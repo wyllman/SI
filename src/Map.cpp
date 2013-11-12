@@ -6,10 +6,18 @@
  */
 
 #include "Map.h"
+#include "MapBuilder.h"
+#include <cstdlib>
 
-Map::Map() {
-	// TODO Auto-generated constructor stub
+Map::Map(uint32_t size) : m_size(size){
+	m_builder = new MapBuilder(m_size);
 
+	m_map = m_builder->generatedMap();
+
+	if(m_builder != NULL) {
+		delete m_builder;
+		m_builder = NULL;
+	}
 }
 
 Map::~Map() {

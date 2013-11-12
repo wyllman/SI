@@ -11,6 +11,13 @@
 #include <SDL.h>
 #include <SDL_events.h>
 
+/**
+ * \class SDL2App
+ * \brief Interfaz con SDL2
+ *
+ * La clase SDL2App implementa los métodos necesarios para crear el bucle del
+ * programa de la simulación.
+ */
 class SDL2App {
 public:
 	SDL2App();

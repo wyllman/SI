@@ -1,0 +1,19 @@
+/*
+ * BuildAgent.h
+ *
+ *  Created on: 12/11/2013
+ *      Author: manwe
+ */
+
+#ifndef BUILDAGENT_H_
+#define BUILDAGENT_H_
+
+#include "WorkingAgent.h"
+
+class BuildAgent: public WorkingAgent {
+public:
+	BuildAgent();
+	~BuildAgent();
+};
+
+#endif /* BUILDAGENT_H_ */

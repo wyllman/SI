@@ -35,12 +35,15 @@ MapBuilder::~MapBuilder() {
 }
 
 char const* const* MapBuilder::generatedMap() {
+	for(uint32_t i = 0; i < m_mapSize; i++) {
+		memcpy(m_resultingMap[i], m_initialMap[i], m_mapSize);
+	}
 	return m_resultingMap;
 }
 
 void MapBuilder::generateMap() {
 	for(uint32_t i = 0; i < m_mapSize; i++) {
-		memset(m_resultingMap[i], 'g', m_mapSize * sizeof(char));
+		memset(m_initialMap[i], 'g', m_mapSize * sizeof(char));
 	}
 }
 

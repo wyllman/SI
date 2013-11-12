@@ -9,7 +9,14 @@
 #define MAPBUILDER_H_
 
 #include <stdint.h>
-
+/**
+ * \class MapBuilder
+ * \brief Constructor de mapas
+ *
+ * La clase MapBuilder recibe como único parámetro en su constructor el tamaño
+ * deseado del lado del mapa y lo genera.
+ *
+ */
 class MapBuilder {
 private:
 	uint32_t m_mapSize;

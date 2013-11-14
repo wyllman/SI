@@ -7,13 +7,13 @@
 
 #include "Map.h"
 #include <cstdlib>
-#include <iostream>
+#include <cstdio>
 
 int main(int argc, char* argv[]) {
 	Map map(8);
 
 	for(int i = 0; i < 8; i++) {
-		std::cout << map.map()[i] << std::endl;
+		printf("%s\n", map.map()[i]);
 	}
 
 	return EXIT_SUCCESS;

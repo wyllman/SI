@@ -8,9 +8,8 @@
 #ifndef MAP_H_
 #define MAP_H_
 
+#include "MapBuilder.h"
 #include <stdint.h>
-
-class MapBuilder;
 
 /**
  * \class Map
@@ -24,11 +23,11 @@ class Map {
 private:
 	uint32_t m_size;
 	MapBuilder* m_builder;
-	const char* const* m_map;
+	WORD const* const* m_map;
 public:
 	Map(uint32_t size);
 	~Map();
-	const char* const* map() { return m_map; }
+	inline WORD const* const* map() { return m_map; }
 };
 
 #endif /* MAP_H_ */

@@ -7,13 +7,24 @@
 
 #include "Map.h"
 #include <cstdlib>
-#include <cstdio>
+#include <iostream>
 
 int main(int argc, char* argv[]) {
-	Map map(8);
+	if(argc != 2) {
+		std::cout << "Usage: SI <size>" << std::endl;
+		return EXIT_SUCCESS;
+	}
 
-	for(int i = 0; i < 8; i++) {
-		printf("%s\n", map.map()[i]);
+	int size;
+	size = atoi(argv[1]);
+
+	Map map(size);
+
+	for(int i = 0; i < size; i++) {
+		for(int j = 0; j < size; j++) {
+			std::cout << (map.map()[i][j]);
+		}
+		std::cout << std::endl;
 	}
 
 	return EXIT_SUCCESS;

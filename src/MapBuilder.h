@@ -8,7 +8,10 @@
 #ifndef MAPBUILDER_H_
 #define MAPBUILDER_H_
 
+#include "include/typedefs.h"
 #include <stdint.h>
+#include <boost/random/mersenne_twister.hpp>
+
 /**
  * \class MapBuilder
  * \brief Constructor de mapas
@@ -20,17 +23,21 @@
 class MapBuilder {
 private:
 	uint32_t m_mapSize;
-	char** m_initialMap;
-	char** m_resultingMap;
+	WORD** m_map;
+	boost::random::mt11213b mersenneGenerator;
 
 	void generateMap();
 	void generateElevation();
 	void generateResources();
+	const int* getArray(const std::string str);
 public:
 	MapBuilder(uint32_t);
+	MapBuilder();
 	~MapBuilder();
 
-	char const* const* generatedMap();
+	WORD const* const* generatedMap() {
+		return m_map;
+	}
 };
 
 #endif /* MAPBUILDER_H_ */

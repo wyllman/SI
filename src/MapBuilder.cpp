@@ -9,11 +9,18 @@
 #include "include/simplexnoise.h"
 #include "../assets/map.xpm"
 #include <string>
+#include <unordered_map>
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
-#include <boost/random/uniform_int_distribution.hpp>
-#include <boost/random/uniform_real_distribution.hpp>
+#ifdef __linux
+	#include <boost/random/uniform_int_distribution.hpp>
+	#include <boost/random/uniform_real_distribution.hpp>
+#elif __APPLE__
+	#ifdef TARGET_OS_MAC
+	/* includes */
+	#endif
+#endif
 
 MapBuilder::MapBuilder(uint32_t size) :
 		m_mapSize(size) {
@@ -36,11 +43,14 @@ MapBuilder::MapBuilder() {
 	std::string str;
 	// extraemos del primer string las propiedades del array
 	str = map_xpm[0];
-	m_mapSize = getArray(str)[0];
-	colors = getArray(str)[2];
-	chars = getArray(str)[3];
+	m_mapSize = splitArray(str)[0];
+	colors = splitArray(str)[2];
+	chars = splitArray(str)[3];
 	lowerBound = colors / 10;
 	upperBound = colors / 10 * 9;
+	// color hashmap
+	std::unordered_map<char*, char*> caca;
+
 
 	// logica de recorrido del array
 	for (int32_t i = 0; i < m_mapSize * chars; i++) {
@@ -126,7 +136,7 @@ void MapBuilder::generateResources() {
 
 }
 
-const int* MapBuilder::getArray(const std::string str) {
+const int* MapBuilder::splitArray(const std::string str) {
 	int tmp[4];
 	int initPos;
 	int index;
@@ -135,9 +145,7 @@ const int* MapBuilder::getArray(const std::string str) {
 
 	for (uint32_t i = 0; i <= str.length(); i++) {
 		if (str[i] == ' ' || str[i] == '\0') {
-			tmp[index] =
-					atoi(
-							const_cast<char*>(str.substr(initPos, i - initPos).c_str()));
+			tmp[index] = atoi(const_cast<char*>(str.substr(initPos, i - initPos).c_str()));
 			index++;
 			initPos = i;
 		}

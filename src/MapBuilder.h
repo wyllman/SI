@@ -29,7 +29,7 @@ private:
 	void generateMap();
 	void generateElevation();
 	void generateResources();
-	const int* getArray(const std::string str);
+	const int* splitArray(const std::string str);
 public:
 	MapBuilder(uint32_t);
 	MapBuilder();

@@ -11,7 +11,7 @@
 
 Map::Map(uint32_t size) :
 		m_size(size), m_map(NULL) {
-	m_builder = new MapBuilder();
+	m_builder = new MapBuilder(m_size);
 
 	m_map = m_builder->generatedMap();
 	if(m_map == NULL) {

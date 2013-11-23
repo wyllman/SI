@@ -9,7 +9,7 @@
 #include "include/simplexnoise.h"
 #include "../assets/map.xpm"
 #include <string>
-#include <unordered_map>
+#include <boost/unordered_map.hpp>
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
@@ -49,7 +49,7 @@ MapBuilder::MapBuilder() {
 	lowerBound = colors / 10;
 	upperBound = colors / 10 * 9;
 	// color hashmap
-	std::unordered_map<char*, char*> caca;
+	boost::unordered::unordered_map<char*, char*> caca;
 
 
 	// logica de recorrido del array

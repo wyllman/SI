@@ -7,19 +7,19 @@
 
 #include "MapBuilder.h"
 #include "include/simplexnoise.h"
-#include "../assets/map.xpm"
+#include "../assets/map.c"
 #include <string>
 #include <boost/unordered_map.hpp>
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
 #ifdef __linux
-	#include <boost/random/uniform_int_distribution.hpp>
-	#include <boost/random/uniform_real_distribution.hpp>
+#include <boost/random/uniform_int_distribution.hpp>
+#include <boost/random/uniform_real_distribution.hpp>
 #elif __APPLE__
-	#ifdef TARGET_OS_MAC
-	/* includes */
-	#endif
+#ifdef TARGET_OS_MAC
+/* includes */
+#endif
 #endif
 
 MapBuilder::MapBuilder(uint32_t size) :
@@ -36,28 +36,27 @@ MapBuilder::MapBuilder(uint32_t size) :
 }
 
 MapBuilder::MapBuilder() {
-	int32_t colors;
-	int32_t chars;
-	int32_t lowerBound;
-	int32_t upperBound;
-	std::string str;
-	// extraemos del primer string las propiedades del array
-	str = map_xpm[0];
-	m_mapSize = splitArray(str)[0];
-	colors = splitArray(str)[2];
-	chars = splitArray(str)[3];
-	lowerBound = colors / 10;
-	upperBound = colors / 10 * 9;
-	// color hashmap
-	boost::unordered::unordered_map<char*, char*> caca;
+	uint32_t depth;
+	uint32_t lowerBound;
+	uint32_t upperBound;
 
+	m_mapSize = gimp_image.width;
+	depth = gimp_image.bytes_per_pixel;
+	lowerBound = pow(2, depth) * 0.1;
+	upperBound = pow(2, depth) * 0.9;
 
-	// logica de recorrido del array
-	for (int32_t i = 0; i < m_mapSize * chars; i++) {
-		for (int32_t j = 0; j < m_mapSize * chars; j++) {
+	m_map = new WORD*[m_mapSize];
 
+	for (uint32_t i = 0; i < m_mapSize; i++) {
+		m_map[i] = new WORD[m_mapSize];
+	}
+
+	for (uint32_t i = 0; i < m_mapSize; i++) {
+		for (uint32_t j = 0; j < m_mapSize; j++) {
+			gimp_image.pixel_data[i + j];
 		}
 	}
+
 }
 
 MapBuilder::~MapBuilder() {
@@ -145,7 +144,9 @@ const int* MapBuilder::splitArray(const std::string str) {
 
 	for (uint32_t i = 0; i <= str.length(); i++) {
 		if (str[i] == ' ' || str[i] == '\0') {
-			tmp[index] = atoi(const_cast<char*>(str.substr(initPos, i - initPos).c_str()));
+			tmp[index] =
+					atoi(
+							const_cast<char*>(str.substr(initPos, i - initPos).c_str()));
 			index++;
 			initPos = i;
 		}

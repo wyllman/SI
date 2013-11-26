@@ -6,9 +6,9 @@
  */
 
 #include "Agent.h"
-#include "BeliefSet.h"
-#include "Goals.h"
-#include "Intentions.h"
+#include "../bdi/BeliefSet.h"
+#include "../bdi/Goals.h"
+#include "../bdi/Intentions.h"
 
 Agent::Agent() {
 	// TODO Auto-generated constructor stub

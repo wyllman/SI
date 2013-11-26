@@ -25,5 +25,7 @@ C_UPPER_DEPS :=
 SUBDIRS := \
 src \
 src/include \
+src/bdi \
+src/agents \
 assets \
 

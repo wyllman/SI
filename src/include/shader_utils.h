@@ -9,7 +9,6 @@
 #define SHADER_UTILS_H_
 
 #include <GL/glew.h>
-#include <GL/gl.h>
 
 #if __cplusplus
 extern "C" {

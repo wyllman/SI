@@ -1,5 +1,6 @@
 *.o
 *.d
+*~
 Debug/SI
 Release/SI
 doc/html/

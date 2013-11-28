@@ -25,6 +25,22 @@ Map::Map(uint32_t size) :
 	}
 }
 
+Map::Map() {
+	m_builder = new MapBuilder();
+	m_size = m_builder->mapSize();
+	m_map = m_builder->generatedMap();
+
+	if(m_map == NULL) {
+		std::cout << "something went horribly wrong" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+
+	if (m_builder != NULL) {
+		delete m_builder;
+		m_builder = NULL;
+	}
+}
+
 Map::~Map() {
 	if (m_map != NULL) {
 		delete[] m_map;

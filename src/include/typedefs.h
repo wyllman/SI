@@ -10,8 +10,7 @@
 
 #include <bits/stl_pair.h>
 
-typedef char byte;
-typedef unsigned char WORD;
+typedef unsigned char BYTE;
 typedef std::pair<int, int> Point;
 
 enum {

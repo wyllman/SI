@@ -5,7 +5,7 @@ static const struct {
   unsigned int 	 height;
   unsigned int 	 bytes_per_pixel; /* 2:RGB16, 3:RGB, 4:RGBA */ 
   unsigned char	 pixel_data[257 * 257 * 3 + 1];
-} gimp_image = {
+} gimp = {
   257, 257, 3,
   "~~~~~~}}}~~~|||||||||{{{zzzyyyyyyzzzyyywwwwwwvvvtttssssssssstttttttttttt"
   "ssspppooopppppppppooommmkkkjjjjjjjjjkkkjjjkkkkkkmmmnnnppppppppppppqqqqqq"

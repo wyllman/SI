@@ -18,11 +18,11 @@ int main(int argc, char* argv[]) {
 	int size;
 	size = atoi(argv[1]);
 
-	Map map(size);
+	Map map;
 
-	for(int i = 0; i < size; i++) {
-		for(int j = 0; j < size; j++) {
-			std::cout << (map.map()[i][j]);
+	for(int i = 0; i < map.mapSize(); i++) {
+		for(int j = 0; j < map.mapSize(); j++) {
+			std::cout << map.map()[i][j];
 		}
 		std::cout << std::endl;
 	}

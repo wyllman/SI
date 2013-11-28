@@ -23,11 +23,13 @@ class Map {
 private:
 	uint32_t m_size;
 	MapBuilder* m_builder;
-	WORD const* const* m_map;
+	BYTE const* const* m_map;
 public:
 	Map(uint32_t size);
+	Map();
 	~Map();
-	inline WORD const* const* map() { return m_map; }
+	inline BYTE const* const* map() { return m_map; }
+	inline int mapSize() { return m_size; }
 };
 
 #endif /* MAP_H_ */

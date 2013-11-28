@@ -23,7 +23,7 @@
 class MapBuilder {
 private:
 	uint32_t m_mapSize;
-	WORD** m_map;
+	BYTE** m_map;
 	boost::random::mt11213b mersenneGenerator;
 
 	void generateMap();
@@ -35,8 +35,11 @@ public:
 	MapBuilder();
 	~MapBuilder();
 
-	WORD const* const* generatedMap() {
+	inline BYTE const* const* generatedMap() {
 		return m_map;
+	}
+	inline int32_t mapSize() {
+		return m_mapSize;
 	}
 };
 

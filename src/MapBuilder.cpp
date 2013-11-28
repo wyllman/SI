@@ -7,7 +7,7 @@
 
 #include "MapBuilder.h"
 #include "include/simplexnoise.h"
-#include "../assets/map3.c"
+#include "../assets/map.c"
 #include <string>
 #include <boost/unordered_map.hpp>
 #include <cstdlib>
@@ -43,9 +43,11 @@ MapBuilder::MapBuilder(uint32_t size) :
 MapBuilder::MapBuilder() {
 	uint32_t lowerBound;
 	uint32_t upperBound;
+	uint32_t bytesPerPixel;
 	uint32_t caca;
 
 	m_mapSize = gimp.width;
+	bytesPerPixel = gimp.bytes_per_pixel;
 
 	m_map = new BYTE*[m_mapSize];
 
@@ -68,12 +70,12 @@ MapBuilder::MapBuilder() {
 			}
 		}
 	}
-	lowerBound = min + (max - min) * 0.1;
-	upperBound = max - (max - min) * 0.1;
+	lowerBound = min + (max - min) * 0.2;
+	upperBound = max - (max - min) * 0.2;
 
 	//bucle de relleno del array
 	int j = 0;
-	for (uint32_t i = 0; i < (m_mapSize * m_mapSize - 1); i++) {
+	for (uint32_t i = 0; i < (m_mapSize * m_mapSize * bytesPerPixel - 1); i += 3) {
 		caca = gimp.pixel_data[i];
 //		std::cout << " "<< i << " ";
 //		std::cout << std::hex << static_cast<int>(gimp.pixel_data[i]);
@@ -84,13 +86,13 @@ MapBuilder::MapBuilder() {
 //			std::cout << "caca = " << std::hex << caca << std::endl;
 //			std::cin.get();
 		if (caca <= lowerBound) {
-			m_map[i % m_mapSize][j] = 'w';
+			m_map[j][(i / 3) % m_mapSize] = 'w';
 		} else if (caca > upperBound) {
-			m_map[i % m_mapSize][j] = 'A';
+			m_map[j][(i / 3) % m_mapSize] = 'A';
 		} else {
-			m_map[i % m_mapSize][j] = '_';
+			m_map[j][(i / 3) % m_mapSize] = '_';
 		}
-		if (i != 0 && i % m_mapSize == (m_mapSize - 1)) {
+		if (i != 0 && (i / 3) % m_mapSize == (m_mapSize - 1)) {
 			j++;
 		}
 	}

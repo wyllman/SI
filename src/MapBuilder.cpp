@@ -86,11 +86,11 @@ MapBuilder::MapBuilder() {
 //			std::cout << "caca = " << std::hex << caca << std::endl;
 //			std::cin.get();
 		if (caca <= lowerBound) {
-			m_map[j][(i / 3) % m_mapSize] = 'w';
+			m_map[j][(i / 3) % m_mapSize] = TERRAIN_WATER;
 		} else if (caca > upperBound) {
-			m_map[j][(i / 3) % m_mapSize] = 'A';
+			m_map[j][(i / 3) % m_mapSize] = TERRAIN_ELEVATION;
 		} else {
-			m_map[j][(i / 3) % m_mapSize] = '_';
+			m_map[j][(i / 3) % m_mapSize] = TERRAIN_GROUND;
 		}
 		if (i != 0 && (i / 3) % m_mapSize == (m_mapSize - 1)) {
 			j++;

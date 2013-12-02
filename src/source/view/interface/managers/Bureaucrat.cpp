@@ -13,7 +13,7 @@
  *
  */
 
-#include "Bureaucrat.h"
+#include "../../../../headers/view/interface/managers/Bureaucrat.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

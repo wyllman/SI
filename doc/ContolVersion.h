@@ -17,6 +17,9 @@
  *       v0:  Creada la estructura de clases inicial, usando el patrón
  *            Modelo-Vista-Controlador. Creadas las clases para la vista y el
  *            controlador.
- *
+ *            Separación por carpetas los archivos de cabecera(.h) y los archivos de
+ *            código(.cpp).
+ *            Arreglados los errores de enlazado de los archivos de cabecera en las
+ *            nuevas carpetas.
  */
 

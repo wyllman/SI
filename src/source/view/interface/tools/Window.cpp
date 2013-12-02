@@ -13,7 +13,7 @@
  *
  */
 
-#include "Window.h"
+#include "../../../../headers/view/interface/tools/Window.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

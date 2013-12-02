@@ -13,7 +13,7 @@
  *
  */
 
-#include "Director.h"
+#include "../../../headers/controller/director/Director.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

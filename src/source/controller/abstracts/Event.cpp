@@ -12,7 +12,7 @@
  *
  */
 
-#include "Event.h"
+#include "../../../headers/controller/abstracts/Event.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

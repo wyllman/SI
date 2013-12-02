@@ -14,7 +14,7 @@
  *
  */
 
-#include "Interface.h"
+#include "../../../headers/view/interface/Interface.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

@@ -12,7 +12,7 @@
  *
  */
 
-#include "Scene.h"
+#include "../../../../headers/view/interface/tools/Scene.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

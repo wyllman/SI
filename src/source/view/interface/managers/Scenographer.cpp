@@ -12,7 +12,7 @@
  *
  */
 
-#include "Scenographer.h"
+#include "../../../../headers/view/interface/managers/Scenographer.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

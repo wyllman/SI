@@ -6,19 +6,19 @@
 CPP_SRCS += \
 ../src/Map.cpp \
 ../src/MapBuilder.cpp \
-../src/SDL2App.cpp \
+../src/MapConsoleInterface.cpp \
 ../src/main.cpp 
 
 OBJS += \
 ./src/Map.o \
 ./src/MapBuilder.o \
-./src/SDL2App.o \
+./src/MapConsoleInterface.o \
 ./src/main.o 
 
 CPP_DEPS += \
 ./src/Map.d \
 ./src/MapBuilder.d \
-./src/SDL2App.d \
+./src/MapConsoleInterface.d \
 ./src/main.d 
 
 

@@ -32,9 +32,26 @@ private:
 	const int* splitArray(const std::string str);
 public:
 	MapBuilder(uint32_t);
+	/**
+	 *	@fn MapBuilder()
+	 *  @brief Constructor por defecto del mapa.
+	 *
+	 *	El constructor por defecto genera el terreno usando una imagen de
+	 *	ruido perlin compilada.
+	 *
+	 */
 	MapBuilder();
+	/**
+	 *	@fn ~MapBuilder()
+	 *	@brief Destructor
+	 */
 	~MapBuilder();
 
+	/**
+	 *	@fn generatedMap()
+	 *	@brief Devuelve el mapa generado
+	 *	@return BYTE const* const*
+	 */
 	inline BYTE const* const* generatedMap() {
 		return m_map;
 	}

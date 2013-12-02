@@ -6,6 +6,7 @@
  */
 
 #include "Map.h"
+#include "MapConsoleInterface.h"
 #include <cstdlib>
 #include <iostream>
 
@@ -17,13 +18,12 @@ int main(int argc, char* argv[]) {
 
 	int size;
 	size = atoi(argv[1]);
+	Map mapa;
+	MapConsoleInterface mapci(mapa);
 
-	Map map;
-
-	for(int i = 0; i < map.mapSize(); i++) {
-		for(int j = 0; j < map.mapSize(); j++) {
-			std::cout << map.map()[i][j];
-		}
+	for(uint i = 0; i < mapa.size(); i++) {
+		for(uint j = 0; j < mapa.size(); j++)
+			std::cout << mapci(i, j);
 		std::cout << std::endl;
 	}
 

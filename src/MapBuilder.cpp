@@ -6,13 +6,9 @@
  */
 
 #include "MapBuilder.h"
-#include "include/simplexnoise.h"
 #include "../assets/map.c"
-#include <string>
-#include <boost/unordered_map.hpp>
 #include <cstdlib>
 #include <cstring>
-#include <cstdio>
 #include <ctime>
 #ifdef __linux
 #include <boost/random/uniform_int_distribution.hpp>
@@ -36,10 +32,6 @@ MapBuilder::MapBuilder(uint32_t size) :
 	generateResources();
 }
 
-/*
- * FIXME: el metodo parece estar recorriendo mal el array de map.c
- * no recorre los caracteres secuencialmente
- */
 MapBuilder::MapBuilder() {
 	uint32_t lowerBound;
 	uint32_t upperBound;
@@ -74,26 +66,20 @@ MapBuilder::MapBuilder() {
 	upperBound = max - (max - min) * 0.2;
 
 	//bucle de relleno del array
-	int j = 0;
-	for (uint32_t i = 0; i < (m_mapSize * m_mapSize * bytesPerPixel - 1); i += 3) {
-		caca = gimp.pixel_data[i];
-//		std::cout << " "<< i << " ";
-//		std::cout << std::hex << static_cast<int>(gimp.pixel_data[i]);
-//		std::cin.get();
-//		m_map[j][i % m_mapSize] = static_cast<char>(caca);
-//			std::cout << "lowerBound = " << std::hex << lowerBound << std::endl;
-//			std::cout << "upperBound = " << std::hex << upperBound << std::endl;
-//			std::cout << "caca = " << std::hex << caca << std::endl;
-//			std::cin.get();
-		if (caca <= lowerBound) {
-			m_map[j][(i / 3) % m_mapSize] = TERRAIN_WATER;
-		} else if (caca > upperBound) {
-			m_map[j][(i / 3) % m_mapSize] = TERRAIN_ELEVATION;
-		} else {
-			m_map[j][(i / 3) % m_mapSize] = TERRAIN_GROUND;
-		}
-		if (i != 0 && (i / 3) % m_mapSize == (m_mapSize - 1)) {
-			j++;
+	for (uint32_t i = 0; i < m_mapSize; i++) {
+		for (uint32_t j = 0; j < m_mapSize; j++) {
+			caca = gimp.pixel_data[((i * m_mapSize) + j) * 3];
+			if (caca < lowerBound) {
+				m_map[i][j] = TERRAIN_WATER;
+			} else if (caca > upperBound) {
+				m_map[i][j] = TERRAIN_ELEVATION;
+			} else {
+				m_map[i][j] = TERRAIN_GROUND;
+			}
+			// creamos agua en los bordes del mapa para simplificar la deteccion de colisiones
+			if (i == 0 || i == m_mapSize - 1 || j == 0 || j == m_mapSize - 1) {
+				m_map[i][j] = TERRAIN_WATER;
+			}
 		}
 	}
 }

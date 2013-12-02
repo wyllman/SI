@@ -8,13 +8,14 @@
 #include "Map.h"
 #include "MapBuilder.h"
 #include <cstdlib>
+#include <cstring>
 
 Map::Map(uint32_t size) :
-		m_size(size), m_map(NULL) {
+		m_size(size), m_mapArray(NULL) {
 	m_builder = new MapBuilder(m_size);
 
-	m_map = m_builder->generatedMap();
-	if(m_map == NULL) {
+	m_mapArray = const_cast<BYTE**>(m_builder->generatedMap());
+	if (m_mapArray == NULL) {
 		std::cout << "something went horribly wrong" << std::endl;
 		exit(EXIT_FAILURE);
 	}
@@ -28,9 +29,9 @@ Map::Map(uint32_t size) :
 Map::Map() {
 	m_builder = new MapBuilder();
 	m_size = m_builder->mapSize();
-	m_map = m_builder->generatedMap();
+	m_mapArray = const_cast<BYTE**>(m_builder->generatedMap());
 
-	if(m_map == NULL) {
+	if (m_mapArray == NULL) {
 		std::cout << "something went horribly wrong" << std::endl;
 		exit(EXIT_FAILURE);
 	}
@@ -41,10 +42,24 @@ Map::Map() {
 	}
 }
 
+Map::Map(const Map& map) :
+		m_size(map.size()), m_builder(NULL) {
+	this->m_mapArray = new BYTE*[m_size];
+
+	for (uint32_t i = 0; i < m_size; i++) {
+		this->m_mapArray[i] = new BYTE[m_size];
+	}
+
+	for(uint32_t i = 0; i < m_size; i++) {
+		memcpy(m_mapArray[i], map.map()[i], m_size * sizeof(BYTE));
+	}
+}
+
 Map::~Map() {
-	if (m_map != NULL) {
-		delete[] m_map;
-		m_map = NULL;
+	//FIXME
+	if (m_mapArray != NULL) {
+		delete[] m_mapArray;
+		m_mapArray = NULL;
 	}
 }
 

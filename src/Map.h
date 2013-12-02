@@ -8,28 +8,31 @@
 #ifndef MAP_H_
 #define MAP_H_
 
-#include "MapBuilder.h"
+#include "./include/typedefs.h"
 #include <stdint.h>
 
+class MapBuilder;
+
 /**
- * \class Map
- * \brief Clase contenedora el mapa.
+ *	@class Map
+ *	@brief Clase contenedora el mapa.
  *
- * La clase Map contiene el mapa sobre el que operan los agentes en la
- * simulación y que es renderizado en pantalla.
+ *	La clase Map contiene el mapa sobre el que operan los agentes en la
+ *	simulación y que es renderizado en pantalla.
  *
  */
 class Map {
 private:
 	uint32_t m_size;
 	MapBuilder* m_builder;
-	BYTE const* const* m_map;
+	BYTE** m_mapArray;
 public:
 	Map(uint32_t size);
 	Map();
+	Map(const Map& map);
 	~Map();
-	inline BYTE const* const* map() { return m_map; }
-	inline int mapSize() { return m_size; }
+	inline BYTE const* const* map() const { return m_mapArray; }
+	inline uint32_t size() const { return m_size; }
 };
 
 #endif /* MAP_H_ */

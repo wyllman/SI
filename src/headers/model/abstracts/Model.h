@@ -18,13 +18,13 @@ class Controller;
 
 class Model {
 public:
-	Model();
+	Model(const Controller*);
 	virtual ~Model();
 
 	virtual void init () {};
 	virtual void update () {};
 	virtual void reset () {};
-	void setReferences (const Controller*);
+
 private:
 	const Controller* refController_;
 

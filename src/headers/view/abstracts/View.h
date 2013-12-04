@@ -21,13 +21,12 @@ class Controller;
 
 class View {
 public:
-	View();
+	View(const Controller*);
 	virtual ~View();
 
 	virtual void init () {};
 	virtual void update () {};
 	virtual void reset () {};
-	void setReferences (const Controller*);
 
 private:
 	const Controller* refController_;

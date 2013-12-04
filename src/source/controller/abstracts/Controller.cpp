@@ -17,7 +17,8 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Controller::Controller() {
-	// TODO Auto-generated constructor stub
+	refView_ = 0;
+	refModel_ = 0;
 }
 
 Controller::~Controller() {

@@ -8,9 +8,9 @@
 #ifndef MAPBUILDER_H_
 #define MAPBUILDER_H_
 
-#include "include/typedefs.h"
 #include <stdint.h>
-#include <boost/random/mersenne_twister.hpp>
+
+#include "include/typedefs.h"
 
 /**
  * \class MapBuilder
@@ -24,12 +24,11 @@ class MapBuilder {
 private:
 	uint32_t m_mapSize;
 	BYTE** m_map;
-	boost::random::mt11213b mersenneGenerator;
 
 	void generateMap();
 	void generateElevation();
 	void generateResources();
-	const int* splitArray(const std::string str);
+	const int* splitArray(const char* cstr);
 public:
 	MapBuilder(uint32_t);
 	/**

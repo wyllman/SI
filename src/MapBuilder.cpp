@@ -6,13 +6,18 @@
  */
 
 #include "MapBuilder.h"
-#include "../assets/map.c"
+
+#include <cmath>
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
+#include <map>
+
+#include "../assets/map.c"
+
 #ifdef __linux
+#include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int_distribution.hpp>
-#include <boost/random/uniform_real_distribution.hpp>
 #elif __APPLE__
 #ifdef TARGET_OS_MAC
 /* includes */
@@ -33,10 +38,12 @@ MapBuilder::MapBuilder(uint32_t size) :
 }
 
 MapBuilder::MapBuilder() {
+	boost::random::mt11213b mersenneGenerator;
 	uint32_t lowerBound;
 	uint32_t upperBound;
 	uint32_t bytesPerPixel;
-	uint32_t caca;
+	uint32_t pixelGrayscaleValue;
+	std::map<uint32_t, uint32_t> terrainBounds;
 
 	m_mapSize = gimp.width;
 	bytesPerPixel = gimp.bytes_per_pixel;
@@ -62,20 +69,38 @@ MapBuilder::MapBuilder() {
 			}
 		}
 	}
-	lowerBound = min + (max - min) * 0.2;
-	upperBound = max - (max - min) * 0.2;
+	// generacion de rangos aleatorios para los tipos de terreno
+	mersenneGenerator.seed(time(NULL));
+	boost::random::uniform_int_distribution<> minimumElevation(min, max - 12);
+	boost::random::uniform_int_distribution<> maximumElevation(8, 12);
+	for (int i = 0; i < 5; i++) {
+		mersenneGenerator();
+		Point p;
+		p.first = minimumElevation(mersenneGenerator);
+		p.second = p.first + maximumElevation(mersenneGenerator);
+		terrainBounds.insert(p);
+	}
 
-	//bucle de relleno del array
+//	lowerBound = min + (max - min) * 0.2;
+//	upperBound = max - (max - min) * 0.2;
+
+//bucle de relleno del array
 	for (uint32_t i = 0; i < m_mapSize; i++) {
 		for (uint32_t j = 0; j < m_mapSize; j++) {
-			caca = gimp.pixel_data[((i * m_mapSize) + j) * 3];
-			if (caca < lowerBound) {
-				m_map[i][j] = TERRAIN_WATER;
-			} else if (caca > upperBound) {
-				m_map[i][j] = TERRAIN_ELEVATION;
+			pixelGrayscaleValue = gimp.pixel_data[((i * m_mapSize) + j)
+					* bytesPerPixel];
+			// FIXME
+			if (true) {
 			} else {
 				m_map[i][j] = TERRAIN_GROUND;
 			}
+//			if (pixelGrayscaleValue < lowerBound) {
+//				m_map[i][j] = TERRAIN_WATER;
+//			} else if (pixelGrayscaleValue > upperBound) {
+//				m_map[i][j] = TERRAIN_ELEVATION;
+//			} else {
+//				m_map[i][j] = TERRAIN_GROUND;
+//			}
 			// creamos agua en los bordes del mapa para simplificar la deteccion de colisiones
 			if (i == 0 || i == m_mapSize - 1 || j == 0 || j == m_mapSize - 1) {
 				m_map[i][j] = TERRAIN_WATER;
@@ -110,6 +135,7 @@ void MapBuilder::generateMap() {
 }
 
 void MapBuilder::generateElevation() {
+	boost::random::mt11213b mersenneGenerator;
 	uint32_t elevations;
 	Point point;
 	int32_t min;
@@ -160,7 +186,8 @@ void MapBuilder::generateResources() {
 
 }
 
-const int* MapBuilder::splitArray(const std::string str) {
+const int* MapBuilder::splitArray(const char* cstr) {
+	std::string str(cstr);
 	int tmp[4];
 	int initPos;
 	int index;

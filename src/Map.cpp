@@ -6,9 +6,12 @@
  */
 
 #include "Map.h"
-#include "MapBuilder.h"
+
 #include <cstdlib>
 #include <cstring>
+#include <iostream>
+
+#include "MapBuilder.h"
 
 Map::Map(uint32_t size) :
 		m_size(size), m_mapArray(NULL) {

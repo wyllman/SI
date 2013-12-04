@@ -15,16 +15,24 @@
 #ifndef CONTROLLER_H_
 #define CONTROLLER_H_
 
+#include "../../view/abstracts/View.h"
+#include "../../model/abstracts/Model.h"
+
+class View;
+class Model;
+
 class Controller {
 public:
 	Controller();
 	virtual ~Controller();
 
-	virtual void init () = 0;
-	virtual void stop () = 0;
+	virtual void init () {};
+	virtual void stop () {};
+	void setReferences (const View*, const Model*);
 
 private:
-	// Atributos privdos
+	const View* refView_;
+	const Model* refModel_;
 
 };
 

@@ -15,15 +15,22 @@
 #ifndef VIEW_H_
 #define VIEW_H_
 
+#include "../../controller/abstracts/Controller.h"
+
+class Controller;
+
 class View {
 public:
 	View();
 	virtual ~View();
 
-	virtual void
+	virtual void init () {};
+	virtual void update () {};
+	virtual void reset () {};
+	void setReferences (const Controller*);
 
 private:
-	// Atributos privdos
+	const Controller* refController_;
 
 };
 

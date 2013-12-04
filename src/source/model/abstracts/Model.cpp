@@ -1,26 +1,23 @@
 /*
- *      Nombre: View.cpp
+ *      Nombre: Model.cpp
  *
- *   Creado en: 02/12/2013
- *     Versión: v0.0
- *     Autores: Tinguaro Cubas Saiz
- *              Juan Henández Hernández
- *              Miguel Pérez Bello
- *              Guillermo Rodríguez Pardo
+ *   Creado en: 04/12/2013
+ *     Version: v0.0
+ *     Autores: tenerent
  *
- * Descripción: Clase abstracta para definir el comportamiento básico de la vista.
+ * Descripcion:
  *
  */
 
-#include "../../../headers/view/abstracts/View.h"
+#include "../../../headers/model/abstracts/Model.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-View::View() {
+Model::Model() {
 	// TODO Auto-generated constructor stub
 }
 
-View::~View() {
+Model::~Model() {
 	// TODO Auto-generated destructor stub
 }
 // FIN -------------------------------------------------------------------------------
@@ -34,7 +31,7 @@ View::~View() {
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Manejadores públicos:
-void View::setReferences(const Controller* controller) {
+void Model::setReferences(const Controller* controller) {
 	refController_ = controller;
 }
 // FIN -------------------------------------------------------------------------------
@@ -46,5 +43,4 @@ void View::setReferences(const Controller* controller) {
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
 

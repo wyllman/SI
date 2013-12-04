@@ -27,6 +27,7 @@ src/source/view/interface/tools \
 src/source/view/interface/managers \
 src/source/view/interface \
 src/source/view/abstracts \
+src/source/model/abstracts \
 src/source/controller/director/tools \
 src/source/controller/director \
 src/source/controller/abstracts \

@@ -4,5 +4,9 @@
 
 USER_OBJS :=
 
+<<<<<<< HEAD
 LIBS := -lSDL -lGLEW -lGLU -lGL
+=======
+LIBS :=
+>>>>>>> 7a993e9867b4edf5fb874c2bba44827b6c9dc4d0
 

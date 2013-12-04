@@ -20,6 +20,8 @@ public:
 	View();
 	virtual ~View();
 
+	virtual void
+
 private:
 	// Atributos privdos
 

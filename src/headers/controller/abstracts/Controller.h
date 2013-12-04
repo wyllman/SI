@@ -20,6 +20,9 @@ public:
 	Controller();
 	virtual ~Controller();
 
+	virtual void init () = 0;
+	virtual void stop () = 0;
+
 private:
 	// Atributos privdos
 

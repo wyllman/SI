@@ -16,13 +16,25 @@
 #ifndef DIRECTOR_H_
 #define DIRECTOR_H_
 
-class Director {
+#include <iostream>
+
+#include "../abstracts/controller.h"
+#include "tools/FileLog.h"
+#include "tools/MainLoop.h"
+
+using namespace std;
+
+class Director: public Controller {
 public:
 	Director();
 	virtual ~Director();
 
+	void init ();
+	void stop ();
+
 private:
-	// Atributos privdos
+	FileLog* regAccErr_;
+	MainLoop* mainLoop_;
 
 };
 

@@ -14,7 +14,23 @@
 #include <iostream>
 using namespace std;
 
+#include "headers/controller/abstracts/Controller.h"
+#include "headers/controller/director/Director.h"
+
 int main() {
-	cout << "!!!Hello World!!!" << endl; // prints !!!Hello World!!!
+	cout << "**********************************" << endl;
+	cout << "Iniciando el Simulador PreColonia." << endl;
+
+	Controller* directorSim = new Director;
+
+	directorSim->init();
+
+
+	directorSim->stop();
+
+	delete (directorSim);
+
+	cout << "Saliendo del Simulador PreColonia." << endl;
+	cout << "**********************************" << endl;
 	return 0;
 }

@@ -15,6 +15,10 @@
 #ifndef MAINLOOP_H_
 #define MAINLOOP_H_
 
+#include <iostream>
+
+using namespace std;
+
 class MainLoop {
 public:
 	MainLoop();

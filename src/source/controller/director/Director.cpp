@@ -18,18 +18,36 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Director::Director() {
-	// TODO Auto-generated constructor stub
+	cout << "---Generado el coordinador Director " << endl;
+	regAccErr_ = 0;
+	mainLoop_ = 0;
 }
 
 Director::~Director() {
-	// TODO Auto-generated destructor stub
+	cout << "---Destruyendo el coordinador Director " << endl;
+	stop ();
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Métodos públicos:
-
+void Director::init() {
+	cout << "---Llamando a la funcion init del Director" << endl;
+	regAccErr_ = new FileLog;
+	mainLoop_ = new MainLoop;
+}
+void Director::stop() {
+	cout << "---Llamando a la funcion stop del Director" << endl;
+	if (regAccErr_ != 0) {
+		delete (regAccErr_);
+		regAccErr_ = 0;
+	}
+	if (mainLoop_ != 0) {
+		delete (mainLoop_);
+		mainLoop_ = 0;
+	}
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

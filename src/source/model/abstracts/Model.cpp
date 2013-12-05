@@ -2,10 +2,10 @@
  *      Nombre: Model.cpp
  *
  *   Creado en: 04/12/2013
- *     Version: v0.0
+ *     Versión: v0.0
  *     Autores: tenerent
  *
- * Descripcion:
+ * Descripción:
  *
  */
 

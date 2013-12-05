@@ -18,11 +18,11 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 FileLog::FileLog() {
-	// TODO Auto-generated constructor stub
+	cout << "------Generado la herramienta FileLog para el Director " << endl;
 }
 
 FileLog::~FileLog() {
-	// TODO Auto-generated destructor stub
+	cout << "------Destruyendo la herramienta FileLog para el Director " << endl;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

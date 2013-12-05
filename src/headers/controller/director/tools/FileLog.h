@@ -16,6 +16,10 @@
 #ifndef FILELOG_H_
 #define FILELOG_H_
 
+#include <iostream>
+
+using namespace std;
+
 class FileLog {
 public:
 	FileLog();

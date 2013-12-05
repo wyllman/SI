@@ -17,12 +17,11 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 MainLoop::MainLoop() {
-	// TODO Auto-generated constructor stub
-
+	cout << "------Generado la herramienta MainLoop para el Director " << endl;
 }
 
 MainLoop::~MainLoop() {
-	// TODO Auto-generated destructor stub
+	cout << "------Destruyendo la herramienta MainLoop para el Director " << endl;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

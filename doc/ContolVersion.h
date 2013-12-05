@@ -27,5 +27,8 @@
  *            FileLog y MainLoop.
  *            - En la función main (): Creado un puntero a Controller con un objeto de tipo
  *            Director y comprobado ciclo de llamadas a constructores y destructores.
+ *            - Enlazada con el programa principal la clase Interface (hija de View).
+ *            - Creadas la clase Simulator (hija de Model) y enlazada con el programa
+ *            principal.
  */
 

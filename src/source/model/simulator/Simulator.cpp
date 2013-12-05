@@ -1,28 +1,27 @@
 /*
- *      Nombre: Interface.cpp
+ *      Nombre: Simulator.cpp
  *
- *   Creado en: 02/12/2013
+ *   Creado en: 05/12/2013
  *     Versión: v0.0
  *     Autores: Tinguaro Cubas Saiz
  *              Juan Henández Hernández
  *              Miguel Pérez Bello
  *              Guillermo Rodríguez Pardo
  *
- * Descripción: Vista específica para la ejecución del simulador. Lleva el control de la
- *              ejecución y creación de la ventana y el contexto (SDL y OGL). Renderizar
- *              la escena, animar los objetos, etc...
+ * Descripción: Modelo específico para la ejecución del sistema inteligente. La generación del
+ *              terreno y la gestión de los agentes que intervienen en la simulación.
  *
  */
 
-#include "../../../headers/view/interface/Interface.h"
+#include "../../../headers/model/simulator/Simulator.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-Interface::Interface(const Controller* controller):View(controller) {
-	cout << "---Generado la vista Interfaz " << endl;
+Simulator::Simulator(const Controller* controller):Model(controller) {
+	cout << "---Generado el modelo Simulator " << endl;
 }
-Interface::~Interface() {
-	cout << "---Destruyendo la vista Interfaz " << endl;
+Simulator::~Simulator() {
+	cout << "---Destruyendo el modelo Simulator " << endl;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

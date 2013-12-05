@@ -17,9 +17,15 @@
 #ifndef INTERFACE_H_
 #define INTERFACE_H_
 
-class Interface {
+#include <iostream>
+
+#include "../abstracts/View.h"
+
+using namespace std;
+
+class Interface: public View {
 public:
-	Interface();
+	Interface(const Controller*);
 	virtual ~Interface();
 
 private:

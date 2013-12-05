@@ -14,15 +14,20 @@
  */
 
 #include "../../../../headers/view/interface/managers/Bureaucrat.h"
+#include "../../../../headers/Tools.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Bureaucrat::Bureaucrat() {
-	cout << "------Generado el gestor Bureaucrat para la vista Interfaz " << endl;
+	if (BASIC_LOG) {
+		cout << "------Generado el gestor Bureaucrat para la vista Interfaz " << endl;
+	}
 }
 
 Bureaucrat::~Bureaucrat() {
-	cout << "------Destruyendo el gestor Bureaucrat para la vista Interfaz " << endl;
+	if (BASIC_LOG) {
+		cout << "------Destruyendo el gestor Bureaucrat para la vista Interfaz " << endl;
+	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

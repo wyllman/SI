@@ -14,14 +14,19 @@
  */
 
 #include "../../../headers/model/simulator/Simulator.h"
+#include "../../../headers/Tools.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Simulator::Simulator(const Controller* controller):Model(controller) {
-	cout << "---Generado el modelo Simulator " << endl;
+	if (BASIC_LOG) {
+		cout << "---Generado el modelo Simulator " << endl;
+	}
 }
 Simulator::~Simulator() {
-	cout << "---Destruyendo el modelo Simulator " << endl;
+	if (BASIC_LOG) {
+		cout << "---Destruyendo el modelo Simulator " << endl;
+	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

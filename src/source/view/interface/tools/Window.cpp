@@ -14,15 +14,20 @@
  */
 
 #include "../../../../headers/view/interface/tools/Window.h"
+#include "../../../../headers/Tools.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Window::Window() {
-	cout << "------Generado la herramienta Window para la vista Interfaz " << endl;
+	if (BASIC_LOG) {
+		cout << "------Generado la herramienta Window para la vista Interfaz " << endl;
+	}
 }
 
 Window::~Window() {
-	cout << "------Destruyendo la herramienta Window para la vista Interfaz " << endl;
+	if (BASIC_LOG) {
+		cout << "------Destruyendo la herramienta Window para la vista Interfaz " << endl;
+	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

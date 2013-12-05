@@ -13,14 +13,19 @@
  */
 
 #include "../../../../headers/view/interface/managers/Scenographer.h"
+#include "../../../../headers/Tools.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Scenographer::Scenographer() {
-	cout << "------Generado el gestor Scenographer para la vista Interfaz " << endl;
+	if (BASIC_LOG) {
+		cout << "------Generado el gestor Scenographer para la vista Interfaz " << endl;
+	}
 }
 Scenographer::~Scenographer() {
-	cout << "------Destruyendo el gestor Scenographer para la vista Interfaz " << endl;
+	if (BASIC_LOG) {
+		cout << "------Destruyendo el gestor Scenographer para la vista Interfaz " << endl;
+	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

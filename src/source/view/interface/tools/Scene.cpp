@@ -13,15 +13,20 @@
  */
 
 #include "../../../../headers/view/interface/tools/Scene.h"
+#include "../../../../headers/Tools.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Scene::Scene() {
-	cout << "------Generado la herramienta Scene para la vista Interfaz " << endl;
+	if (BASIC_LOG) {
+		cout << "------Generado la herramienta Scene para la vista Interfaz " << endl;
+	}
 }
 
 Scene::~Scene() {
-	cout << "------Destruyendo la herramienta Scene para la vista Interfaz " << endl;
+	if (BASIC_LOG) {
+		cout << "------Destruyendo la herramienta Scene para la vista Interfaz " << endl;
+	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

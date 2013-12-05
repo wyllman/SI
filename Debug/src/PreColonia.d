@@ -18,7 +18,8 @@ src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
   ../src/headers/view/interface/tools/Scene.h \
   ../src/headers/model/abstracts/Model.h \
   ../src/headers/model/simulator/Simulator.h \
-  ../src/headers/model/simulator/../abstracts/Model.h
+  ../src/headers/model/simulator/../abstracts/Model.h \
+  ../src/headers/Tools.h
 
 ../src/headers/controller/abstracts/Controller.h:
 
@@ -59,3 +60,5 @@ src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
 ../src/headers/model/simulator/Simulator.h:
 
 ../src/headers/model/simulator/../abstracts/Model.h:
+
+../src/headers/Tools.h:

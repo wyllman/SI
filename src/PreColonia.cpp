@@ -4,7 +4,7 @@
 //               Juan Henández Hernández
 //               Miguel Pérez Bello
 //               Guillermo Rodríguez Pardo
-// Versión     : v0.0
+// Versión     : v0.001
 // Descripción : Simulador de la preparación de un terreno inexplorado para la
 //               la creación de una futura colonia humana. Se usará un sistema
 //               inteligente basado en agentes encargados de explorar y
@@ -14,16 +14,22 @@
 #include <iostream>
 using namespace std;
 
+
+
 #include "headers/controller/abstracts/Controller.h"
 #include "headers/controller/director/Director.h"
 #include "headers/view/abstracts/View.h"
 #include "headers/view/interface/Interface.h"
 #include "headers/model/abstracts/Model.h"
 #include "headers/model/simulator/Simulator.h"
+#include "headers/Tools.h"
+
 
 int main() {
-	cout << "**********************************" << endl;
-	cout << "Iniciando el Simulador PreColonia." << endl;
+	if (BASIC_LOG) {
+		cout << "**********************************" << endl;
+		cout << "Iniciando el Simulador PreColonia." << endl;
+	}
 
 	// Inicializando las clases base del patrón MVC y enlazar las referencias
 	Controller* directorSim = new Director;
@@ -42,7 +48,9 @@ int main() {
 	delete (interfaceSim);
 	delete (modelSim);
 
-	cout << "Saliendo del Simulador PreColonia." << endl;
-	cout << "**********************************" << endl;
+	if (BASIC_LOG) {
+		cout << "Saliendo del Simulador PreColonia." << endl;
+		cout << "**********************************" << endl;
+	}
 	return 0;
 }

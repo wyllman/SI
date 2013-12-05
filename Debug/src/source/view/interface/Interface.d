@@ -11,7 +11,8 @@ src/source/view/interface/Interface.d \
   ../src/source/view/interface/../../../headers/view/interface/managers/Scenographer.h \
   ../src/source/view/interface/../../../headers/view/interface/tools/Window.h \
   ../src/source/view/interface/../../../headers/view/interface/tools/Context.h \
-  ../src/source/view/interface/../../../headers/view/interface/tools/Scene.h
+  ../src/source/view/interface/../../../headers/view/interface/tools/Scene.h \
+  ../src/source/view/interface/../../../headers/Tools.h
 
 ../src/source/view/interface/../../../headers/view/interface/Interface.h:
 
@@ -34,3 +35,5 @@ src/source/view/interface/Interface.d \
 ../src/source/view/interface/../../../headers/view/interface/tools/Context.h:
 
 ../src/source/view/interface/../../../headers/view/interface/tools/Scene.h:
+
+../src/source/view/interface/../../../headers/Tools.h:

@@ -14,22 +14,64 @@
  */
 
 #include "../../../../headers/controller/director/tools/FileLog.h"
+#include "../../../../headers/Tools.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 FileLog::FileLog() {
-	cout << "------Generado la herramienta FileLog para el Director " << endl;
+	if (BASIC_LOG) {
+		cout << "------Generado la herramienta FileLog para el Director " << endl;
+	}
+	lineNumber_ = 0;
 }
 
 FileLog::~FileLog() {
-	cout << "------Destruyendo la herramienta FileLog para el Director " << endl;
+	if (BASIC_LOG) {
+		cout << "------Destruyendo la herramienta FileLog para el Director " << endl;
+	}
+
+	reset ();
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Métodos públicos:
+void FileLog::init() {
+	reset ();
+	lineNumber_ = 0;
+	insertLine("**********************************");
+	insertLine("Iniciando el Simulador PreColonia.");
+	insertLine("---Generado el coordinador Director ");
 
+}
+void FileLog::reset() {
+	int regSize = regAccErr_.size();
+	if (regSize > 0) {
+		for (int i = 0; i < regSize; i++) {
+			delete (regAccErr_[i]);
+		}
+		regAccErr_.clear();
+	}
+}
+void FileLog::save() {
+}
+void FileLog::showConsole() {
+	int tmpSize = regAccErr_.size();
+	cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+	cout << "+++ Mostrando el registro de acciones y errores         +++" << endl;
+	cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+
+	if (tmpSize > 0) {
+		for (int i = 0; i < tmpSize; i++) {
+			cout << "+++ " << regAccErr_[i] << endl;
+		}
+		cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+	} else if (tmpSize == 0) {
+		cout << "+++ ¡Error! El registro está vacío.                     +++" << endl;
+		cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+	}
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -41,8 +83,27 @@ FileLog::~FileLog() {
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Métodos privados:
+void FileLog::insertLine(const char* line) {
+	string tempLine;
+	char* finalLine;
+	int lineSize = strlen(line);
+	stringstream ss;
 
+	lineNumber_ += 1;
+	ss << lineNumber_;//add number to the stream
+	tempLine = "" + ss.str();
+	tempLine += ". ";
+	if ( lineSize > 0) {
+		for (int i = 0; i < lineSize; i++) {
+			tempLine += line[i];
+		}
+	}
+	finalLine = new char [tempLine.size() + 1];
+	strcpy(finalLine, tempLine.c_str());
+	regAccErr_.push_back(finalLine);
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
 

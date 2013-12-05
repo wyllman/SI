@@ -13,15 +13,20 @@
  */
 
 #include "../../../../headers/view/interface/tools/Context.h"
+#include "../../../../headers/Tools.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Context::Context() {
-	cout << "------Generado la herramienta Context para la vista Interfaz " << endl;
+	if (BASIC_LOG) {
+		cout << "------Generado la herramienta Context para la vista Interfaz " << endl;
+	}
 }
 
 Context::~Context() {
-	cout << "------Destruyendo la herramienta Context para la vista Interfaz " << endl;
+	if (BASIC_LOG) {
+		cout << "------Destruyendo la herramienta Context para la vista Interfaz " << endl;
+	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

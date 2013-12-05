@@ -17,6 +17,9 @@
 #define FILELOG_H_
 
 #include <iostream>
+#include <sstream>
+#include <vector>
+#include <string>
 
 using namespace std;
 
@@ -25,8 +28,17 @@ public:
 	FileLog();
 	virtual ~FileLog();
 
+	void init();
+	void reset();
+	void save();
+
+	void showConsole();
+
 private:
-	// Atributos privdos
+	vector<char*> regAccErr_;
+	int lineNumber_;
+
+	void insertLine (const char*);
 
 };
 

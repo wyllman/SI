@@ -13,15 +13,20 @@
  */
 
 #include "../../../../headers/controller/director/tools/MainLoop.h"
+#include "../../../../headers/Tools.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 MainLoop::MainLoop() {
-	cout << "------Generado la herramienta MainLoop para el Director " << endl;
+	if (BASIC_LOG) {
+		cout << "------Generado la herramienta MainLoop para el Director " << endl;
+	}
 }
 
 MainLoop::~MainLoop() {
-	cout << "------Destruyendo la herramienta MainLoop para el Director " << endl;
+	if (BASIC_LOG) {
+		cout << "------Destruyendo la herramienta MainLoop para el Director " << endl;
+	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

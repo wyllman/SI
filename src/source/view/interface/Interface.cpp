@@ -15,11 +15,14 @@
  */
 
 #include "../../../headers/view/interface/Interface.h"
+#include "../../../headers/Tools.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Interface::Interface(const Controller* controller):View(controller) {
-	cout << "---Generado la vista Interfaz " << endl;
+	if (BASIC_LOG) {
+		cout << "---Generado la vista Interfaz " << endl;
+	}
 	bureaucrat_ = 0;
 	scenographer_ = 0;
 
@@ -28,7 +31,9 @@ Interface::Interface(const Controller* controller):View(controller) {
 	scene_ = 0;
 }
 Interface::~Interface() {
-	cout << "---Destruyendo la vista Interfaz " << endl;
+	if (BASIC_LOG) {
+		cout << "---Destruyendo la vista Interfaz " << endl;
+	}
 	stop ();
 }
 // FIN -------------------------------------------------------------------------------
@@ -37,7 +42,9 @@ Interface::~Interface() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 void Interface::init() {
-	cout << "---Llamano a la función init de la clase Interface." << endl;
+	if (BASIC_LOG) {
+		cout << "---Llamano a la función init de la clase Interface." << endl;
+	}
 	bureaucrat_ = new Bureaucrat;
 	scenographer_ = new Scenographer;
 
@@ -46,7 +53,9 @@ void Interface::init() {
 	scene_ = new Scene;
 }
 void Interface::stop() {
-	cout << "---Llamano a la función stop de la clase Interface." << endl;
+	if (BASIC_LOG) {
+		cout << "---Llamano a la función stop de la clase Interface." << endl;
+	}
 	if (bureaucrat_ != 0) {
 		delete (bureaucrat_);
 		bureaucrat_ = 0;

@@ -40,5 +40,6 @@
  *              - Usando el archivo Tools.h se activa o desactiva el mostrado de mensajes en
  *              consola o el uso del registro de acciones-errores.
  *              - Uso de la clase FileLog por todos los metodos que requieran ser registrados.
+ *              - Implementada la función save() de la clase FileLog.
  */
 

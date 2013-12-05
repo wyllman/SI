@@ -51,9 +51,9 @@ int main() {
 	directorSim->stop();
 	delete (directorSim);
 
-	if (BASIC_LOG) {
+	//if (BASIC_LOG) {
 		cout << "Saliendo del Simulador PreColonia." << endl;
 		cout << "**********************************" << endl;
-	}
+	//}
 	return 0;
 }

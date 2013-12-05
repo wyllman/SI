@@ -27,9 +27,9 @@ Director::Director() {
 }
 
 Director::~Director() {
-	if (BASIC_LOG) {
+	//if (BASIC_LOG) {
 		cout << "---Destruyendo el coordinador Director " << endl;
-	}
+	//}
 	stop ();
 }
 // FIN -------------------------------------------------------------------------------
@@ -62,6 +62,7 @@ void Director::stop() {
 			regAccErr_->insertLine("---Llamando a la funcion stop del Director");
 			regAccErr_->insertLine("******************************************");
 			regAccErr_->showConsole();
+			regAccErr_->save();
 		}
 		delete (regAccErr_);
 		regAccErr_ = 0;

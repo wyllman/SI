@@ -1,0 +1,26 @@
+1. **********************************
+2. Iniciando el Simulador PreColonia.
+3. ---Generado el coordinador Director 
+4. ---Llamando a la funcion init del Director
+5. ------Generado la herramienta MainLoop para el Director 
+6. ---Llamano a la función init de la clase Interface.
+7. ------Generado el gestor Bureaucrat para la vista Interfaz 
+8. ------Generado el gestor Scenographer para la vista Interfaz 
+9. ------Generado la herramienta Window para la vista Interfaz 
+10. ------Generado la herramienta Context para la vista Interfaz 
+11. ------Generado la herramienta Scene para la vista Interfaz 
+12. ---Llamano a la función init de la clase Simulator.
+13. ---Llamano a la función stop de la clase Interface.
+14. ------Destruyendo el gestor Bureaucrat para la vista Interfaz 
+15. ------Destruyendo el gestor Scenographer para la vista Interfaz 
+16. ------Destruyendo la herramienta Window para la vista Interfaz 
+17. ------Destruyendo la herramienta Context para la vista Interfaz 
+18. ------Destruyendo la herramienta Scene para la vista Interfaz 
+19. ---Llamano a la función stop de la clase Simulator.
+20. ---Destruyendo la vista Interfaz 
+21. ---Llamano a la función stop de la clase Interface.
+22. ---Destruyendo el modelo Simulator 
+23. ---Llamano a la función stop de la clase Simulator.
+24. ------Destruyendo la herramienta MainLoop para el Director 
+25. ---Llamando a la funcion stop del Director
+26. ******************************************

@@ -12,7 +12,7 @@
 #ifndef TOOLS_H_
 #define TOOLS_H_
 
-const bool BASIC_LOG = true;
+const bool BASIC_LOG = false;
 const bool ADVAN_LOG = true;
 
 

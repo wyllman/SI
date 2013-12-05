@@ -49,12 +49,22 @@ void FileLog::reset() {
 	int regSize = regAccErr_.size();
 	if (regSize > 0) {
 		for (int i = 0; i < regSize; i++) {
-			delete (regAccErr_[i]);
+			delete[] (regAccErr_[i]);
 		}
 		regAccErr_.clear();
 	}
 }
 void FileLog::save() {
+	int regSize = regAccErr_.size();
+	if (regSize > 0) {
+		ofstream outfile ("LogAE.txt",std::ofstream::binary);
+		for (int i = 0; i < regSize; i++) {
+			outfile.write (regAccErr_[i],strlen(regAccErr_[i]));
+			outfile.write ("\n",1);
+		}
+		outfile.close();
+	}
+
 }
 void FileLog::showConsole() {
 	int tmpSize = regAccErr_.size();

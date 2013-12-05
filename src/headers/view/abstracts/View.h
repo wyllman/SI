@@ -29,7 +29,7 @@ public:
 	virtual void reset () {};
 	virtual void stop () {};
 
-private:
+protected:
 	const Controller* refController_;
 
 };

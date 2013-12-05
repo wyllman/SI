@@ -42,23 +42,29 @@ void Director::init() {
 		cout << "---Llamando a la funcion init del Director" << endl;
 	}
 	regAccErr_ = new FileLog;
-	mainLoop_ = new MainLoop;
-
 	regAccErr_->init();
-
-	regAccErr_->showConsole();
+	if(ADVAN_LOG) {
+		regAccErr_->insertLine("---Llamando a la funcion init del Director");
+	}
+	mainLoop_ = new MainLoop (this);
 }
 void Director::stop() {
 	if (BASIC_LOG) {
 		cout << "---Llamando a la funcion stop del Director" << endl;
 	}
-	if (regAccErr_ != 0) {
-		delete (regAccErr_);
-		regAccErr_ = 0;
-	}
 	if (mainLoop_ != 0) {
 		delete (mainLoop_);
 		mainLoop_ = 0;
+	}
+
+	if (regAccErr_ != 0) {
+		if(ADVAN_LOG) {
+			regAccErr_->insertLine("---Llamando a la funcion stop del Director");
+			regAccErr_->insertLine("******************************************");
+			regAccErr_->showConsole();
+		}
+		delete (regAccErr_);
+		regAccErr_ = 0;
 	}
 }
 // FIN -------------------------------------------------------------------------------
@@ -66,7 +72,9 @@ void Director::stop() {
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Manejadores públicos:
-
+const FileLog* Director::getRegAccErr() const{
+	return regAccErr_;
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -76,4 +84,5 @@ void Director::stop() {
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
 

@@ -18,15 +18,19 @@
 
 #include <iostream>
 
+#include "../Interface.h"
+
 using namespace std;
+
+class Interface;
 
 class Window {
 public:
-	Window();
+	Window(const Interface*);
 	virtual ~Window();
 
 private:
-	// Atributos privdos
+	const Interface* refInterface_;
 
 };
 

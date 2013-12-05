@@ -17,15 +17,17 @@
 
 #include <iostream>
 
+#include "../Interface.h"
+
 using namespace std;
 
 class Context {
 public:
-	Context();
+	Context(const Interface*);
 	virtual ~Context();
 
 private:
-	// Atributos privdos
+	const Interface* refInterface_;
 
 };
 

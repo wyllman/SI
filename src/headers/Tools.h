@@ -16,4 +16,5 @@ const bool BASIC_LOG = true;
 const bool ADVAN_LOG = true;
 
 
+
 #endif /* TOOLS_H_ */

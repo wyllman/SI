@@ -17,15 +17,19 @@
 
 #include <iostream>
 
+#include "../Interface.h"
+
 using namespace std;
+
+class Interface;
 
 class Scenographer {
 public:
-	Scenographer();
+	Scenographer(const Interface*);
 	virtual ~Scenographer();
 
 private:
-	// Atributos privdos
+	const Interface* refInterface_;
 
 };
 

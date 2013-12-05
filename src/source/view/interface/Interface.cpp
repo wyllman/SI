@@ -23,6 +23,7 @@ Interface::Interface(const Controller* controller):View(controller) {
 	if (BASIC_LOG) {
 		cout << "---Generado la vista Interfaz " << endl;
 	}
+
 	bureaucrat_ = 0;
 	scenographer_ = 0;
 
@@ -33,6 +34,10 @@ Interface::Interface(const Controller* controller):View(controller) {
 Interface::~Interface() {
 	if (BASIC_LOG) {
 		cout << "---Destruyendo la vista Interfaz " << endl;
+	}
+	if (ADVAN_LOG) {
+		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
+		fileLogTmp->insertLine("---Destruyendo la vista Interfaz ");
 	}
 	stop ();
 }
@@ -45,16 +50,24 @@ void Interface::init() {
 	if (BASIC_LOG) {
 		cout << "---Llamano a la función init de la clase Interface." << endl;
 	}
-	bureaucrat_ = new Bureaucrat;
-	scenographer_ = new Scenographer;
+	if (ADVAN_LOG) {
+		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
+		fileLogTmp->insertLine("---Llamano a la función init de la clase Interface.");
+	}
+	bureaucrat_ = new Bureaucrat (this);
+	scenographer_ = new Scenographer (this);
 
-	window_ = new Window;
-	context_ = new Context;
-	scene_ = new Scene;
+	window_ = new Window (this);
+	context_ = new Context (this);
+	scene_ = new Scene (this);
 }
 void Interface::stop() {
 	if (BASIC_LOG) {
 		cout << "---Llamano a la función stop de la clase Interface." << endl;
+	}
+	if (ADVAN_LOG) {
+		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
+		fileLogTmp->insertLine("---Llamano a la función stop de la clase Interface.");
 	}
 	if (bureaucrat_ != 0) {
 		delete (bureaucrat_);
@@ -75,6 +88,12 @@ void Interface::stop() {
 	if (scene_ != 0) {
 		delete (scene_);
 		scene_ = 0;
+	}
+}
+void Interface::log(const char* line) {
+	if (ADVAN_LOG) {
+		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
+		fileLogTmp->insertLine(line);
 	}
 }
 // FIN -------------------------------------------------------------------------------

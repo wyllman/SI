@@ -24,8 +24,9 @@ public:
 	virtual void init () {};
 	virtual void update () {};
 	virtual void reset () {};
+	virtual void stop () {};
 
-private:
+protected:
 	const Controller* refController_;
 
 };

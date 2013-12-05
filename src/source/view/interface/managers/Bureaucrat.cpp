@@ -18,15 +18,23 @@
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-Bureaucrat::Bureaucrat() {
+Bureaucrat::Bureaucrat(const Interface* interface) {
 	if (BASIC_LOG) {
 		cout << "------Generado el gestor Bureaucrat para la vista Interfaz " << endl;
+	}
+	refInterface_ = interface;
+	if (ADVAN_LOG) {
+		((Interface*)refInterface_)
+				->log("------Generado el gestor Bureaucrat para la vista Interfaz ");
 	}
 }
 
 Bureaucrat::~Bureaucrat() {
 	if (BASIC_LOG) {
 		cout << "------Destruyendo el gestor Bureaucrat para la vista Interfaz " << endl;
+	}
+	if (ADVAN_LOG) {
+		((Interface*)refInterface_)->log("------Destruyendo el gestor Bureaucrat para la vista Interfaz ");
 	}
 }
 // FIN -------------------------------------------------------------------------------

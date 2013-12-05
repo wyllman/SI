@@ -17,15 +17,24 @@
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-MainLoop::MainLoop() {
+MainLoop::MainLoop(const Director* director) {
 	if (BASIC_LOG) {
 		cout << "------Generado la herramienta MainLoop para el Director " << endl;
+	}
+	refDirector_ = director;
+	if (ADVAN_LOG) {
+		FileLog* regist = (FileLog*) refDirector_->getRegAccErr();
+		regist->insertLine("------Generado la herramienta MainLoop para el Director ");
 	}
 }
 
 MainLoop::~MainLoop() {
 	if (BASIC_LOG) {
 		cout << "------Destruyendo la herramienta MainLoop para el Director " << endl;
+	}
+	if (ADVAN_LOG) {
+		FileLog* regist = (FileLog*) refDirector_->getRegAccErr();
+		regist->insertLine("------Destruyendo la herramienta MainLoop para el Director ");
 	}
 }
 // FIN -------------------------------------------------------------------------------

@@ -9,6 +9,8 @@ src/source/controller/director/Director.d \
   ../src/source/controller/director/../../../headers/controller/director/../abstracts/../../model/abstracts/../../controller/abstracts/Controller.h \
   ../src/source/controller/director/../../../headers/controller/director/tools/FileLog.h \
   ../src/source/controller/director/../../../headers/controller/director/tools/MainLoop.h \
+  ../src/source/controller/director/../../../headers/controller/director/tools/../Director.h \
+  ../src/source/controller/director/../../../headers/controller/director/tools/FileLog.h \
   ../src/source/controller/director/../../../headers/Tools.h
 
 ../src/source/controller/director/../../../headers/controller/director/Director.h:
@@ -26,5 +28,9 @@ src/source/controller/director/Director.d \
 ../src/source/controller/director/../../../headers/controller/director/tools/FileLog.h:
 
 ../src/source/controller/director/../../../headers/controller/director/tools/MainLoop.h:
+
+../src/source/controller/director/../../../headers/controller/director/tools/../Director.h:
+
+../src/source/controller/director/../../../headers/controller/director/tools/FileLog.h:
 
 ../src/source/controller/director/../../../headers/Tools.h:

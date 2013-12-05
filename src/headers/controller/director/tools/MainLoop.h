@@ -17,18 +17,19 @@
 
 #include <iostream>
 
-
+#include "../Director.h"
+#include "FileLog.h"
 
 using namespace std;
+class Director;
 
 class MainLoop {
 public:
-	MainLoop();
+	MainLoop(const Director*);
 	virtual ~MainLoop();
 
 private:
-	// Atributos privdos
-
+	const Director* refDirector_;
 };
 
 #endif /* MAINLOOP_H_ */

@@ -19,6 +19,7 @@
 #include <iostream>
 
 #include "../abstracts/Model.h"
+#include "../../controller/director/Director.h"
 
 using namespace std;
 
@@ -26,6 +27,9 @@ class Simulator: public Model {
 public:
 	Simulator(const Controller*);
 	virtual ~Simulator();
+
+	void init();
+	void stop();
 
 private:
 	// Atributos privdos

@@ -18,15 +18,18 @@
 
 #include <iostream>
 
+#include "../Interface.h"
+
 using namespace std;
+class Interface;
 
 class Bureaucrat {
 public:
-	Bureaucrat();
+	Bureaucrat(const Interface*);
 	virtual ~Bureaucrat();
 
 private:
-	// Atributos privdos
+	const Interface* refInterface_;
 
 };
 

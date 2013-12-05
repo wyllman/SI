@@ -17,15 +17,24 @@
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-Context::Context() {
+Context::Context(const Interface* interface) {
 	if (BASIC_LOG) {
 		cout << "------Generado la herramienta Context para la vista Interfaz " << endl;
+	}
+	refInterface_ = interface;
+	if (ADVAN_LOG) {
+		((Interface*)refInterface_)
+				->log("------Generado la herramienta Context para la vista Interfaz ");
 	}
 }
 
 Context::~Context() {
 	if (BASIC_LOG) {
 		cout << "------Destruyendo la herramienta Context para la vista Interfaz " << endl;
+	}
+	if (ADVAN_LOG) {
+		((Interface*)refInterface_)
+				->log("------Destruyendo la herramienta Context para la vista Interfaz ");
 	}
 }
 // FIN -------------------------------------------------------------------------------

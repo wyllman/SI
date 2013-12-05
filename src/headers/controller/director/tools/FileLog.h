@@ -34,11 +34,13 @@ public:
 
 	void showConsole();
 
+	void insertLine (const char*);
+
 private:
 	vector<char*> regAccErr_;
 	int lineNumber_;
 
-	void insertLine (const char*);
+
 
 };
 

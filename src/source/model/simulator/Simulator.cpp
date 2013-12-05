@@ -27,13 +27,35 @@ Simulator::~Simulator() {
 	if (BASIC_LOG) {
 		cout << "---Destruyendo el modelo Simulator " << endl;
 	}
+	if (ADVAN_LOG) {
+		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
+		fileLogTmp->insertLine("---Destruyendo el modelo Simulator ");
+	}
+	stop();
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Métodos públicos:
-
+void Simulator::init() {
+	if (BASIC_LOG) {
+		cout << "---Llamano a la función init de la clase Simulator " << endl;
+	}
+	if (ADVAN_LOG) {
+		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
+		fileLogTmp->insertLine("---Llamano a la función init de la clase Simulator.");
+	}
+}
+void Simulator::stop() {
+	if (BASIC_LOG) {
+		cout << "---Llamano a la función stop de la clase Simulator " << endl;
+	}
+	if (ADVAN_LOG) {
+		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
+		fileLogTmp->insertLine("---Llamano a la función stop de la clase Simulator.");
+	}
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -49,4 +71,5 @@ Simulator::~Simulator() {
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
 

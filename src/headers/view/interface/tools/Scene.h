@@ -17,15 +17,19 @@
 
 #include <iostream>
 
+#include "../Interface.h"
+
 using namespace std;
+
+class Interface;
 
 class Scene {
 public:
-	Scene();
+	Scene(const Interface*);
 	virtual ~Scene();
 
 private:
-	// Atributos privdos
+	const Interface* refInterface_;
 
 };
 

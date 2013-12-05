@@ -36,17 +36,20 @@ int main() {
 	View* interfaceSim = new Interface (directorSim);
 	Model* modelSim = new Simulator (directorSim);
 	directorSim->setReferences(interfaceSim, modelSim);
-	interfaceSim->init();
 
 	// Inicializando la ejecución del simulador
 	directorSim->init();
-	directorSim->stop();
+
+	interfaceSim->init();
+	modelSim->init();
 	interfaceSim->stop();
+	modelSim->stop();
 
 	// Destruyendo los objetos creados para el patrón MVC
-	delete (directorSim);
 	delete (interfaceSim);
 	delete (modelSim);
+	directorSim->stop();
+	delete (directorSim);
 
 	if (BASIC_LOG) {
 		cout << "Saliendo del Simulador PreColonia." << endl;

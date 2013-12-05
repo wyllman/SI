@@ -17,15 +17,24 @@
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-Scene::Scene() {
+Scene::Scene(const Interface* interface) {
 	if (BASIC_LOG) {
 		cout << "------Generado la herramienta Scene para la vista Interfaz " << endl;
+	}
+	refInterface_ = interface;
+	if (ADVAN_LOG) {
+		((Interface*)refInterface_)
+				->log("------Generado la herramienta Scene para la vista Interfaz ");
 	}
 }
 
 Scene::~Scene() {
 	if (BASIC_LOG) {
 		cout << "------Destruyendo la herramienta Scene para la vista Interfaz " << endl;
+	}
+	if (ADVAN_LOG) {
+		((Interface*)refInterface_)
+				->log("------Destruyendo la herramienta Scene para la vista Interfaz ");
 	}
 }
 // FIN -------------------------------------------------------------------------------

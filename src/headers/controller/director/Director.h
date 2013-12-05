@@ -22,8 +22,8 @@
 #include "tools/FileLog.h"
 #include "tools/MainLoop.h"
 
-
 using namespace std;
+class MainLoop;
 
 class Director: public Controller {
 public:
@@ -32,6 +32,7 @@ public:
 
 	void init ();
 	void stop ();
+	const FileLog* getRegAccErr() const;
 
 private:
 	FileLog* regAccErr_;

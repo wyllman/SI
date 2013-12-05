@@ -17,14 +17,23 @@
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-Scenographer::Scenographer() {
+Scenographer::Scenographer(const Interface* interface) {
 	if (BASIC_LOG) {
 		cout << "------Generado el gestor Scenographer para la vista Interfaz " << endl;
+	}
+	refInterface_ = interface;
+	if (ADVAN_LOG) {
+		((Interface*)refInterface_)
+				->log("------Generado el gestor Scenographer para la vista Interfaz ");
 	}
 }
 Scenographer::~Scenographer() {
 	if (BASIC_LOG) {
 		cout << "------Destruyendo el gestor Scenographer para la vista Interfaz " << endl;
+	}
+	if (ADVAN_LOG) {
+		((Interface*)refInterface_)
+				->log("------Destruyendo el gestor Scenographer para la vista Interfaz ");
 	}
 }
 // FIN -------------------------------------------------------------------------------

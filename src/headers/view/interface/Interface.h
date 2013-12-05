@@ -25,8 +25,15 @@
 #include "tools/Window.h"
 #include "tools/Context.h"
 #include "tools/Scene.h"
+#include "../../controller/director/Director.h"
 
 using namespace std;
+
+class Bureaucrat;
+class Scenographer;
+class Window;
+class Context;
+class Scene;
 
 class Interface: public View {
 public:
@@ -35,6 +42,8 @@ public:
 
 	void init();
 	void stop();
+
+	void log(const char*);
 
 private:
 	Bureaucrat* bureaucrat_;

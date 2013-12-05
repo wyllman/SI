@@ -11,13 +11,6 @@
 #include <iostream>
 
 int main(int argc, char* argv[]) {
-	if(argc != 2) {
-		std::cout << "Usage: SI <size>" << std::endl;
-		return EXIT_SUCCESS;
-	}
-
-	int size;
-	size = atoi(argv[1]);
 	Map mapa;
 	MapConsoleInterface mapci(mapa);
 

@@ -13,7 +13,7 @@
 #include <ctime>
 #include <map>
 
-#include "../assets/map.c"
+#include "../assets/map2.c"
 
 #ifdef __linux
 #include <boost/random/mersenne_twister.hpp>
@@ -81,26 +81,21 @@ MapBuilder::MapBuilder() {
 		terrainBounds.insert(p);
 	}
 
-//	lowerBound = min + (max - min) * 0.2;
-//	upperBound = max - (max - min) * 0.2;
+	lowerBound = min + (max - min) * 0.05;
+	upperBound = max - (max - min) * 0.4;
 
 //bucle de relleno del array
 	for (uint32_t i = 0; i < m_mapSize; i++) {
 		for (uint32_t j = 0; j < m_mapSize; j++) {
 			pixelGrayscaleValue = gimp.pixel_data[((i * m_mapSize) + j)
 					* bytesPerPixel];
-			// FIXME
-			if (true) {
+			if (pixelGrayscaleValue < lowerBound) {
+				m_map[i][j] = TERRAIN_WATER;
+			} else if (pixelGrayscaleValue > upperBound) {
+				m_map[i][j] = TERRAIN_ELEVATION;
 			} else {
 				m_map[i][j] = TERRAIN_GROUND;
 			}
-//			if (pixelGrayscaleValue < lowerBound) {
-//				m_map[i][j] = TERRAIN_WATER;
-//			} else if (pixelGrayscaleValue > upperBound) {
-//				m_map[i][j] = TERRAIN_ELEVATION;
-//			} else {
-//				m_map[i][j] = TERRAIN_GROUND;
-//			}
 			// creamos agua en los bordes del mapa para simplificar la deteccion de colisiones
 			if (i == 0 || i == m_mapSize - 1 || j == 0 || j == m_mapSize - 1) {
 				m_map[i][j] = TERRAIN_WATER;

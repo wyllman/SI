@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 
-#include "include/typedefs.h"
+#include "../include/typedefs.h"
 
 /**
  * \class MapBuilder

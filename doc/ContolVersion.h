@@ -30,5 +30,7 @@
  *            - Enlazada con el programa principal la clase Interface (hija de View).
  *            - Creadas la clase Simulator (hija de Model) y enlazada con el programa
  *            principal.
+ *            - Enlazados los gestores Bureaucrat y Scenographer a la clase Interface.
+ *            - Enlazadas las herramientas Window, Context y Scene a la clase Interfeace.
  */
 

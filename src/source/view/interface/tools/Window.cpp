@@ -18,11 +18,11 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Window::Window() {
-	// TODO Auto-generated constructor stub
+	cout << "------Generado la herramienta Window para la vista Interfaz " << endl;
 }
 
 Window::~Window() {
-	// TODO Auto-generated destructor stub
+	cout << "------Destruyendo la herramienta Window para la vista Interfaz " << endl;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

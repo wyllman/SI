@@ -17,11 +17,11 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Context::Context() {
-	// TODO Auto-generated constructor stub
+	cout << "------Generado la herramienta Context para la vista Interfaz " << endl;
 }
 
 Context::~Context() {
-	// TODO Auto-generated destructor stub
+	cout << "------Destruyendo la herramienta Context para la vista Interfaz " << endl;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

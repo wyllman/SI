@@ -17,11 +17,10 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Scenographer::Scenographer() {
-	// TODO Auto-generated constructor stub
+	cout << "------Generado el gestor Scenographer para la vista Interfaz " << endl;
 }
-
 Scenographer::~Scenographer() {
-	// TODO Auto-generated destructor stub
+	cout << "------Destruyendo el gestor Scenographer para la vista Interfaz " << endl;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

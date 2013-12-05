@@ -15,6 +15,10 @@
 #ifndef CONTEXT_H_
 #define CONTEXT_H_
 
+#include <iostream>
+
+using namespace std;
+
 class Context {
 public:
 	Context();

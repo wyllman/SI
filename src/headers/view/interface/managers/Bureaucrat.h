@@ -16,6 +16,10 @@
 #ifndef BUREAUCRAT_H_
 #define BUREAUCRAT_H_
 
+#include <iostream>
+
+using namespace std;
+
 class Bureaucrat {
 public:
 	Bureaucrat();

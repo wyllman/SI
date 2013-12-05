@@ -30,10 +30,12 @@ int main() {
 	View* interfaceSim = new Interface (directorSim);
 	Model* modelSim = new Simulator (directorSim);
 	directorSim->setReferences(interfaceSim, modelSim);
+	interfaceSim->init();
 
 	// Inicializando la ejecución del simulador
 	directorSim->init();
 	directorSim->stop();
+	interfaceSim->stop();
 
 	// Destruyendo los objetos creados para el patrón MVC
 	delete (directorSim);

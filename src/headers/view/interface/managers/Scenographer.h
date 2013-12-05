@@ -15,6 +15,10 @@
 #ifndef SCENOGRAPHER_H_
 #define SCENOGRAPHER_H_
 
+#include <iostream>
+
+using namespace std;
+
 class Scenographer {
 public:
 	Scenographer();

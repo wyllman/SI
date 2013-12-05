@@ -20,6 +20,11 @@
 #include <iostream>
 
 #include "../abstracts/View.h"
+#include "managers/Bureaucrat.h"
+#include "managers/Scenographer.h"
+#include "tools/Window.h"
+#include "tools/Context.h"
+#include "tools/Scene.h"
 
 using namespace std;
 
@@ -28,9 +33,16 @@ public:
 	Interface(const Controller*);
 	virtual ~Interface();
 
-private:
-	// Atributos privdos
+	void init();
+	void stop();
 
+private:
+	Bureaucrat* bureaucrat_;
+	Scenographer* scenographer_;
+
+	Window* window_;
+	Context* context_;
+	Scene* scene_;
 };
 
 #endif /* INTERFACE_H_ */

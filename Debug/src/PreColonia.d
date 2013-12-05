@@ -11,6 +11,11 @@ src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
   ../src/headers/view/abstracts/View.h \
   ../src/headers/view/interface/Interface.h \
   ../src/headers/view/interface/../abstracts/View.h \
+  ../src/headers/view/interface/managers/Bureaucrat.h \
+  ../src/headers/view/interface/managers/Scenographer.h \
+  ../src/headers/view/interface/tools/Window.h \
+  ../src/headers/view/interface/tools/Context.h \
+  ../src/headers/view/interface/tools/Scene.h \
   ../src/headers/model/abstracts/Model.h \
   ../src/headers/model/simulator/Simulator.h \
   ../src/headers/model/simulator/../abstracts/Model.h
@@ -38,6 +43,16 @@ src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
 ../src/headers/view/interface/Interface.h:
 
 ../src/headers/view/interface/../abstracts/View.h:
+
+../src/headers/view/interface/managers/Bureaucrat.h:
+
+../src/headers/view/interface/managers/Scenographer.h:
+
+../src/headers/view/interface/tools/Window.h:
+
+../src/headers/view/interface/tools/Context.h:
+
+../src/headers/view/interface/tools/Scene.h:
 
 ../src/headers/model/abstracts/Model.h:
 

@@ -17,11 +17,11 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Scene::Scene() {
-	// TODO Auto-generated constructor stub
+	cout << "------Generado la herramienta Scene para la vista Interfaz " << endl;
 }
 
 Scene::~Scene() {
-	// TODO Auto-generated destructor stub
+	cout << "------Destruyendo la herramienta Scene para la vista Interfaz " << endl;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

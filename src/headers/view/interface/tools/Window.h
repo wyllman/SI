@@ -16,6 +16,10 @@
 #ifndef WINDOW_H_
 #define WINDOW_H_
 
+#include <iostream>
+
+using namespace std;
+
 class Window {
 public:
 	Window();

@@ -18,11 +18,11 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Bureaucrat::Bureaucrat() {
-	// TODO Auto-generated constructor stub
+	cout << "------Generado el gestor Bureaucrat para la vista Interfaz " << endl;
 }
 
 Bureaucrat::~Bureaucrat() {
-	// TODO Auto-generated destructor stub
+	cout << "------Destruyendo el gestor Bureaucrat para la vista Interfaz " << endl;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

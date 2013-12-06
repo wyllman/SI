@@ -2,6 +2,8 @@ src/source/view/interface/tools/Context.d \
   src/source/view/interface/tools/Context.o:  \
  ../src/source/view/interface/tools/Context.cpp \
   ../src/source/view/interface/tools/../../../../headers/view/interface/tools/Context.h \
+  /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h \
+  /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h \
   ../src/source/view/interface/tools/../../../../headers/view/interface/tools/../Interface.h \
   ../src/source/view/interface/tools/../../../../headers/view/interface/tools/../../abstracts/View.h \
   ../src/source/view/interface/tools/../../../../headers/view/interface/tools/../../abstracts/../../controller/abstracts/Controller.h \
@@ -52,8 +54,6 @@ src/source/view/interface/tools/Context.d \
   /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_system.h \
   /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_timer.h \
   /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_version.h \
-  /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h \
-  /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h \
   ../src/source/view/interface/tools/../../../../headers/view/interface/tools/../managers/../Interface.h \
   ../src/source/view/interface/tools/../../../../headers/view/interface/tools/../managers/Scenographer.h \
   ../src/source/view/interface/tools/../../../../headers/view/interface/tools/../tools/Window.h \
@@ -70,6 +70,10 @@ src/source/view/interface/tools/Context.d \
   ../src/source/view/interface/tools/../../../../headers/Tools.h
 
 ../src/source/view/interface/tools/../../../../headers/view/interface/tools/Context.h:
+
+/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h:
+
+/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h:
 
 ../src/source/view/interface/tools/../../../../headers/view/interface/tools/../Interface.h:
 
@@ -170,10 +174,6 @@ src/source/view/interface/tools/Context.d \
 /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_timer.h:
 
 /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_version.h:
-
-/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h:
-
-/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h:
 
 ../src/source/view/interface/tools/../../../../headers/view/interface/tools/../managers/../Interface.h:
 

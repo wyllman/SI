@@ -12,8 +12,8 @@
 12. ------Generado la herramienta Scene para la vista Interfaz 
 13. ------Inicializando SDL en la clase Bureaucrat. 
 14. ------Inicializando OGL en la clase Bureaucrat. 
-15. ------Cargando Shaders en la clase Bureaucrat. 
-16. ------Inicializando la ventana SDL. 
+15. ------Inicializando la ventana SDL. 
+16. ------Iniciando el contexto OGL de la herramienta Context 
 17. ---Llamando a la función mainLoop del Director
 18. ---Llamano a la función stop de la clase Interface.
 19. ------Destruyendo el gestor Bureaucrat para la vista Interfaz 

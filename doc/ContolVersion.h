@@ -45,5 +45,8 @@
  *              - Implementada la parte de la interfaz hasta la creación de una ventana SDL.
  *              - Implementado en el bucle principal de Director la acción de parar la ejecución
  *              al cerrarse la ventana SDL creada(Captura evento SDL).
+ *              - Implementación inicial la clase Context.
+ *              - Implementada la inicialización de OGL, los shaders y una visualización inicial
+ *              de puntos.
  */
 

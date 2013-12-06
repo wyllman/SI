@@ -42,6 +42,7 @@ public:
 
 	void init();
 	void stop();
+	void render();
 
 	void log(const char*);
 
@@ -52,6 +53,9 @@ private:
 	Window* window_;
 	Context* context_;
 	Scene* scene_;
+
+
+	void createFloor(int, int);
 };
 
 #endif /* INTERFACE_H_ */

@@ -74,6 +74,7 @@ void Window::init(int width, int height) {
 	SDL_SetWindowTitle(windowSDL_, "Simulador PreColonia");
 }
 void Window::update() {
+	SDL_RenderPresent(rendererScene_);
 }
 void Window::reshape() {
 }

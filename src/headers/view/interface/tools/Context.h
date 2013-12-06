@@ -17,6 +17,9 @@
 
 #include <iostream>
 
+#include <GL.h>
+#include <GLU.h>
+
 #include "../Interface.h"
 
 using namespace std;
@@ -26,8 +29,21 @@ public:
 	Context(const Interface*);
 	virtual ~Context();
 
+	void init ();
+	GLuint getProgramGsl() const;
+
 private:
 	const Interface* refInterface_;
+
+	GLuint programGSL_;
+	GLuint bufferVertex_;
+	GLuint vertexShader_;
+	GLuint fragmentShader_;
+	GLint compilerStateOK_;
+	GLint linkerStateOK_;
+
+	void initShaders();
+	void initBuffers();
 
 };
 

@@ -64,7 +64,12 @@ void Bureaucrat::initOGL() {
 		((Interface*)refInterface_)
 			->log("------Inicializando OGL en la clase Bureaucrat. ");
 	}
-	loadShader ();
+	//glShadeModel( GL_SMOOTH );
+	//glClearDepth( 1.0f );
+	//glEnable( GL_DEPTH_TEST );
+	//glDepthFunc( GL_LEQUAL );
+	//glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
+	//loadShader ();
 }
 void Bureaucrat::loadShader() {
 	if (ADVAN_LOG) {

@@ -42,6 +42,7 @@ private:
 	MainLoop* mainLoop_;
 
 	void mainLoop ();
+	void logAction (int);
 
 };
 

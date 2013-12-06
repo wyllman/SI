@@ -4,7 +4,7 @@
 //               Juan Henández Hernández
 //               Miguel Pérez Bello
 //               Guillermo Rodríguez Pardo
-// Versión     : v0.001
+// Versión     : v0.002
 // Descripción : Simulador de la preparación de un terreno inexplorado para la
 //               la creación de una futura colonia humana. Se usará un sistema
 //               inteligente basado en agentes encargados de explorar y
@@ -24,14 +24,28 @@ using namespace std;
 #include "headers/model/simulator/Simulator.h"
 #include "headers/Tools.h"
 
+void logAction (int index) {
+	if (BASIC_LOG) {
+		switch (index) {
+			case LOG_INIT:
+				cout << "**********************************" << endl;
+				cout << "Iniciando el Simulador PreColonia." << endl;
+				break;
+			case LOG_END:
+				cout << "Saliendo del Simulador PreColonia." << endl;
+				cout << "**********************************" << endl;
+				break;
+			default:
+				break;
+		}
+
+	}
+}
 
 int main() {
-	if (BASIC_LOG) {
-		cout << "**********************************" << endl;
-		cout << "Iniciando el Simulador PreColonia." << endl;
-	}
+	logAction(LOG_INIT);
 
-	// Inicializando las clases base del patrón MVC y enlazar las referencias
+	// Creando las clases base del patrón MVC y enlazar las referencias
 	Controller* directorSim = new Director;
 	View* interfaceSim = new Interface (directorSim);
 	Model* modelSim = new Simulator (directorSim);
@@ -39,23 +53,21 @@ int main() {
 
 	// Inicializando la ejecución del simulador
 	directorSim->init();
-
-	//interfaceSim->init();
 	modelSim->init();
-
 	directorSim->start();
+
+	// Terminando la ejecución del simulador
 	interfaceSim->stop();
 	modelSim->stop();
 
 	// Destruyendo los objetos creados para el patrón MVC
 	delete (interfaceSim);
 	delete (modelSim);
+
+	// Terminando y destruyendo al Director del simulador
 	directorSim->stop();
 	delete (directorSim);
 
-	//if (BASIC_LOG) {
-		cout << "Saliendo del Simulador PreColonia." << endl;
-		cout << "**********************************" << endl;
-	//}
+	logAction(LOG_END);
 	return 0;
 }

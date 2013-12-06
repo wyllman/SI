@@ -1,8 +1,8 @@
 1. **********************************
 2. Iniciando el Simulador PreColonia.
 3. ---Generado el coordinador Director 
-4. ---Llamando a la funcion init del Director
-5. ------Generado la herramienta MainLoop para el Director 
+4. ------Generado la herramienta MainLoop para el Director 
+5. ---Llamando a la funcion init del Director
 6. ---Llamano a la función init de la clase Simulator.
 7. ---Llamano a la función init de la clase Interface.
 8. ------Generado el gestor Bureaucrat para la vista Interfaz 

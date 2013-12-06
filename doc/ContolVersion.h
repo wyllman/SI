@@ -48,5 +48,10 @@
  *              - Implementación inicial la clase Context.
  *              - Implementada la inicialización de OGL, los shaders y una visualización inicial
  *              de puntos.
+ *
+ *       v0.002:
+ *              - Implementadas las funciones logAction() para la clase Director y el progrma
+ *              principal. Usadas para separar las acciones referentes al registro de mensajes
+ *              internos del resto del código.
  */
 

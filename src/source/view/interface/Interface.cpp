@@ -117,16 +117,14 @@ void Interface::log(const char* line) {
 // Métodos privados:
 void Interface::render() {
 	// Clear the background as white
-	glClearColor(1.0, 1.0, 1.0, 1.0);
+	glClearColor(1.0, 1.0, 0.9, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glUseProgram(context_->getProgramGsl());
 
 	float ratio = 500 / 500;
-	//float anguloFov = (45 *  (3.1416 / 180));
 	float near = 1;
 	float far = 1000;
-	//float factor = 1 / (tanf(anguloFov / 2));
 
 	GLfloat modelviewMatrix[16];
 	GLfloat projectionMatrix[16];
@@ -141,13 +139,10 @@ void Interface::render() {
 	glGetFloatv(GL_MODELVIEW_MATRIX, modelviewMatrix);
 	glMatrixMode(0);
 
-
 	glUniformMatrix4fv(glGetUniformLocation(context_->getProgramGsl(),  "projection_matrix"),
 						1, GL_FALSE, projectionMatrix);
-
 	glUniformMatrix4fv(glGetUniformLocation(context_->getProgramGsl(),  "modelview_matrix"),
 						1, GL_FALSE, modelviewMatrix);
-
 	glEnableVertexAttribArray(0);
 
 	createFloor(1000, 1000);

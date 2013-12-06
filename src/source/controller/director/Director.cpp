@@ -19,17 +19,13 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Director::Director() {
-	if (BASIC_LOG) {
-		cout << "---Generado el coordinador Director " << endl;
-	}
+	logAction(LOG_INIT);
 	regAccErr_ = 0;
 	mainLoop_ = 0;
 }
 
 Director::~Director() {
-	//if (BASIC_LOG) {
-		cout << "---Destruyendo el coordinador Director " << endl;
-	//}
+	logAction(LOG_END);
 	stop ();
 }
 // FIN -------------------------------------------------------------------------------
@@ -38,37 +34,24 @@ Director::~Director() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 void Director::init() {
-	if (BASIC_LOG) {
-		cout << "---Llamando a la funcion init del Director" << endl;
-	}
 	regAccErr_ = new FileLog;
 	regAccErr_->init();
-	if(ADVAN_LOG) {
-		regAccErr_->insertLine("---Llamando a la funcion init del Director");
-	}
 	mainLoop_ = new MainLoop (this);
+	logAction(LOG_F_INIT);
 }
 void Director::start() {
-	//Interface* tmp = (View*)refView_;
 	((View*)refView_)->init();
 	mainLoop();
 }
 void Director::stop() {
-	if (BASIC_LOG) {
-		cout << "---Llamando a la funcion stop del Director" << endl;
-	}
 	if (mainLoop_ != 0) {
 		delete (mainLoop_);
 		mainLoop_ = 0;
 	}
 
+	logAction(LOG_F_STOP);
+
 	if (regAccErr_ != 0) {
-		if(ADVAN_LOG) {
-			regAccErr_->insertLine("---Llamando a la funcion stop del Director");
-			regAccErr_->insertLine("******************************************");
-			regAccErr_->showConsole();
-			regAccErr_->save();
-		}
 		delete (regAccErr_);
 		regAccErr_ = 0;
 	}
@@ -88,12 +71,7 @@ const FileLog* Director::getRegAccErr() const{
 // Métodos privados:
 void Director::mainLoop() {
 	SDL_Event eventSDL;
-	if (BASIC_LOG) {
-		cout << "---Llamando a la función mainLoop del Director" << endl;
-	}
-	if(ADVAN_LOG) {
-		regAccErr_->insertLine("---Llamando a la función mainLoop del Director");
-	}
+	logAction(LOG_F_LOOP);
 
 	mainLoop_->init();
 	while (mainLoop_->isContinue()) {
@@ -101,6 +79,49 @@ void Director::mainLoop() {
 			if (eventSDL.type == SDL_QUIT) {
 				mainLoop_->stop();
 			}
+		}
+	}
+}
+void Director::logAction(int index) {
+	if (BASIC_LOG) {
+		switch (index) {
+			case LOG_INIT:
+				cout << "---Generado el coordinador Director " << endl;
+				break;
+			case LOG_END:
+				cout << "---Destruyendo el coordinador Director " << endl;
+				break;
+			case LOG_F_INIT:
+				cout << "---Llamando a la funcion init del Director" << endl;
+				break;
+			case LOG_F_STOP:
+				cout << "---Llamando a la funcion stop del Director" << endl;
+				break;
+			case LOG_F_LOOP:
+				cout << "---Llamando a la función mainLoop del Director" << endl;
+				break;
+			default:
+				break;
+		}
+	}
+	if(ADVAN_LOG) {
+		switch (index) {
+			case LOG_F_INIT:
+				regAccErr_->insertLine("---Llamando a la funcion init del Director");
+				break;
+			case LOG_F_STOP:
+				if (regAccErr_ != 0) {
+					regAccErr_->insertLine("---Llamando a la funcion stop del Director");
+					regAccErr_->insertLine("******************************************");
+					regAccErr_->showConsole();
+					regAccErr_->save();
+				}
+				break;
+			case LOG_F_LOOP:
+				regAccErr_->insertLine("---Llamando a la función mainLoop del Director");
+				break;
+			default:
+				break;
 		}
 	}
 }

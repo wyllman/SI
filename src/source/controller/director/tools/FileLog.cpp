@@ -39,7 +39,6 @@ FileLog::~FileLog() {
 // Métodos públicos:
 void FileLog::init() {
 	reset ();
-	lineNumber_ = 0;
 	insertLine("**********************************");
 	insertLine("Iniciando el Simulador PreColonia.");
 	insertLine("---Generado el coordinador Director ");
@@ -53,6 +52,7 @@ void FileLog::reset() {
 		}
 		regAccErr_.clear();
 	}
+	lineNumber_ = 0;
 }
 void FileLog::save() {
 	int regSize = regAccErr_.size();

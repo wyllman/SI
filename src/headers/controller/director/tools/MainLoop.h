@@ -28,8 +28,22 @@ public:
 	MainLoop(const Director*);
 	virtual ~MainLoop();
 
+	void init();
+	void pauseResume();
+	void reset();
+	void stop();
+
+	bool isContinue() const;
+	bool isPause() const;
+	bool isRequireReset() const;
+	bool isRequireUpdate() const;
+
 private:
 	const Director* refDirector_;
+	bool continue_;
+	bool pause_;
+	bool requireReset_;
+	bool requireUpdate_;
 };
 
 #endif /* MAINLOOP_H_ */

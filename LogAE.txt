@@ -3,24 +3,29 @@
 3. ---Generado el coordinador Director 
 4. ---Llamando a la funcion init del Director
 5. ------Generado la herramienta MainLoop para el Director 
-6. ---Llamano a la función init de la clase Interface.
-7. ------Generado el gestor Bureaucrat para la vista Interfaz 
-8. ------Generado el gestor Scenographer para la vista Interfaz 
-9. ------Generado la herramienta Window para la vista Interfaz 
-10. ------Generado la herramienta Context para la vista Interfaz 
-11. ------Generado la herramienta Scene para la vista Interfaz 
-12. ---Llamano a la función init de la clase Simulator.
-13. ---Llamano a la función stop de la clase Interface.
-14. ------Destruyendo el gestor Bureaucrat para la vista Interfaz 
-15. ------Destruyendo el gestor Scenographer para la vista Interfaz 
-16. ------Destruyendo la herramienta Window para la vista Interfaz 
-17. ------Destruyendo la herramienta Context para la vista Interfaz 
-18. ------Destruyendo la herramienta Scene para la vista Interfaz 
-19. ---Llamano a la función stop de la clase Simulator.
-20. ---Destruyendo la vista Interfaz 
-21. ---Llamano a la función stop de la clase Interface.
-22. ---Destruyendo el modelo Simulator 
-23. ---Llamano a la función stop de la clase Simulator.
-24. ------Destruyendo la herramienta MainLoop para el Director 
-25. ---Llamando a la funcion stop del Director
-26. ******************************************
+6. ---Llamano a la función init de la clase Simulator.
+7. ---Llamano a la función init de la clase Interface.
+8. ------Generado el gestor Bureaucrat para la vista Interfaz 
+9. ------Generado el gestor Scenographer para la vista Interfaz 
+10. ------Generado la herramienta Window para la vista Interfaz 
+11. ------Generado la herramienta Context para la vista Interfaz 
+12. ------Generado la herramienta Scene para la vista Interfaz 
+13. ------Inicializando SDL en la clase Bureaucrat. 
+14. ------Inicializando OGL en la clase Bureaucrat. 
+15. ------Cargando Shaders en la clase Bureaucrat. 
+16. ------Inicializando la ventana SDL. 
+17. ---Llamando a la función mainLoop del Director
+18. ---Llamano a la función stop de la clase Interface.
+19. ------Destruyendo el gestor Bureaucrat para la vista Interfaz 
+20. ------Destruyendo el gestor Scenographer para la vista Interfaz 
+21. ------Destruyendo la herramienta Window para la vista Interfaz 
+22. ------Destruyendo la herramienta Context para la vista Interfaz 
+23. ------Destruyendo la herramienta Scene para la vista Interfaz 
+24. ---Llamano a la función stop de la clase Simulator.
+25. ---Destruyendo la vista Interfaz 
+26. ---Llamano a la función stop de la clase Interface.
+27. ---Destruyendo el modelo Simulator 
+28. ---Llamano a la función stop de la clase Simulator.
+29. ------Destruyendo la herramienta MainLoop para el Director 
+30. ---Llamando a la funcion stop del Director
+31. ******************************************

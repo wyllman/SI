@@ -27,10 +27,11 @@ public:
 	virtual ~Controller();
 
 	virtual void init () {};
+	virtual void start () {};
 	virtual void stop () {};
 	void setReferences (const View*, const Model*);
 
-private:
+protected:
 	const View* refView_;
 	const Model* refModel_;
 

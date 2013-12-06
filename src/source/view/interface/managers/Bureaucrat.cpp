@@ -34,7 +34,8 @@ Bureaucrat::~Bureaucrat() {
 		cout << "------Destruyendo el gestor Bureaucrat para la vista Interfaz " << endl;
 	}
 	if (ADVAN_LOG) {
-		((Interface*)refInterface_)->log("------Destruyendo el gestor Bureaucrat para la vista Interfaz ");
+		((Interface*)refInterface_)
+			->log("------Destruyendo el gestor Bureaucrat para la vista Interfaz ");
 	}
 }
 // FIN -------------------------------------------------------------------------------
@@ -42,7 +43,35 @@ Bureaucrat::~Bureaucrat() {
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Métodos públicos:
-
+void Bureaucrat::initSDL() {
+	if (ADVAN_LOG) {
+		((Interface*)refInterface_)
+			->log("------Inicializando SDL en la clase Bureaucrat. ");
+	}
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+		if (BASIC_LOG) {
+			cout << "------ERROR!! No se pudo iniciar SDL: " << SDL_GetError() << endl;
+		}
+		if (ADVAN_LOG) {
+			((Interface*)refInterface_)
+				->log("------ERROR!! No se pudo iniciar SDL ");
+		}
+		((Interface*)refInterface_)->stop();
+	}
+}
+void Bureaucrat::initOGL() {
+	if (ADVAN_LOG) {
+		((Interface*)refInterface_)
+			->log("------Inicializando OGL en la clase Bureaucrat. ");
+	}
+	loadShader ();
+}
+void Bureaucrat::loadShader() {
+	if (ADVAN_LOG) {
+		((Interface*)refInterface_)
+			->log("------Cargando Shaders en la clase Bureaucrat. ");
+	}
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

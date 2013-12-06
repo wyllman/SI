@@ -18,6 +18,10 @@
 
 #include <iostream>
 
+#include <SDL.h>
+#include <GL.h>
+#include <GLU.h>
+
 #include "../Interface.h"
 
 using namespace std;
@@ -27,6 +31,11 @@ class Bureaucrat {
 public:
 	Bureaucrat(const Interface*);
 	virtual ~Bureaucrat();
+
+	void initSDL ();
+	void initOGL ();
+
+	void loadShader ();
 
 private:
 	const Interface* refInterface_;

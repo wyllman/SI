@@ -60,6 +60,11 @@ void Interface::init() {
 	window_ = new Window (this);
 	context_ = new Context (this);
 	scene_ = new Scene (this);
+
+	bureaucrat_->initSDL();
+	bureaucrat_->initOGL();
+
+	window_->init(500, 500);
 }
 void Interface::stop() {
 	if (BASIC_LOG) {

@@ -18,6 +18,8 @@
 
 #include <iostream>
 
+#include <SDL.h>
+
 #include "../Interface.h"
 
 using namespace std;
@@ -29,8 +31,16 @@ public:
 	Window(const Interface*);
 	virtual ~Window();
 
+	void init (int, int);
+	void update ();
+	void reshape ();
+
 private:
 	const Interface* refInterface_;
+
+	SDL_Window* windowSDL_;
+	SDL_Renderer* rendererScene_;
+	SDL_RendererInfo* displayRendererInfo_;
 
 };
 

@@ -53,7 +53,7 @@ all: PreColonia
 PreColonia: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MacOS X C++ Linker'
-	g++  -o "PreColonia" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -framework Cocoa -framework SDL2 -framework OpenGL -o "PreColonia" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

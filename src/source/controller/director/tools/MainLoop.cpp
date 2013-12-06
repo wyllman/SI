@@ -26,6 +26,10 @@ MainLoop::MainLoop(const Director* director) {
 		FileLog* regist = (FileLog*) refDirector_->getRegAccErr();
 		regist->insertLine("------Generado la herramienta MainLoop para el Director ");
 	}
+	continue_ = false;
+	pause_ = false;
+	requireReset_ = false;
+	requireUpdate_ = false;
 }
 
 MainLoop::~MainLoop() {
@@ -42,13 +46,45 @@ MainLoop::~MainLoop() {
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Métodos públicos:
+void MainLoop::init() {
+	continue_ = true;
+	pause_ = false;
+	requireReset_ = false;
+	requireUpdate_ = false;
+}
 
+void MainLoop::pauseResume() {
+	if (pause_) {
+		pause_ = false;
+	} else {
+		pause_ = true;
+	}
+}
+
+void MainLoop::reset() {
+	requireReset_ = true;
+}
+
+void MainLoop::stop() {
+	continue_ = false;
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Manejadores públicos:
-
+bool MainLoop::isContinue() const {
+	return continue_;
+}
+bool MainLoop::isPause() const {
+	return pause_;
+}
+bool MainLoop::isRequireReset() const {
+	return requireReset_;
+}
+bool MainLoop::isRequireUpdate() const {
+	return requireUpdate_;
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -58,4 +94,5 @@ MainLoop::~MainLoop() {
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
 

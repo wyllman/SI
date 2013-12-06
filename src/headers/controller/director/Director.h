@@ -17,10 +17,12 @@
 #define DIRECTOR_H_
 
 #include <iostream>
+#include <SDL.h>
 
 #include "../abstracts/controller.h"
 #include "tools/FileLog.h"
 #include "tools/MainLoop.h"
+#include "../../view/interface/Interface.h"
 
 using namespace std;
 class MainLoop;
@@ -31,12 +33,15 @@ public:
 	virtual ~Director();
 
 	void init ();
+	void start ();
 	void stop ();
 	const FileLog* getRegAccErr() const;
 
 private:
 	FileLog* regAccErr_;
 	MainLoop* mainLoop_;
+
+	void mainLoop ();
 
 };
 

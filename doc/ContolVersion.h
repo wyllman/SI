@@ -41,5 +41,9 @@
  *              consola o el uso del registro de acciones-errores.
  *              - Uso de la clase FileLog por todos los metodos que requieran ser registrados.
  *              - Implementada la función save() de la clase FileLog.
+ *              - Implementación inicial la clase MainLoop, Interface, Window y Bureaucrat.
+ *              - Implementada la parte de la interfaz hasta la creación de una ventana SDL.
+ *              - Implementado en el bucle principal de Director la acción de parar la ejecución
+ *              al cerrarse la ventana SDL creada(Captura evento SDL).
  */
 

@@ -40,8 +40,10 @@ int main() {
 	// Inicializando la ejecución del simulador
 	directorSim->init();
 
-	interfaceSim->init();
+	//interfaceSim->init();
 	modelSim->init();
+
+	directorSim->start();
 	interfaceSim->stop();
 	modelSim->stop();
 

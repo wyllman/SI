@@ -48,6 +48,11 @@ void Director::init() {
 	}
 	mainLoop_ = new MainLoop (this);
 }
+void Director::start() {
+	//Interface* tmp = (View*)refView_;
+	((View*)refView_)->init();
+	mainLoop();
+}
 void Director::stop() {
 	if (BASIC_LOG) {
 		cout << "---Llamando a la funcion stop del Director" << endl;
@@ -81,7 +86,24 @@ const FileLog* Director::getRegAccErr() const{
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Métodos privados:
+void Director::mainLoop() {
+	SDL_Event eventSDL;
+	if (BASIC_LOG) {
+		cout << "---Llamando a la función mainLoop del Director" << endl;
+	}
+	if(ADVAN_LOG) {
+		regAccErr_->insertLine("---Llamando a la función mainLoop del Director");
+	}
 
+	mainLoop_->init();
+	while (mainLoop_->isContinue()) {
+		while ( SDL_PollEvent(&eventSDL) ) {
+			if (eventSDL.type == SDL_QUIT) {
+				mainLoop_->stop();
+			}
+		}
+	}
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

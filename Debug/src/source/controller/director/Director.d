@@ -66,7 +66,7 @@ src/source/controller/director/Director.d \
   ../src/source/controller/director/../../../headers/controller/director/../../view/interface/tools/Context.h \
   ../src/source/controller/director/../../../headers/controller/director/../../view/interface/tools/Scene.h \
   ../src/source/controller/director/../../../headers/controller/director/../../view/interface/../../controller/director/Director.h \
-  ../src/source/controller/director/../../../headers/Tools.h
+  ../src/source/controller/director/../../../headers/controller/director/../../Tools.h
 
 ../src/source/controller/director/../../../headers/controller/director/Director.h:
 
@@ -198,4 +198,4 @@ src/source/controller/director/Director.d \
 
 ../src/source/controller/director/../../../headers/controller/director/../../view/interface/../../controller/director/Director.h:
 
-../src/source/controller/director/../../../headers/Tools.h:
+../src/source/controller/director/../../../headers/controller/director/../../Tools.h:

@@ -33,7 +33,7 @@ public:
 
 private:
 	// Atributos privdos
-
+	void logAction(int);
 };
 
 #endif /* SIMULATOR_H_ */

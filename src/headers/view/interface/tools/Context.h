@@ -45,6 +45,8 @@ private:
 	void initShaders();
 	void initBuffers();
 
+	void logAction(int);
+
 };
 
 #endif /* CONTEXT_H_ */

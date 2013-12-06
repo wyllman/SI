@@ -14,14 +14,7 @@
 #include <iostream>
 using namespace std;
 
-
-
-#include "headers/controller/abstracts/Controller.h"
-#include "headers/controller/director/Director.h"
-#include "headers/view/abstracts/View.h"
-#include "headers/view/interface/Interface.h"
-#include "headers/model/abstracts/Model.h"
-#include "headers/model/simulator/Simulator.h"
+#include "headers/MVCHeaders.h"
 #include "headers/Tools.h"
 
 void logAction (int index) {

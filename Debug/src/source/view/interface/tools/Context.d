@@ -67,6 +67,7 @@ src/source/view/interface/tools/Context.d \
   ../src/source/view/interface/tools/../../../../headers/view/interface/tools/../../../controller/director/tools/../Director.h \
   ../src/source/view/interface/tools/../../../../headers/view/interface/tools/../../../controller/director/tools/FileLog.h \
   ../src/source/view/interface/tools/../../../../headers/view/interface/tools/../../../controller/director/../../view/interface/Interface.h \
+  ../src/source/view/interface/tools/../../../../headers/view/interface/tools/../../../controller/director/../../Tools.h \
   ../src/source/view/interface/tools/../../../../headers/Tools.h
 
 ../src/source/view/interface/tools/../../../../headers/view/interface/tools/Context.h:
@@ -200,5 +201,7 @@ src/source/view/interface/tools/Context.d \
 ../src/source/view/interface/tools/../../../../headers/view/interface/tools/../../../controller/director/tools/FileLog.h:
 
 ../src/source/view/interface/tools/../../../../headers/view/interface/tools/../../../controller/director/../../view/interface/Interface.h:
+
+../src/source/view/interface/tools/../../../../headers/view/interface/tools/../../../controller/director/../../Tools.h:
 
 ../src/source/view/interface/tools/../../../../headers/Tools.h:

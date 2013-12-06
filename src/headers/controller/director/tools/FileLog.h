@@ -41,7 +41,7 @@ private:
 	vector<char*> regAccErr_;
 	int lineNumber_;
 
-
+	void logAction (int);
 
 };
 

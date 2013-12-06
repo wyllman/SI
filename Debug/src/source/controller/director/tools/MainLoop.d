@@ -65,6 +65,7 @@ src/source/controller/director/tools/MainLoop.d \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/tools/Context.h \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/tools/Scene.h \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/../../controller/director/Director.h \
+  ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../Tools.h \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/FileLog.h \
   ../src/source/controller/director/tools/../../../../headers/Tools.h
 
@@ -195,6 +196,8 @@ src/source/controller/director/tools/MainLoop.d \
 ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/tools/Scene.h:
 
 ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/../../controller/director/Director.h:
+
+../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../Tools.h:
 
 ../src/source/controller/director/tools/../../../../headers/controller/director/tools/FileLog.h:
 

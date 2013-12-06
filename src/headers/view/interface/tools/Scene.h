@@ -31,6 +31,8 @@ public:
 private:
 	const Interface* refInterface_;
 
+	void logAction(int);
+
 };
 
 #endif /* SCENE_H_ */

@@ -42,6 +42,8 @@ private:
 	SDL_Renderer* rendererScene_;
 	SDL_RendererInfo* displayRendererInfo_;
 
+	void logAction(int);
+
 };
 
 #endif /* WINDOW_H_ */

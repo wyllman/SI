@@ -40,6 +40,7 @@ public:
 private:
 	const Interface* refInterface_;
 
+	void logAction(int);
 };
 
 #endif /* BUREAUCRAT_H_ */

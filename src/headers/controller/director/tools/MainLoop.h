@@ -44,6 +44,8 @@ private:
 	bool pause_;
 	bool requireReset_;
 	bool requireUpdate_;
+
+	void logAction (int);
 };
 
 #endif /* MAINLOOP_H_ */

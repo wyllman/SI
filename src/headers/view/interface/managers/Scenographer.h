@@ -31,6 +31,7 @@ public:
 private:
 	const Interface* refInterface_;
 
+	void logAction(int);
 };
 
 #endif /* SCENOGRAPHER_H_ */

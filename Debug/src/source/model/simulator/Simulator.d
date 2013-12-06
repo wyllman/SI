@@ -68,6 +68,7 @@ src/source/model/simulator/Simulator.d \
   ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/tools/Context.h \
   ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/tools/Scene.h \
   ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/../../controller/director/Director.h \
+  ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../Tools.h \
   ../src/source/model/simulator/../../../headers/Tools.h
 
 ../src/source/model/simulator/../../../headers/model/simulator/Simulator.h:
@@ -203,5 +204,7 @@ src/source/model/simulator/Simulator.d \
 ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/tools/Scene.h:
 
 ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/../../controller/director/Director.h:
+
+../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../Tools.h:
 
 ../src/source/model/simulator/../../../headers/Tools.h:

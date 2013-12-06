@@ -23,6 +23,7 @@
 #include "tools/FileLog.h"
 #include "tools/MainLoop.h"
 #include "../../view/interface/Interface.h"
+#include "../../Tools.h"
 
 using namespace std;
 class MainLoop;

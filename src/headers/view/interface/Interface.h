@@ -54,8 +54,8 @@ private:
 	Context* context_;
 	Scene* scene_;
 
-
 	void createFloor(int, int);
+	void logAction(int);
 };
 
 #endif /* INTERFACE_H_ */

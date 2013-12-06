@@ -166,6 +166,8 @@ void Interface::createFloor(int width, int height) {
 					, vertexFloor, GL_STATIC_DRAW);
 	glDrawArrays(GL_POINTS, 0, width * height);
 }
+void Interface::logAction(int index) {
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

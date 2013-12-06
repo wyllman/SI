@@ -67,6 +67,7 @@ src/source/view/interface/managers/Scenographer.d \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/tools/../Director.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/tools/FileLog.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/../../view/interface/Interface.h \
+  ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/../../Tools.h \
   ../src/source/view/interface/managers/../../../../headers/Tools.h
 
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/Scenographer.h:
@@ -200,5 +201,7 @@ src/source/view/interface/managers/Scenographer.d \
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/tools/FileLog.h:
 
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/../../view/interface/Interface.h:
+
+../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/../../Tools.h:
 
 ../src/source/view/interface/managers/../../../../headers/Tools.h:

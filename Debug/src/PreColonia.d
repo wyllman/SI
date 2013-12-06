@@ -1,4 +1,5 @@
 src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
+  ../src/headers/MVCHeaders.h \
   ../src/headers/controller/abstracts/Controller.h \
   ../src/headers/controller/abstracts/../../view/abstracts/View.h \
   ../src/headers/controller/abstracts/../../view/abstracts/../../controller/abstracts/Controller.h \
@@ -65,6 +66,7 @@ src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
   ../src/headers/controller/director/../../view/interface/tools/Context.h \
   ../src/headers/controller/director/../../view/interface/tools/Scene.h \
   ../src/headers/controller/director/../../view/interface/../../controller/director/Director.h \
+  ../src/headers/controller/director/../../Tools.h \
   ../src/headers/view/abstracts/View.h \
   ../src/headers/view/interface/Interface.h \
   ../src/headers/model/abstracts/Model.h \
@@ -72,6 +74,8 @@ src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
   ../src/headers/model/simulator/../abstracts/Model.h \
   ../src/headers/model/simulator/../../controller/director/Director.h \
   ../src/headers/Tools.h
+
+../src/headers/MVCHeaders.h:
 
 ../src/headers/controller/abstracts/Controller.h:
 
@@ -204,6 +208,8 @@ src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
 ../src/headers/controller/director/../../view/interface/tools/Scene.h:
 
 ../src/headers/controller/director/../../view/interface/../../controller/director/Director.h:
+
+../src/headers/controller/director/../../Tools.h:
 
 ../src/headers/view/abstracts/View.h:
 

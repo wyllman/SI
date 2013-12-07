@@ -19,6 +19,7 @@
 
 #include "../Director.h"
 #include "FileLog.h"
+#include "../../../Tools.h"
 
 using namespace std;
 class Director;

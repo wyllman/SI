@@ -54,9 +54,11 @@ src/source/view/interface/Interface.d \
   /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h \
   /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h \
   ../src/source/view/interface/../../../headers/view/interface/managers/../Interface.h \
+  ../src/source/view/interface/../../../headers/view/interface/managers/../../../Tools.h \
   ../src/source/view/interface/../../../headers/view/interface/managers/Scenographer.h \
   ../src/source/view/interface/../../../headers/view/interface/tools/Window.h \
   ../src/source/view/interface/../../../headers/view/interface/tools/../Interface.h \
+  ../src/source/view/interface/../../../headers/view/interface/tools/../../../Tools.h \
   ../src/source/view/interface/../../../headers/view/interface/tools/Context.h \
   ../src/source/view/interface/../../../headers/view/interface/tools/Scene.h \
   ../src/source/view/interface/../../../headers/view/interface/../../controller/director/Director.h \
@@ -65,9 +67,10 @@ src/source/view/interface/Interface.d \
   ../src/source/view/interface/../../../headers/view/interface/../../controller/director/tools/MainLoop.h \
   ../src/source/view/interface/../../../headers/view/interface/../../controller/director/tools/../Director.h \
   ../src/source/view/interface/../../../headers/view/interface/../../controller/director/tools/FileLog.h \
+  ../src/source/view/interface/../../../headers/view/interface/../../controller/director/tools/../../../Tools.h \
   ../src/source/view/interface/../../../headers/view/interface/../../controller/director/../../view/interface/Interface.h \
   ../src/source/view/interface/../../../headers/view/interface/../../controller/director/../../Tools.h \
-  ../src/source/view/interface/../../../headers/Tools.h
+  ../src/source/view/interface/../../../headers/view/interface/../../Tools.h
 
 ../src/source/view/interface/../../../headers/view/interface/Interface.h:
 
@@ -175,11 +178,15 @@ src/source/view/interface/Interface.d \
 
 ../src/source/view/interface/../../../headers/view/interface/managers/../Interface.h:
 
+../src/source/view/interface/../../../headers/view/interface/managers/../../../Tools.h:
+
 ../src/source/view/interface/../../../headers/view/interface/managers/Scenographer.h:
 
 ../src/source/view/interface/../../../headers/view/interface/tools/Window.h:
 
 ../src/source/view/interface/../../../headers/view/interface/tools/../Interface.h:
+
+../src/source/view/interface/../../../headers/view/interface/tools/../../../Tools.h:
 
 ../src/source/view/interface/../../../headers/view/interface/tools/Context.h:
 
@@ -197,8 +204,10 @@ src/source/view/interface/Interface.d \
 
 ../src/source/view/interface/../../../headers/view/interface/../../controller/director/tools/FileLog.h:
 
+../src/source/view/interface/../../../headers/view/interface/../../controller/director/tools/../../../Tools.h:
+
 ../src/source/view/interface/../../../headers/view/interface/../../controller/director/../../view/interface/Interface.h:
 
 ../src/source/view/interface/../../../headers/view/interface/../../controller/director/../../Tools.h:
 
-../src/source/view/interface/../../../headers/Tools.h:
+../src/source/view/interface/../../../headers/view/interface/../../Tools.h:

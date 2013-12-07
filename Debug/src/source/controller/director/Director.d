@@ -54,18 +54,22 @@ src/source/controller/director/Director.d \
   ../src/source/controller/director/../../../headers/controller/director/tools/MainLoop.h \
   ../src/source/controller/director/../../../headers/controller/director/tools/../Director.h \
   ../src/source/controller/director/../../../headers/controller/director/tools/FileLog.h \
+  ../src/source/controller/director/../../../headers/controller/director/tools/../../../Tools.h \
   ../src/source/controller/director/../../../headers/controller/director/../../view/interface/Interface.h \
   ../src/source/controller/director/../../../headers/controller/director/../../view/interface/../abstracts/View.h \
   ../src/source/controller/director/../../../headers/controller/director/../../view/interface/managers/Bureaucrat.h \
   /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h \
   /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h \
   ../src/source/controller/director/../../../headers/controller/director/../../view/interface/managers/../Interface.h \
+  ../src/source/controller/director/../../../headers/controller/director/../../view/interface/managers/../../../Tools.h \
   ../src/source/controller/director/../../../headers/controller/director/../../view/interface/managers/Scenographer.h \
   ../src/source/controller/director/../../../headers/controller/director/../../view/interface/tools/Window.h \
   ../src/source/controller/director/../../../headers/controller/director/../../view/interface/tools/../Interface.h \
+  ../src/source/controller/director/../../../headers/controller/director/../../view/interface/tools/../../../Tools.h \
   ../src/source/controller/director/../../../headers/controller/director/../../view/interface/tools/Context.h \
   ../src/source/controller/director/../../../headers/controller/director/../../view/interface/tools/Scene.h \
   ../src/source/controller/director/../../../headers/controller/director/../../view/interface/../../controller/director/Director.h \
+  ../src/source/controller/director/../../../headers/controller/director/../../view/interface/../../Tools.h \
   ../src/source/controller/director/../../../headers/controller/director/../../Tools.h
 
 ../src/source/controller/director/../../../headers/controller/director/Director.h:
@@ -174,6 +178,8 @@ src/source/controller/director/Director.d \
 
 ../src/source/controller/director/../../../headers/controller/director/tools/FileLog.h:
 
+../src/source/controller/director/../../../headers/controller/director/tools/../../../Tools.h:
+
 ../src/source/controller/director/../../../headers/controller/director/../../view/interface/Interface.h:
 
 ../src/source/controller/director/../../../headers/controller/director/../../view/interface/../abstracts/View.h:
@@ -186,16 +192,22 @@ src/source/controller/director/Director.d \
 
 ../src/source/controller/director/../../../headers/controller/director/../../view/interface/managers/../Interface.h:
 
+../src/source/controller/director/../../../headers/controller/director/../../view/interface/managers/../../../Tools.h:
+
 ../src/source/controller/director/../../../headers/controller/director/../../view/interface/managers/Scenographer.h:
 
 ../src/source/controller/director/../../../headers/controller/director/../../view/interface/tools/Window.h:
 
 ../src/source/controller/director/../../../headers/controller/director/../../view/interface/tools/../Interface.h:
 
+../src/source/controller/director/../../../headers/controller/director/../../view/interface/tools/../../../Tools.h:
+
 ../src/source/controller/director/../../../headers/controller/director/../../view/interface/tools/Context.h:
 
 ../src/source/controller/director/../../../headers/controller/director/../../view/interface/tools/Scene.h:
 
 ../src/source/controller/director/../../../headers/controller/director/../../view/interface/../../controller/director/Director.h:
+
+../src/source/controller/director/../../../headers/controller/director/../../view/interface/../../Tools.h:
 
 ../src/source/controller/director/../../../headers/controller/director/../../Tools.h:

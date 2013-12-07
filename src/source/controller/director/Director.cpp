@@ -20,7 +20,8 @@
 // Constructores y Destructor:
 Director::Director() {
 	logAction(LOG_INIT);
-	regAccErr_ = 0;
+	regAccErr_ = new FileLog;
+	regAccErr_->init();
 	mainLoop_ = 0;
 }
 
@@ -34,8 +35,6 @@ Director::~Director() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 void Director::init() {
-	regAccErr_ = new FileLog;
-	regAccErr_->init();
 	mainLoop_ = new MainLoop (this);
 	logAction(LOG_F_INIT);
 }

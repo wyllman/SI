@@ -13,31 +13,18 @@
  */
 
 #include "../../../../headers/view/interface/tools/Context.h"
-#include "../../../../headers/Tools.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Context::Context(const Interface* interface) {
-	if (BASIC_LOG) {
-		cout << "------Generado la herramienta Context para la vista Interfaz " << endl;
-	}
 	refInterface_ = interface;
-	if (ADVAN_LOG) {
-		((Interface*)refInterface_)
-				->log("------Generado la herramienta Context para la vista Interfaz ");
-	}
+	logAction(LOG_INIT);
 	compilerStateOK_ = GL_FALSE;
 	linkerStateOK_ = GL_FALSE;
 }
 
 Context::~Context() {
-	if (BASIC_LOG) {
-		cout << "------Destruyendo la herramienta Context para la vista Interfaz " << endl;
-	}
-	if (ADVAN_LOG) {
-		((Interface*)refInterface_)
-				->log("------Destruyendo la herramienta Context para la vista Interfaz ");
-	}
+	logAction(LOG_END);
 	glDeleteBuffers(1, &bufferVertex_);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
@@ -47,10 +34,7 @@ Context::~Context() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 void Context::init() {
-	if (ADVAN_LOG) {
-		((Interface*)refInterface_)
-			->log("------Iniciando el contexto OGL de la herramienta Context ");
-	}
+	logAction(LOG_F_INIT);
 	initShaders();
 	initBuffers();
 
@@ -60,7 +44,9 @@ void Context::init() {
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Manejadores públicos:
-
+GLuint Context::getProgramGsl() const {
+	return programGSL_;
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -87,18 +73,14 @@ void Context::initShaders() {
 			"  gl_FragColor[1] = 0.4; "
 			"  gl_FragColor[2] = 0.2; "
 			"}";
-	//const char* attribute_name = "coord2d"; //Nombre de la variable global instanciada en el vertex shader
 
 	vertexShader_ = glCreateShader(GL_VERTEX_SHADER);  //Crear el vertex shader
 	glShaderSource(vertexShader_, 1, &vs_source, NULL);
 	glCompileShader(vertexShader_);  //Compilar el vertex shader
 	glGetShaderiv(vertexShader_, GL_COMPILE_STATUS, &compilerStateOK_);
 
-	if (0 == compilerStateOK_) {  // Comprobar si la compilacion ha finalizado satisfactoriamente
-		if (ADVAN_LOG) {
-			((Interface*)refInterface_)
-				->log("------ERROR!! Compilando el Vertex Shader. ");
-		}
+	if (0 == compilerStateOK_) {
+		logAction(LOG_ERROR);
 		((Interface*)refInterface_)->stop();
 	}
 
@@ -108,32 +90,20 @@ void Context::initShaders() {
 	glGetShaderiv(fragmentShader_, GL_COMPILE_STATUS, &compilerStateOK_);
 
 	if (0 == compilerStateOK_) {
-		if (ADVAN_LOG) {
-			((Interface*)refInterface_)
-				->log("------ERROR!! Compilando el Fragment Shader. ");
-		}
+		logAction(LOG_ERROR_1);
 		((Interface*)refInterface_)->stop();
 	}
-
-	//setElProgramaGlsl(glCreateProgram());
 	programGSL_ = glCreateProgram();
 	glAttachShader(programGSL_, vertexShader_);
 	glAttachShader(programGSL_, fragmentShader_);
 
-	glLinkProgram(programGSL_);  //Enlazar el programa creado con OpenGL
+	glLinkProgram(programGSL_);
 	glGetProgramiv(programGSL_, GL_LINK_STATUS, &linkerStateOK_);
 
-	if (0 == linkerStateOK_) {   // Comprobar el correcto enlazado del programa a openGL
-		if (ADVAN_LOG) {
-			((Interface*)refInterface_)
-				->log("------ERROR!! Enlazando el programa GSL. ");
-		}
+	if (0 == linkerStateOK_) {
+		logAction(LOG_ERROR_2);
 		((Interface*)refInterface_)->stop();
 	}
-}
-
-GLuint Context::getProgramGsl() const {
-	return programGSL_;
 }
 
 void Context::initBuffers() {
@@ -142,6 +112,64 @@ void Context::initBuffers() {
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
 }
 void Context::logAction(int index) {
+	if (BASIC_LOG) {
+			switch (index) {
+				case LOG_INIT:
+					cout << "------Generado la herramienta Context para la vista Interfaz"
+						<< endl;
+					break;
+				case LOG_END:
+					cout << "------Destruyendo la herramienta Context para la vista Interfaz"
+						<< endl;
+					break;
+				case LOG_F_INIT:
+					cout << "------Iniciando el contexto OGL de la herramienta Context"
+						<< endl;
+					break;
+				case LOG_ERROR:
+					cout << "------ERROR!! Compilando el Vertex Shader" << endl;
+					break;
+				case LOG_ERROR_1:
+					cout << "------ERROR!! Compilando el Fragment Shader" << endl;
+					break;
+				case LOG_ERROR_2:
+					cout << "------ERROR!! Enlazando el programa GSL" << endl;
+					break;
+				default:
+					break;
+			}
+		}
+		if(ADVAN_LOG) {
+			switch (index) {
+				case LOG_INIT:
+					((Interface*)refInterface_)
+						->log("------Generado la herramienta Context para la vista Interfaz ");
+					break;
+				case LOG_END:
+					((Interface*)refInterface_)
+						->log("------Destruyendo la herramienta Context para la vista "
+							"Interfaz ");
+					break;
+				case LOG_F_INIT:
+					((Interface*)refInterface_)
+						->log("------Iniciando el contexto OGL de la herramienta Context ");
+					break;
+				case LOG_ERROR:
+					((Interface*)refInterface_)
+						->log("------ERROR!! Compilando el Vertex Shader. ");
+					break;
+				case LOG_ERROR_1:
+					((Interface*)refInterface_)
+						->log("------ERROR!! Compilando el Fragment Shader. ");
+					break;
+				case LOG_ERROR_2:
+					((Interface*)refInterface_)
+						->log("------ERROR!! Enlazando el programa GSL. ");
+					break;
+				default:
+					break;
+			}
+		}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

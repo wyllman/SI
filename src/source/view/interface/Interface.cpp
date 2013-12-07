@@ -15,15 +15,11 @@
  */
 
 #include "../../../headers/view/interface/Interface.h"
-#include "../../../headers/Tools.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Interface::Interface(const Controller* controller):View(controller) {
-	if (BASIC_LOG) {
-		cout << "---Generado la vista Interfaz " << endl;
-	}
-
+	logAction(LOG_INIT);
 	bureaucrat_ = 0;
 	scenographer_ = 0;
 
@@ -32,13 +28,7 @@ Interface::Interface(const Controller* controller):View(controller) {
 	scene_ = 0;
 }
 Interface::~Interface() {
-	if (BASIC_LOG) {
-		cout << "---Destruyendo la vista Interfaz " << endl;
-	}
-	if (ADVAN_LOG) {
-		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
-		fileLogTmp->insertLine("---Destruyendo la vista Interfaz ");
-	}
+	logAction(LOG_END);
 	stop ();
 }
 // FIN -------------------------------------------------------------------------------
@@ -47,13 +37,7 @@ Interface::~Interface() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 void Interface::init() {
-	if (BASIC_LOG) {
-		cout << "---Llamano a la función init de la clase Interface." << endl;
-	}
-	if (ADVAN_LOG) {
-		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
-		fileLogTmp->insertLine("---Llamano a la función init de la clase Interface.");
-	}
+	logAction(LOG_F_INIT);
 	bureaucrat_ = new Bureaucrat (this);
 	scenographer_ = new Scenographer (this);
 
@@ -70,13 +54,7 @@ void Interface::init() {
 	render();
 }
 void Interface::stop() {
-	if (BASIC_LOG) {
-		cout << "---Llamano a la función stop de la clase Interface." << endl;
-	}
-	if (ADVAN_LOG) {
-		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
-		fileLogTmp->insertLine("---Llamano a la función stop de la clase Interface.");
-	}
+	logAction(LOG_F_STOP);
 	if (bureaucrat_ != 0) {
 		delete (bureaucrat_);
 		bureaucrat_ = 0;
@@ -167,6 +145,43 @@ void Interface::createFloor(int width, int height) {
 	glDrawArrays(GL_POINTS, 0, width * height);
 }
 void Interface::logAction(int index) {
+	if (BASIC_LOG) {
+		switch (index) {
+			case LOG_INIT:
+				cout << "---Generado la vista Interfaz " << endl;
+				break;
+			case LOG_END:
+				cout << "---Destruyendo la vista Interfaz " << endl;
+				break;
+			case LOG_F_INIT:
+				cout << "---Llamano a la función init de la clase Interface." << endl;
+				break;
+			case LOG_F_STOP:
+				cout << "---Llamano a la función stop de la clase Interface." << endl;
+				break;
+			default:
+				break;
+		}
+	}
+	if(ADVAN_LOG) {
+		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
+		switch (index) {
+			case LOG_INIT:
+				fileLogTmp->insertLine("---Generando la vista Interfaz ");
+				break;
+			case LOG_END:
+				fileLogTmp->insertLine("---Destruyendo la vista Interfaz ");
+				break;
+			case LOG_F_INIT:
+				fileLogTmp->insertLine("---Llamano a la función init de la clase Interface.");
+				break;
+			case LOG_F_STOP:
+				fileLogTmp->insertLine("---Llamano a la función stop de la clase Interface.");
+				break;
+			default:
+				break;
+		}
+	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

@@ -19,17 +19,12 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 FileLog::FileLog() {
-	if (BASIC_LOG) {
-		cout << "------Generado la herramienta FileLog para el Director " << endl;
-	}
+	logAction(LOG_INIT);
 	lineNumber_ = 0;
 }
 
 FileLog::~FileLog() {
-	if (BASIC_LOG) {
-		cout << "------Destruyendo la herramienta FileLog para el Director " << endl;
-	}
-
+	logAction(LOG_END);
 	reset ();
 }
 // FIN -------------------------------------------------------------------------------
@@ -39,10 +34,7 @@ FileLog::~FileLog() {
 // Métodos públicos:
 void FileLog::init() {
 	reset ();
-	insertLine("**********************************");
-	insertLine("Iniciando el Simulador PreColonia.");
-	insertLine("---Generado el coordinador Director ");
-
+	logAction(LOG_F_INIT);
 }
 void FileLog::reset() {
 	int regSize = regAccErr_.size();
@@ -113,6 +105,29 @@ void FileLog::insertLine(const char* line) {
 // ___________________________________________________________________________________
 // Métodos privados:
 void FileLog::logAction(int index) {
+	if (BASIC_LOG) {
+		switch (index) {
+			case LOG_INIT:
+				cout << "------Generado la herramienta FileLog para el Director " << endl;
+				break;
+			case LOG_END:
+				cout << "------Destruyendo la herramienta FileLog para el Director " << endl;
+				break;
+			default:
+				break;
+		}
+	}
+	if(ADVAN_LOG) {
+		switch (index) {
+			case LOG_F_INIT:
+				insertLine("**********************************");
+				insertLine("Iniciando el Simulador PreColonia.");
+				insertLine("---Generado el coordinador Director ");
+				break;
+			default:
+				break;
+		}
+	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

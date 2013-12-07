@@ -13,29 +13,16 @@
  */
 
 #include "../../../../headers/view/interface/tools/Scene.h"
-#include "../../../../headers/Tools.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Scene::Scene(const Interface* interface) {
-	if (BASIC_LOG) {
-		cout << "------Generado la herramienta Scene para la vista Interfaz " << endl;
-	}
 	refInterface_ = interface;
-	if (ADVAN_LOG) {
-		((Interface*)refInterface_)
-				->log("------Generado la herramienta Scene para la vista Interfaz ");
-	}
+	logAction(LOG_INIT);
 }
 
 Scene::~Scene() {
-	if (BASIC_LOG) {
-		cout << "------Destruyendo la herramienta Scene para la vista Interfaz " << endl;
-	}
-	if (ADVAN_LOG) {
-		((Interface*)refInterface_)
-				->log("------Destruyendo la herramienta Scene para la vista Interfaz ");
-	}
+	logAction(LOG_END);
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -55,6 +42,33 @@ Scene::~Scene() {
 // ___________________________________________________________________________________
 // Métodos privados:
 void Scene::logAction(int index) {
+	if (BASIC_LOG) {
+		switch (index) {
+			case LOG_INIT:
+				cout << "------Generado la herramienta Scene para la vista Interfaz " << endl;
+				break;
+			case LOG_END:
+				cout << "------Destruyendo la herramienta Scene para la vista Interfaz "
+					<< endl;
+				break;
+			default:
+				break;
+		}
+	}
+	if(ADVAN_LOG) {
+		switch (index) {
+			case LOG_INIT:
+				((Interface*)refInterface_)
+					->log("------Generado la herramienta Scene para la vista Interfaz ");
+				break;
+			case LOG_END:
+				((Interface*)refInterface_)
+					->log("------Destruyendo la herramienta Scene para la vista Interfaz ");
+				break;
+			default:
+				break;
+		}
+	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

@@ -26,6 +26,7 @@
 #include "tools/Context.h"
 #include "tools/Scene.h"
 #include "../../controller/director/Director.h"
+#include "../../Tools.h"
 
 using namespace std;
 

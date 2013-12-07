@@ -20,6 +20,7 @@
 
 #include "../abstracts/Model.h"
 #include "../../controller/director/Director.h"
+#include "../../Tools.h"
 
 using namespace std;
 

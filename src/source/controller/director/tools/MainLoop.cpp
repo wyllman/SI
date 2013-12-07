@@ -13,19 +13,12 @@
  */
 
 #include "../../../../headers/controller/director/tools/MainLoop.h"
-#include "../../../../headers/Tools.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 MainLoop::MainLoop(const Director* director) {
-	if (BASIC_LOG) {
-		cout << "------Generado la herramienta MainLoop para el Director " << endl;
-	}
 	refDirector_ = director;
-	if (ADVAN_LOG) {
-		FileLog* regist = (FileLog*) refDirector_->getRegAccErr();
-		regist->insertLine("------Generado la herramienta MainLoop para el Director ");
-	}
+	logAction(LOG_INIT);
 	continue_ = false;
 	pause_ = false;
 	requireReset_ = false;
@@ -33,13 +26,7 @@ MainLoop::MainLoop(const Director* director) {
 }
 
 MainLoop::~MainLoop() {
-	if (BASIC_LOG) {
-		cout << "------Destruyendo la herramienta MainLoop para el Director " << endl;
-	}
-	if (ADVAN_LOG) {
-		FileLog* regist = (FileLog*) refDirector_->getRegAccErr();
-		regist->insertLine("------Destruyendo la herramienta MainLoop para el Director ");
-	}
+	logAction(LOG_END);
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -91,6 +78,32 @@ bool MainLoop::isRequireUpdate() const {
 // ___________________________________________________________________________________
 // Métodos privados:
 void MainLoop::logAction(int index) {
+	if (BASIC_LOG) {
+		switch (index) {
+			case LOG_INIT:
+				cout << "------Generado la herramienta MainLoop para el Director " << endl;
+				break;
+			case LOG_END:
+				cout << "------Destruyendo la herramienta MainLoop para el Director " << endl;
+				break;
+			default:
+				break;
+		}
+	}
+	if(ADVAN_LOG) {
+		FileLog* regist = (FileLog*) refDirector_->getRegAccErr();
+		switch (index) {
+			case LOG_INIT:
+				regist->insertLine("------Generado la herramienta MainLoop para el Director ");
+				break;
+			case LOG_END:
+				regist
+				   ->insertLine("------Destruyendo la herramienta MainLoop para el Director ");
+				break;
+			default:
+				break;
+		}
+	}
 }
 
 // FIN -------------------------------------------------------------------------------

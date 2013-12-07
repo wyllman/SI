@@ -54,18 +54,22 @@ src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
   ../src/headers/controller/director/tools/MainLoop.h \
   ../src/headers/controller/director/tools/../Director.h \
   ../src/headers/controller/director/tools/FileLog.h \
+  ../src/headers/controller/director/tools/../../../Tools.h \
   ../src/headers/controller/director/../../view/interface/Interface.h \
   ../src/headers/controller/director/../../view/interface/../abstracts/View.h \
   ../src/headers/controller/director/../../view/interface/managers/Bureaucrat.h \
   /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h \
   /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h \
   ../src/headers/controller/director/../../view/interface/managers/../Interface.h \
+  ../src/headers/controller/director/../../view/interface/managers/../../../Tools.h \
   ../src/headers/controller/director/../../view/interface/managers/Scenographer.h \
   ../src/headers/controller/director/../../view/interface/tools/Window.h \
   ../src/headers/controller/director/../../view/interface/tools/../Interface.h \
+  ../src/headers/controller/director/../../view/interface/tools/../../../Tools.h \
   ../src/headers/controller/director/../../view/interface/tools/Context.h \
   ../src/headers/controller/director/../../view/interface/tools/Scene.h \
   ../src/headers/controller/director/../../view/interface/../../controller/director/Director.h \
+  ../src/headers/controller/director/../../view/interface/../../Tools.h \
   ../src/headers/controller/director/../../Tools.h \
   ../src/headers/view/abstracts/View.h \
   ../src/headers/view/interface/Interface.h \
@@ -73,7 +77,7 @@ src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
   ../src/headers/model/simulator/Simulator.h \
   ../src/headers/model/simulator/../abstracts/Model.h \
   ../src/headers/model/simulator/../../controller/director/Director.h \
-  ../src/headers/Tools.h
+  ../src/headers/model/simulator/../../Tools.h ../src/headers/Tools.h
 
 ../src/headers/MVCHeaders.h:
 
@@ -185,6 +189,8 @@ src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
 
 ../src/headers/controller/director/tools/FileLog.h:
 
+../src/headers/controller/director/tools/../../../Tools.h:
+
 ../src/headers/controller/director/../../view/interface/Interface.h:
 
 ../src/headers/controller/director/../../view/interface/../abstracts/View.h:
@@ -197,17 +203,23 @@ src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
 
 ../src/headers/controller/director/../../view/interface/managers/../Interface.h:
 
+../src/headers/controller/director/../../view/interface/managers/../../../Tools.h:
+
 ../src/headers/controller/director/../../view/interface/managers/Scenographer.h:
 
 ../src/headers/controller/director/../../view/interface/tools/Window.h:
 
 ../src/headers/controller/director/../../view/interface/tools/../Interface.h:
 
+../src/headers/controller/director/../../view/interface/tools/../../../Tools.h:
+
 ../src/headers/controller/director/../../view/interface/tools/Context.h:
 
 ../src/headers/controller/director/../../view/interface/tools/Scene.h:
 
 ../src/headers/controller/director/../../view/interface/../../controller/director/Director.h:
+
+../src/headers/controller/director/../../view/interface/../../Tools.h:
 
 ../src/headers/controller/director/../../Tools.h:
 
@@ -222,5 +234,7 @@ src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
 ../src/headers/model/simulator/../abstracts/Model.h:
 
 ../src/headers/model/simulator/../../controller/director/Director.h:
+
+../src/headers/model/simulator/../../Tools.h:
 
 ../src/headers/Tools.h:

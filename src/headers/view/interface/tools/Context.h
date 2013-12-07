@@ -21,6 +21,7 @@
 #include <GLU.h>
 
 #include "../Interface.h"
+#include "../../../Tools.h"
 
 using namespace std;
 

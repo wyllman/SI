@@ -13,28 +13,15 @@
  */
 
 #include "../../../../headers/view/interface/managers/Scenographer.h"
-#include "../../../../headers/Tools.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Scenographer::Scenographer(const Interface* interface) {
-	if (BASIC_LOG) {
-		cout << "------Generado el gestor Scenographer para la vista Interfaz " << endl;
-	}
 	refInterface_ = interface;
-	if (ADVAN_LOG) {
-		((Interface*)refInterface_)
-				->log("------Generado el gestor Scenographer para la vista Interfaz ");
-	}
+	logAction(LOG_INIT);
 }
 Scenographer::~Scenographer() {
-	if (BASIC_LOG) {
-		cout << "------Destruyendo el gestor Scenographer para la vista Interfaz " << endl;
-	}
-	if (ADVAN_LOG) {
-		((Interface*)refInterface_)
-				->log("------Destruyendo el gestor Scenographer para la vista Interfaz ");
-	}
+	logAction(LOG_END);
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -54,6 +41,33 @@ Scenographer::~Scenographer() {
 // ___________________________________________________________________________________
 // Métodos privados:
 void Scenographer::logAction(int index) {
+	if (BASIC_LOG) {
+		switch (index) {
+			case LOG_INIT:
+				cout << "------Generado el gestor Scenographer para la vista Interfaz " << endl;
+				break;
+			case LOG_END:
+				cout << "------Destruyendo el gestor Scenographer para la vista Interfaz "
+					<< endl;
+				break;
+		default:
+			break;
+		}
+	}
+	if(ADVAN_LOG) {
+		switch (index) {
+			case LOG_INIT:
+				((Interface*)refInterface_)
+					->log("------Generado el gestor Scenographer para la vista Interfaz ");
+				break;
+			case LOG_END:
+				((Interface*)refInterface_)
+					->log("------Destruyendo el gestor Scenographer para la vista Interfaz ");
+				break;
+			default:
+				break;
+		}
+	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

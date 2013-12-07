@@ -59,15 +59,18 @@ src/source/controller/director/tools/MainLoop.d \
   /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h \
   /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/managers/../Interface.h \
+  ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/managers/../../../Tools.h \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/managers/Scenographer.h \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/tools/Window.h \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/tools/../Interface.h \
+  ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/tools/../../../Tools.h \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/tools/Context.h \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/tools/Scene.h \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/../../controller/director/Director.h \
+  ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/../../Tools.h \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../Tools.h \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/FileLog.h \
-  ../src/source/controller/director/tools/../../../../headers/Tools.h
+  ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../Tools.h
 
 ../src/source/controller/director/tools/../../../../headers/controller/director/tools/MainLoop.h:
 
@@ -185,11 +188,15 @@ src/source/controller/director/tools/MainLoop.d \
 
 ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/managers/../Interface.h:
 
+../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/managers/../../../Tools.h:
+
 ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/managers/Scenographer.h:
 
 ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/tools/Window.h:
 
 ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/tools/../Interface.h:
+
+../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/tools/../../../Tools.h:
 
 ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/tools/Context.h:
 
@@ -197,8 +204,10 @@ src/source/controller/director/tools/MainLoop.d \
 
 ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/../../controller/director/Director.h:
 
+../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/../../Tools.h:
+
 ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../Tools.h:
 
 ../src/source/controller/director/tools/../../../../headers/controller/director/tools/FileLog.h:
 
-../src/source/controller/director/tools/../../../../headers/Tools.h:
+../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../Tools.h:

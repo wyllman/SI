@@ -14,23 +14,15 @@
  */
 
 #include "../../../headers/model/simulator/Simulator.h"
-#include "../../../headers/Tools.h"
+
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Simulator::Simulator(const Controller* controller):Model(controller) {
-	if (BASIC_LOG) {
-		cout << "---Generado el modelo Simulator " << endl;
-	}
+	logAction(LOG_INIT);
 }
 Simulator::~Simulator() {
-	if (BASIC_LOG) {
-		cout << "---Destruyendo el modelo Simulator " << endl;
-	}
-	if (ADVAN_LOG) {
-		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
-		fileLogTmp->insertLine("---Destruyendo el modelo Simulator ");
-	}
+	logAction(LOG_END);
 	stop();
 }
 // FIN -------------------------------------------------------------------------------
@@ -39,22 +31,10 @@ Simulator::~Simulator() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 void Simulator::init() {
-	if (BASIC_LOG) {
-		cout << "---Llamano a la función init de la clase Simulator " << endl;
-	}
-	if (ADVAN_LOG) {
-		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
-		fileLogTmp->insertLine("---Llamano a la función init de la clase Simulator.");
-	}
+	logAction(LOG_F_INIT);
 }
 void Simulator::stop() {
-	if (BASIC_LOG) {
-		cout << "---Llamano a la función stop de la clase Simulator " << endl;
-	}
-	if (ADVAN_LOG) {
-		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
-		fileLogTmp->insertLine("---Llamano a la función stop de la clase Simulator.");
-	}
+	logAction(LOG_F_STOP);
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -68,6 +48,43 @@ void Simulator::stop() {
 // ___________________________________________________________________________________
 // Métodos privados:
 void Simulator::logAction(int index) {
+	if (BASIC_LOG) {
+		switch (index) {
+			case LOG_INIT:
+				cout << "---Generado el modelo Simulator " << endl;
+				break;
+			case LOG_END:
+				cout << "---Destruyendo el modelo Simulator " << endl;
+				break;
+			case LOG_F_INIT:
+				cout << "---Llamano a la función init de la clase Simulator " << endl;
+				break;
+			case LOG_F_STOP:
+				cout << "---Llamano a la función stop de la clase Simulator " << endl;
+				break;
+			default:
+				break;
+		}
+	}
+	if(ADVAN_LOG) {
+		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
+		switch (index) {
+			case LOG_INIT:
+				fileLogTmp->insertLine("---Generando el modelo Simulator ");
+				break;
+			case LOG_END:
+				fileLogTmp->insertLine("---Destruyendo el modelo Simulator ");
+				break;
+			case LOG_F_INIT:
+				fileLogTmp->insertLine("---Llamano a la función init de la clase Simulator.");
+				break;
+			case LOG_F_STOP:
+				fileLogTmp->insertLine("---Llamano a la función stop de la clase Simulator.");
+				break;
+			default:
+				break;
+		}
+	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

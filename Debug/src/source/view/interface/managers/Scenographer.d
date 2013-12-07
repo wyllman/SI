@@ -55,9 +55,11 @@ src/source/view/interface/managers/Scenographer.d \
   /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h \
   /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../Interface.h \
+  ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../../../Tools.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/Scenographer.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../tools/Window.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../tools/../Interface.h \
+  ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../tools/../../../Tools.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../tools/Context.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../tools/Scene.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/Director.h \
@@ -66,9 +68,11 @@ src/source/view/interface/managers/Scenographer.d \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/tools/MainLoop.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/tools/../Director.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/tools/FileLog.h \
+  ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/tools/../../../Tools.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/../../view/interface/Interface.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/../../Tools.h \
-  ../src/source/view/interface/managers/../../../../headers/Tools.h
+  ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../Tools.h \
+  ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../Tools.h
 
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/Scenographer.h:
 
@@ -178,11 +182,15 @@ src/source/view/interface/managers/Scenographer.d \
 
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../Interface.h:
 
+../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../../../Tools.h:
+
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/Scenographer.h:
 
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../tools/Window.h:
 
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../tools/../Interface.h:
+
+../src/source/view/interface/managers/../../../../headers/view/interface/managers/../tools/../../../Tools.h:
 
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../tools/Context.h:
 
@@ -200,8 +208,12 @@ src/source/view/interface/managers/Scenographer.d \
 
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/tools/FileLog.h:
 
+../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/tools/../../../Tools.h:
+
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/../../view/interface/Interface.h:
 
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/../../Tools.h:
 
-../src/source/view/interface/managers/../../../../headers/Tools.h:
+../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../Tools.h:
+
+../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../Tools.h:

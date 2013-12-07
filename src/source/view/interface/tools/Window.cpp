@@ -14,29 +14,16 @@
  */
 
 #include "../../../../headers/view/interface/tools/Window.h"
-#include "../../../../headers/Tools.h"
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Window::Window(const Interface* interface) {
-	if (BASIC_LOG) {
-		cout << "------Generado la herramienta Window para la vista Interfaz " << endl;
-	}
 	refInterface_ = interface;
-	if (ADVAN_LOG) {
-		((Interface*)refInterface_)
-				->log("------Generado la herramienta Window para la vista Interfaz ");
-	}
+	logAction(LOG_INIT);
 }
 
 Window::~Window() {
-	if (BASIC_LOG) {
-		cout << "------Destruyendo la herramienta Window para la vista Interfaz " << endl;
-	}
-	if (ADVAN_LOG) {
-		((Interface*)refInterface_)
-				->log("------Destruyendo la herramienta Window para la vista Interfaz ");
-	}
+	logAction(LOG_END);
 	delete(displayRendererInfo_);
 	SDL_DestroyRenderer(rendererScene_);
 	SDL_DestroyWindow(windowSDL_);
@@ -48,26 +35,17 @@ Window::~Window() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 void Window::init(int width, int height) {
-	if (ADVAN_LOG) {
-		((Interface*)refInterface_)
-				->log("------Inicializando la ventana SDL. ");
-	}
+	logAction(LOG_F_INIT);
 	displayRendererInfo_ = new SDL_RendererInfo;
 	SDL_CreateWindowAndRenderer( width, height, SDL_WINDOW_OPENGL, &windowSDL_, &rendererScene_);
 	SDL_GetRendererInfo(rendererScene_, displayRendererInfo_);
 
 	if ((displayRendererInfo_->flags & SDL_RENDERER_ACCELERATED) == 0 ) {
-		if (ADVAN_LOG) {
-			((Interface*)refInterface_)
-					->log("------ERROR!! SDL RendererInfo (Sin aceleración gráfica) ");
-		}
+		logAction(LOG_ERROR);
 		((Interface*)refInterface_)->stop();
 	}
 	if ((displayRendererInfo_->flags & SDL_RENDERER_TARGETTEXTURE) == 0) {
-		if (ADVAN_LOG) {
-			((Interface*)refInterface_)
-					->log("------ERROR!! SDL RendererInfo (Sin ... textura?...) ");
-		}
+		logAction(LOG_ERROR_1);
 		((Interface*)refInterface_)->stop();
 	}
 
@@ -90,6 +68,55 @@ void Window::reshape() {
 // ___________________________________________________________________________________
 // Métodos privados:
 void Window::logAction(int index) {
+	if (BASIC_LOG) {
+		switch (index) {
+			case LOG_INIT:
+				cout << "------Generado la herramienta Window para la vista Interfaz "
+					<< endl;
+				break;
+			case LOG_END:
+				cout << "------Destruyendo la herramienta Window para la vista Interfaz "
+					<< endl;
+				break;
+			case LOG_F_INIT:
+				cout << "------Inicializando la ventana SDL. " << endl;
+				break;
+			case LOG_ERROR:
+				cout << "------ERROR!! SDL RendererInfo (Sin aceleración gráfica) " << endl;
+				break;
+			case LOG_ERROR_1:
+				cout << "------ERROR!! SDL RendererInfo (Sin ... textura?...) " << endl;
+				break;
+			default:
+				break;
+		}
+	}
+	if(ADVAN_LOG) {
+		switch (index) {
+			case LOG_INIT:
+				((Interface*)refInterface_)
+					->log("------Generado la herramienta Window para la vista Interfaz ");
+				break;
+			case LOG_END:
+				((Interface*)refInterface_)
+					->log("------Destruyendo la herramienta Window para la vista Interfaz ");
+				break;
+			case LOG_F_INIT:
+				((Interface*)refInterface_)
+					->log("------Inicializando la ventana SDL");
+				break;
+			case LOG_ERROR:
+				((Interface*)refInterface_)
+					->log("------ERROR!! SDL RendererInfo (Sin aceleración gráfica) ");
+				break;
+			case LOG_ERROR_1:
+				((Interface*)refInterface_)
+					->log("------ERROR!! SDL RendererInfo (Sin ... textura?...) ");
+				break;
+			default:
+				break;
+		}
+	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

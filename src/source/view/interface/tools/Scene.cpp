@@ -19,10 +19,14 @@
 Scene::Scene(const Interface* interface) {
 	refInterface_ = interface;
 	logAction(LOG_INIT);
+	vertexFloor_ = 0;
 }
 
 Scene::~Scene() {
 	logAction(LOG_END);
+	if (vertexFloor_ != 0) {
+		delete [] (vertexFloor_);
+	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -35,7 +39,41 @@ Scene::~Scene() {
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Manejadores públicos:
-
+void Scene::updateProy(GLfloat projectionMatrix[]) {
+	for (int i = 0;i < 16; i++) {
+		projectionMatrix_[i] = projectionMatrix[i];
+	}
+}
+void Scene::updateCam(GLfloat modelviewMatrix[]) {
+	for (int i = 0;i < 16; i++) {
+		modelviewMatrix_[i] = modelviewMatrix[i];
+	}
+}
+void Scene::updateFloor(float vertexFloor [], int size) {
+	if (vertexFloor_ != 0) {
+		delete [] (vertexFloor_);
+	}
+	vertexFloor_ = new float [size];
+	for (int i = 0;i < size; i++) {
+		vertexFloor_[i] = vertexFloor[i];
+	}
+}
+GLfloat* Scene::getModelviewMatrix() {
+	return modelviewMatrix_;
+}
+GLfloat* Scene::getProjectionMatrix() {
+	return projectionMatrix_;
+}
+const float* Scene::getVertexFloor() const {
+	return vertexFloor_;
+}
+float* Scene::getVertexFloor(int size) {
+	if (vertexFloor_ != 0) {
+		delete [] (vertexFloor_);
+	}
+	vertexFloor_ = new float [size];
+	return vertexFloor_;
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -73,5 +111,4 @@ void Scene::logAction(int index) {
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
 

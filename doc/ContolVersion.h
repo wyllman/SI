@@ -53,5 +53,8 @@
  *              - Implementadas las funciones logAction() para la clase Director y el progrma
  *              principal. Usadas para separar las acciones referentes al registro de mensajes
  *              internos del resto del código.
+ *              - Implementadas las funciones logAction() para el resto de clases.
+ *              - Implementada una primera versión de las clases Scene y Scenographer
+ *              (proyección, cámara y suelo).
  */
 

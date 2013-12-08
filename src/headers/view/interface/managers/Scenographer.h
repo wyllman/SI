@@ -16,21 +16,37 @@
 #define SCENOGRAPHER_H_
 
 #include <iostream>
+#include <GL.h>
+#include <GLU.h>
 
 #include "../Interface.h"
+#include "../tools/Scene.h"
 #include "../../../Tools.h"
 
 using namespace std;
 
 class Interface;
+class Scene;
 
 class Scenographer {
 public:
-	Scenographer(const Interface*);
+	Scenographer(const Interface*, const Scene*);
 	virtual ~Scenographer();
+
+	void init ();
+	void update ();
 
 private:
 	const Interface* refInterface_;
+	const Scene* refScene_;
+
+	void initProy ();
+	void initCam ();
+	void initFloor ();
+
+	void updateProy (float, float, int, int);
+	void updateCam (int [3], int [3], int [3]);
+	void updateFloor (int, int);
 
 	void logAction(int);
 };

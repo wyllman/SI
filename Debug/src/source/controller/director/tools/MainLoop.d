@@ -61,6 +61,9 @@ src/source/controller/director/tools/MainLoop.d \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/managers/../Interface.h \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/managers/../../../Tools.h \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/managers/Scenographer.h \
+  ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/managers/../tools/Scene.h \
+  ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/managers/../tools/../Interface.h \
+  ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/managers/../tools/../../../Tools.h \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/tools/Window.h \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/tools/../Interface.h \
   ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/tools/../../../Tools.h \
@@ -191,6 +194,12 @@ src/source/controller/director/tools/MainLoop.d \
 ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/managers/../../../Tools.h:
 
 ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/managers/Scenographer.h:
+
+../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/managers/../tools/Scene.h:
+
+../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/managers/../tools/../Interface.h:
+
+../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/managers/../tools/../../../Tools.h:
 
 ../src/source/controller/director/tools/../../../../headers/controller/director/tools/../../../view/interface/tools/Window.h:
 

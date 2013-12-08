@@ -56,6 +56,9 @@ src/source/view/interface/managers/Bureaucrat.d \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/Bureaucrat.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/Scenographer.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../Interface.h \
+  ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../tools/Scene.h \
+  ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../tools/../Interface.h \
+  ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../tools/../../../Tools.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../../../Tools.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../tools/Window.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../tools/../Interface.h \
@@ -183,6 +186,12 @@ src/source/view/interface/managers/Bureaucrat.d \
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/Scenographer.h:
 
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../Interface.h:
+
+../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../tools/Scene.h:
+
+../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../tools/../Interface.h:
+
+../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../tools/../../../Tools.h:
 
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../../../Tools.h:
 

@@ -2,6 +2,8 @@ src/source/view/interface/managers/Scenographer.d \
   src/source/view/interface/managers/Scenographer.o:  \
  ../src/source/view/interface/managers/Scenographer.cpp \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/Scenographer.h \
+  /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h \
+  /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../Interface.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../abstracts/View.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../abstracts/../../controller/abstracts/Controller.h \
@@ -52,8 +54,6 @@ src/source/view/interface/managers/Scenographer.d \
   /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_system.h \
   /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_timer.h \
   /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_version.h \
-  /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h \
-  /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../Interface.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../../../Tools.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/Scenographer.h \
@@ -72,9 +72,14 @@ src/source/view/interface/managers/Scenographer.d \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/../../view/interface/Interface.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/../../Tools.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../Tools.h \
+  ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../tools/Scene.h \
   ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../Tools.h
 
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/Scenographer.h:
+
+/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h:
+
+/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h:
 
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../Interface.h:
 
@@ -176,10 +181,6 @@ src/source/view/interface/managers/Scenographer.d \
 
 /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_version.h:
 
-/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h:
-
-/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h:
-
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../Interface.h:
 
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../managers/../../../Tools.h:
@@ -215,5 +216,7 @@ src/source/view/interface/managers/Scenographer.d \
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../controller/director/../../Tools.h:
 
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../Tools.h:
+
+../src/source/view/interface/managers/../../../../headers/view/interface/managers/../tools/Scene.h:
 
 ../src/source/view/interface/managers/../../../../headers/view/interface/managers/../../../Tools.h:

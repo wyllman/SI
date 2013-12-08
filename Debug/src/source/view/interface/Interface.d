@@ -56,6 +56,9 @@ src/source/view/interface/Interface.d \
   ../src/source/view/interface/../../../headers/view/interface/managers/../Interface.h \
   ../src/source/view/interface/../../../headers/view/interface/managers/../../../Tools.h \
   ../src/source/view/interface/../../../headers/view/interface/managers/Scenographer.h \
+  ../src/source/view/interface/../../../headers/view/interface/managers/../tools/Scene.h \
+  ../src/source/view/interface/../../../headers/view/interface/managers/../tools/../Interface.h \
+  ../src/source/view/interface/../../../headers/view/interface/managers/../tools/../../../Tools.h \
   ../src/source/view/interface/../../../headers/view/interface/tools/Window.h \
   ../src/source/view/interface/../../../headers/view/interface/tools/../Interface.h \
   ../src/source/view/interface/../../../headers/view/interface/tools/../../../Tools.h \
@@ -181,6 +184,12 @@ src/source/view/interface/Interface.d \
 ../src/source/view/interface/../../../headers/view/interface/managers/../../../Tools.h:
 
 ../src/source/view/interface/../../../headers/view/interface/managers/Scenographer.h:
+
+../src/source/view/interface/../../../headers/view/interface/managers/../tools/Scene.h:
+
+../src/source/view/interface/../../../headers/view/interface/managers/../tools/../Interface.h:
+
+../src/source/view/interface/../../../headers/view/interface/managers/../tools/../../../Tools.h:
 
 ../src/source/view/interface/../../../headers/view/interface/tools/Window.h:
 

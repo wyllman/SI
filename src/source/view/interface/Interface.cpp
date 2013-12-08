@@ -39,17 +39,20 @@ Interface::~Interface() {
 void Interface::init() {
 	logAction(LOG_F_INIT);
 	bureaucrat_ = new Bureaucrat (this);
-	scenographer_ = new Scenographer (this);
 
 	window_ = new Window (this);
 	context_ = new Context (this);
+
 	scene_ = new Scene (this);
+	scenographer_ = new Scenographer (this, scene_);
 
 	bureaucrat_->initSDL();
 	bureaucrat_->initOGL();
 
 	window_->init(500, 500);
 	context_->init();
+
+	scenographer_->init();
 
 	render();
 }
@@ -100,30 +103,17 @@ void Interface::render() {
 
 	glUseProgram(context_->getProgramGsl());
 
-	float ratio = 500 / 500;
-	float near = 1;
-	float far = 1000;
-
-	GLfloat modelviewMatrix[16];
-	GLfloat projectionMatrix[16];
-
-	glMatrixMode( GL_PROJECTION );
-	glLoadIdentity();
-	gluPerspective(45.0, ratio, near, far);
-	glGetFloatv(GL_PROJECTION_MATRIX, projectionMatrix);
-
-	glMatrixMode( GL_MODELVIEW );
-	gluLookAt(0,0,0,    0, 0,1,    0,1,0);
-	glGetFloatv(GL_MODELVIEW_MATRIX, modelviewMatrix);
-	glMatrixMode(0);
-
+	// Enviar la proyección al shader
 	glUniformMatrix4fv(glGetUniformLocation(context_->getProgramGsl(),  "projection_matrix"),
-						1, GL_FALSE, projectionMatrix);
+						1, GL_FALSE, scene_->getProjectionMatrix());
+	// Enviar la cámara al shader
 	glUniformMatrix4fv(glGetUniformLocation(context_->getProgramGsl(),  "modelview_matrix"),
-						1, GL_FALSE, modelviewMatrix);
+						1, GL_FALSE, scene_->getModelviewMatrix());
 	glEnableVertexAttribArray(0);
-
-	createFloor(1000, 1000);
+	// Enviar el suelo al shader y pintarlo.
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 1000 * 1000 * 2
+				, scene_->getVertexFloor(), GL_STATIC_DRAW);
+	glDrawArrays(GL_POINTS, 0, 1000 * 1000);
 
 	glDisableVertexAttribArray(0);
 	glUseProgram(0);

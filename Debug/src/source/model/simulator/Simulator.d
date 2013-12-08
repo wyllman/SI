@@ -65,6 +65,9 @@ src/source/model/simulator/Simulator.d \
   ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/managers/../Interface.h \
   ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/managers/../../../Tools.h \
   ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/managers/Scenographer.h \
+  ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/managers/../tools/Scene.h \
+  ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/managers/../tools/../Interface.h \
+  ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/managers/../tools/../../../Tools.h \
   ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/tools/Window.h \
   ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/tools/../Interface.h \
   ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/tools/../../../Tools.h \
@@ -202,6 +205,12 @@ src/source/model/simulator/Simulator.d \
 ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/managers/../../../Tools.h:
 
 ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/managers/Scenographer.h:
+
+../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/managers/../tools/Scene.h:
+
+../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/managers/../tools/../Interface.h:
+
+../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/managers/../tools/../../../Tools.h:
 
 ../src/source/model/simulator/../../../headers/model/simulator/../../controller/director/../../view/interface/tools/Window.h:
 

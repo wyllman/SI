@@ -8,10 +8,10 @@
 8. ---Llamano a la función init de la clase Simulator.
 9. ---Llamano a la función init de la clase Interface.
 10. ------Inicializando SDL en la clase Bureaucrat. 
-11. ------Generado el gestor Scenographer para la vista Interfaz 
-12. ------Generado la herramienta Window para la vista Interfaz 
-13. ------Generado la herramienta Context para la vista Interfaz 
-14. ------Generado la herramienta Scene para la vista Interfaz 
+11. ------Generado la herramienta Window para la vista Interfaz 
+12. ------Generado la herramienta Context para la vista Interfaz 
+13. ------Generado la herramienta Scene para la vista Interfaz 
+14. ------Generado el gestor Scenographer para la vista Interfaz 
 15. ------Inicializando SDL en la clase Bureaucrat. 
 16. ------Inicializando OGL en la clase Bureaucrat. 
 17. ------Inicializando la ventana SDL

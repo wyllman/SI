@@ -63,6 +63,9 @@ src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
   ../src/headers/controller/director/../../view/interface/managers/../Interface.h \
   ../src/headers/controller/director/../../view/interface/managers/../../../Tools.h \
   ../src/headers/controller/director/../../view/interface/managers/Scenographer.h \
+  ../src/headers/controller/director/../../view/interface/managers/../tools/Scene.h \
+  ../src/headers/controller/director/../../view/interface/managers/../tools/../Interface.h \
+  ../src/headers/controller/director/../../view/interface/managers/../tools/../../../Tools.h \
   ../src/headers/controller/director/../../view/interface/tools/Window.h \
   ../src/headers/controller/director/../../view/interface/tools/../Interface.h \
   ../src/headers/controller/director/../../view/interface/tools/../../../Tools.h \
@@ -206,6 +209,12 @@ src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
 ../src/headers/controller/director/../../view/interface/managers/../../../Tools.h:
 
 ../src/headers/controller/director/../../view/interface/managers/Scenographer.h:
+
+../src/headers/controller/director/../../view/interface/managers/../tools/Scene.h:
+
+../src/headers/controller/director/../../view/interface/managers/../tools/../Interface.h:
+
+../src/headers/controller/director/../../view/interface/managers/../tools/../../../Tools.h:
 
 ../src/headers/controller/director/../../view/interface/tools/Window.h:
 

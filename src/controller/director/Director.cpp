@@ -13,7 +13,7 @@
  *
  */
 
-#include "../../../headers/controller/director/Director.h"
+#include "../../../include/controller/director/Director.h"
 
 
 // ___________________________________________________________________________________

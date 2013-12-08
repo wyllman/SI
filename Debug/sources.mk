@@ -23,14 +23,14 @@ C_UPPER_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
-src/source/view/interface/tools \
-src/source/view/interface/managers \
-src/source/view/interface \
-src/source/view/abstracts \
-src/source/model/simulator \
-src/source/model/abstracts \
-src/source/controller/director/tools \
-src/source/controller/director \
-src/source/controller/abstracts \
+src/view/interface/tools \
+src/view/interface/managers \
+src/view/interface \
+src/view/abstracts \
+src/model/simulator \
+src/model/abstracts \
+src/controller/director/tools \
+src/controller/director \
+src/controller/abstracts \
 src \
 

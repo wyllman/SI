@@ -1,11 +1,11 @@
 src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
-  ../src/headers/MVCHeaders.h \
-  ../src/headers/controller/abstracts/Controller.h \
-  ../src/headers/controller/abstracts/../../view/abstracts/View.h \
-  ../src/headers/controller/abstracts/../../view/abstracts/../../controller/abstracts/Controller.h \
-  ../src/headers/controller/abstracts/../../model/abstracts/Model.h \
-  ../src/headers/controller/abstracts/../../model/abstracts/../../controller/abstracts/Controller.h \
-  ../src/headers/controller/director/Director.h \
+  ../src/../include/MVCHeaders.h \
+  ../src/../include/controller/abstracts/Controller.h \
+  ../src/../include/controller/abstracts/../../view/abstracts/View.h \
+  ../src/../include/controller/abstracts/../../view/abstracts/../../controller/abstracts/Controller.h \
+  ../src/../include/controller/abstracts/../../model/abstracts/Model.h \
+  ../src/../include/controller/abstracts/../../model/abstracts/../../controller/abstracts/Controller.h \
+  ../src/../include/controller/director/Director.h \
   /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL.h \
   /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_main.h \
   /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_stdinc.h \
@@ -49,52 +49,53 @@ src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
   /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_system.h \
   /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_timer.h \
   /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_version.h \
-  ../src/headers/controller/director/../abstracts/controller.h \
-  ../src/headers/controller/director/tools/FileLog.h \
-  ../src/headers/controller/director/tools/MainLoop.h \
-  ../src/headers/controller/director/tools/../Director.h \
-  ../src/headers/controller/director/tools/FileLog.h \
-  ../src/headers/controller/director/tools/../../../Tools.h \
-  ../src/headers/controller/director/../../view/interface/Interface.h \
-  ../src/headers/controller/director/../../view/interface/../abstracts/View.h \
-  ../src/headers/controller/director/../../view/interface/managers/Bureaucrat.h \
+  ../src/../include/controller/director/../abstracts/controller.h \
+  ../src/../include/controller/director/tools/FileLog.h \
+  ../src/../include/controller/director/tools/../../../Tools.h \
+  ../src/../include/controller/director/tools/MainLoop.h \
+  ../src/../include/controller/director/tools/../Director.h \
+  ../src/../include/controller/director/tools/FileLog.h \
+  ../src/../include/controller/director/../../view/interface/Interface.h \
+  ../src/../include/controller/director/../../view/interface/../abstracts/View.h \
+  ../src/../include/controller/director/../../view/interface/managers/Bureaucrat.h \
   /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h \
   /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h \
-  ../src/headers/controller/director/../../view/interface/managers/../Interface.h \
-  ../src/headers/controller/director/../../view/interface/managers/../../../Tools.h \
-  ../src/headers/controller/director/../../view/interface/managers/Scenographer.h \
-  ../src/headers/controller/director/../../view/interface/managers/../tools/Scene.h \
-  ../src/headers/controller/director/../../view/interface/managers/../tools/../Interface.h \
-  ../src/headers/controller/director/../../view/interface/managers/../tools/../../../Tools.h \
-  ../src/headers/controller/director/../../view/interface/tools/Window.h \
-  ../src/headers/controller/director/../../view/interface/tools/../Interface.h \
-  ../src/headers/controller/director/../../view/interface/tools/../../../Tools.h \
-  ../src/headers/controller/director/../../view/interface/tools/Context.h \
-  ../src/headers/controller/director/../../view/interface/tools/Scene.h \
-  ../src/headers/controller/director/../../view/interface/../../controller/director/Director.h \
-  ../src/headers/controller/director/../../view/interface/../../Tools.h \
-  ../src/headers/controller/director/../../Tools.h \
-  ../src/headers/view/abstracts/View.h \
-  ../src/headers/view/interface/Interface.h \
-  ../src/headers/model/abstracts/Model.h \
-  ../src/headers/model/simulator/Simulator.h \
-  ../src/headers/model/simulator/../abstracts/Model.h \
-  ../src/headers/model/simulator/../../controller/director/Director.h \
-  ../src/headers/model/simulator/../../Tools.h ../src/headers/Tools.h
+  ../src/../include/controller/director/../../view/interface/managers/../Interface.h \
+  ../src/../include/controller/director/../../view/interface/managers/../../../Tools.h \
+  ../src/../include/controller/director/../../view/interface/managers/Scenographer.h \
+  ../src/../include/controller/director/../../view/interface/managers/../tools/Scene.h \
+  ../src/../include/controller/director/../../view/interface/managers/../tools/../Interface.h \
+  ../src/../include/controller/director/../../view/interface/managers/../tools/../../../Tools.h \
+  ../src/../include/controller/director/../../view/interface/tools/Window.h \
+  ../src/../include/controller/director/../../view/interface/tools/../Interface.h \
+  ../src/../include/controller/director/../../view/interface/tools/../../../Tools.h \
+  ../src/../include/controller/director/../../view/interface/tools/Context.h \
+  ../src/../include/controller/director/../../view/interface/tools/Scene.h \
+  ../src/../include/controller/director/../../view/interface/../../controller/director/Director.h \
+  ../src/../include/controller/director/../../view/interface/../../Tools.h \
+  ../src/../include/controller/director/../../Tools.h \
+  ../src/../include/view/abstracts/View.h \
+  ../src/../include/view/interface/Interface.h \
+  ../src/../include/model/abstracts/Model.h \
+  ../src/../include/model/simulator/Simulator.h \
+  ../src/../include/model/simulator/../abstracts/Model.h \
+  ../src/../include/model/simulator/../../controller/director/Director.h \
+  ../src/../include/model/simulator/../../Tools.h \
+  ../src/../include/Tools.h
 
-../src/headers/MVCHeaders.h:
+../src/../include/MVCHeaders.h:
 
-../src/headers/controller/abstracts/Controller.h:
+../src/../include/controller/abstracts/Controller.h:
 
-../src/headers/controller/abstracts/../../view/abstracts/View.h:
+../src/../include/controller/abstracts/../../view/abstracts/View.h:
 
-../src/headers/controller/abstracts/../../view/abstracts/../../controller/abstracts/Controller.h:
+../src/../include/controller/abstracts/../../view/abstracts/../../controller/abstracts/Controller.h:
 
-../src/headers/controller/abstracts/../../model/abstracts/Model.h:
+../src/../include/controller/abstracts/../../model/abstracts/Model.h:
 
-../src/headers/controller/abstracts/../../model/abstracts/../../controller/abstracts/Controller.h:
+../src/../include/controller/abstracts/../../model/abstracts/../../controller/abstracts/Controller.h:
 
-../src/headers/controller/director/Director.h:
+../src/../include/controller/director/Director.h:
 
 /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL.h:
 
@@ -182,68 +183,68 @@ src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
 
 /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_version.h:
 
-../src/headers/controller/director/../abstracts/controller.h:
+../src/../include/controller/director/../abstracts/controller.h:
 
-../src/headers/controller/director/tools/FileLog.h:
+../src/../include/controller/director/tools/FileLog.h:
 
-../src/headers/controller/director/tools/MainLoop.h:
+../src/../include/controller/director/tools/../../../Tools.h:
 
-../src/headers/controller/director/tools/../Director.h:
+../src/../include/controller/director/tools/MainLoop.h:
 
-../src/headers/controller/director/tools/FileLog.h:
+../src/../include/controller/director/tools/../Director.h:
 
-../src/headers/controller/director/tools/../../../Tools.h:
+../src/../include/controller/director/tools/FileLog.h:
 
-../src/headers/controller/director/../../view/interface/Interface.h:
+../src/../include/controller/director/../../view/interface/Interface.h:
 
-../src/headers/controller/director/../../view/interface/../abstracts/View.h:
+../src/../include/controller/director/../../view/interface/../abstracts/View.h:
 
-../src/headers/controller/director/../../view/interface/managers/Bureaucrat.h:
+../src/../include/controller/director/../../view/interface/managers/Bureaucrat.h:
 
 /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h:
 
 /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h:
 
-../src/headers/controller/director/../../view/interface/managers/../Interface.h:
+../src/../include/controller/director/../../view/interface/managers/../Interface.h:
 
-../src/headers/controller/director/../../view/interface/managers/../../../Tools.h:
+../src/../include/controller/director/../../view/interface/managers/../../../Tools.h:
 
-../src/headers/controller/director/../../view/interface/managers/Scenographer.h:
+../src/../include/controller/director/../../view/interface/managers/Scenographer.h:
 
-../src/headers/controller/director/../../view/interface/managers/../tools/Scene.h:
+../src/../include/controller/director/../../view/interface/managers/../tools/Scene.h:
 
-../src/headers/controller/director/../../view/interface/managers/../tools/../Interface.h:
+../src/../include/controller/director/../../view/interface/managers/../tools/../Interface.h:
 
-../src/headers/controller/director/../../view/interface/managers/../tools/../../../Tools.h:
+../src/../include/controller/director/../../view/interface/managers/../tools/../../../Tools.h:
 
-../src/headers/controller/director/../../view/interface/tools/Window.h:
+../src/../include/controller/director/../../view/interface/tools/Window.h:
 
-../src/headers/controller/director/../../view/interface/tools/../Interface.h:
+../src/../include/controller/director/../../view/interface/tools/../Interface.h:
 
-../src/headers/controller/director/../../view/interface/tools/../../../Tools.h:
+../src/../include/controller/director/../../view/interface/tools/../../../Tools.h:
 
-../src/headers/controller/director/../../view/interface/tools/Context.h:
+../src/../include/controller/director/../../view/interface/tools/Context.h:
 
-../src/headers/controller/director/../../view/interface/tools/Scene.h:
+../src/../include/controller/director/../../view/interface/tools/Scene.h:
 
-../src/headers/controller/director/../../view/interface/../../controller/director/Director.h:
+../src/../include/controller/director/../../view/interface/../../controller/director/Director.h:
 
-../src/headers/controller/director/../../view/interface/../../Tools.h:
+../src/../include/controller/director/../../view/interface/../../Tools.h:
 
-../src/headers/controller/director/../../Tools.h:
+../src/../include/controller/director/../../Tools.h:
 
-../src/headers/view/abstracts/View.h:
+../src/../include/view/abstracts/View.h:
 
-../src/headers/view/interface/Interface.h:
+../src/../include/view/interface/Interface.h:
 
-../src/headers/model/abstracts/Model.h:
+../src/../include/model/abstracts/Model.h:
 
-../src/headers/model/simulator/Simulator.h:
+../src/../include/model/simulator/Simulator.h:
 
-../src/headers/model/simulator/../abstracts/Model.h:
+../src/../include/model/simulator/../abstracts/Model.h:
 
-../src/headers/model/simulator/../../controller/director/Director.h:
+../src/../include/model/simulator/../../controller/director/Director.h:
 
-../src/headers/model/simulator/../../Tools.h:
+../src/../include/model/simulator/../../Tools.h:
 
-../src/headers/Tools.h:
+../src/../include/Tools.h:

@@ -14,8 +14,8 @@
 #include <iostream>
 using namespace std;
 
-#include "headers/MVCHeaders.h"
-#include "headers/Tools.h"
+#include "../include/MVCHeaders.h"
+#include "../include/Tools.h"
 
 void logAction (int index) {
 	if (BASIC_LOG) {

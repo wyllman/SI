@@ -8,15 +8,15 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include src/source/view/interface/tools/subdir.mk
--include src/source/view/interface/managers/subdir.mk
--include src/source/view/interface/subdir.mk
--include src/source/view/abstracts/subdir.mk
--include src/source/model/simulator/subdir.mk
--include src/source/model/abstracts/subdir.mk
--include src/source/controller/director/tools/subdir.mk
--include src/source/controller/director/subdir.mk
--include src/source/controller/abstracts/subdir.mk
+-include src/view/interface/tools/subdir.mk
+-include src/view/interface/managers/subdir.mk
+-include src/view/interface/subdir.mk
+-include src/view/abstracts/subdir.mk
+-include src/model/simulator/subdir.mk
+-include src/model/abstracts/subdir.mk
+-include src/controller/director/tools/subdir.mk
+-include src/controller/director/subdir.mk
+-include src/controller/abstracts/subdir.mk
 -include src/subdir.mk
 -include subdir.mk
 -include objects.mk

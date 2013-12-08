@@ -22,6 +22,8 @@
 #include <string>
 #include <fstream>
 
+#include "../../../Tools.h"
+
 using namespace std;
 
 class FileLog {

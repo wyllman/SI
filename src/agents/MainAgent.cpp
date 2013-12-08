@@ -5,7 +5,7 @@
  *      Author: manwe
  */
 
-#include "MainAgent.h"
+#include "agents/MainAgent.h"
 
 MainAgent::MainAgent() {
 	// TODO Auto-generated constructor stub

@@ -8,9 +8,8 @@
 #ifndef MAPBUILDER_H_
 #define MAPBUILDER_H_
 
+#include "typedefs.h"
 #include <stdint.h>
-
-#include "../include/typedefs.h"
 
 /**
  * \class MapBuilder

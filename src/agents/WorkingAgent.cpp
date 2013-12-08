@@ -5,7 +5,7 @@
  *      Author: manwe
  */
 
-#include "WorkingAgent.h"
+#include "agents/WorkingAgent.h"
 
 WorkingAgent::WorkingAgent() {
 	// TODO Auto-generated constructor stub

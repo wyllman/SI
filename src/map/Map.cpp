@@ -5,13 +5,12 @@
  *      Author: manwe
  */
 
-#include "Map.h"
+#include "map/Map.h"
+#include "map/MapBuilder.h"
 
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
-
-#include "MapBuilder.h"
 
 Map::Map(uint32_t size) :
 		m_size(size), m_mapArray(NULL) {

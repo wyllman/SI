@@ -5,7 +5,7 @@
  *      Author: manwe
  */
 
-#include "Plan.h"
+#include "bdi/Plan.h"
 
 Plan::Plan() {
 	// TODO Auto-generated constructor stub

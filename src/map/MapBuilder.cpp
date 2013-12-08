@@ -5,7 +5,7 @@
  *      Author: manwe
  */
 
-#include "MapBuilder.h"
+#include "map/MapBuilder.h"
 
 #include <cmath>
 #include <cstdlib>
@@ -18,6 +18,7 @@
 #ifdef __linux
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int_distribution.hpp>
+#include <boost/random/binomial_distribution.hpp>
 #elif __APPLE__
 #ifdef TARGET_OS_MAC
 /* includes */
@@ -43,7 +44,7 @@ MapBuilder::MapBuilder() {
 	uint32_t upperBound;
 	uint32_t bytesPerPixel;
 	uint32_t pixelGrayscaleValue;
-	std::map<uint32_t, uint32_t> terrainBounds;
+	std::map<BYTE, BYTE> terrainBounds;
 
 	m_mapSize = gimp.width;
 	bytesPerPixel = gimp.bytes_per_pixel;
@@ -81,21 +82,30 @@ MapBuilder::MapBuilder() {
 		terrainBounds.insert(p);
 	}
 
-	lowerBound = min + (max - min) * 0.05;
-	upperBound = max - (max - min) * 0.4;
+//	lowerBound = min + (max - min) * 0.05;
+//	upperBound = max - (max - min) * 0.4;
 
 //bucle de relleno del array
 	for (uint32_t i = 0; i < m_mapSize; i++) {
 		for (uint32_t j = 0; j < m_mapSize; j++) {
 			pixelGrayscaleValue = gimp.pixel_data[((i * m_mapSize) + j)
 					* bytesPerPixel];
-			if (pixelGrayscaleValue < lowerBound) {
-				m_map[i][j] = TERRAIN_WATER;
-			} else if (pixelGrayscaleValue > upperBound) {
-				m_map[i][j] = TERRAIN_ELEVATION;
+//			std::cout << "key = "<< static_cast<int>(terrainBounds.lower_bound(pixelGrayscaleValue)->first)
+//					<< " value = " << static_cast<int>(terrainBounds.lower_bound(pixelGrayscaleValue)->second) << std::endl;
+//			std::cin.get();
+			if(pixelGrayscaleValue >= terrainBounds.lower_bound(pixelGrayscaleValue)->first &&
+					pixelGrayscaleValue <= terrainBounds.lower_bound(pixelGrayscaleValue)->second) {
+					m_map[i][j] = TERRAIN_ELEVATION;
 			} else {
 				m_map[i][j] = TERRAIN_GROUND;
 			}
+//			if (pixelGrayscaleValue < lowerBound) {
+//				m_map[i][j] = TERRAIN_WATER;
+//			} else if (pixelGrayscaleValue > upperBound) {
+//				m_map[i][j] = TERRAIN_ELEVATION;
+//			} else {
+//				m_map[i][j] = TERRAIN_GROUND;
+//			}
 			// creamos agua en los bordes del mapa para simplificar la deteccion de colisiones
 			if (i == 0 || i == m_mapSize - 1 || j == 0 || j == m_mapSize - 1) {
 				m_map[i][j] = TERRAIN_WATER;

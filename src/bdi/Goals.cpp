@@ -5,7 +5,7 @@
  *      Author: manwe
  */
 
-#include "Goals.h"
+#include "bdi/Goals.h"
 
 Goals::Goals() {
 	// TODO Auto-generated constructor stub

@@ -5,10 +5,10 @@
  *      Author: manwe
  */
 
-#include "Agent.h"
-#include "../bdi/BeliefSet.h"
-#include "../bdi/Goals.h"
-#include "../bdi/Intentions.h"
+#include "agents/Agent.h"
+#include "bdi/BeliefSet.h"
+#include "bdi/Goals.h"
+#include "bdi/Intentions.h"
 
 Agent::Agent() {
 	// TODO Auto-generated constructor stub

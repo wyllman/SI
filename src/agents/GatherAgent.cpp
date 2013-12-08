@@ -5,7 +5,7 @@
  *      Author: manwe
  */
 
-#include "GatherAgent.h"
+#include "agents/GatherAgent.h"
 
 GatherAgent::GatherAgent() {
 	// TODO Auto-generated constructor stub

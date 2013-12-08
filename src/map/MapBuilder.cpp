@@ -44,7 +44,7 @@ MapBuilder::MapBuilder() {
 	uint32_t upperBound;
 	uint32_t bytesPerPixel;
 	uint32_t pixelGrayscaleValue;
-	std::map<BYTE, BYTE> terrainBounds;
+// 	std::map<BYTE, BYTE> terrainBounds;
 
 	m_mapSize = gimp.width;
 	bytesPerPixel = gimp.bytes_per_pixel;
@@ -71,7 +71,7 @@ MapBuilder::MapBuilder() {
 		}
 	}
 	// generacion de rangos aleatorios para los tipos de terreno
-	mersenneGenerator.seed(time(NULL));
+	/*mersenneGenerator.seed(time(NULL));
 	boost::random::uniform_int_distribution<> minimumElevation(min, max - 12);
 	boost::random::uniform_int_distribution<> maximumElevation(8, 12);
 	for (int i = 0; i < 5; i++) {
@@ -80,10 +80,10 @@ MapBuilder::MapBuilder() {
 		p.first = minimumElevation(mersenneGenerator);
 		p.second = p.first + maximumElevation(mersenneGenerator);
 		terrainBounds.insert(p);
-	}
+	}*/
 
-//	lowerBound = min + (max - min) * 0.05;
-//	upperBound = max - (max - min) * 0.4;
+	lowerBound = min + (max - min) * 0.05;
+	upperBound = max - (max - min) * 0.4;
 
 //bucle de relleno del array
 	for (uint32_t i = 0; i < m_mapSize; i++) {
@@ -93,19 +93,19 @@ MapBuilder::MapBuilder() {
 //			std::cout << "key = "<< static_cast<int>(terrainBounds.lower_bound(pixelGrayscaleValue)->first)
 //					<< " value = " << static_cast<int>(terrainBounds.lower_bound(pixelGrayscaleValue)->second) << std::endl;
 //			std::cin.get();
-			if(pixelGrayscaleValue >= terrainBounds.lower_bound(pixelGrayscaleValue)->first &&
-					pixelGrayscaleValue <= terrainBounds.lower_bound(pixelGrayscaleValue)->second) {
-					m_map[i][j] = TERRAIN_ELEVATION;
+// 			if(pixelGrayscaleValue >= terrainBounds.lower_bound(pixelGrayscaleValue)->first &&
+// 					pixelGrayscaleValue <= terrainBounds.lower_bound(pixelGrayscaleValue)->second) {
+// 					m_map[i][j] = TERRAIN_ELEVATION;
+// 			} else {
+// 				m_map[i][j] = TERRAIN_GROUND;
+// 			}
+			if (pixelGrayscaleValue < lowerBound) {
+				m_map[i][j] = TERRAIN_WATER;
+			} else if (pixelGrayscaleValue > upperBound) {
+				m_map[i][j] = TERRAIN_ELEVATION;
 			} else {
 				m_map[i][j] = TERRAIN_GROUND;
 			}
-//			if (pixelGrayscaleValue < lowerBound) {
-//				m_map[i][j] = TERRAIN_WATER;
-//			} else if (pixelGrayscaleValue > upperBound) {
-//				m_map[i][j] = TERRAIN_ELEVATION;
-//			} else {
-//				m_map[i][j] = TERRAIN_GROUND;
-//			}
 			// creamos agua en los bordes del mapa para simplificar la deteccion de colisiones
 			if (i == 0 || i == m_mapSize - 1 || j == 0 || j == m_mapSize - 1) {
 				m_map[i][j] = TERRAIN_WATER;

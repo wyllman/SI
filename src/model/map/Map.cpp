@@ -5,8 +5,8 @@
  *      Author: manwe
  */
 
-#include "map/Map.h"
-#include "map/MapBuilder.h"
+#include "../../../include/model/map/Map.h"
+#include "../../../include/model/map/MapBuilder.h"
 
 #include <cstdlib>
 #include <cstring>

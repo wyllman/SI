@@ -56,5 +56,8 @@
  *              - Implementadas las funciones logAction() para el resto de clases.
  *              - Implementada una primera versión de las clases Scene y Scenographer
  *              (proyección, cámara y suelo).
+ *              - Mezcla de la rama guillermo (estructura de clases del MVC) con la rama master
+ *              (estructura inicial del sist. int.).
+ *              - Principales arreglos de enlazado después de la reestructuración o mezcla.
  */
 

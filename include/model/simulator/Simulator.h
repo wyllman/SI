@@ -21,6 +21,8 @@
 #include "../abstracts/Model.h"
 #include "../../controller/director/Director.h"
 #include "../../Tools.h"
+#include "../map/Map.h"
+#include "../map/MapConsoleInterface.h"
 
 using namespace std;
 
@@ -33,7 +35,8 @@ public:
 	void stop();
 
 private:
-	// Atributos privdos
+	Map* map_;
+
 	void logAction(int);
 };
 

@@ -93,7 +93,7 @@ MapBuilder::MapBuilder() {
 			                                      * bytesPerPixel];
 						std::cout << "key = "<< static_cast<int>(terrainBounds.lower_bound(pixelGrayscaleValue)->first)
 								<< " value = " << static_cast<int>(terrainBounds.lower_bound(pixelGrayscaleValue)->second) << std::endl;
-						std::cin.get();
+						//std::cin.get();
 						if(pixelGrayscaleValue >= terrainBounds.lower_bound(pixelGrayscaleValue)->first &&
 								pixelGrayscaleValue <= terrainBounds.lower_bound(pixelGrayscaleValue)->second) {
 								m_map[i][j] = TERRAIN_ELEVATION;

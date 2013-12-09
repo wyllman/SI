@@ -32,6 +32,17 @@ Simulator::~Simulator() {
 // Métodos públicos:
 void Simulator::init() {
 	logAction(LOG_F_INIT);
+	map_ = new Map();
+
+	MapConsoleInterface mapci(*map_);
+
+
+
+	for (uint i = 0; i < map_->size(); i++) {
+		for (uint j = 0; j < map_->size(); j++)
+				std::cout << mapci(i, j);
+		std::cout << std::endl;
+	 }
 }
 void Simulator::stop() {
 	logAction(LOG_F_STOP);

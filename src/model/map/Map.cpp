@@ -4,13 +4,13 @@
  *  Created on: 10/11/2013
  *      Author: manwe
  */
-/*
+
 #include "../../../include/model/map/Map.h"
 #include "../../../include/model/map/MapBuilder.h"
 
 #include <cstdlib>
-//#include <cstring>
-//#include <iostream>
+#include <cstring>
+#include <iostream>
 
 Map::Map(uint32_t size) :
 		m_size(size), m_mapArray(NULL) {
@@ -64,4 +64,4 @@ Map::~Map() {
 		m_mapArray = NULL;
 	}
 }
-*/
+

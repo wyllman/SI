@@ -4,18 +4,18 @@
  *  Created on: 10/11/2013
  *      Author: manwe
  */
-/*
+
 #ifndef MAP_H_
 #define MAP_H_
 
 #include "../../typedefs.h"
-//#include <stdint.h>
+#include <stdint.h>
 
 class MapBuilder;
 
-/**
- *	@class Map
- *	@brief Clase contenedora el mapa.
+//
+//	@class Map
+//	@brief Clase contenedora el mapa.
 //
 //	La clase Map contiene el mapa sobre el que operan los agentes en la
 //	simulación y que es renderizado en pantalla.

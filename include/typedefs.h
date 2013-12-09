@@ -8,10 +8,11 @@
 #ifndef TYPEDEFS_H_
 #define TYPEDEFS_H_
 
+#include <map>
 //#include <bits/stl_pair.h>
 
 typedef unsigned char BYTE;
-//typedef std::pair<int, int> Point;
+typedef std::pair<int, int> Point;
 
 enum {
 	TERRAIN_GROUND = 0x0,

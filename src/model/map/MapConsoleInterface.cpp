@@ -20,11 +20,11 @@ MapConsoleInterface::~MapConsoleInterface() {
 }
 
 BYTE const* const * MapConsoleInterface::map() {
-	return 0;
-	//return m_map->map();
+	//return 0;
+	return m_map->map();
 }
 
 BYTE MapConsoleInterface::operator()(int x, int y) {
-	return 0;
-	//return m_consoleMapping[m_map->map()[x][y]];
+	//return 0;
+	return m_consoleMapping[m_map->map()[x][y]];
 }

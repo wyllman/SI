@@ -33,17 +33,15 @@ Map::Map() {
 	m_size = m_builder->mapSize();
 	m_mapArray = const_cast<BYTE**>(m_builder->generatedMap());
 
-	//std::cout << "Después de =>Ultima linea constructor." << std::endl;
 	if (m_mapArray == NULL) {
 		std::cout << "something went horribly wrong" << std::endl;
 		exit(EXIT_FAILURE);
 	}
-	//std::cout << "Después de =>Después de =>Ultima linea constructor." << std::endl;
+
 	if (m_builder != NULL) {
 		delete m_builder;
 		m_builder = NULL;
 	}
-	//std::cout << "Después de =>Después de =>Después de =>Ultima linea constructor." << std::endl;
 }
 
 Map::Map(const Map& map) :

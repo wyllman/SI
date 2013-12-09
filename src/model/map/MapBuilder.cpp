@@ -116,7 +116,6 @@ MapBuilder::MapBuilder() {
 			}
 		}
 	}
-	//std::cout << "Ultima linea constructor." << std::endl;
 }
 
 MapBuilder::~MapBuilder() {

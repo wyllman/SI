@@ -59,5 +59,7 @@
  *              - Mezcla de la rama guillermo (estructura de clases del MVC) con la rama master
  *              (estructura inicial del sist. int.).
  *              - Principales arreglos de enlazado después de la reestructuración o mezcla.
+ *              - Enlazando la clase Map con la clase Simulator y su función init(). Además
+ *              se muestra por consola el mapa generado.
  */
 

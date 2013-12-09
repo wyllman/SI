@@ -4,9 +4,9 @@
  *  Created on: 01/12/2013
  *      Author: manwe
  */
-
-#include "map/MapConsoleInterface.h"
-#include "map/Map.h"
+/*
+#include "../../../include/model/map/MapConsoleInterface.h"
+#include "../../../include/model/map/Map.h"
 
 MapConsoleInterface::MapConsoleInterface(const Map& map) :
 		m_map(&map) {
@@ -25,4 +25,4 @@ BYTE const* const * MapConsoleInterface::map() {
 
 BYTE MapConsoleInterface::operator()(int x, int y) {
 	return m_consoleMapping[m_map->map()[x][y]];
-}
+}*/

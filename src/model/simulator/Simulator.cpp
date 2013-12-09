@@ -15,10 +15,10 @@
 
 #include "../../../include/model/simulator/Simulator.h"
 
-
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-Simulator::Simulator(const Controller* controller):Model(controller) {
+Simulator::Simulator(const Controller* controller) :
+		Model(controller) {
 	logAction(LOG_INIT);
 }
 Simulator::~Simulator() {
@@ -50,44 +50,48 @@ void Simulator::stop() {
 void Simulator::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
-			case LOG_INIT:
-				cout << "---Generado el modelo Simulator " << endl;
-				break;
-			case LOG_END:
-				cout << "---Destruyendo el modelo Simulator " << endl;
-				break;
-			case LOG_F_INIT:
-				cout << "---Llamano a la función init de la clase Simulator " << endl;
-				break;
-			case LOG_F_STOP:
-				cout << "---Llamano a la función stop de la clase Simulator " << endl;
-				break;
-			default:
-				break;
+		case LOG_INIT:
+			cout << "---Generado el modelo Simulator " << endl;
+			break;
+		case LOG_END:
+			cout << "---Destruyendo el modelo Simulator " << endl;
+			break;
+		case LOG_F_INIT:
+			cout << "---Llamano a la función init de la clase Simulator "
+					<< endl;
+			break;
+		case LOG_F_STOP:
+			cout << "---Llamano a la función stop de la clase Simulator "
+					<< endl;
+			break;
+		default:
+			break;
 		}
 	}
-	if(ADVAN_LOG) {
-		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
+	if (ADVAN_LOG) {
+		FileLog* fileLogTmp =
+				(FileLog*) (((Director*) refController_)->getRegAccErr());
 		switch (index) {
-			case LOG_INIT:
-				fileLogTmp->insertLine("---Generando el modelo Simulator ");
-				break;
-			case LOG_END:
-				fileLogTmp->insertLine("---Destruyendo el modelo Simulator ");
-				break;
-			case LOG_F_INIT:
-				fileLogTmp->insertLine("---Llamano a la función init de la clase Simulator.");
-				break;
-			case LOG_F_STOP:
-				fileLogTmp->insertLine("---Llamano a la función stop de la clase Simulator.");
-				break;
-			default:
-				break;
+		case LOG_INIT:
+			fileLogTmp->insertLine("---Generando el modelo Simulator ");
+			break;
+		case LOG_END:
+			fileLogTmp->insertLine("---Destruyendo el modelo Simulator ");
+			break;
+		case LOG_F_INIT:
+			fileLogTmp->insertLine(
+					"---Llamano a la función init de la clase Simulator.");
+			break;
+		case LOG_F_STOP:
+			fileLogTmp->insertLine(
+					"---Llamano a la función stop de la clase Simulator.");
+			break;
+		default:
+			break;
 		}
 	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
 

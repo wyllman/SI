@@ -51,33 +51,35 @@ void Scenographer::initProy() {
 	updateProy(45.0, 1.0, 1, 1000);
 }
 void Scenographer::initCam() {
-	int pos[3] = {0, 0, 0};
-	int view[3] = {0, 0, 1};
-	int upV[3] = {0, 1, 0};
-	updateCam(pos, view , upV);
+	int pos[3] = { 0, 0, 0 };
+	int view[3] = { 0, 0, 1 };
+	int upV[3] = { 0, 1, 0 };
+	updateCam(pos, view, upV);
 }
 void Scenographer::initFloor() {
 	updateFloor(1000, 1000);
 }
 void Scenographer::updateProy(float ang, float ratio, int near, int far) {
-	glMatrixMode( GL_PROJECTION );
+	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(ang, ratio, near, far);
 
-	glGetFloatv(GL_PROJECTION_MATRIX, ((Scene*)refScene_)->getProjectionMatrix());
+	glGetFloatv(GL_PROJECTION_MATRIX,
+			((Scene*) refScene_)->getProjectionMatrix());
 	glMatrixMode(0);
 }
 void Scenographer::updateCam(int camPos[3], int viewPoint[3], int vectorUp[3]) {
-	glMatrixMode( GL_MODELVIEW );
-	gluLookAt(camPos[0],    camPos[1],    camPos[2],
-			  viewPoint[0], viewPoint[1], viewPoint[2],
-			  vectorUp[0],  vectorUp[1],  vectorUp[2]);
+	glMatrixMode (GL_MODELVIEW);
+	gluLookAt(camPos[0], camPos[1], camPos[2], viewPoint[0], viewPoint[1],
+			viewPoint[2], vectorUp[0], vectorUp[1], vectorUp[2]);
 
-	glGetFloatv(GL_MODELVIEW_MATRIX, ((Scene*)refScene_)->getModelviewMatrix());
+	glGetFloatv(GL_MODELVIEW_MATRIX,
+			((Scene*) refScene_)->getModelviewMatrix());
 	glMatrixMode(0);
 }
 void Scenographer::updateFloor(int width, int height) {
-	float* vertexFloor = ((Scene*)refScene_)->getVertexFloor(width * height * 2);
+	float* vertexFloor = ((Scene*) refScene_)->getVertexFloor(
+			width * height * 2);
 
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
@@ -90,29 +92,32 @@ void Scenographer::updateFloor(int width, int height) {
 void Scenographer::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
-			case LOG_INIT:
-				cout << "------Generado el gestor Scenographer para la vista Interfaz " << endl;
-				break;
-			case LOG_END:
-				cout << "------Destruyendo el gestor Scenographer para la vista Interfaz "
+		case LOG_INIT:
+			cout
+					<< "------Generado el gestor Scenographer para la vista Interfaz "
 					<< endl;
-				break;
+			break;
+		case LOG_END:
+			cout
+					<< "------Destruyendo el gestor Scenographer para la vista Interfaz "
+					<< endl;
+			break;
 		default:
 			break;
 		}
 	}
-	if(ADVAN_LOG) {
+	if (ADVAN_LOG) {
 		switch (index) {
-			case LOG_INIT:
-				((Interface*)refInterface_)
-					->log("------Generado el gestor Scenographer para la vista Interfaz ");
-				break;
-			case LOG_END:
-				((Interface*)refInterface_)
-					->log("------Destruyendo el gestor Scenographer para la vista Interfaz ");
-				break;
-			default:
-				break;
+		case LOG_INIT:
+			((Interface*) refInterface_)->log(
+					"------Generado el gestor Scenographer para la vista Interfaz ");
+			break;
+		case LOG_END:
+			((Interface*) refInterface_)->log(
+					"------Destruyendo el gestor Scenographer para la vista Interfaz ");
+			break;
+		default:
+			break;
 		}
 	}
 }

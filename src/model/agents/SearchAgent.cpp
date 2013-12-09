@@ -5,7 +5,7 @@
  *      Author: manwe
  */
 
-#include "agents/SearchAgent.h"
+#include "../../../include/model/agents/SearchAgent.h"
 
 SearchAgent::SearchAgent() {
 	// TODO Auto-generated constructor stub

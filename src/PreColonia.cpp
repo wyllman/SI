@@ -17,19 +17,19 @@ using namespace std;
 #include "../include/MVCHeaders.h"
 #include "../include/Tools.h"
 
-void logAction (int index) {
+void logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
-			case LOG_INIT:
-				cout << "**********************************" << endl;
-				cout << "Iniciando el Simulador PreColonia." << endl;
-				break;
-			case LOG_END:
-				cout << "Saliendo del Simulador PreColonia." << endl;
-				cout << "**********************************" << endl;
-				break;
-			default:
-				break;
+		case LOG_INIT:
+			cout << "**********************************" << endl;
+			cout << "Iniciando el Simulador PreColonia." << endl;
+			break;
+		case LOG_END:
+			cout << "Saliendo del Simulador PreColonia." << endl;
+			cout << "**********************************" << endl;
+			break;
+		default:
+			break;
 		}
 
 	}
@@ -40,8 +40,8 @@ int main() {
 
 	// Creando las clases base del patrón MVC y enlazar las referencias
 	Controller* directorSim = new Director;
-	View* interfaceSim = new Interface (directorSim);
-	Model* modelSim = new Simulator (directorSim);
+	View* interfaceSim = new Interface(directorSim);
+	Model* modelSim = new Simulator(directorSim);
 	directorSim->setReferences(interfaceSim, modelSim);
 
 	// Inicializando la ejecución del simulador

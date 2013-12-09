@@ -4,11 +4,11 @@
  *  Created on: 01/12/2013
  *      Author: manwe
  */
-
+/*
 #ifndef MAPCONSOLEINTERFACE_H_
 #define MAPCONSOLEINTERFACE_H_
 
-#include "../include/typedefs.h"
+#include "../../typedefs.h"
 #include <map>
 
 class Map;

@@ -2,7 +2,7 @@
  *      Nombre: MainLoop.cpp
  *
  *   Creado en: 02/12/2013
-  *     Versión: v0.0
+ *     Versión: v0.0
  *     Autores: Tinguaro Cubas Saiz
  *              Juan Henández Hernández
  *              Miguel Pérez Bello
@@ -80,28 +80,32 @@ bool MainLoop::isRequireUpdate() const {
 void MainLoop::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
-			case LOG_INIT:
-				cout << "------Generado la herramienta MainLoop para el Director " << endl;
-				break;
-			case LOG_END:
-				cout << "------Destruyendo la herramienta MainLoop para el Director " << endl;
-				break;
-			default:
-				break;
+		case LOG_INIT:
+			cout << "------Generado la herramienta MainLoop para el Director "
+					<< endl;
+			break;
+		case LOG_END:
+			cout
+					<< "------Destruyendo la herramienta MainLoop para el Director "
+					<< endl;
+			break;
+		default:
+			break;
 		}
 	}
-	if(ADVAN_LOG) {
+	if (ADVAN_LOG) {
 		FileLog* regist = (FileLog*) refDirector_->getRegAccErr();
 		switch (index) {
-			case LOG_INIT:
-				regist->insertLine("------Generado la herramienta MainLoop para el Director ");
-				break;
-			case LOG_END:
-				regist
-				   ->insertLine("------Destruyendo la herramienta MainLoop para el Director ");
-				break;
-			default:
-				break;
+		case LOG_INIT:
+			regist->insertLine(
+					"------Generado la herramienta MainLoop para el Director ");
+			break;
+		case LOG_END:
+			regist->insertLine(
+					"------Destruyendo la herramienta MainLoop para el Director ");
+			break;
+		default:
+			break;
 		}
 	}
 }

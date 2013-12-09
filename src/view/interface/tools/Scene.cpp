@@ -25,7 +25,7 @@ Scene::Scene(const Interface* interface) {
 Scene::~Scene() {
 	logAction(LOG_END);
 	if (vertexFloor_ != 0) {
-		delete [] (vertexFloor_);
+		delete[] (vertexFloor_);
 	}
 }
 // FIN -------------------------------------------------------------------------------
@@ -40,21 +40,21 @@ Scene::~Scene() {
 // ___________________________________________________________________________________
 // Manejadores públicos:
 void Scene::updateProy(GLfloat projectionMatrix[]) {
-	for (int i = 0;i < 16; i++) {
+	for (int i = 0; i < 16; i++) {
 		projectionMatrix_[i] = projectionMatrix[i];
 	}
 }
 void Scene::updateCam(GLfloat modelviewMatrix[]) {
-	for (int i = 0;i < 16; i++) {
+	for (int i = 0; i < 16; i++) {
 		modelviewMatrix_[i] = modelviewMatrix[i];
 	}
 }
-void Scene::updateFloor(float vertexFloor [], int size) {
+void Scene::updateFloor(float vertexFloor[], int size) {
 	if (vertexFloor_ != 0) {
-		delete [] (vertexFloor_);
+		delete[] (vertexFloor_);
 	}
-	vertexFloor_ = new float [size];
-	for (int i = 0;i < size; i++) {
+	vertexFloor_ = new float[size];
+	for (int i = 0; i < size; i++) {
 		vertexFloor_[i] = vertexFloor[i];
 	}
 }
@@ -69,9 +69,9 @@ const float* Scene::getVertexFloor() const {
 }
 float* Scene::getVertexFloor(int size) {
 	if (vertexFloor_ != 0) {
-		delete [] (vertexFloor_);
+		delete[] (vertexFloor_);
 	}
-	vertexFloor_ = new float [size];
+	vertexFloor_ = new float[size];
 	return vertexFloor_;
 }
 // FIN -------------------------------------------------------------------------------
@@ -82,29 +82,32 @@ float* Scene::getVertexFloor(int size) {
 void Scene::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
-			case LOG_INIT:
-				cout << "------Generado la herramienta Scene para la vista Interfaz " << endl;
-				break;
-			case LOG_END:
-				cout << "------Destruyendo la herramienta Scene para la vista Interfaz "
+		case LOG_INIT:
+			cout
+					<< "------Generado la herramienta Scene para la vista Interfaz "
 					<< endl;
-				break;
-			default:
-				break;
+			break;
+		case LOG_END:
+			cout
+					<< "------Destruyendo la herramienta Scene para la vista Interfaz "
+					<< endl;
+			break;
+		default:
+			break;
 		}
 	}
-	if(ADVAN_LOG) {
+	if (ADVAN_LOG) {
 		switch (index) {
-			case LOG_INIT:
-				((Interface*)refInterface_)
-					->log("------Generado la herramienta Scene para la vista Interfaz ");
-				break;
-			case LOG_END:
-				((Interface*)refInterface_)
-					->log("------Destruyendo la herramienta Scene para la vista Interfaz ");
-				break;
-			default:
-				break;
+		case LOG_INIT:
+			((Interface*) refInterface_)->log(
+					"------Generado la herramienta Scene para la vista Interfaz ");
+			break;
+		case LOG_END:
+			((Interface*) refInterface_)->log(
+					"------Destruyendo la herramienta Scene para la vista Interfaz ");
+			break;
+		default:
+			break;
 		}
 	}
 }

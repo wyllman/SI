@@ -15,7 +15,6 @@
 
 #include "../../../../include/controller/director/tools/FileLog.h"
 
-
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 FileLog::FileLog() {
@@ -25,7 +24,7 @@ FileLog::FileLog() {
 
 FileLog::~FileLog() {
 	logAction(LOG_END);
-	reset ();
+	reset();
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -33,7 +32,7 @@ FileLog::~FileLog() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 void FileLog::init() {
-	reset ();
+	reset();
 	logAction(LOG_F_INIT);
 }
 void FileLog::reset() {
@@ -49,10 +48,10 @@ void FileLog::reset() {
 void FileLog::save() {
 	int regSize = regAccErr_.size();
 	if (regSize > 0) {
-		ofstream outfile ("LogAE.txt",std::ofstream::binary);
+		ofstream outfile("LogAE.txt", std::ofstream::binary);
 		for (int i = 0; i < regSize; i++) {
-			outfile.write (regAccErr_[i],strlen(regAccErr_[i]));
-			outfile.write ("\n",1);
+			outfile.write(regAccErr_[i], strlen(regAccErr_[i]));
+			outfile.write("\n", 1);
 		}
 		outfile.close();
 	}
@@ -60,18 +59,24 @@ void FileLog::save() {
 }
 void FileLog::showConsole() {
 	int tmpSize = regAccErr_.size();
-	cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
-	cout << "+++ Mostrando el registro de acciones y errores         +++" << endl;
-	cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+	cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+			<< endl;
+	cout << "+++ Mostrando el registro de acciones y errores         +++"
+			<< endl;
+	cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+			<< endl;
 
 	if (tmpSize > 0) {
 		for (int i = 0; i < tmpSize; i++) {
 			cout << "+++ " << regAccErr_[i] << endl;
 		}
-		cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+		cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+				<< endl;
 	} else if (tmpSize == 0) {
-		cout << "+++ ¡Error! El registro está vacío.                     +++" << endl;
-		cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+		cout << "+++ ¡Error! El registro está vacío.                     +++"
+				<< endl;
+		cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+				<< endl;
 	}
 }
 void FileLog::insertLine(const char* line) {
@@ -81,15 +86,15 @@ void FileLog::insertLine(const char* line) {
 	stringstream ss;
 
 	lineNumber_ += 1;
-	ss << lineNumber_;//add number to the stream
+	ss << lineNumber_; //add number to the stream
 	tempLine = "" + ss.str();
 	tempLine += ". ";
-	if ( lineSize > 0) {
+	if (lineSize > 0) {
 		for (int i = 0; i < lineSize; i++) {
 			tempLine += line[i];
 		}
 	}
-	finalLine = new char [tempLine.size() + 1];
+	finalLine = new char[tempLine.size() + 1];
 	strcpy(finalLine, tempLine.c_str());
 	regAccErr_.push_back(finalLine);
 }
@@ -107,30 +112,31 @@ void FileLog::insertLine(const char* line) {
 void FileLog::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
-			case LOG_INIT:
-				cout << "------Generado la herramienta FileLog para el Director " << endl;
-				break;
-			case LOG_END:
-				cout << "------Destruyendo la herramienta FileLog para el Director " << endl;
-				break;
-			default:
-				break;
+		case LOG_INIT:
+			cout << "------Generado la herramienta FileLog para el Director "
+					<< endl;
+			break;
+		case LOG_END:
+			cout << "------Destruyendo la herramienta FileLog para el Director "
+					<< endl;
+			break;
+		default:
+			break;
 		}
 	}
-	if(ADVAN_LOG) {
+	if (ADVAN_LOG) {
 		switch (index) {
-			case LOG_F_INIT:
-				insertLine("**********************************");
-				insertLine("Iniciando el Simulador PreColonia.");
-				insertLine("---Generado el coordinador Director ");
-				break;
-			default:
-				break;
+		case LOG_F_INIT:
+			insertLine("**********************************");
+			insertLine("Iniciando el Simulador PreColonia.");
+			insertLine("---Generado el coordinador Director ");
+			break;
+		default:
+			break;
 		}
 	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
 

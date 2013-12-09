@@ -5,7 +5,7 @@
  *      Author: manwe
  */
 
-#include "bdi/Belief.h"
+#include "../../../include/model/bdi/Belief.h"
 
 Belief::Belief() {
 	// TODO Auto-generated constructor stub

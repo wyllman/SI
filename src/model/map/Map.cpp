@@ -4,13 +4,13 @@
  *  Created on: 10/11/2013
  *      Author: manwe
  */
-
+/*
 #include "../../../include/model/map/Map.h"
 #include "../../../include/model/map/MapBuilder.h"
 
 #include <cstdlib>
-#include <cstring>
-#include <iostream>
+//#include <cstring>
+//#include <iostream>
 
 Map::Map(uint32_t size) :
 		m_size(size), m_mapArray(NULL) {
@@ -52,7 +52,7 @@ Map::Map(const Map& map) :
 		this->m_mapArray[i] = new BYTE[m_size];
 	}
 
-	for(uint32_t i = 0; i < m_size; i++) {
+	for (uint32_t i = 0; i < m_size; i++) {
 		memcpy(m_mapArray[i], map.map()[i], m_size * sizeof(BYTE));
 	}
 }
@@ -64,4 +64,4 @@ Map::~Map() {
 		m_mapArray = NULL;
 	}
 }
-
+*/

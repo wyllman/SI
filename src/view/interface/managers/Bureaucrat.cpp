@@ -34,7 +34,7 @@ void Bureaucrat::initSDL() {
 	logAction(LOG_F_INIT);
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		logAction(LOG_ERROR);
-		((Interface*)refInterface_)->stop();
+		((Interface*) refInterface_)->stop();
 	}
 }
 void Bureaucrat::initOGL() {
@@ -48,8 +48,8 @@ void Bureaucrat::initOGL() {
 }
 void Bureaucrat::loadShader() {
 	if (ADVAN_LOG) {
-		((Interface*)refInterface_)
-			->log("------Cargando Shaders en la clase Bureaucrat. ");
+		((Interface*) refInterface_)->log(
+				"------Cargando Shaders en la clase Bureaucrat. ");
 	}
 }
 // FIN -------------------------------------------------------------------------------
@@ -66,55 +66,58 @@ void Bureaucrat::loadShader() {
 void Bureaucrat::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
-			case LOG_INIT:
-				cout << "------Generado el gestor Bureaucrat para la vista Interfaz " << endl;
-				break;
-			case LOG_END:
-				cout << "------Destruyendo el gestor Bureaucrat para la vista Interfaz"
+		case LOG_INIT:
+			cout
+					<< "------Generado el gestor Bureaucrat para la vista Interfaz "
 					<< endl;
-				break;
-			case LOG_F_INIT:
-				cout << "------Inicializando SDL en la clase Bureaucrat." << endl;
-				break;
-			case LOG_F_INIT_1:
-				cout << "------Inicializando OGL en la clase Bureaucrat." << endl;
-				break;
-			case LOG_ERROR:
-				cout << "------ERROR!! No se pudo iniciar SDL: " << SDL_GetError() << endl;
-				break;
-			default:
-				break;
+			break;
+		case LOG_END:
+			cout
+					<< "------Destruyendo el gestor Bureaucrat para la vista Interfaz"
+					<< endl;
+			break;
+		case LOG_F_INIT:
+			cout << "------Inicializando SDL en la clase Bureaucrat." << endl;
+			break;
+		case LOG_F_INIT_1:
+			cout << "------Inicializando OGL en la clase Bureaucrat." << endl;
+			break;
+		case LOG_ERROR:
+			cout << "------ERROR!! No se pudo iniciar SDL: " << SDL_GetError()
+					<< endl;
+			break;
+		default:
+			break;
 		}
 	}
-	if(ADVAN_LOG) {
+	if (ADVAN_LOG) {
 		switch (index) {
-			case LOG_INIT:
-				((Interface*)refInterface_)
-					->log("------Generado el gestor Bureaucrat para la vista Interfaz ");
-				break;
-			case LOG_END:
-				((Interface*)refInterface_)
-					->log("------Destruyendo el gestor Bureaucrat para la vista Interfaz ");
-				break;
-			case LOG_F_INIT:
-				((Interface*)refInterface_)
-					->log("------Inicializando SDL en la clase Bureaucrat. ");
-				break;
-			case LOG_F_INIT_1:
-				((Interface*)refInterface_)
-					->log("------Inicializando OGL en la clase Bureaucrat. ");
-				break;
-			case LOG_ERROR:
-				((Interface*)refInterface_)
-					->log("------ERROR!! No se pudo iniciar SDL ");
-				break;
-			default:
-				break;
+		case LOG_INIT:
+			((Interface*) refInterface_)->log(
+					"------Generado el gestor Bureaucrat para la vista Interfaz ");
+			break;
+		case LOG_END:
+			((Interface*) refInterface_)->log(
+					"------Destruyendo el gestor Bureaucrat para la vista Interfaz ");
+			break;
+		case LOG_F_INIT:
+			((Interface*) refInterface_)->log(
+					"------Inicializando SDL en la clase Bureaucrat. ");
+			break;
+		case LOG_F_INIT_1:
+			((Interface*) refInterface_)->log(
+					"------Inicializando OGL en la clase Bureaucrat. ");
+			break;
+		case LOG_ERROR:
+			((Interface*) refInterface_)->log(
+					"------ERROR!! No se pudo iniciar SDL ");
+			break;
+		default:
+			break;
 		}
 	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
 

@@ -24,7 +24,7 @@ Window::Window(const Interface* interface) {
 
 Window::~Window() {
 	logAction(LOG_END);
-	delete(displayRendererInfo_);
+	delete (displayRendererInfo_);
 	SDL_DestroyRenderer(rendererScene_);
 	SDL_DestroyWindow(windowSDL_);
 	SDL_Quit();
@@ -37,16 +37,17 @@ Window::~Window() {
 void Window::init(int width, int height) {
 	logAction(LOG_F_INIT);
 	displayRendererInfo_ = new SDL_RendererInfo;
-	SDL_CreateWindowAndRenderer( width, height, SDL_WINDOW_OPENGL, &windowSDL_, &rendererScene_);
+	SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_OPENGL, &windowSDL_,
+			&rendererScene_);
 	SDL_GetRendererInfo(rendererScene_, displayRendererInfo_);
 
-	if ((displayRendererInfo_->flags & SDL_RENDERER_ACCELERATED) == 0 ) {
+	if ((displayRendererInfo_->flags & SDL_RENDERER_ACCELERATED) == 0) {
 		logAction(LOG_ERROR);
-		((Interface*)refInterface_)->stop();
+		((Interface*) refInterface_)->stop();
 	}
 	if ((displayRendererInfo_->flags & SDL_RENDERER_TARGETTEXTURE) == 0) {
 		logAction(LOG_ERROR_1);
-		((Interface*)refInterface_)->stop();
+		((Interface*) refInterface_)->stop();
 	}
 
 	SDL_SetWindowTitle(windowSDL_, "Simulador PreColonia");
@@ -70,56 +71,59 @@ void Window::reshape() {
 void Window::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
-			case LOG_INIT:
-				cout << "------Generado la herramienta Window para la vista Interfaz "
+		case LOG_INIT:
+			cout
+					<< "------Generado la herramienta Window para la vista Interfaz "
 					<< endl;
-				break;
-			case LOG_END:
-				cout << "------Destruyendo la herramienta Window para la vista Interfaz "
+			break;
+		case LOG_END:
+			cout
+					<< "------Destruyendo la herramienta Window para la vista Interfaz "
 					<< endl;
-				break;
-			case LOG_F_INIT:
-				cout << "------Inicializando la ventana SDL. " << endl;
-				break;
-			case LOG_ERROR:
-				cout << "------ERROR!! SDL RendererInfo (Sin aceleración gráfica) " << endl;
-				break;
-			case LOG_ERROR_1:
-				cout << "------ERROR!! SDL RendererInfo (Sin ... textura?...) " << endl;
-				break;
-			default:
-				break;
+			break;
+		case LOG_F_INIT:
+			cout << "------Inicializando la ventana SDL. " << endl;
+			break;
+		case LOG_ERROR:
+			cout << "------ERROR!! SDL RendererInfo (Sin aceleración gráfica) "
+					<< endl;
+			break;
+		case LOG_ERROR_1:
+			cout << "------ERROR!! SDL RendererInfo (Sin ... textura?...) "
+					<< endl;
+			break;
+		default:
+			break;
 		}
 	}
-	if(ADVAN_LOG) {
+	if (ADVAN_LOG) {
 		switch (index) {
-			case LOG_INIT:
-				((Interface*)refInterface_)
-					->log("------Generado la herramienta Window para la vista Interfaz ");
-				break;
-			case LOG_END:
-				((Interface*)refInterface_)
-					->log("------Destruyendo la herramienta Window para la vista Interfaz ");
-				break;
-			case LOG_F_INIT:
-				((Interface*)refInterface_)
-					->log("------Inicializando la ventana SDL");
-				break;
-			case LOG_ERROR:
-				((Interface*)refInterface_)
-					->log("------ERROR!! SDL RendererInfo (Sin aceleración gráfica) ");
-				break;
-			case LOG_ERROR_1:
-				((Interface*)refInterface_)
-					->log("------ERROR!! SDL RendererInfo (Sin ... textura?...) ");
-				break;
-			default:
-				break;
+		case LOG_INIT:
+			((Interface*) refInterface_)->log(
+					"------Generado la herramienta Window para la vista Interfaz ");
+			break;
+		case LOG_END:
+			((Interface*) refInterface_)->log(
+					"------Destruyendo la herramienta Window para la vista Interfaz ");
+			break;
+		case LOG_F_INIT:
+			((Interface*) refInterface_)->log(
+					"------Inicializando la ventana SDL");
+			break;
+		case LOG_ERROR:
+			((Interface*) refInterface_)->log(
+					"------ERROR!! SDL RendererInfo (Sin aceleración gráfica) ");
+			break;
+		case LOG_ERROR_1:
+			((Interface*) refInterface_)->log(
+					"------ERROR!! SDL RendererInfo (Sin ... textura?...) ");
+			break;
+		default:
+			break;
 		}
 	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
 

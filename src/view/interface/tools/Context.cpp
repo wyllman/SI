@@ -54,20 +54,19 @@ GLuint Context::getProgramGsl() const {
 // Métodos privados:
 void Context::initShaders() {
 	const char *vs_source =
-		#ifdef GL_ES_VERSION_2_0
+#ifdef GL_ES_VERSION_2_0
 			"#version 100\n"  // OpenGL ES 2.0
-		#else
+#else
 			"#version 120\n"  // OpenGL 2.1
-		#endif
-			"  uniform      mat4 modelview_matrix;    "
-			"  uniform      mat4 projection_matrix;   "
-			"attribute vec2 coord2d;                  "
-			"void main(void) {                        "
-			"  vec4 pos = modelview_matrix * vec4(coord2d[0], -0.5 , coord2d[1], 1.0); "
-			"  gl_Position = projection_matrix * pos; "
-			"}";
-	const char *fs_source =
-			"#version 120           \n"
+#endif
+					"  uniform      mat4 modelview_matrix;    "
+					"  uniform      mat4 projection_matrix;   "
+					"attribute vec2 coord2d;                  "
+					"void main(void) {                        "
+					"  vec4 pos = modelview_matrix * vec4(coord2d[0], -0.5 , coord2d[1], 1.0); "
+					"  gl_Position = projection_matrix * pos; "
+					"}";
+	const char *fs_source = "#version 120           \n"
 			"void main(void) {        "
 			"  gl_FragColor[0] = 0.9; "
 			"  gl_FragColor[1] = 0.4; "
@@ -81,7 +80,7 @@ void Context::initShaders() {
 
 	if (0 == compilerStateOK_) {
 		logAction(LOG_ERROR);
-		((Interface*)refInterface_)->stop();
+		((Interface*) refInterface_)->stop();
 	}
 
 	fragmentShader_ = glCreateShader(GL_FRAGMENT_SHADER);
@@ -91,7 +90,7 @@ void Context::initShaders() {
 
 	if (0 == compilerStateOK_) {
 		logAction(LOG_ERROR_1);
-		((Interface*)refInterface_)->stop();
+		((Interface*) refInterface_)->stop();
 	}
 	programGSL_ = glCreateProgram();
 	glAttachShader(programGSL_, vertexShader_);
@@ -102,7 +101,7 @@ void Context::initShaders() {
 
 	if (0 == linkerStateOK_) {
 		logAction(LOG_ERROR_2);
-		((Interface*)refInterface_)->stop();
+		((Interface*) refInterface_)->stop();
 	}
 }
 
@@ -113,66 +112,67 @@ void Context::initBuffers() {
 }
 void Context::logAction(int index) {
 	if (BASIC_LOG) {
-			switch (index) {
-				case LOG_INIT:
-					cout << "------Generado la herramienta Context para la vista Interfaz"
-						<< endl;
-					break;
-				case LOG_END:
-					cout << "------Destruyendo la herramienta Context para la vista Interfaz"
-						<< endl;
-					break;
-				case LOG_F_INIT:
-					cout << "------Iniciando el contexto OGL de la herramienta Context"
-						<< endl;
-					break;
-				case LOG_ERROR:
-					cout << "------ERROR!! Compilando el Vertex Shader" << endl;
-					break;
-				case LOG_ERROR_1:
-					cout << "------ERROR!! Compilando el Fragment Shader" << endl;
-					break;
-				case LOG_ERROR_2:
-					cout << "------ERROR!! Enlazando el programa GSL" << endl;
-					break;
-				default:
-					break;
-			}
+		switch (index) {
+		case LOG_INIT:
+			cout
+					<< "------Generado la herramienta Context para la vista Interfaz"
+					<< endl;
+			break;
+		case LOG_END:
+			cout
+					<< "------Destruyendo la herramienta Context para la vista Interfaz"
+					<< endl;
+			break;
+		case LOG_F_INIT:
+			cout << "------Iniciando el contexto OGL de la herramienta Context"
+					<< endl;
+			break;
+		case LOG_ERROR:
+			cout << "------ERROR!! Compilando el Vertex Shader" << endl;
+			break;
+		case LOG_ERROR_1:
+			cout << "------ERROR!! Compilando el Fragment Shader" << endl;
+			break;
+		case LOG_ERROR_2:
+			cout << "------ERROR!! Enlazando el programa GSL" << endl;
+			break;
+		default:
+			break;
 		}
-		if(ADVAN_LOG) {
-			switch (index) {
-				case LOG_INIT:
-					((Interface*)refInterface_)
-						->log("------Generado la herramienta Context para la vista Interfaz ");
-					break;
-				case LOG_END:
-					((Interface*)refInterface_)
-						->log("------Destruyendo la herramienta Context para la vista "
+	}
+	if (ADVAN_LOG) {
+		switch (index) {
+		case LOG_INIT:
+			((Interface*) refInterface_)->log(
+					"------Generado la herramienta Context para la vista Interfaz ");
+			break;
+		case LOG_END:
+			((Interface*) refInterface_)->log(
+					"------Destruyendo la herramienta Context para la vista "
 							"Interfaz ");
-					break;
-				case LOG_F_INIT:
-					((Interface*)refInterface_)
-						->log("------Iniciando el contexto OGL de la herramienta Context ");
-					break;
-				case LOG_ERROR:
-					((Interface*)refInterface_)
-						->log("------ERROR!! Compilando el Vertex Shader. ");
-					break;
-				case LOG_ERROR_1:
-					((Interface*)refInterface_)
-						->log("------ERROR!! Compilando el Fragment Shader. ");
-					break;
-				case LOG_ERROR_2:
-					((Interface*)refInterface_)
-						->log("------ERROR!! Enlazando el programa GSL. ");
-					break;
-				default:
-					break;
-			}
+			break;
+		case LOG_F_INIT:
+			((Interface*) refInterface_)->log(
+					"------Iniciando el contexto OGL de la herramienta Context ");
+			break;
+		case LOG_ERROR:
+			((Interface*) refInterface_)->log(
+					"------ERROR!! Compilando el Vertex Shader. ");
+			break;
+		case LOG_ERROR_1:
+			((Interface*) refInterface_)->log(
+					"------ERROR!! Compilando el Fragment Shader. ");
+			break;
+		case LOG_ERROR_2:
+			((Interface*) refInterface_)->log(
+					"------ERROR!! Enlazando el programa GSL. ");
+			break;
+		default:
+			break;
 		}
+	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
 

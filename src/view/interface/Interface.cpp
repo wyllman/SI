@@ -18,7 +18,8 @@
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-Interface::Interface(const Controller* controller):View(controller) {
+Interface::Interface(const Controller* controller) :
+		View(controller) {
 	logAction(LOG_INIT);
 	bureaucrat_ = 0;
 	scenographer_ = 0;
@@ -29,7 +30,7 @@ Interface::Interface(const Controller* controller):View(controller) {
 }
 Interface::~Interface() {
 	logAction(LOG_END);
-	stop ();
+	stop();
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -38,13 +39,13 @@ Interface::~Interface() {
 // Métodos públicos:
 void Interface::init() {
 	logAction(LOG_F_INIT);
-	bureaucrat_ = new Bureaucrat (this);
+	bureaucrat_ = new Bureaucrat(this);
 
-	window_ = new Window (this);
-	context_ = new Context (this);
+	window_ = new Window(this);
+	context_ = new Context(this);
 
-	scene_ = new Scene (this);
-	scenographer_ = new Scenographer (this, scene_);
+	scene_ = new Scene(this);
+	scenographer_ = new Scenographer(this, scene_);
 
 	bureaucrat_->initSDL();
 	bureaucrat_->initOGL();
@@ -81,7 +82,8 @@ void Interface::stop() {
 }
 void Interface::log(const char* line) {
 	if (ADVAN_LOG) {
-		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
+		FileLog* fileLogTmp =
+				(FileLog*) (((Director*) refController_)->getRegAccErr());
 		fileLogTmp->insertLine(line);
 	}
 }
@@ -104,15 +106,18 @@ void Interface::render() {
 	glUseProgram(context_->getProgramGsl());
 
 	// Enviar la proyección al shader
-	glUniformMatrix4fv(glGetUniformLocation(context_->getProgramGsl(),  "projection_matrix"),
-						1, GL_FALSE, scene_->getProjectionMatrix());
+	glUniformMatrix4fv(
+			glGetUniformLocation(context_->getProgramGsl(),
+					"projection_matrix"), 1, GL_FALSE,
+			scene_->getProjectionMatrix());
 	// Enviar la cámara al shader
-	glUniformMatrix4fv(glGetUniformLocation(context_->getProgramGsl(),  "modelview_matrix"),
-						1, GL_FALSE, scene_->getModelviewMatrix());
+	glUniformMatrix4fv(
+			glGetUniformLocation(context_->getProgramGsl(), "modelview_matrix"),
+			1, GL_FALSE, scene_->getModelviewMatrix());
 	glEnableVertexAttribArray(0);
 	// Enviar el suelo al shader y pintarlo.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 1000 * 1000 * 2
-				, scene_->getVertexFloor(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 1000 * 1000 * 2,
+			scene_->getVertexFloor(), GL_STATIC_DRAW);
 	glDrawArrays(GL_POINTS, 0, 1000 * 1000);
 
 	glDisableVertexAttribArray(0);
@@ -130,51 +135,55 @@ void Interface::createFloor(int width, int height) {
 		}
 	}
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * width * height * 2
-					, vertexFloor, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * width * height * 2,
+			vertexFloor, GL_STATIC_DRAW);
 	glDrawArrays(GL_POINTS, 0, width * height);
 }
 void Interface::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
-			case LOG_INIT:
-				cout << "---Generado la vista Interfaz " << endl;
-				break;
-			case LOG_END:
-				cout << "---Destruyendo la vista Interfaz " << endl;
-				break;
-			case LOG_F_INIT:
-				cout << "---Llamano a la función init de la clase Interface." << endl;
-				break;
-			case LOG_F_STOP:
-				cout << "---Llamano a la función stop de la clase Interface." << endl;
-				break;
-			default:
-				break;
+		case LOG_INIT:
+			cout << "---Generado la vista Interfaz " << endl;
+			break;
+		case LOG_END:
+			cout << "---Destruyendo la vista Interfaz " << endl;
+			break;
+		case LOG_F_INIT:
+			cout << "---Llamano a la función init de la clase Interface."
+					<< endl;
+			break;
+		case LOG_F_STOP:
+			cout << "---Llamano a la función stop de la clase Interface."
+					<< endl;
+			break;
+		default:
+			break;
 		}
 	}
-	if(ADVAN_LOG) {
-		FileLog* fileLogTmp = (FileLog*)(((Director*)refController_)->getRegAccErr());
+	if (ADVAN_LOG) {
+		FileLog* fileLogTmp =
+				(FileLog*) (((Director*) refController_)->getRegAccErr());
 		switch (index) {
-			case LOG_INIT:
-				fileLogTmp->insertLine("---Generando la vista Interfaz ");
-				break;
-			case LOG_END:
-				fileLogTmp->insertLine("---Destruyendo la vista Interfaz ");
-				break;
-			case LOG_F_INIT:
-				fileLogTmp->insertLine("---Llamano a la función init de la clase Interface.");
-				break;
-			case LOG_F_STOP:
-				fileLogTmp->insertLine("---Llamano a la función stop de la clase Interface.");
-				break;
-			default:
-				break;
+		case LOG_INIT:
+			fileLogTmp->insertLine("---Generando la vista Interfaz ");
+			break;
+		case LOG_END:
+			fileLogTmp->insertLine("---Destruyendo la vista Interfaz ");
+			break;
+		case LOG_F_INIT:
+			fileLogTmp->insertLine(
+					"---Llamano a la función init de la clase Interface.");
+			break;
+		case LOG_F_STOP:
+			fileLogTmp->insertLine(
+					"---Llamano a la función stop de la clase Interface.");
+			break;
+		default:
+			break;
 		}
 	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
 

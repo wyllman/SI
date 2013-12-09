@@ -5,7 +5,7 @@
  *      Author: manwe
  */
 
-#include "agents/BuildAgent.h"
+#include "../../../include/model/agents/BuildAgent.h"
 
 BuildAgent::BuildAgent() {
 	// TODO Auto-generated constructor stub

@@ -3,3 +3,5 @@ doc/html/
 Debug/
 Release/
 .gitignore
+.cproject
+.project

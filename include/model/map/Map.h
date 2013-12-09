@@ -10,6 +10,7 @@
 
 #include "../../typedefs.h"
 #include <stdint.h>
+#include <iostream>
 
 class MapBuilder;
 
@@ -31,7 +32,10 @@ public:
 	Map();
 	Map(const Map& map);
 	~Map();
-	inline BYTE const* const* map() const { return m_mapArray; }
+	inline BYTE const* const* map() const {
+		//std::cout << "Accediendo a map()[][]" << std::endl;
+		return m_mapArray;
+	}
 	inline uint32_t size() const { return m_size; }
 };
 

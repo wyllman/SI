@@ -9,7 +9,9 @@
 #define MAPCONSOLEINTERFACE_H_
 
 #include "../../typedefs.h"
+#include <iostream>
 #include <map>
+#include <bits/stl_pair.h>
 
 class Map;
 

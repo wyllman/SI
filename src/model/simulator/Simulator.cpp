@@ -33,16 +33,20 @@ Simulator::~Simulator() {
 void Simulator::init() {
 	logAction(LOG_F_INIT);
 	map_ = new Map();
+	//std::cout << "Después de =>Constructor mapa." << std::endl;
 
 	MapConsoleInterface mapci(*map_);
 
-
+	//std::cout << "Después de =>Constructor mapaConsoleInt." << std::endl;
 
 	for (uint i = 0; i < map_->size(); i++) {
-		for (uint j = 0; j < map_->size(); j++)
+		for (uint j = 0; j < map_->size(); j++) {
+				//std::cout << "Antes de => Retornar cada parte del terreno." << std::endl;
 				std::cout << mapci(i, j);
+		}
 		std::cout << std::endl;
 	 }
+	//std::cout << "Después de =>Mostrar mapa por consola." << std::endl;
 }
 void Simulator::stop() {
 	logAction(LOG_F_STOP);

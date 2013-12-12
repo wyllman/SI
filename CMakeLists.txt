@@ -66,10 +66,27 @@ endforeach ()
 
 find_package (Boost REQUIRED)
 if (Boost_FOUND)
-	message ("${Boost_INCLUDE_DIRS}")
 	include_directories (${Boost_INCLUDE_DIRS})
 endif (Boost_FOUND)
-find_package (GLEW REQUIRED)
+
+find_file (
+	FIND_GLEW
+	FindGLEW.cmake
+	PATHS ${CMAKE_ROOT}/Modules/
+)
+
+if (FIND_GLEW)
+	set (CMAKE_MODULE_PATH "")
+	find_package (GLEW REQUIRED)
+	set (CMAKE_MODULE_PATH ${PROJECT_DIR}/cmake/modules)
+else (FIND_GLEW)
+	find_package (GLEW REQUIRED)
+endif (FIND_GLEW)
+ 
+if (GLEW_FOUND)
+	include_directories (${GLEW_INCLUDE_DIRS})
+endif (GLEW_FOUND)
+
 find_package (OpenGL REQUIRED)
 find_package (SDL2 REQUIRED)
 
@@ -79,10 +96,12 @@ foreach (DIR ${DIRS})
 	add_subdirectory (${PROJECT_SOURCE_DIR}${DIR})
 endforeach ()
 
-link_directories (${PROJECT_BINARY_DIR}/controller/director)
-link_directories (${PROJECT_BINARY_DIR}/controller/abstracts)
-link_directories (${PROJECT_BINARY_DIR}/view/interface)
-link_directories (${PROJECT_BINARY_DIR}/model/simulator)
+link_directories (
+	${PROJECT_BINARY_DIR}/controller/director
+	${PROJECT_BINARY_DIR}/controller/abstracts
+	${PROJECT_BINARY_DIR}/view/interface
+	${PROJECT_BINARY_DIR}/model/simulator
+)
 
 add_executable (${PROJECT_NAME} ${PROJECT_SOURCE_DIR}/PreColonia.cpp)
 target_link_libraries (

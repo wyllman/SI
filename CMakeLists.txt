@@ -64,12 +64,14 @@ foreach (A ${INCLUDE_DIRECTORIES})
 	message ("${A}")
 endforeach ()
 
-find_package (Boost 1.54 REQUIRED)
+find_package (Boost REQUIRED)
+if (Boost_FOUND)
+	message ("${Boost_INCLUDE_DIRS}")
+	include_directories (${Boost_INCLUDE_DIRS})
+endif (Boost_FOUND)
 find_package (GLEW REQUIRED)
 find_package (OpenGL REQUIRED)
 find_package (SDL2 REQUIRED)
-
-message("${OPENGL_LIBRARIES}")
 
 set (DIRS /controller /view /model)
 

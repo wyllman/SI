@@ -8,12 +8,12 @@
 #ifndef MAPBUILDER_H_
 #define MAPBUILDER_H_
 
-#include "../../typedefs.h"
+#include <typedefs.h>
 #include <stdint.h>
 
 /*
- * \class MapBuilder
- * \brief Constructor de mapas
+ * @class MapBuilder
+ * @brief Constructor de mapas
  *
  * La clase MapBuilder recibe como único parámetro en su constructor el tamaño
  * deseado del lado del mapa y lo genera.

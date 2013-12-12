@@ -1,2 +1,0 @@
-/usr/bin/ar cr libFileLog.a  CMakeFiles/FileLog.dir/FileLog.cpp.o
-/usr/bin/ranlib libFileLog.a

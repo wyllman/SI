@@ -5,7 +5,17 @@
  *      Author: manwe
  */
 
-#include "../../../include/model/map/MapBuilder.h"
+#include <model/map/MapBuilder.h>
+
+#ifdef __linux
+	#include <boost/random/mersenne_twister.hpp>
+	#include <boost/random/uniform_int_distribution.hpp>
+	#include <boost/random/binomial_distribution.hpp>
+#elif __APPLE__
+	#ifdef TARGET_OS_MAC
+	// includes
+	#endif
+#endif
 
 #include <cmath>
 #include <cstdlib>
@@ -13,18 +23,7 @@
 #include <ctime>
 #include <map>
 
-#include "../../../assets/map2.c"
-
-//#ifdef __linux
-#include <boost/random/mersenne_twister.hpp>
-#include <boost/random/uniform_int_distribution.hpp>
-#include <boost/random/binomial_distribution.hpp>
-//#elif __APPLE__
-//#ifdef TARGET_OS_MAC
-// includes
-
-//#endif
-//#endif
+#include <map2.c>
 
 MapBuilder::MapBuilder(uint32_t size) :
 m_mapSize(size) {
@@ -89,20 +88,8 @@ MapBuilder::MapBuilder() {
 	//bucle de relleno del array
 	for (uint32_t i = 0; i < m_mapSize; i++) {
 		for (uint32_t j = 0; j < m_mapSize; j++) {
-			pixelGrayscaleValue = gimp.pixel_data[((i * m_mapSize) + j)
-			                                      * bytesPerPixel];
-			std::cout << "Creando posición de terreno." << std::endl;
-			//std::cout << "key = "<< static_cast<int>(terrainBounds.lower_bound(pixelGrayscaleValue)->first)
-			//		<< " value = " << static_cast<int>(terrainBounds.lower_bound(pixelGrayscaleValue)->second) << std::endl;
-			//std::cin.get();
-			/*
-			*if(pixelGrayscaleValue >= terrainBounds.lower_bound(pixelGrayscaleValue)->first &&
-			*	pixelGrayscaleValue <= terrainBounds.lower_bound(pixelGrayscaleValue)->second) {
-			*	m_map[i][j] = TERRAIN_ELEVATION;
-			*} else {
-			*	m_map[i][j] = TERRAIN_GROUND;
-			*}
-			*/
+			pixelGrayscaleValue = gimp.pixel_data[((i * m_mapSize) + j) * 
+bytesPerPixel];
 			if (pixelGrayscaleValue < lowerBound) {
 				m_map[i][j] = TERRAIN_WATER;
 			} else if (pixelGrayscaleValue > upperBound) {

@@ -1,2 +1,0 @@
-/usr/bin/ar cr libBureaucrat.a  CMakeFiles/Bureaucrat.dir/Bureaucrat.cpp.o
-/usr/bin/ranlib libBureaucrat.a

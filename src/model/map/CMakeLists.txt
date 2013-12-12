@@ -1,3 +1,5 @@
+include_directories (${PROJECT_DIR}/assets)
+
 add_library (
 	MapBuilder
 	STATIC

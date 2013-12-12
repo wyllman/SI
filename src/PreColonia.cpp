@@ -11,22 +11,21 @@
 //               trabajar sobre la zona.
 //============================================================================
 
-#include <iostream>
-using namespace std;
+#include <MVCHeaders.h>
+#include <Tools.h>
 
-#include "../include/MVCHeaders.h"
-#include "../include/Tools.h"
+#include <iostream>
 
 void logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			cout << "**********************************" << endl;
-			cout << "Iniciando el Simulador PreColonia." << endl;
+			std::cout << "**********************************" << std::endl;
+			std::cout << "Iniciando el Simulador PreColonia." << std::endl;
 			break;
 		case LOG_END:
-			cout << "Saliendo del Simulador PreColonia." << endl;
-			cout << "**********************************" << endl;
+			std::cout << "Saliendo del Simulador PreColonia." << std::endl;
+			std::cout << "**********************************" << std::endl;
 			break;
 		default:
 			break;

@@ -5,8 +5,8 @@
  *      Author: manwe
  */
 
-#include "../../../include/model/map/MapConsoleInterface.h"
-#include "../../../include/model/map/Map.h"
+#include <model/map/MapConsoleInterface.h>
+#include <model/map/Map.h>
 
 MapConsoleInterface::MapConsoleInterface(const Map& map) :
 		m_map(&map) {

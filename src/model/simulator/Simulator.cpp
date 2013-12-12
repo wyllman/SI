@@ -18,6 +18,7 @@
 #include <model/map/MapConsoleInterface.h>
 
 #include <controller/director/Director.h>
+#include <controller/director/tools/FileLog.h>
 #include <Tools.h>
 
 // ___________________________________________________________________________________
@@ -41,8 +42,8 @@ void Simulator::init() {
 
 	MapConsoleInterface mapci(*map_);
 
-	for (uint i = 0; i < map_->size(); i++) {
-		for (uint j = 0; j < map_->size(); j++) {
+	for (uint32_t i = 0; i < map_->size(); i++) {
+		for (uint32_t j = 0; j < map_->size(); j++) {
 				std::cout << mapci(i, j);
 		}
 		std::cout << std::endl;

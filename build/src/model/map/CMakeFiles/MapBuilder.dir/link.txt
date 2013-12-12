@@ -1,2 +1,0 @@
-/usr/bin/ar cr libMapBuilder.a  CMakeFiles/MapBuilder.dir/MapBuilder.cpp.o
-/usr/bin/ranlib libMapBuilder.a

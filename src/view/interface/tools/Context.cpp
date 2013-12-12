@@ -22,8 +22,8 @@
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-Context::Context(const Interface* interface) {
-	refInterface_ = interface;
+Context::Context(const Interface& interface) {
+	refInterface_ = &interface;
 	logAction(LOG_INIT);
 	compilerStateOK_ = GL_FALSE;
 	linkerStateOK_ = GL_FALSE;
@@ -120,27 +120,29 @@ void Context::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			cout
+			std::cout
 					<< "------Generado la herramienta Context para la vista Interfaz"
-					<< endl;
+					<< std::endl;
 			break;
 		case LOG_END:
-			cout
+			std::cout
 					<< "------Destruyendo la herramienta Context para la vista Interfaz"
-					<< endl;
+					<< std::endl;
 			break;
 		case LOG_F_INIT:
-			cout << "------Iniciando el contexto OGL de la herramienta Context"
-					<< endl;
+			std::cout << "------Iniciando el contexto OGL de la herramienta Context"
+					<< std::endl;
 			break;
 		case LOG_ERROR:
-			cout << "------ERROR!! Compilando el Vertex Shader" << endl;
+			std::cout << "------ERROR!! Compilando el Vertex Shader" << 
+std::endl;
 			break;
 		case LOG_ERROR_1:
-			cout << "------ERROR!! Compilando el Fragment Shader" << endl;
+			std::cout << "------ERROR!! Compilando el Fragment Shader" << 
+std::endl;
 			break;
 		case LOG_ERROR_2:
-			cout << "------ERROR!! Enlazando el programa GSL" << endl;
+			std::cout << "------ERROR!! Enlazando el programa GSL" << std::endl;
 			break;
 		default:
 			break;

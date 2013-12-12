@@ -20,8 +20,8 @@
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-Bureaucrat::Bureaucrat(const Interface* interface) {
-	refInterface_ = interface;
+Bureaucrat::Bureaucrat(const Interface& interface) {
+	refInterface_ = &interface;
 	logAction(LOG_F_INIT);
 }
 
@@ -70,24 +70,27 @@ void Bureaucrat::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			cout
+			std::cout
 					<< "------Generado el gestor Bureaucrat para la vista Interfaz "
-					<< endl;
+					<< std::endl;
 			break;
 		case LOG_END:
-			cout
+			std::cout
 					<< "------Destruyendo el gestor Bureaucrat para la vista Interfaz"
-					<< endl;
+					<< std::endl;
 			break;
 		case LOG_F_INIT:
-			cout << "------Inicializando SDL en la clase Bureaucrat." << endl;
+			std::cout << "------Inicializando SDL en la clase Bureaucrat." << 
+std::endl;
 			break;
 		case LOG_F_INIT_1:
-			cout << "------Inicializando OGL en la clase Bureaucrat." << endl;
+			std::cout << "------Inicializando OGL en la clase Bureaucrat." << 
+std::endl;
 			break;
 		case LOG_ERROR:
-			cout << "------ERROR!! No se pudo iniciar SDL: " << SDL_GetError()
-					<< endl;
+			std::cout << "------ERROR!! No se pudo iniciar SDL: " << 
+SDL_GetError()
+					<< std::endl;
 			break;
 		default:
 			break;

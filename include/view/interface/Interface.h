@@ -28,7 +28,7 @@ class Scene;
 
 class Interface: public View {
 public:
-	Interface(const Controller*);
+	Interface(const Controller&);
 	virtual ~Interface();
 
 	void init();

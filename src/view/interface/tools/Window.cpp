@@ -24,8 +24,8 @@
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-Window::Window(const Interface* interface) {
-	refInterface_ = interface;
+Window::Window(const Interface& interface) {
+	refInterface_ = &interface;
 	logAction(LOG_INIT);
 }
 
@@ -79,25 +79,25 @@ void Window::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			cout
+			std::cout
 					<< "------Generado la herramienta Window para la vista Interfaz "
-					<< endl;
+					<< std::endl;
 			break;
 		case LOG_END:
-			cout
+			std::cout
 					<< "------Destruyendo la herramienta Window para la vista Interfaz "
-					<< endl;
+					<< std::endl;
 			break;
 		case LOG_F_INIT:
-			cout << "------Inicializando la ventana SDL. " << endl;
+			std::cout << "------Inicializando la ventana SDL. " << std::endl;
 			break;
 		case LOG_ERROR:
-			cout << "------ERROR!! SDL RendererInfo (Sin aceleración gráfica) "
-					<< endl;
+			std::cout << "------ERROR!! SDL RendererInfo (Sin aceleración gráfica) "
+					<< std::endl;
 			break;
 		case LOG_ERROR_1:
-			cout << "------ERROR!! SDL RendererInfo (Sin ... textura?...) "
-					<< endl;
+			std::cout << "------ERROR!! SDL RendererInfo (Sin ... textura?...) "
+					<< std::endl;
 			break;
 		default:
 			break;

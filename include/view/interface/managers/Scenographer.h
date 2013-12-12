@@ -22,14 +22,12 @@
 	#include <GLU.h>
 #endif
 
-using namespace std;
-
 class Interface;
 class Scene;
 
 class Scenographer {
 public:
-	Scenographer(const Interface*, const Scene*);
+	Scenographer(const Interface&, const Scene&);
 	virtual ~Scenographer();
 
 	void init ();

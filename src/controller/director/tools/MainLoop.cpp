@@ -21,8 +21,8 @@
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-MainLoop::MainLoop(const Director* director) {
-	refDirector_ = director;
+MainLoop::MainLoop(const Director& director) {
+	refDirector_ = &director;
 	logAction(LOG_INIT);
 	continue_ = false;
 	pause_ = false;

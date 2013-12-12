@@ -22,13 +22,11 @@
 	#include <GLU.h>
 #endif
 
-using namespace std;
-
 class Interface;
 
 class Context {
 public:
-	Context(const Interface*);
+	Context(const Interface&);
 	virtual ~Context();
 
 	void init ();

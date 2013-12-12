@@ -23,8 +23,8 @@
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-Simulator::Simulator(const Controller* controller) :
-		Model(controller) {
+Simulator::Simulator(const Controller& controller) :
+		Model(&controller) {
 	logAction(LOG_INIT);
 }
 Simulator::~Simulator() {

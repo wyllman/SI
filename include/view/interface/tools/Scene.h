@@ -22,13 +22,11 @@
 	#include <GLU.h>
 #endif
 
-using namespace std;
-
 class Interface;
 
 class Scene {
 public:
-	Scene(const Interface*);
+	Scene(const Interface&);
 	virtual ~Scene();
 
 	void updateProy (GLfloat []);

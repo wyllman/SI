@@ -24,7 +24,7 @@ class Map;
 
 class Simulator: public Model {
 public:
-	Simulator(const Controller*);
+	Simulator(const Controller&);
 	virtual ~Simulator();
 
 	void init();

@@ -16,8 +16,8 @@
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-View::View(const Controller* controller) {
-	refController_ = controller;
+View::View(const Controller& controller) {
+	refController_ = &controller;
 }
 
 View::~View() {

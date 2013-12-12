@@ -22,13 +22,11 @@
 	#include <SDL.h>
 #endif
 
-using namespace std;
-
 class Interface;
 
 class Window {
 public:
-	Window(const Interface*);
+	Window(const Interface&);
 	virtual ~Window();
 
 	void init (int, int);

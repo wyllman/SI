@@ -20,7 +20,7 @@ class Director;
 
 class MainLoop {
 public:
-	MainLoop(const Director*);
+	MainLoop(const Director&);
 	virtual ~MainLoop();
 
 	void init();

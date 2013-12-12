@@ -21,8 +21,8 @@
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-Scene::Scene(const Interface* interface) {
-	refInterface_ = interface;
+Scene::Scene(const Interface& interface) {
+	refInterface_ = &interface;
 	logAction(LOG_INIT);
 	vertexFloor_ = 0;
 }
@@ -88,14 +88,14 @@ void Scene::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			cout
+			std::cout
 					<< "------Generado la herramienta Scene para la vista Interfaz "
-					<< endl;
+					<< std::endl;
 			break;
 		case LOG_END:
-			cout
+			std::cout
 					<< "------Destruyendo la herramienta Scene para la vista Interfaz "
-					<< endl;
+					<< std::endl;
 			break;
 		default:
 			break;

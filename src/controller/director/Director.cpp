@@ -44,7 +44,7 @@ Director::~Director() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 void Director::init() {
-	mainLoop_ = new MainLoop(this);
+	mainLoop_ = new MainLoop(*this);
 	logAction(LOG_F_INIT);
 }
 void Director::start() {

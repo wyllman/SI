@@ -22,9 +22,9 @@
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-Scenographer::Scenographer(const Interface* interface, const Scene* scene) {
-	refInterface_ = interface;
-	refScene_ = scene;
+Scenographer::Scenographer(const Interface& interface, const Scene& scene) {
+	refInterface_ = &interface;
+	refScene_ = &scene;
 	logAction(LOG_INIT);
 }
 Scenographer::~Scenographer() {
@@ -99,14 +99,14 @@ void Scenographer::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			cout
+			std::cout
 					<< "------Generado el gestor Scenographer para la vista Interfaz "
-					<< endl;
+					<< std::endl;
 			break;
 		case LOG_END:
-			cout
+			std::cout
 					<< "------Destruyendo el gestor Scenographer para la vista Interfaz "
-					<< endl;
+					<< std::endl;
 			break;
 		default:
 			break;

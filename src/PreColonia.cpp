@@ -40,8 +40,8 @@ int main() {
 
 	// Creando las clases base del patrón MVC y enlazar las referencias
  	Controller* directorSim = new Director;
- 	View* interfaceSim = new Interface(directorSim);
- 	Model* modelSim = new Simulator(directorSim);
+ 	View* interfaceSim = new Interface(*directorSim);
+ 	Model* modelSim = new Simulator(*directorSim);
 
 
 	// Inicializando la ejecución del simulador

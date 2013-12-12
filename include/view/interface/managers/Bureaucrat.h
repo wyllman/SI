@@ -27,12 +27,11 @@
 	#include <GLU.h>
 #endif
 
-using namespace std;
 class Interface;
 
 class Bureaucrat {
 public:
-	Bureaucrat(const Interface*);
+	Bureaucrat(const Interface&);
 	virtual ~Bureaucrat();
 
 	void initSDL ();

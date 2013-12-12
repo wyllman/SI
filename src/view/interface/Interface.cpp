@@ -32,7 +32,7 @@
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-Interface::Interface(const Controller* controller) :
+Interface::Interface(const Controller& controller) :
 		View(controller) {
 	logAction(LOG_INIT);
 	bureaucrat_ = 0;
@@ -53,13 +53,13 @@ Interface::~Interface() {
 // Métodos públicos:
 void Interface::init() {
 	logAction(LOG_F_INIT);
-	bureaucrat_ = new Bureaucrat(this);
+	bureaucrat_ = new Bureaucrat(*this);
 
-	window_ = new Window(this);
-	context_ = new Context(this);
+	window_ = new Window(*this);
+	context_ = new Context(*this);
 
-	scene_ = new Scene(this);
-	scenographer_ = new Scenographer(this, scene_);
+	scene_ = new Scene(*this);
+	scenographer_ = new Scenographer(*this, *scene_);
 
 	bureaucrat_->initSDL();
 	bureaucrat_->initOGL();

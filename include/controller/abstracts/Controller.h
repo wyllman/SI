@@ -29,7 +29,7 @@ public:
 	virtual void init () {};
 	virtual void start () {};
 	virtual void stop () {};
-	void setReferences (const View*, const Model*);
+	void setReferences (const View&, const Model&);
 
 protected:
 	const View* refView_;

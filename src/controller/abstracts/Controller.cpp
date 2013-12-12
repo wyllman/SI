@@ -35,9 +35,9 @@ Controller::~Controller() {
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Manejadores públicos:
-void Controller::setReferences(const View* view, const Model* model) {
-	refView_ = view;
-	refModel_ = model;
+void Controller::setReferences(const View& view, const Model& model) {
+	refView_ = &view;
+	refModel_ = &model;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

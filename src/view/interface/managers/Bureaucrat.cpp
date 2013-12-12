@@ -13,7 +13,10 @@
  *
  */
 
-#include "../../../../include/view/interface/managers/Bureaucrat.h"
+#include <view/interface/managers/Bureaucrat.h>
+
+#include <view/interface/Interface.h>
+#include <Tools.h>
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

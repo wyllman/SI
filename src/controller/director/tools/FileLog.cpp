@@ -13,7 +13,13 @@
  *
  */
 
-#include "../../../../include/controller/director/tools/FileLog.h"
+#include <controller/director/tools/FileLog.h>
+
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <fstream>
+#include <cstring>
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

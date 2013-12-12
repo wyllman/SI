@@ -15,8 +15,8 @@
 #ifndef CONTROLLER_H_
 #define CONTROLLER_H_
 
-#include "../../view/abstracts/View.h"
-#include "../../model/abstracts/Model.h"
+#include <view/abstracts/View.h>
+#include <model/abstracts/Model.h>
 
 class View;
 class Model;

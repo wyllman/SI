@@ -1,0 +1,2 @@
+/usr/bin/ar cr libMainLoop.a  CMakeFiles/MainLoop.dir/MainLoop.cpp.o
+/usr/bin/ranlib libMainLoop.a

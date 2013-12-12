@@ -16,12 +16,11 @@
 #ifndef WINDOW_H_
 #define WINDOW_H_
 
-#include <iostream>
-
-#include <SDL.h>
-
-#include "../Interface.h"
-#include "../../../Tools.h"
+#ifdef __linux
+	#include <SDL2/SDL.h>
+#else
+	#include <SDL.h>
+#endif
 
 using namespace std;
 

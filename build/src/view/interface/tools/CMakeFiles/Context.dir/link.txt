@@ -1,0 +1,2 @@
+/usr/bin/ar cr libContext.a  CMakeFiles/Context.dir/Context.cpp.o
+/usr/bin/ranlib libContext.a

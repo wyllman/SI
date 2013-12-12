@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/SI.dir/src/PreColonia.cpp.o  -o SI  -L/home/manwe/workspace/SI/build/controller  -L/home/manwe/workspace/SI/build/view  -L/home/manwe/workspace/SI/build/model -rdynamic 

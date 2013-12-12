@@ -1,0 +1,2 @@
+/usr/bin/ar cr libScenographer.a  CMakeFiles/Scenographer.dir/Scenographer.cpp.o
+/usr/bin/ranlib libScenographer.a

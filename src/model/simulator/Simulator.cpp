@@ -13,7 +13,12 @@
  *
  */
 
-#include "../../../include/model/simulator/Simulator.h"
+#include <model/simulator/Simulator.h>
+#include <model/map/Map.h>
+#include <model/map/MapConsoleInterface.h>
+
+#include <controller/director/Director.h>
+#include <Tools.h>
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

@@ -1,0 +1,2 @@
+/usr/bin/ar cr libDirector.a  CMakeFiles/Director.dir/Director.cpp.o
+/usr/bin/ranlib libDirector.a

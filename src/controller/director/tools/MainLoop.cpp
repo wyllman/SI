@@ -12,7 +12,12 @@
  *
  */
 
-#include "../../../../include/controller/director/tools/MainLoop.h"
+#include <controller/director/tools/MainLoop.h>
+#include <controller/director/tools/FileLog.h>
+#include <controller/director/Director.h>
+#include <Tools.h>
+
+#include <iostream>
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

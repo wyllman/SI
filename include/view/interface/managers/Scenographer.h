@@ -15,13 +15,12 @@
 #ifndef SCENOGRAPHER_H_
 #define SCENOGRAPHER_H_
 
-#include <iostream>
-#include <GL.h>
-#include <GLU.h>
-
-#include "../Interface.h"
-#include "../tools/Scene.h"
-#include "../../../Tools.h"
+#ifdef __linux
+	#include <GL/glew.h>
+#else
+	#include <GL.h>
+	#include <GLU.h>
+#endif
 
 using namespace std;
 

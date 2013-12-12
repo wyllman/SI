@@ -17,18 +17,8 @@
 #ifndef INTERFACE_H_
 #define INTERFACE_H_
 
-#include <iostream>
 
-#include "../abstracts/View.h"
-#include "managers/Bureaucrat.h"
-#include "managers/Scenographer.h"
-#include "tools/Window.h"
-#include "tools/Context.h"
-#include "tools/Scene.h"
-#include "../../controller/director/Director.h"
-#include "../../Tools.h"
-
-using namespace std;
+#include <view/abstracts/View.h>
 
 class Bureaucrat;
 class Scenographer;

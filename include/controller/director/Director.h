@@ -16,17 +16,13 @@
 #ifndef DIRECTOR_H_
 #define DIRECTOR_H_
 
-#include <iostream>
-#include <SDL.h>
-
-#include "../abstracts/controller.h"
-#include "tools/FileLog.h"
-#include "tools/MainLoop.h"
-#include "../../view/interface/Interface.h"
-#include "../../Tools.h"
+#include <controller/abstracts/Controller.h>
+#include <view/interface/Interface.h>
+#include <Tools.h>
 
 using namespace std;
 class MainLoop;
+class FileLog;
 
 class Director: public Controller {
 public:

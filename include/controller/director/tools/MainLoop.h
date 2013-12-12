@@ -15,12 +15,6 @@
 #ifndef MAINLOOP_H_
 #define MAINLOOP_H_
 
-#include <iostream>
-
-#include "../Director.h"
-#include "FileLog.h"
-#include "../../../Tools.h"
-
 using namespace std;
 class Director;
 

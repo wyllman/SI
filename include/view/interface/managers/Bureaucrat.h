@@ -18,12 +18,14 @@
 
 #include <iostream>
 
-#include <SDL.h>
-#include <GL.h>
-#include <GLU.h>
-
-#include "../Interface.h"
-#include "../../../Tools.h"
+#ifdef __linux
+	#include <SDL2/SDL.h>
+	#include <GL/glew.h>
+#else
+	#include <SDL.h>
+	#include <GL.h>
+	#include <GLU.h>
+#endif
 
 using namespace std;
 class Interface;

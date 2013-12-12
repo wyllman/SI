@@ -14,7 +14,21 @@
  *
  */
 
-#include "../../../include/view/interface/Interface.h"
+#include <view/interface/Interface.h>
+
+// dependencias  de la vista
+#include <view/interface/managers/Bureaucrat.h>
+#include <view/interface/managers/Scenographer.h>
+#include <view/interface/tools/Window.h>
+#include <view/interface/tools/Context.h>
+#include <view/interface/tools/Scene.h>
+
+// dependencias de controller
+#include <controller/director/Director.h>
+#include <controller/director/tools/FileLog.h>
+#include <Tools.h>
+
+#include <iostream>
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

@@ -13,7 +13,17 @@
  *
  */
 
-#include "../../../include/controller/director/Director.h"
+#include <controller/director/Director.h>
+
+#ifdef __linux
+	#include <SDL2/SDL.h>
+#else
+	#include <SDL.h>
+#endif
+
+#include <controller/director/tools/FileLog.h>
+#include <controller/director/tools/MainLoop.h>
+#include <iostream>
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

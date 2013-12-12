@@ -12,7 +12,13 @@
  *
  */
 
-#include "../../../../include/view/interface/managers/Scenographer.h"
+#include <view/interface/managers/Scenographer.h>
+
+#include <view/interface/Interface.h>
+#include <view/interface/tools/Scene.h>
+#include <Tools.h>
+
+#include <iostream>
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

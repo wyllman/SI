@@ -18,13 +18,9 @@
 
 #include <iostream>
 
-#include "../abstracts/Model.h"
-#include "../../controller/director/Director.h"
-#include "../../Tools.h"
-#include "../map/Map.h"
-#include "../map/MapConsoleInterface.h"
+#include <model/abstracts/Model.h>
 
-using namespace std;
+class Map;
 
 class Simulator: public Model {
 public:

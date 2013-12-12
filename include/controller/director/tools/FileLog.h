@@ -16,13 +16,9 @@
 #ifndef FILELOG_H_
 #define FILELOG_H_
 
-#include <iostream>
-#include <sstream>
-#include <vector>
-#include <string>
-#include <fstream>
+#include <Tools.h>
 
-#include "../../../Tools.h"
+#include <vector>
 
 using namespace std;
 

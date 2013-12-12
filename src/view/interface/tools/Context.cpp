@@ -43,7 +43,6 @@ void Context::init() {
 	logAction(LOG_F_INIT);
 	initShaders();
 	initBuffers();
-
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -151,28 +150,34 @@ std::endl;
 	if (ADVAN_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			((Interface*) refInterface_)->log(
+			dynamic_cast<Interface*>(
+				const_cast<Interface*>(refInterface_))->log(
 					"------Generado la herramienta Context para la vista Interfaz ");
 			break;
 		case LOG_END:
-			((Interface*) refInterface_)->log(
+			dynamic_cast<Interface*>(
+				const_cast<Interface*>(refInterface_))->log(
 					"------Destruyendo la herramienta Context para la vista "
 							"Interfaz ");
 			break;
 		case LOG_F_INIT:
-			((Interface*) refInterface_)->log(
+			dynamic_cast<Interface*>(
+				const_cast<Interface*>(refInterface_))->log(
 					"------Iniciando el contexto OGL de la herramienta Context ");
 			break;
 		case LOG_ERROR:
-			((Interface*) refInterface_)->log(
+			dynamic_cast<Interface*>(
+				const_cast<Interface*>(refInterface_))->log(
 					"------ERROR!! Compilando el Vertex Shader. ");
 			break;
 		case LOG_ERROR_1:
-			((Interface*) refInterface_)->log(
+			dynamic_cast<Interface*>(
+				const_cast<Interface*>(refInterface_))->log(
 					"------ERROR!! Compilando el Fragment Shader. ");
 			break;
 		case LOG_ERROR_2:
-			((Interface*) refInterface_)->log(
+			dynamic_cast<Interface*>(
+				const_cast<Interface*>(refInterface_))->log(
 					"------ERROR!! Enlazando el programa GSL. ");
 			break;
 		default:

@@ -50,7 +50,9 @@ void Simulator::init() {
 	 }
 	 /* FIXME: Se libera el mapa aqui aunque no deberia, puesto que nos hace
 	  * falta para el resto de la simulación
-	  * Deberia ser liberado en el destructor idealmente*/
+	  * Deberia ser liberado en el destructor idealmente
+	  * FIX? alocar la memoria en el constructor y liberarla en el destructor
+	  */
  	 if (map_ != NULL) {
  		delete map_;
  		map_ = NULL;

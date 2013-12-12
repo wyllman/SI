@@ -30,6 +30,12 @@ option (
 )
 
 option (
+	DEBUG_BUILD
+	"Sets CMAKE_BUILD_TYPE to Debug to compile debuggins symbols"
+	OFF
+)
+
+option (
 	BUILD_DOCUMENTATION
 	"Poseso"
 	OFF
@@ -42,13 +48,15 @@ endif (BUILD_DOCUMENTATION)
 
 if (VERBOSE_BUILD)
 	set (CMAKE_VERBOSE_MAKEFILE ON)
-endif ()
+endif (VERBOSE_BUILD)
 
 if (CONSOLE_BUILD)
 	# TODO
-endif ()
+endif (CONSOLE_BUILD)
 
-set (CMAKE_BUILD_TYPE Debug)
+if (DEBUG_BUILD)
+	set (CMAKE_BUILD_TYPE Debug)
+endif (DEBUG_BUILD)
 
 include_directories (${PROJECT_INCLUDE_DIR})
 
@@ -57,9 +65,11 @@ foreach (A ${INCLUDE_DIRECTORIES})
 endforeach ()
 
 find_package (Boost 1.54 REQUIRED)
-find_package (GLEW)
-find_package (OpenGL)
-find_package (SDL2)
+find_package (GLEW REQUIRED)
+find_package (OpenGL REQUIRED)
+find_package (SDL2 REQUIRED)
+
+message("${OPENGL_LIBRARIES}")
 
 set (DIRS /controller /view /model)
 

@@ -14,11 +14,13 @@
 
 #include <controller/abstracts/Controller.h>
 
+#include <cstdlib>
+
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Controller::Controller() {
-	refView_ = 0;
-	refModel_ = 0;
+	refView_ = NULL;
+	refModel_ = NULL;
 }
 
 Controller::~Controller() {

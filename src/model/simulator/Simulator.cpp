@@ -48,14 +48,16 @@ void Simulator::init() {
 		}
 		std::cout << std::endl;
 	 }
+	 /* FIXME: Se libera el mapa aqui aunque no deberia, puesto que nos hace
+	  * falta para el resto de la simulación
+	  * Deberia ser liberado en el destructor idealmente*/
+ 	 if (map_ != NULL) {
+ 		delete map_;
+ 		map_ = NULL;
+ 	}
 }
 void Simulator::stop() {
 	logAction(LOG_F_STOP);
-	
-	if (map_ != NULL) {
-		delete map_;
-		map_ = NULL;
-	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

@@ -48,6 +48,10 @@ void Director::init() {
 	logAction(LOG_F_INIT);
 }
 void Director::start() {
+	if (refView_ == NULL) {
+		std::cout << "NOOOOOOOOOOOOOOO" << std::endl;
+		exit(EXIT_FAILURE);
+	}
 	const_cast<View*>(refView_)->init();
 	mainLoop();
 }

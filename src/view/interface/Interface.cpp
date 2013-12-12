@@ -96,8 +96,9 @@ void Interface::stop() {
 }
 void Interface::log(const char* line) {
 	if (ADVAN_LOG) {
-		FileLog* fileLogTmp =
-				(FileLog*) (((Director*) refController_)->getRegAccErr());
+		FileLog* fileLogTmp = const_cast<FileLog*>(
+			dynamic_cast<Director*>(
+				const_cast<Controller*>(refController_))->getRegAccErr());
 		fileLogTmp->insertLine(line);
 	}
 }

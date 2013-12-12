@@ -1,0 +1,76 @@
+{
+   OpenGL1
+   Memcheck:Leak
+   obj:/usr/*lib*/*GL*
+   ...
+   obj:*
+}
+
+{
+   OpenGL2
+   Memcheck:Leak
+   ...
+   obj:/usr/*lib*/*GL*
+   ...
+}
+
+{
+   nvidia
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/*lib*/libnvidia*
+}
+
+{
+   STL-reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:_Znwm
+   ...
+}
+
+{
+   STL-possible
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:_Znwm
+   ...
+}
+
+{
+   SDL
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/*lib*/*/libSDL2*
+   ...
+}
+
+{
+   SDL-2
+   Memcheck:Leak
+   match-leak-kinds: definite
+   ...
+   obj:/usr/*lib*/*/libSDL2*
+   ...
+}
+
+
+{
+   dbus
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/*lib*/*/libdbus*
+   ...
+}
+
+{
+   libX11
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/*lib/*/libX11*
+   ...
+}

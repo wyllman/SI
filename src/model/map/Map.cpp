@@ -32,8 +32,6 @@ Map::Map() {
 		memcpy(m_mapArray[i], m_builder->generatedMap()[i], sizeof(BYTE) * m_size);
 	}
 	
-	//m_mapArray = m_builder->generatedMap();
-
 	if (m_builder != NULL) {
 		delete m_builder;
 		m_builder = NULL;

@@ -84,7 +84,7 @@ void Context::initShaders() {
 	glCompileShader(vertexShader_);  //Compilar el vertex shader
 	glGetShaderiv(vertexShader_, GL_COMPILE_STATUS, &compilerStateOK_);
 
-	if (0 == compilerStateOK_) {
+	if (compilerStateOK_ == 0) {
 		logAction(LOG_ERROR);
 		((Interface*) refInterface_)->stop();
 	}
@@ -94,7 +94,7 @@ void Context::initShaders() {
 	glCompileShader(fragmentShader_);
 	glGetShaderiv(fragmentShader_, GL_COMPILE_STATUS, &compilerStateOK_);
 
-	if (0 == compilerStateOK_) {
+	if (compilerStateOK_ == 0) {
 		logAction(LOG_ERROR_1);
 		((Interface*) refInterface_)->stop();
 	}
@@ -105,7 +105,7 @@ void Context::initShaders() {
 	glLinkProgram(programGSL_);
 	glGetProgramiv(programGSL_, GL_LINK_STATUS, &linkerStateOK_);
 
-	if (0 == linkerStateOK_) {
+	if (linkerStateOK_ == 0) {
 		logAction(LOG_ERROR_2);
 		((Interface*) refInterface_)->stop();
 	}

@@ -42,7 +42,7 @@ int main() {
  	Controller* directorSim = new Director;
  	View* interfaceSim = new Interface(*directorSim);
  	Model* modelSim = new Simulator(*directorSim);
-
+	directorSim->setReferences(*interfaceSim, *modelSim);
 
 	// Inicializando la ejecución del simulador
 	directorSim->init();

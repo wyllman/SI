@@ -42,13 +42,6 @@ void FileLog::init() {
 	logAction(LOG_F_INIT);
 }
 void FileLog::reset() {
-// 	int regSize = regAccErr_.size();
-// 	if (regSize > 0) {
-// 		for (int i = 0; i < regSize; i++) {
-// 			delete [] (regAccErr_[i]);
-// 		}
-// 		regAccErr_.clear();
-// 	}
 	if (!regAccErr_.empty()) {
 		regAccErr_.clear();
 	}

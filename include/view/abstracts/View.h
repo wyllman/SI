@@ -31,7 +31,6 @@ public:
 
 protected:
 	const Controller* refController_;
-
 };
 
 #endif /* VIEW_H_ */

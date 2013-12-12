@@ -44,7 +44,6 @@ MapBuilder::MapBuilder() {
 	uint32_t upperBound;
 	uint32_t bytesPerPixel;
 	uint32_t pixelGrayscaleValue;
-	// 	std::map<BYTE, BYTE> terrainBounds;
 
 	m_mapSize = gimp.width;
 	bytesPerPixel = gimp.bytes_per_pixel;
@@ -70,17 +69,6 @@ MapBuilder::MapBuilder() {
 			}
 		}
 	}
-	// generacion de rangos aleatorios para los tipos de terreno
-		mersenneGenerator.seed(time(NULL));
-		boost::random::uniform_int_distribution<> minimumElevation(min, max - 12);
-		boost::random::uniform_int_distribution<> maximumElevation(8, 12);
-		for (int i = 0; i < 5; i++) {
-			mersenneGenerator();
-			Point p;
-			p.first = minimumElevation(mersenneGenerator);
-			p.second = p.first + maximumElevation(mersenneGenerator);
-			//terrainBounds.insert(p);
-		}
 
 	lowerBound = min + (max - min) * 0.05;
 	upperBound = max - (max - min) * 0.4;
@@ -106,14 +94,6 @@ bytesPerPixel];
 }
 
 MapBuilder::~MapBuilder() {
-		if (m_map != NULL) {
-			for (uint32_t i = 0; i < m_mapSize; i++) {
-				//delete[] m_map[i];
-				//m_map[i] = NULL;
-			}
-			//delete[] m_map;
-			m_map = NULL;
-		}
 }
 
 void MapBuilder::generateMap() {

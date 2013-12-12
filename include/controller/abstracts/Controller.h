@@ -34,7 +34,6 @@ public:
 protected:
 	const View* refView_;
 	const Model* refModel_;
-
 };
 
 #endif /* CONTROLLER_H_ */

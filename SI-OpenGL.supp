@@ -1,0 +1,15 @@
+{
+   <opengl2>
+   Memcheck:Leak
+   obj:/usr/*lib*/*GL*
+   ...
+   obj:*
+}
+
+{
+   <opengl3>
+   Memcheck:Leak
+   ...
+   obj:/usr/*lib*/*GL*
+   ...
+}

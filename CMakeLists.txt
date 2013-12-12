@@ -48,6 +48,8 @@ if (CONSOLE_BUILD)
 	# TODO
 endif ()
 
+set (CMAKE_BUILD_TYPE Debug)
+
 include_directories (${PROJECT_INCLUDE_DIR})
 
 foreach (A ${INCLUDE_DIRECTORIES})

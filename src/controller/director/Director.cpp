@@ -48,7 +48,7 @@ void Director::init() {
 	logAction(LOG_F_INIT);
 }
 void Director::start() {
-	((View*) refView_)->init();
+	const_cast<View*>(refView_)->init();
 	mainLoop();
 }
 void Director::stop() {

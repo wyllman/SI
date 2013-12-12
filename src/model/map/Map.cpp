@@ -58,9 +58,12 @@ Map::Map(const Map& map) :
 }
 
 Map::~Map() {
-	//FIXME
 	if (m_mapArray != NULL) {
-		delete[] m_mapArray;
+		for(uint32_t i = 0; i <m_size; i++) {
+			delete [] m_mapArray[i];
+			m_mapArray[i] = NULL;
+		}
+		delete [] m_mapArray;
 		m_mapArray = NULL;
 	}
 }

@@ -12,7 +12,7 @@ Proyecto de Sistemas Inteligentes
 
 		mkdir build && cd build
 
-		cmake ../
+		cmake ../ -DDEBUG_BUILD:BOOL=ON
 
 		make
 
@@ -28,7 +28,7 @@ outside
 
 		mkdir <project>-build && cd <project>-build
 
-		cmake ../<project>
+		cmake ../<project> -DDEBUG_BUILD:BOOL=ON
 
 		make
 

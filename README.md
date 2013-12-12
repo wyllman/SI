@@ -8,13 +8,13 @@ Proyecto de Sistemas Inteligentes
 ||||||||Building|||||||
 =======================
 
-cd <project>
+		cd <project>
 
-mkdir build && cd build
+		mkdir build && cd build
 
-cmake ../
+		cmake ../
 
-make
+		make
 
 ========================
 !!!!!!!!IMPORTANT!!!!!!!
@@ -24,11 +24,11 @@ Eclipse does not support well out-of-source builds
 so the best solution in that case is create the build directory
 outside
 
-cd <project>
+		cd <project>
 
-mkdir <project>-build && cd <project>-build
+		mkdir <project>-build && cd <project>-build
 
-cmake ../<project>
+		cmake ../<project>
 
-make
+		make
 

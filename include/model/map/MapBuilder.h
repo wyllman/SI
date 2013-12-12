@@ -47,9 +47,9 @@ public:
 	/*
 	 *	@fn generatedMap()
 	 *	@brief Devuelve el mapa generado
-	 *	@return BYTE const* const*
+	 *	@return BYTE**
 	 */
-	inline BYTE const* const* generatedMap() {
+	inline BYTE** generatedMap() {
 		return m_map;
 	}
 	inline int32_t mapSize() {

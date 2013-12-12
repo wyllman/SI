@@ -157,18 +157,18 @@ void Interface::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			cout << "---Generado la vista Interfaz " << endl;
+			std::cout << "---Generado la vista Interfaz " << std::endl;
 			break;
 		case LOG_END:
-			cout << "---Destruyendo la vista Interfaz " << endl;
+			std::cout << "---Destruyendo la vista Interfaz " << std::endl;
 			break;
 		case LOG_F_INIT:
-			cout << "---Llamano a la función init de la clase Interface."
-					<< endl;
+			std::cout << "---Llamano a la función init de la clase Interface."
+					<< std::endl;
 			break;
 		case LOG_F_STOP:
-			cout << "---Llamano a la función stop de la clase Interface."
-					<< endl;
+			std::cout << "---Llamano a la función stop de la clase Interface."
+					<< std::endl;
 			break;
 		default:
 			break;

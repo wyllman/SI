@@ -24,7 +24,7 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Simulator::Simulator(const Controller& controller) :
-		Model(&controller) {
+		Model(controller) {
 	logAction(LOG_INIT);
 }
 Simulator::~Simulator() {
@@ -51,6 +51,11 @@ void Simulator::init() {
 }
 void Simulator::stop() {
 	logAction(LOG_F_STOP);
+	
+	if (map_ != NULL) {
+		delete map_;
+		map_ = NULL;
+	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -67,26 +72,27 @@ void Simulator::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			cout << "---Generado el modelo Simulator " << endl;
+			std::cout << "---Generado el modelo Simulator " << std::endl;
 			break;
 		case LOG_END:
-			cout << "---Destruyendo el modelo Simulator " << endl;
+			std::cout << "---Destruyendo el modelo Simulator " << std::endl;
 			break;
 		case LOG_F_INIT:
-			cout << "---Llamano a la función init de la clase Simulator "
-					<< endl;
+			std::cout << "---Llamano a la función init de la clase Simulator "
+					<< std::endl;
 			break;
 		case LOG_F_STOP:
-			cout << "---Llamano a la función stop de la clase Simulator "
-					<< endl;
+			std::cout << "---Llamano a la función stop de la clase Simulator "
+					<< std::endl;
 			break;
 		default:
 			break;
 		}
 	}
 	if (ADVAN_LOG) {
-		FileLog* fileLogTmp =
-				(FileLog*) (((Director*) refController_)->getRegAccErr());
+		FileLog* fileLogTmp = const_cast<FileLog*>(
+			dynamic_cast<Director*>(
+				const_cast<Controller*>(refController_))->getRegAccErr());
 		switch (index) {
 		case LOG_INIT:
 			fileLogTmp->insertLine("---Generando el modelo Simulator ");

@@ -12,13 +12,13 @@
 #ifndef MODEL_H_
 #define MODEL_H_
 
-#include "../../controller/abstracts/Controller.h"
+#include <controller/abstracts/Controller.h>
 
 class Controller;
 
 class Model {
 public:
-	Model(const Controller*);
+	Model(const Controller&);
 	virtual ~Model();
 
 	virtual void init () {};

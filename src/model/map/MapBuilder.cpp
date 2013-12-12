@@ -76,8 +76,7 @@ MapBuilder::MapBuilder() {
 	//bucle de relleno del array
 	for (uint32_t i = 0; i < m_mapSize; i++) {
 		for (uint32_t j = 0; j < m_mapSize; j++) {
-			pixelGrayscaleValue = gimp.pixel_data[((i * m_mapSize) + j) * 
-bytesPerPixel];
+			pixelGrayscaleValue = gimp.pixel_data[((i * m_mapSize) + j) * bytesPerPixel];
 			if (pixelGrayscaleValue < lowerBound) {
 				m_map[i][j] = TERRAIN_WATER;
 			} else if (pixelGrayscaleValue > upperBound) {
@@ -94,6 +93,14 @@ bytesPerPixel];
 }
 
 MapBuilder::~MapBuilder() {
+	if (m_map != NULL) {
+		for (uint32_t i = 0; i < m_mapSize; i++) {
+			delete [] m_map[i];
+			m_map[i] = NULL;
+		}
+		delete [] m_map;
+		m_map = NULL;
+	}
 }
 
 void MapBuilder::generateMap() {
@@ -126,15 +133,13 @@ void MapBuilder::generateElevation() {
 		mersenneGenerator();
 		point.first = elevationDist(mersenneGenerator);
 		point.second = elevationDist(mersenneGenerator);
-		boost::random::uniform_int_distribution<> radiusDist(min,
-				sqrt(m_mapSize));
+		boost::random::uniform_int_distribution<> radiusDist(min, sqrt(m_mapSize));
 		radius = radiusDist(mersenneGenerator);
 
 		for (int32_t i = 0; static_cast<uint32_t>(i) < m_mapSize; i++) {
 			for (int32_t j = 0; static_cast<uint32_t>(j) < m_mapSize; j++) {
-				if ((sqrt(pow(i - point.first, 2) + pow(j - point.second, 2))
-						<= radius)) {
-					m_map[i][j] = 'A';
+				if ((sqrt(pow(i - point.first, 2) + pow(j - point.second, 2)) <= radius)) {
+					m_map[i][j] = TERRAIN_ELEVATION;
 				}
 			}
 		}
@@ -143,15 +148,13 @@ void MapBuilder::generateElevation() {
 		mersenneGenerator();
 		point.first = elevationDist(mersenneGenerator);
 		point.second = elevationDist(mersenneGenerator);
-		boost::random::uniform_int_distribution<> radiusDist(min,
-				sqrt(m_mapSize));
+		boost::random::uniform_int_distribution<> radiusDist(min, sqrt(m_mapSize));
 		radius = radiusDist(mersenneGenerator);
 
 		for (int32_t i = 0; static_cast<uint32_t>(i) < m_mapSize; i++) {
 			for (int32_t j = 0; static_cast<uint32_t>(j) < m_mapSize; j++) {
-				if ((sqrt(pow(i - point.first, 2) + pow(j - point.second, 2))
-						<= radius)) {
-					m_map[i][j] = 'w';
+				if ((sqrt(pow(i - point.first, 2) + pow(j - point.second, 2)) <= radius)) {
+					m_map[i][j] = TERRAIN_WATER;
 				}
 			}
 		}
@@ -172,9 +175,7 @@ const int* MapBuilder::splitArray(const char* cstr) {
 
 	for (uint32_t i = 0; i <= str.length(); i++) {
 		if (str[i] == ' ' || str[i] == '\0') {
-			tmp[index] =
-					atoi(
-							const_cast<char*>(str.substr(initPos, i - initPos).c_str()));
+			tmp[index] = atoi(const_cast<char*>(str.substr(initPos, i - initPos).c_str()));
 			index++;
 			initPos = i;
 		}

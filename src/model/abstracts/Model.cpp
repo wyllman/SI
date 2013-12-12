@@ -13,8 +13,8 @@
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-Model::Model(const Controller* controller) {
-	refController_ = controller;
+Model::Model(const Controller& controller) {
+	refController_ = &controller;
 }
 
 Model::~Model() {

@@ -20,7 +20,6 @@
 #include <view/interface/Interface.h>
 #include <Tools.h>
 
-using namespace std;
 class MainLoop;
 class FileLog;
 

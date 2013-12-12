@@ -42,21 +42,23 @@ void FileLog::init() {
 	logAction(LOG_F_INIT);
 }
 void FileLog::reset() {
-	int regSize = regAccErr_.size();
-	if (regSize > 0) {
-		for (int i = 0; i < regSize; i++) {
-			delete[] (regAccErr_[i]);
-		}
+// 	int regSize = regAccErr_.size();
+// 	if (regSize > 0) {
+// 		for (int i = 0; i < regSize; i++) {
+// 			delete [] (regAccErr_[i]);
+// 		}
+// 		regAccErr_.clear();
+// 	}
+	if (!regAccErr_.empty()) {
 		regAccErr_.clear();
 	}
 	lineNumber_ = 0;
 }
 void FileLog::save() {
-	int regSize = regAccErr_.size();
-	if (regSize > 0) {
-		ofstream outfile("LogAE.txt", std::ofstream::binary);
-		for (int i = 0; i < regSize; i++) {
-			outfile.write(regAccErr_[i], strlen(regAccErr_[i]));
+	if (!regAccErr_.empty()) {
+		std::ofstream outfile("LogAE.txt", std::ofstream::out);
+		for (int i = 0; i < regAccErr_.size(); i++) {
+			outfile.write(regAccErr_[i].c_str(), regAccErr_[i].size());
 			outfile.write("\n", 1);
 		}
 		outfile.close();
@@ -64,32 +66,30 @@ void FileLog::save() {
 
 }
 void FileLog::showConsole() {
-	int tmpSize = regAccErr_.size();
-	cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-			<< endl;
-	cout << "+++ Mostrando el registro de acciones y errores         +++"
-			<< endl;
-	cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-			<< endl;
+	std::cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+			<< std::endl;
+	std::cout << "+++ Mostrando el registro de acciones y errores         +++"
+			<< std::endl;
+	std::cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+			<< std::endl;
 
-	if (tmpSize > 0) {
-		for (int i = 0; i < tmpSize; i++) {
-			cout << "+++ " << regAccErr_[i] << endl;
+	if (!regAccErr_.empty()) {
+		for (int i = 0; i < regAccErr_.size(); i++) {
+			std::cout << "+++ " << regAccErr_[i] << std::endl;
 		}
-		cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-				<< endl;
-	} else if (tmpSize == 0) {
-		cout << "+++ ¡Error! El registro está vacío.                     +++"
-				<< endl;
-		cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-				<< endl;
+		std::cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+				<< std::endl;
+	} else {
+		std::cout << "+++ ¡Error! El registro está vacío.                     +++"
+				<< std::endl;
+		std::cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+				<< std::endl;
 	}
 }
 void FileLog::insertLine(const char* line) {
-	string tempLine;
-	char* finalLine;
+	std::string tempLine;
 	int lineSize = strlen(line);
-	stringstream ss;
+	std::stringstream ss;
 
 	lineNumber_ += 1;
 	ss << lineNumber_; //add number to the stream
@@ -100,9 +100,7 @@ void FileLog::insertLine(const char* line) {
 			tempLine += line[i];
 		}
 	}
-	finalLine = new char[tempLine.size() + 1];
-	strcpy(finalLine, tempLine.c_str());
-	regAccErr_.push_back(finalLine);
+	regAccErr_.push_back(tempLine);
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -119,12 +117,12 @@ void FileLog::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			cout << "------Generado la herramienta FileLog para el Director "
-					<< endl;
+			std::cout << "------Generado la herramienta FileLog para el Director "
+					<< std::endl;
 			break;
 		case LOG_END:
-			cout << "------Destruyendo la herramienta FileLog para el Director "
-					<< endl;
+			std::cout << "------Destruyendo la herramienta FileLog para el Director "
+					<< std::endl;
 			break;
 		default:
 			break;

@@ -10,17 +10,11 @@
 
 #include <cstdlib>
 #include <cstring>
-#include <iostream>
 
 Map::Map(uint32_t size) :
 		m_size(size), m_mapArray(NULL) {
 	m_builder = new MapBuilder(m_size);
-
-	m_mapArray = const_cast<BYTE**>(m_builder->generatedMap());
-	if (m_mapArray == NULL) {
-		std::cout << "something went horribly wrong" << std::endl;
-		exit(EXIT_FAILURE);
-	}
+	m_mapArray = m_builder->generatedMap();
 
 	if (m_builder != NULL) {
 		delete m_builder;
@@ -31,12 +25,14 @@ Map::Map(uint32_t size) :
 Map::Map() {
 	m_builder = new MapBuilder();
 	m_size = m_builder->mapSize();
-	m_mapArray = const_cast<BYTE**>(m_builder->generatedMap());
-
-	if (m_mapArray == NULL) {
-		std::cout << "something went horribly wrong" << std::endl;
-		exit(EXIT_FAILURE);
+	m_mapArray = new BYTE*[m_size];
+	
+	for(uint32_t i = 0; i < m_size; i++) {
+		m_mapArray[i] = new BYTE[m_size];
+		memcpy(m_mapArray[i], m_builder->generatedMap()[i], sizeof(BYTE) * m_size);
 	}
+	
+	//m_mapArray = m_builder->generatedMap();
 
 	if (m_builder != NULL) {
 		delete m_builder;
@@ -59,7 +55,7 @@ Map::Map(const Map& map) :
 
 Map::~Map() {
 	if (m_mapArray != NULL) {
-		for(uint32_t i = 0; i <m_size; i++) {
+		for(uint32_t i = 0; i < m_size; i++) {
 			delete [] m_mapArray[i];
 			m_mapArray[i] = NULL;
 		}

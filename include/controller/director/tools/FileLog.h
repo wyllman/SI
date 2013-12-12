@@ -19,8 +19,7 @@
 #include <Tools.h>
 
 #include <vector>
-
-using namespace std;
+#include <string>
 
 class FileLog {
 public:
@@ -36,7 +35,7 @@ public:
 	void insertLine (const char*);
 
 private:
-	vector<char*> regAccErr_;
+	std::vector<std::string> regAccErr_;
 	int lineNumber_;
 
 	void logAction (int);

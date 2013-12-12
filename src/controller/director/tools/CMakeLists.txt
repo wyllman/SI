@@ -1,9 +1,11 @@
 add_library (
 	FileLog
-	STATIC
-	FileLog.cpp)
+	SHARED
+	FileLog.cpp
+)
 
 add_library (
 	MainLoop
-	STATIC
-	MainLoop.cpp)
+	SHARED
+	MainLoop.cpp
+)

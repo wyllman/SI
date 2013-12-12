@@ -3,7 +3,8 @@ add_subdirectory (tools)
 
 add_library (
 	Interface
-	STATIC
+	SHARED
 	Interface.cpp)
 
-target_link_libraries (Interface Bureaucrat Scenographer Context Scene Window)
+target_link_libraries (Interface View Bureaucrat Scenographer Context Scene 
+Window)

@@ -2,10 +2,18 @@ include_directories (${PROJECT_DIR}/assets)
 
 add_library (
 	MapBuilder
-	STATIC
+	SHARED
 	MapBuilder.cpp)
 	
 add_library (
 	Map
-	STATIC
+	SHARED
 	Map.cpp)
+
+add_library (
+	MapConsoleInterface
+	SHARED
+	MapConsoleInterface.cpp
+)
+
+target_link_libraries (Map MapBuilder)

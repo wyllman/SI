@@ -9,7 +9,7 @@
  *
  */
 
-#include "../../../include/model/abstracts/Model.h"
+#include <model/abstracts/Model.h>
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

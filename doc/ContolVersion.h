@@ -1,5 +1,5 @@
 /*
- *      Nombre: ContolVersion.h
+ *      Nombre: ControlVersion.h
  *
  *   Creado en: 02/12/2013
  *     Versión: v0.0

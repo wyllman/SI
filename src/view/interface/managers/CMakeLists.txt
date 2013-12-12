@@ -1,9 +1,13 @@
 add_library (
 	Bureaucrat
-	STATIC
-	Bureaucrat.cpp)
+	SHARED
+	Bureaucrat.cpp
+)
 
 add_library (
 	Scenographer
-	STATIC
-	Scenographer.cpp)
+	SHARED
+	Scenographer.cpp
+)
+
+target_link_libraries (Scenographer ${OPENGL_LIBRARIES})

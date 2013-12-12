@@ -12,11 +12,11 @@
 #ifndef MVCHEADERS_H_
 #define MVCHEADERS_H_
 
-#include <controller/abstracts/Controller.h>
+//#include <controller/abstracts/Controller.h>
 #include <controller/director/Director.h>
-#include <view/abstracts/View.h>
+//#include <view/abstracts/View.h>
 #include <view/interface/Interface.h>
-#include <model/abstracts/Model.h>
+//#include <model/abstracts/Model.h>
 #include <model/simulator/Simulator.h>
 
 #endif /* MVCHEADERS_H_ */

@@ -12,7 +12,7 @@
  *
  */
 
-#include "../../../include/controller/abstracts/Controller.h"
+#include <controller/abstracts/Controller.h>
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

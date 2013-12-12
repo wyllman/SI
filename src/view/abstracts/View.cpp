@@ -12,7 +12,7 @@
  *
  */
 
-#include "../../../include/view/abstracts/View.h"
+#include <view/abstracts/View.h>
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

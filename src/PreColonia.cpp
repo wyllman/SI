@@ -15,6 +15,7 @@
 #include <Tools.h>
 
 #include <iostream>
+#include <cstdlib>
 
 void logAction(int index) {
 	if (BASIC_LOG) {
@@ -38,28 +39,40 @@ int main() {
 	logAction(LOG_INIT);
 
 	// Creando las clases base del patrón MVC y enlazar las referencias
-	Controller* directorSim = new Director;
-	View* interfaceSim = new Interface(directorSim);
-	Model* modelSim = new Simulator(directorSim);
-	directorSim->setReferences(interfaceSim, modelSim);
+// 	Controller* directorSim = new Director;
+// 	View* interfaceSim = new Interface(directorSim);
+// 	Model* modelSim = new Simulator(directorSim);
+	Director directorSim;
+	Interface interfaceSim(&directorSim);
+	Simulator modelSim(&directorSim);
+	directorSim.setReferences(&interfaceSim, &modelSim);
 
 	// Inicializando la ejecución del simulador
-	directorSim->init();
-	modelSim->init();
-	directorSim->start();
+	directorSim.init();
+	modelSim.init();
+	directorSim.start();
 
 	// Terminando la ejecución del simulador
-	interfaceSim->stop();
-	modelSim->stop();
+	interfaceSim.stop();
+	modelSim.stop();
 
 	// Destruyendo los objetos creados para el patrón MVC
-	delete (interfaceSim);
-	delete (modelSim);
+// 	if (interfaceSim != NULL) {
+// 		delete interfaceSim;
+// 		interfaceSim = NULL;
+// 	}
+// 	if (modelSim != NULL) {
+// 		delete modelSim;
+// 		modelSim = NULL;
+// 	}
 
 	// Terminando y destruyendo al Director del simulador
-	directorSim->stop();
-	delete (directorSim);
+	directorSim.stop();
+// 	if(directorSim != NULL) {
+// 		delete directorSim;
+// 		directorSim = NULL;
+// 	}
 
 	logAction(LOG_END);
-	return 0;
+	return EXIT_SUCCESS;
 }

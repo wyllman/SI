@@ -1,6 +1,7 @@
 add_library (
 	Simulator
-	STATIC
-	Simulator.cpp)
+	SHARED
+	Simulator.cpp
+)
 
-target_link_libraries (Simulator Map)
+target_link_libraries (Simulator Model Map MapConsoleInterface)

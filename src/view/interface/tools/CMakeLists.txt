@@ -1,14 +1,21 @@
 add_library (
 	Context
-	STATIC
-	Context.cpp)
+	SHARED
+	Context.cpp
+)
+
+target_link_libraries (Context ${GLEW_LIBRARIES})
 
 add_library (
 	Scene
-	STATIC
-	Scene.cpp)
+	SHARED
+	Scene.cpp
+)
 
 add_library (
 	Window
-	STATIC
-	Window.cpp)
+	SHARED
+	Window.cpp
+)
+
+target_link_libraries (Window ${SDL2_LIBRARY})

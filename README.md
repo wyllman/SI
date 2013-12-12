@@ -9,8 +9,11 @@ Proyecto de Sistemas Inteligentes
 =======================
 
 cd <project>
+
 mkdir build && cd build
+
 cmake ../
+
 make
 
 ========================
@@ -22,7 +25,10 @@ so the best solution in that case is create the build directory
 outside
 
 cd <project>
+
 mkdir <project>-build && cd <project>-build
+
 cmake ../<project>
+
 make
 

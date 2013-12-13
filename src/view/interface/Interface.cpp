@@ -62,9 +62,9 @@ void Interface::init() {
 	scenographer_ = new Scenographer(*this, *scene_);
 
 	bureaucrat_->initSDL();
-	bureaucrat_->initOGL();
-
 	window_->init(500, 500);
+	
+	bureaucrat_->initOGL();
 	context_->init();
 
 	scenographer_->init();

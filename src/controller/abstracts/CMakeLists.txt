@@ -1,5 +1,5 @@
 add_library (
 	Controller
-	SHARED
+	STATIC
 	Controller.cpp
 )

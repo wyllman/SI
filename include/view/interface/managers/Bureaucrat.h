@@ -16,17 +16,6 @@
 #ifndef BUREAUCRAT_H_
 #define BUREAUCRAT_H_
 
-#include <iostream>
-
-#ifdef __linux
-	#include <SDL2/SDL.h>
-	#include <GL/glew.h>
-#else
-	#include <SDL.h>
-	#include <GL.h>
-	#include <GLU.h>
-#endif
-
 class Interface;
 
 class Bureaucrat {

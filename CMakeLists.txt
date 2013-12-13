@@ -17,6 +17,12 @@ configure_file (
 	"${PROJECT_BINARY_DIR}/SIConfig.h"
 )
 
+if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+	set (PROJECT_OS "Linux")
+elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+	set (PROJECT_OS "OSX")
+endif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+
 option (
 	VERBOSE_BUILD
 	"Sets VERBOSE=1 for debugging purposes"
@@ -31,8 +37,8 @@ option (
 
 option (
 	DEBUG_BUILD
-	"Sets CMAKE_BUILD_TYPE to Debug to compile debuggins symbols"
-	OFF
+	"Sets CMAKE_BUILD_TYPE to Debug to compile debuggins symbols (Default=ON)"
+	ON
 )
 
 option (
@@ -69,26 +75,25 @@ if (Boost_FOUND)
 	include_directories (${Boost_INCLUDE_DIRS})
 endif (Boost_FOUND)
 
-find_file (
-	FIND_GLEW
-	FindGLEW.cmake
-	PATHS ${CMAKE_ROOT}/Modules/
-)
+if (${PROJECT_OS} MATCHES "Linux")
+	find_package (GLEW)
+	if (GLEW_FOUND)
+		include_directories (${GLEW_INCLUDE_DIR})
+	endif (GLEW_FOUND)
+endif (${PROJECT_OS} MATCHES "Linux")
 
-if (FIND_GLEW)
-	set (CMAKE_MODULE_PATH "")
-	find_package (GLEW REQUIRED)
-	set (CMAKE_MODULE_PATH ${PROJECT_DIR}/cmake/modules)
-else (FIND_GLEW)
-	find_package (GLEW REQUIRED)
-endif (FIND_GLEW)
- 
-if (GLEW_FOUND)
-	include_directories (${GLEW_INCLUDE_DIRS})
-endif (GLEW_FOUND)
+## FIXME: Volver a escribir el workaround de glew a ver si esta vez
+## funciona
 
 find_package (OpenGL REQUIRED)
+if (OPENGL_FOUND)
+	include_directories (${OPENGL_INCLUDE_DIR})
+endif (OPENGL_FOUND)
+
 find_package (SDL2 REQUIRED)
+if (SDL2_FOUND)
+	include_directories (${SDL2_INCLUDE_DIR})
+endif (SDL2_FOUND)
 
 set (DIRS /controller /view /model)
 
@@ -105,7 +110,7 @@ link_directories (
 
 add_executable (${PROJECT_NAME} ${PROJECT_SOURCE_DIR}/PreColonia.cpp)
 target_link_libraries (
-	SI
+	${PROJECT_NAME}
 	Director
 	Interface
 	Simulator

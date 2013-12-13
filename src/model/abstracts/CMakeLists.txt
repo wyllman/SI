@@ -1,5 +1,5 @@
 add_library (
 	Model
-	SHARED
+	STATIC
 	Model.cpp
 )

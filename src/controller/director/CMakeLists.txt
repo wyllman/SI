@@ -2,7 +2,7 @@ add_subdirectory (tools)
 
 add_library (
 	Director
-	SHARED
+	STATIC
 	Director.cpp
 )
 

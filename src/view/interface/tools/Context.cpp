@@ -18,6 +18,7 @@
 #include <Tools.h>
 
 #include <iostream>
+#include <cstdlib>
 
 
 // ___________________________________________________________________________________
@@ -79,6 +80,12 @@ void Context::initShaders() {
 			"}";
 
 	vertexShader_ = glCreateShader(GL_VERTEX_SHADER);  //Crear el vertex shader
+
+	if (vertexShader_ == 0) {
+		std::cout << "THE FUCK!" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	
 	glShaderSource(vertexShader_, 1, &vs_source, NULL);
 	glCompileShader(vertexShader_);  //Compilar el vertex shader
 	glGetShaderiv(vertexShader_, GL_COMPILE_STATUS, &compilerStateOK_);

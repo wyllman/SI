@@ -15,14 +15,6 @@
 }
 
 {
-   nvidia
-   Memcheck:Leak
-   match-leak-kinds: reachable
-   ...
-   obj:/usr/*lib*/libnvidia*
-}
-
-{
    STL-reachable
    Memcheck:Leak
    match-leak-kinds: reachable

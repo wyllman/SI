@@ -15,13 +15,6 @@
 #ifndef SCENOGRAPHER_H_
 #define SCENOGRAPHER_H_
 
-#ifdef __linux
-	#include <GL/glew.h>
-#else
-	#include <GL.h>
-	#include <GLU.h>
-#endif
-
 class Interface;
 class Scene;
 

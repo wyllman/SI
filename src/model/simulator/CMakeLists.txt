@@ -1,6 +1,6 @@
 add_library (
 	Simulator
-	SHARED
+	STATIC
 	Simulator.cpp
 )
 

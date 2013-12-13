@@ -1,23 +1,27 @@
 add_library (
 	Context
-	SHARED
+	STATIC
 	Context.cpp
 )
 
-target_link_libraries (Context ${GLEW_LIBRARIES} ${OPENGL_LIBRARIES})
+if (PROJECT_OS MATCHES "Linux")
+	target_link_libraries (Context Interface ${GLEW_LIBRARIES})
+else (PROJECT_OS MATCHES "Linux")
+	target_link_libraries (Context Interface ${OPENGL_LIBRARIES})
+endif (PROJECT_OS MATCHES "Linux")
 
 add_library (
 	Scene
-	SHARED
+	STATIC
 	Scene.cpp
 )
 
-target_link_libraries (Context ${OPENGL_LIBRARIES})
+target_link_libraries (Scene Interface)
 
 add_library (
 	Window
-	SHARED
+	STATIC
 	Window.cpp
 )
 
-target_link_libraries (Window ${SDL2_LIBRARY})
+target_link_libraries (Window Interface ${SDL2_LIBRARY})

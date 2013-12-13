@@ -19,6 +19,13 @@
 #include <Tools.h>
 
 #include <iostream>
+#ifdef __linux
+	#include <GL/gl.h>
+	#include <GL/glu.h>
+#else
+	#include <GL.h>
+	#include <GLU.h>
+#endif
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

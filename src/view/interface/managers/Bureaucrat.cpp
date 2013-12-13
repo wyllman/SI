@@ -18,6 +18,15 @@
 #include <view/interface/Interface.h>
 #include <Tools.h>
 
+#include <iostream>
+#include <SDL.h>
+#ifdef __linux
+	#include <GL/glew.h>
+#else
+	#include <GL.h>
+	#include <GLU.h>
+#endif
+
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Bureaucrat::Bureaucrat(const Interface& interface) {
@@ -42,12 +51,19 @@ void Bureaucrat::initSDL() {
 }
 void Bureaucrat::initOGL() {
 	logAction(LOG_F_INIT_1);
-	//glShadeModel( GL_SMOOTH );
-	//glClearDepth( 1.0f );
-	//glEnable( GL_DEPTH_TEST );
-	//glDepthFunc( GL_LEQUAL );
-	//glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
-	//loadShader ();
+	#ifdef __linux
+	GLenum err = glewInit();
+	if (GLEW_OK != err) {
+		exit(-1);
+	}
+	#else
+	glShadeModel( GL_SMOOTH );
+	glClearDepth( 1.0f );
+	glEnable( GL_DEPTH_TEST );
+	glDepthFunc( GL_LEQUAL );
+	glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
+	#endif
+	loadShader ();
 }
 void Bureaucrat::loadShader() {
 	if (ADVAN_LOG) {

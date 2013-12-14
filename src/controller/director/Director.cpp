@@ -98,19 +98,19 @@ void Director::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			cout << "---Generado el coordinador Director " << endl;
+			std::cout << "---Generado el coordinador Director " << std::endl;
 			break;
 		case LOG_END:
-			cout << "---Destruyendo el coordinador Director " << endl;
+			std::cout << "---Destruyendo el coordinador Director " << std::endl;
 			break;
 		case LOG_F_INIT:
-			cout << "---Llamando a la funcion init del Director" << endl;
+			std::cout << "---Llamando a la funcion init del Director" << std::endl;
 			break;
 		case LOG_F_STOP:
-			cout << "---Llamando a la funcion stop del Director" << endl;
+			std::cout << "---Llamando a la funcion stop del Director" << std::endl;
 			break;
 		case LOG_F_LOOP:
-			cout << "---Llamando a la función mainLoop del Director" << endl;
+			std::cout << "---Llamando a la función mainLoop del Director" << std::endl;
 			break;
 		default:
 			break;
@@ -119,22 +119,18 @@ void Director::logAction(int index) {
 	if (ADVAN_LOG) {
 		switch (index) {
 		case LOG_F_INIT:
-			regAccErr_->insertLine(
-					"---Llamando a la funcion init del Director");
+			regAccErr_->insertLine("---Llamando a la funcion init del Director");
 			break;
 		case LOG_F_STOP:
 			if (regAccErr_ != 0) {
-				regAccErr_->insertLine(
-						"---Llamando a la funcion stop del Director");
-				regAccErr_->insertLine(
-						"******************************************");
+				regAccErr_->insertLine("---Llamando a la funcion stop del Director");
+				regAccErr_->insertLine("******************************************");
 				regAccErr_->showConsole();
 				regAccErr_->save();
 			}
 			break;
 		case LOG_F_LOOP:
-			regAccErr_->insertLine(
-					"---Llamando a la función mainLoop del Director");
+			regAccErr_->insertLine("---Llamando a la función mainLoop del Director");
 			break;
 		default:
 			break;

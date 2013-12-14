@@ -29,7 +29,7 @@ public:
 	void loadShader ();
 
 private:
-	const Interface* refInterface_;
+	Interface* refInterface_;
 
 	void logAction(int);
 };

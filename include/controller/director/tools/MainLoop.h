@@ -15,7 +15,6 @@
 #ifndef MAINLOOP_H_
 #define MAINLOOP_H_
 
-using namespace std;
 class Director;
 
 class MainLoop {

@@ -122,12 +122,10 @@ void Scenographer::logAction(int index) {
 	if (ADVAN_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			((Interface*) refInterface_)->log(
-					"------Generado el gestor Scenographer para la vista Interfaz ");
+			const_cast<Interface*>(refInterface_)->log("------Generado el gestor Scenographer para la vista Interfaz ");
 			break;
 		case LOG_END:
-			((Interface*) refInterface_)->log(
-					"------Destruyendo el gestor Scenographer para la vista Interfaz ");
+			const_cast<Interface*>(refInterface_)->log("------Destruyendo el gestor Scenographer para la vista Interfaz ");
 			break;
 		default:
 			break;

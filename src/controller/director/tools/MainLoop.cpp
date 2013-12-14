@@ -86,28 +86,23 @@ void MainLoop::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			cout << "------Generado la herramienta MainLoop para el Director "
-					<< endl;
+			std::cout << "------Generado la herramienta MainLoop para el Director " << std::endl;
 			break;
 		case LOG_END:
-			cout
-					<< "------Destruyendo la herramienta MainLoop para el Director "
-					<< endl;
+			std::cout << "------Destruyendo la herramienta MainLoop para el Director " << std::endl;
 			break;
 		default:
 			break;
 		}
 	}
 	if (ADVAN_LOG) {
-		FileLog* regist = (FileLog*) refDirector_->getRegAccErr();
+		FileLog* regist = const_cast<FileLog*>(refDirector_->getRegAccErr());
 		switch (index) {
 		case LOG_INIT:
-			regist->insertLine(
-					"------Generado la herramienta MainLoop para el Director ");
+			regist->insertLine("------Generado la herramienta MainLoop para el Director ");
 			break;
 		case LOG_END:
-			regist->insertLine(
-					"------Destruyendo la herramienta MainLoop para el Director ");
+			regist->insertLine("------Destruyendo la herramienta MainLoop para el Director ");
 			break;
 		default:
 			break;

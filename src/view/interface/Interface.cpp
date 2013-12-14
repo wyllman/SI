@@ -94,7 +94,7 @@ void Interface::stop() {
 		scene_ = 0;
 	}
 }
-void Interface::log(const char* line) {
+void Interface::log(const char* line){
 	if (ADVAN_LOG) {
 		FileLog* fileLogTmp = const_cast<FileLog*>(
 			dynamic_cast<Director*>(

@@ -8,7 +8,7 @@
 #ifndef MAP_H_
 #define MAP_H_
 
-#include "../../typedefs.h"
+#include <typedefs.h>
 #include <stdint.h>
 #include <iostream>
 

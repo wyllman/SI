@@ -17,11 +17,8 @@
 
 #include <iostream>
 
-#include <GL.h>
-#include <GLU.h>
-
-#include "../Interface.h"
-#include "../../../Tools.h"
+#include <view/interface/Interface.h>
+#include <Tools.h>
 
 using namespace std;
 
@@ -32,16 +29,19 @@ public:
 
 	void init ();
 	GLuint getProgramGsl() const;
+	const uint* getVboId() const;
 
 private:
 	const Interface* refInterface_;
 
 	GLuint programGSL_;
 	GLuint bufferVertex_;
+	GLuint bufferVertexColor_;
 	GLuint vertexShader_;
 	GLuint fragmentShader_;
 	GLint compilerStateOK_;
 	GLint linkerStateOK_;
+	uint vboID_[2];
 
 	void initShaders();
 	void initBuffers();

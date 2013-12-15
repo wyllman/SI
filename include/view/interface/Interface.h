@@ -19,14 +19,18 @@
 
 #include <iostream>
 
-#include "../abstracts/View.h"
-#include "managers/Bureaucrat.h"
-#include "managers/Scenographer.h"
-#include "tools/Window.h"
-#include "tools/Context.h"
-#include "tools/Scene.h"
-#include "../../controller/director/Director.h"
-#include "../../Tools.h"
+#include <SDL.h>
+#include <GL.h>
+#include <GLU.h>
+
+#include <view/abstracts/View.h>
+#include <view/interface/managers/Bureaucrat.h>
+#include <view/interface/managers/Scenographer.h>
+#include <view/interface/tools/Window.h>
+#include <view/interface/tools/Context.h>
+#include <view/interface/tools/Scene.h>
+#include <controller/director/Director.h>
+#include <Tools.h>
 
 using namespace std;
 
@@ -38,7 +42,7 @@ class Scene;
 
 class Interface: public View {
 public:
-	Interface(const Controller*);
+	Interface(const Controller&);
 	virtual ~Interface();
 
 	void init();
@@ -46,6 +50,8 @@ public:
 	void render();
 
 	void log(const char*);
+	const Scene* getScene() const;
+	const Scenographer* getScenographer() const;
 
 private:
 	Bureaucrat* bureaucrat_;

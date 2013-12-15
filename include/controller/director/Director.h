@@ -17,13 +17,15 @@
 #define DIRECTOR_H_
 
 #include <iostream>
-#include <SDL.h>
 
-#include "../abstracts/controller.h"
-#include "tools/FileLog.h"
-#include "tools/MainLoop.h"
-#include "../../view/interface/Interface.h"
-#include "../../Tools.h"
+#include <controller/abstracts/Controller.h>
+#include <controller/director/tools/FileLog.h>
+#include <controller/director/tools/MainLoop.h>
+#include <view/interface/Interface.h>
+#include <view/interface/managers/Scenographer.h>
+#include <model/simulator/Simulator.h>
+#include <model/map/Map.h>
+#include <Tools.h>
 
 using namespace std;
 class MainLoop;
@@ -37,6 +39,7 @@ public:
 	void start ();
 	void stop ();
 	const FileLog* getRegAccErr() const;
+	const Map* getMap() const;
 
 private:
 	FileLog* regAccErr_;

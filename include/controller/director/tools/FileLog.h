@@ -22,7 +22,7 @@
 #include <string>
 #include <fstream>
 
-#include "../../../Tools.h"
+#include <Tools.h>
 
 using namespace std;
 

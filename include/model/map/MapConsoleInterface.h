@@ -8,7 +8,7 @@
 #ifndef MAPCONSOLEINTERFACE_H_
 #define MAPCONSOLEINTERFACE_H_
 
-#include "../../typedefs.h"
+#include <typedefs.h>
 #include <iostream>
 #include <map>
 #include <bits/stl_pair.h>

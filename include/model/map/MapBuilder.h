@@ -8,7 +8,7 @@
 #ifndef MAPBUILDER_H_
 #define MAPBUILDER_H_
 
-#include "../../typedefs.h"
+#include <typedefs.h>
 #include <stdint.h>
 
 /*

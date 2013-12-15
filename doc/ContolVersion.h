@@ -61,5 +61,6 @@
  *              - Principales arreglos de enlazado después de la reestructuración o mezcla.
  *              - Enlazando la clase Map con la clase Simulator y su función init(). Además
  *              se muestra por consola el mapa generado.
+ *              - Refactorizado de los "includes" del proyecto.
  */
 

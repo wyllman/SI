@@ -19,7 +19,7 @@ MapConsoleInterface::~MapConsoleInterface() {
 
 }
 
-BYTE const* const * MapConsoleInterface::map() {
+BYTE const * const * MapConsoleInterface::map() {
 	return m_map->map();
 }
 

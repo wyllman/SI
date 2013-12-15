@@ -18,11 +18,11 @@
 
 #include <iostream>
 
-#include "../abstracts/Model.h"
-#include "../../controller/director/Director.h"
-#include "../../Tools.h"
-#include "../map/Map.h"
-#include "../map/MapConsoleInterface.h"
+#include <model/abstracts/Model.h>
+#include <controller/director/Director.h>
+#include <Tools.h>
+#include <model/map/Map.h>
+#include  <model/map/MapConsoleInterface.h>
 
 using namespace std;
 
@@ -33,6 +33,7 @@ public:
 
 	void init();
 	void stop();
+	const Map* getMap() const;
 
 private:
 	Map* map_;

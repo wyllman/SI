@@ -39,11 +39,11 @@ void Bureaucrat::initSDL() {
 }
 void Bureaucrat::initOGL() {
 	logAction(LOG_F_INIT_1);
-	//glShadeModel( GL_SMOOTH );
-	//glClearDepth( 1.0f );
-	//glEnable( GL_DEPTH_TEST );
-	//glDepthFunc( GL_LEQUAL );
-	//glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
+	glShadeModel( GL_SMOOTH );
+	glClearDepth( 100.0f );
+	glEnable( GL_DEPTH_TEST );
+	glDepthFunc( GL_LEQUAL );
+	glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
 	//loadShader ();
 }
 void Bureaucrat::loadShader() {

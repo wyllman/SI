@@ -16,12 +16,12 @@
 #define SCENOGRAPHER_H_
 
 #include <iostream>
-#include <GL.h>
-#include <GLU.h>
 
-#include "../Interface.h"
-#include "../tools/Scene.h"
-#include "../../../Tools.h"
+#include <view/interface/Interface.h>
+#include <view/interface/tools/Scene.h>
+#include <model/map/Map.h>
+#include <model/map/MapConsoleInterface.h>
+#include <Tools.h>
 
 using namespace std;
 
@@ -30,23 +30,37 @@ class Scene;
 
 class Scenographer {
 public:
-	Scenographer(const Interface*, const Scene*);
+	Scenographer(const Interface*, const Scene*, const Map*);
 	virtual ~Scenographer();
 
 	void init ();
 	void update ();
+	void projZoom (float);
+	void camPosX (float);
 
 private:
 	const Interface* refInterface_;
 	const Scene* refScene_;
+	const Map* refMap_;
 
-	void initProy ();
-	void initCam ();
+	float projAng_;
+	float projRatio_;
+	int projNear_;
+	int projFar_;
+
+	float camPos_[3];
+	float camViewPoint_[3];
+	float camVectorUp_[3];
+
+	void initProy (float, float, int, int);
+	void initCam (float [3], float [3], float [3]);
 	void initFloor ();
 
-	void updateProy (float, float, int, int);
-	void updateCam (int [3], int [3], int [3]);
+	void updateProy ();
+	void updateCam ();
 	void updateFloor (int, int);
+	void createUp (int, int, float, float [3], float*, float*, int);
+	void createLeft ();
 
 	void logAction(int);
 };

@@ -17,9 +17,9 @@
 
 #include <iostream>
 
-#include "../Director.h"
-#include "FileLog.h"
-#include "../../../Tools.h"
+#include <controller/director/Director.h>
+#include <controller/director/tools/FileLog.h>
+#include <Tools.h>
 
 using namespace std;
 class Director;

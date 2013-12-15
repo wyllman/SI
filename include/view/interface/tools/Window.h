@@ -18,10 +18,8 @@
 
 #include <iostream>
 
-#include <SDL.h>
-
-#include "../Interface.h"
-#include "../../../Tools.h"
+#include <view/interface/Interface.h>
+#include <Tools.h>
 
 using namespace std;
 

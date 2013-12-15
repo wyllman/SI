@@ -20,6 +20,7 @@ Scene::Scene(const Interface* interface) {
 	refInterface_ = interface;
 	logAction(LOG_INIT);
 	vertexFloor_ = 0;
+	vertexFloorColor_ = 0;
 }
 
 Scene::~Scene() {
@@ -73,6 +74,16 @@ float* Scene::getVertexFloor(int size) {
 	}
 	vertexFloor_ = new float[size];
 	return vertexFloor_;
+}
+const float* Scene::getVertexFloorColor() const {
+	return vertexFloorColor_;
+}
+float* Scene::getVertexFloorColor(int size) {
+	if (vertexFloorColor_ != 0) {
+		delete[] (vertexFloorColor_);
+	}
+	vertexFloorColor_ = new float[size];
+	return vertexFloorColor_;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

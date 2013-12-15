@@ -14,8 +14,8 @@
 #include <iostream>
 using namespace std;
 
-#include "../include/MVCHeaders.h"
-#include "../include/Tools.h"
+#include <MVCHeaders.h>
+#include <Tools.h>
 
 void logAction(int index) {
 	if (BASIC_LOG) {
@@ -40,13 +40,12 @@ int main() {
 
 	// Creando las clases base del patrón MVC y enlazar las referencias
 	Controller* directorSim = new Director;
-	View* interfaceSim = new Interface(directorSim);
+	View* interfaceSim = new Interface(*directorSim);
 	Model* modelSim = new Simulator(directorSim);
 	directorSim->setReferences(interfaceSim, modelSim);
 
 	// Inicializando la ejecución del simulador
 	directorSim->init();
-	modelSim->init();
 	directorSim->start();
 
 	// Terminando la ejecución del simulador

@@ -18,12 +18,8 @@
 
 #include <iostream>
 
-#include <SDL.h>
-#include <GL.h>
-#include <GLU.h>
-
-#include "../Interface.h"
-#include "../../../Tools.h"
+#include <view/interface/Interface.h>
+#include <Tools.h>
 
 using namespace std;
 class Interface;

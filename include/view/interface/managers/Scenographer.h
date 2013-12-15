@@ -15,14 +15,9 @@
 #ifndef SCENOGRAPHER_H_
 #define SCENOGRAPHER_H_
 
-#include <view/interface/Interface.h>
-#include <view/interface/tools/Scene.h>
-#include <model/map/Map.h>
-#include <model/map/MapConsoleInterface.h>
-#include <Tools.h>
-
 class Interface;
 class Scene;
+class Map;
 
 class Scenographer {
 public:

@@ -9,7 +9,6 @@
 #define MAPCONSOLEINTERFACE_H_
 
 #include <typedefs.h>
-#include <map>
 
 class Map;
 

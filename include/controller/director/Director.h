@@ -17,16 +17,10 @@
 #define DIRECTOR_H_
 
 #include <controller/abstracts/Controller.h>
-#include <controller/director/tools/FileLog.h>
-#include <controller/director/tools/MainLoop.h>
-#include <view/interface/Interface.h>
-#include <view/interface/managers/Scenographer.h>
-#include <model/simulator/Simulator.h>
-#include <model/map/Map.h>
-#include <Tools.h>
 
 class MainLoop;
 class FileLog;
+class Map;
 
 class Director: public Controller {
 public:

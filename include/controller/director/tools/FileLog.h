@@ -16,8 +16,6 @@
 #ifndef FILELOG_H_
 #define FILELOG_H_
 
-#include <Tools.h>
-
 #include <vector>
 #include <string>
 

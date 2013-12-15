@@ -14,6 +14,7 @@
  *
  */
 
+#include <view/abstracts/View.h>
 #include <view/interface/Interface.h>
 
 // dependencias  de la vista
@@ -35,12 +36,12 @@
 Interface::Interface(const Controller& controller) :
 		View(controller) {
 	logAction(LOG_INIT);
-	bureaucrat_ = 0;
-	scenographer_ = 0;
+	bureaucrat_ = NULL;
+	scenographer_ = NULL;
 
-	window_ = 0;
-	context_ = 0;
-	scene_ = 0;
+	window_ = NULL;
+	context_ = NULL;
+	scene_ = NULL;
 }
 Interface::~Interface() {
 	logAction(LOG_END);
@@ -73,32 +74,33 @@ void Interface::init() {
 }
 void Interface::stop() {
 	logAction(LOG_F_STOP);
-	if (bureaucrat_ != 0) {
+	if (bureaucrat_ != NULL) {
 		delete (bureaucrat_);
-		bureaucrat_ = 0;
+		bureaucrat_ = NULL;
 	}
-	if (scenographer_ != 0) {
+	if (scenographer_ != NULL) {
 		delete (scenographer_);
-		scenographer_ = 0;
+		scenographer_ = NULL;
 	}
-	if (window_ != 0) {
+	if (window_ != NULL) {
 		delete (window_);
-		window_ = 0;
+		window_ = NULL;
 	}
-	if (context_ != 0) {
+	if (context_ != NULL) {
 		delete (context_);
-		context_ = 0;
+		context_ = NULL;
 	}
-	if (scene_ != 0) {
+	if (scene_ != NULL) {
 		delete (scene_);
-		scene_ = 0;
+		scene_ = NULL;
 	}
 }
-void Interface::log(const char* line){
+void Interface::log(const char* line) {
 	if (ADVAN_LOG) {
-		FileLog* fileLogTmp = const_cast<FileLog*>(
-			dynamic_cast<Director*>(
-				const_cast<Controller*>(refController_))->getRegAccErr());
+		FileLog* fileLogTmp =
+			const_cast<FileLog*>(
+				dynamic_cast<Director*>(
+					const_cast<Controller*>(refController_))->getRegAccErr());
 		fileLogTmp->insertLine(line);
 	}
 }
@@ -183,7 +185,9 @@ void Interface::logAction(int index) {
 	}
 	if (ADVAN_LOG) {
 		FileLog* fileLogTmp =
-				(FileLog*) (((Director*) refController_)->getRegAccErr());
+				const_cast<FileLog*>(
+					dynamic_cast<Director*>(
+						const_cast<Controller*>(refController_))->getRegAccErr());
 		switch (index) {
 		case LOG_INIT:
 			fileLogTmp->insertLine("---Generando la vista Interfaz ");

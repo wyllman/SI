@@ -12,11 +12,12 @@
  *
  */
 
+#include <model/map/Map.h>
 #include <view/interface/managers/Scenographer.h>
-
 #include <view/interface/Interface.h>
 #include <view/interface/tools/Scene.h>
 #include <Tools.h>
+#include <typedefs.h>
 
 #include <iostream>
 #ifdef __linux
@@ -124,57 +125,56 @@ void Scenographer::updateFloor(int width, int height) {
 			100 * 100 * NUM_VER_POINT);
 	float color[3] = {0.0, 0.0, 0.0};
 
-	MapConsoleInterface mapci(*refMap_);
-		for (int i = 0; i < 100; i++) {
-			for (int j = 0; j < 100; j++) {
-				switch (mapci(i, j)) {
-					case '_':
-						color[0] = 0.0;
-						color[1] = 1.0;
-						color [2] = 0.0;
+	for (int i = 0; i < MAP_WIDTH; i++) {
+		for (int j = 0; j < MAP_HEIGHT; j++) {
+			switch ((*refMap_)(i, j)) {
+				case TERRAIN_GROUND:
+					color[0] = 0.0;
+					color[1] = 1.0;
+					color [2] = 0.0;
 
-						createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 0);
-						createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 1);
-						createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 2);
-						createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 3);
-						createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 4);
-						break;
-					case 'A':
-						color[0] = 0.0;
-						color[1] = 0.5;
-						color [2] = 0.0;
+					createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 0);
+					createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 1);
+					createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 2);
+					createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 3);
+					createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 4);
+					break;
+				case TERRAIN_ELEVATION:
+					color[0] = 0.0;
+					color[1] = 0.5;
+					color [2] = 0.0;
 
-						createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 0);
-						createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 1);
-						createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 2);
-						createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 3);
-						createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 4);
-						break;
-					case 'w':
-						color[0] = 0.0;
-						color[1] = 0.0;
-						color [2] = 1.0;
+					createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 0);
+					createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 1);
+					createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 2);
+					createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 3);
+					createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 4);
+					break;
+				case TERRAIN_WATER:
+					color[0] = 0.0;
+					color[1] = 0.0;
+					color [2] = 1.0;
 
-						createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 0);
-						createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 1);
-						createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 2);
-						createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 3);
-						createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 4);
-						break;
-					default:
-						color[0] = 0.0;
-						color[1] = 1.0;
-						color [2] = 0.0;
+					createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 0);
+					createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 1);
+					createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 2);
+					createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 3);
+					createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 4);
+					break;
+				default:
+					color[0] = 0.0;
+					color[1] = 1.0;
+					color [2] = 0.0;
 
-						createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 0);
-						createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 1);
-						createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 2);
-						createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 3);
-						createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 4);
-						break;
-				}
+					createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 0);
+					createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 1);
+					createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 2);
+					createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 3);
+					createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 4);
+					break;
 			}
-		 }
+		}
+	}
 }
 
 void Scenographer::createUp(int row, int col, float height, float color[3], float* vertexFloor, float* vertexFloorColor, int side) {

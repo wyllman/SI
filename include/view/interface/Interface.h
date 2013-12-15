@@ -18,13 +18,6 @@
 #define INTERFACE_H_
 
 #include <view/abstracts/View.h>
-#include <view/interface/managers/Bureaucrat.h>
-#include <view/interface/managers/Scenographer.h>
-#include <view/interface/tools/Window.h>
-#include <view/interface/tools/Context.h>
-#include <view/interface/tools/Scene.h>
-#include <controller/director/Director.h>
-#include <Tools.h>
 
 class Bureaucrat;
 class Scenographer;

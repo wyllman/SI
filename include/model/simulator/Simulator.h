@@ -15,15 +15,7 @@
 
 #ifndef SIMULATOR_H_
 #define SIMULATOR_H_
-
-#include <iostream>
-
-#include <model/abstracts/Model.h>
-#include <controller/director/Director.h>
-#include <Tools.h>
-#include <model/map/Map.h>
-#include  <model/map/MapConsoleInterface.h>
-
+ 
 class Map;
 
 class Simulator: public Model {

@@ -33,6 +33,7 @@ class Map {
 		Map(const Map& map);
 		~Map();
 		inline BYTE const* const* map() const { return m_mapArray; }
+		BYTE operator()(int x, int y) const;
 		inline uint32_t size() const { return m_size; }
 };
 

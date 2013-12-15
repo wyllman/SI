@@ -14,6 +14,7 @@
  */
 
 #include <controller/director/tools/FileLog.h>
+#include <Tools.h>
 
 #include <iostream>
 #include <sstream>

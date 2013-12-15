@@ -13,10 +13,10 @@
  */
 
 #include <view/interface/tools/Scene.h>
-
 #include <view/interface/Interface.h>
 #include <Tools.h>
 
+#include <string.h>
 #include <iostream>
 
 // ___________________________________________________________________________________
@@ -24,14 +24,15 @@
 Scene::Scene(const Interface& interface) {
 	refInterface_ = &interface;
 	logAction(LOG_INIT);
-	vertexFloor_ = 0;
-	vertexFloorColor_ = 0;
+	vertexFloor_ = NULL;
+	vertexFloorColor_ = NULL;
 }
 
 Scene::~Scene() {
 	logAction(LOG_END);
-	if (vertexFloor_ != 0) {
-		delete[] (vertexFloor_);
+	if (vertexFloor_ != NULL) {
+		delete [] vertexFloor_;
+		vertexFloor_ = NULL;
 	}
 }
 // FIN -------------------------------------------------------------------------------
@@ -46,22 +47,14 @@ Scene::~Scene() {
 // ___________________________________________________________________________________
 // Manejadores públicos:
 void Scene::updateProy(GLfloat projectionMatrix[]) {
-	for (int i = 0; i < 16; i++) {
-		projectionMatrix_[i] = projectionMatrix[i];
-	}
+	memcpy(projectionMatrix_, projectionMatrix, sizeof(float) * 16);
 }
 void Scene::updateCam(GLfloat modelviewMatrix[]) {
-	for (int i = 0; i < 16; i++) {
-		modelviewMatrix_[i] = modelviewMatrix[i];
-	}
+	memcpy(modelviewMatrix_, modelviewMatrix, sizeof(float) * 16);
 }
 void Scene::updateFloor(float vertexFloor[], int size) {
-	if (vertexFloor_ != 0) {
-		delete[] (vertexFloor_);
-	}
-	vertexFloor_ = new float[size];
-	for (int i = 0; i < size; i++) {
-		vertexFloor_[i] = vertexFloor[i];
+	if (vertexFloor_ != NULL) {
+		memcpy(vertexFloor_, vertexFloor, sizeof(float) * size);
 	}
 }
 GLfloat* Scene::getModelviewMatrix() {
@@ -74,8 +67,8 @@ const float* Scene::getVertexFloor() const {
 	return vertexFloor_;
 }
 float* Scene::getVertexFloor(int size) {
-	if (vertexFloor_ != 0) {
-		delete[] (vertexFloor_);
+	if (vertexFloor_ != NULL) {
+		delete [] vertexFloor_;
 	}
 	vertexFloor_ = new float[size];
 	return vertexFloor_;
@@ -84,8 +77,8 @@ const float* Scene::getVertexFloorColor() const {
 	return vertexFloorColor_;
 }
 float* Scene::getVertexFloorColor(int size) {
-	if (vertexFloorColor_ != 0) {
-		delete[] (vertexFloorColor_);
+	if (vertexFloorColor_ != NULL) {
+		delete [] vertexFloorColor_;
 	}
 	vertexFloorColor_ = new float[size];
 	return vertexFloorColor_;

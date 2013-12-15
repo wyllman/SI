@@ -8,7 +8,9 @@
 #ifndef WORKINGAGENT_H_
 #define WORKINGAGENT_H_
 
-class WorkingAgent {
+#include <model/agents/Agent.h>
+
+class WorkingAgent : public Agent {
 public:
 	WorkingAgent();
 	~WorkingAgent();

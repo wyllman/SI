@@ -15,8 +15,6 @@
 #ifndef VIEW_H_
 #define VIEW_H_
 
-#include <controller/abstracts/Controller.h>
-
 class Controller;
 
 class View {

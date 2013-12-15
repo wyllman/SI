@@ -13,7 +13,15 @@
  *
  */
 
+#include <view/abstracts/View.h>
 #include <controller/director/Director.h>
+#include <controller/director/tools/FileLog.h>
+#include <controller/director/tools/MainLoop.h>
+#include <model/abstracts/Model.h>
+#include <model/simulator/Simulator.h>
+#include <view/interface/Interface.h>
+#include <view/interface/managers/Scenographer.h>
+#include <Tools.h>
 
 #ifdef __linux
 	#include <SDL2/SDL.h>
@@ -21,8 +29,6 @@
 	#include <SDL.h>
 #endif
 
-#include <controller/director/tools/FileLog.h>
-#include <controller/director/tools/MainLoop.h>
 #include <iostream>
 
 // ___________________________________________________________________________________

@@ -59,10 +59,10 @@ void Interface::init() {
 	context_ = new Context(*this);
 
 	scene_ = new Scene(*this);
-	scenographer_ = new Scenographer(*this, *scene_);
+	scenographer_ = new Scenographer(*this, *scene_, *dynamic_cast<Director*>(const_cast<Controller*>(refController_))->getMap());
 
 	bureaucrat_->initSDL();
-	window_->init(500, 500);
+	window_->init(WIN_WIDTH, WIN_HEIGHT);
 	
 	bureaucrat_->initOGL();
 	context_->init();
@@ -107,7 +107,12 @@ void Interface::log(const char* line){
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Manejadores públicos:
-
+const Scene* Interface::getScene() const {
+	return scene_;
+}
+const Scenographer* Interface::getScenographer() const {
+	return scenographer_;
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -129,30 +134,31 @@ void Interface::render() {
 	glUniformMatrix4fv(
 			glGetUniformLocation(context_->getProgramGsl(), "modelview_matrix"),
 			1, GL_FALSE, scene_->getModelviewMatrix());
-	glEnableVertexAttribArray(0);
-	// Enviar el suelo al shader y pintarlo.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 1000 * 1000 * 2,
-			scene_->getVertexFloor(), GL_STATIC_DRAW);
-	glDrawArrays(GL_POINTS, 0, 1000 * 1000);
 
-	glDisableVertexAttribArray(0);
+	// Enviar el suelo al shader y pintarlo.
+	//    Buffer de vertices
+	glBindBuffer(GL_ARRAY_BUFFER, context_->getVboId()[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 100 * 100 * 3 * 4 * 5,
+			scene_->getVertexFloor(), GL_STATIC_DRAW);
+	glVertexAttribPointer(glGetAttribLocation(context_->getProgramGsl(), "coord3d")
+				, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	//    Buffer de colores
+	glBindBuffer(GL_ARRAY_BUFFER, context_->getVboId()[1]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 100 * 100 * 3 * 4 * 5,
+				scene_->getVertexFloorColor(), GL_STATIC_DRAW);
+	glVertexAttribPointer(glGetAttribLocation(context_->getProgramGsl(), "colorRGB")
+					, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glEnableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "coord3d"));
+	glEnableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"));
+
+	glDrawArrays(GL_QUADS, 0, 100 * 100 * 4 * 5);
+
+	glDisableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "coord3d"));
+	glDisableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"));
 	glUseProgram(0);
 
 	window_->update();
-}
-void Interface::createFloor(int width, int height) {
-	float vertexFloor[width * height * 2];
-
-	for (int i = 0; i < width; i++) {
-		for (int j = 0; j < height; j++) {
-			vertexFloor[((i * width) + j) * 2] = (i - (width / 2)) / 100.0;
-			vertexFloor[((i * width) + j) * 2 + 1] = (j - (width / 2)) / 100.0;
-		}
-	}
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * width * height * 2,
-			vertexFloor, GL_STATIC_DRAW);
-	glDrawArrays(GL_POINTS, 0, width * height);
 }
 void Interface::logAction(int index) {
 	if (BASIC_LOG) {
@@ -201,4 +207,5 @@ void Interface::logAction(int index) {
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
 

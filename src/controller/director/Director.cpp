@@ -48,11 +48,9 @@ void Director::init() {
 	logAction(LOG_F_INIT);
 }
 void Director::start() {
-	if (refView_ == NULL) {
-		std::cout << "NOOOOOOOOOOOOOOO" << std::endl;
-		exit(EXIT_FAILURE);
-	}
+	const_cast<Model*>(refModel_)->init();
 	const_cast<View*>(refView_)->init();
+
 	mainLoop();
 }
 void Director::stop() {
@@ -76,6 +74,9 @@ void Director::stop() {
 const FileLog* Director::getRegAccErr() const {
 	return regAccErr_;
 }
+const Map* Director::getMap() const {
+	return (((Simulator*)refModel_)->getMap());
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -84,12 +85,31 @@ const FileLog* Director::getRegAccErr() const {
 void Director::mainLoop() {
 	SDL_Event eventSDL;
 	logAction(LOG_F_LOOP);
+	bool needRender = false;
 
 	mainLoop_->init();
 	while (mainLoop_->isContinue()) {
 		while (SDL_PollEvent(&eventSDL)) {
 			if (eventSDL.type == SDL_QUIT) {
 				mainLoop_->stop();
+			} else if (eventSDL.type == SDL_KEYDOWN && eventSDL.key.state == SDL_PRESSED) {
+				if (eventSDL.key.keysym.sym == SDLK_UP) {
+					((Scenographer*)((Interface*)refView_)->getScenographer())->projZoom(-0.75);
+					needRender = true;
+				} else if (eventSDL.key.keysym.sym == SDLK_DOWN) {
+					((Scenographer*)((Interface*)refView_)->getScenographer())->projZoom(0.75);
+					needRender = true;
+				} else if (eventSDL.key.keysym.sym == SDLK_LEFT) {
+					((Scenographer*)((Interface*)refView_)->getScenographer())->camPosX(0.5);
+					needRender = true;
+				} else if (eventSDL.key.keysym.sym == SDLK_RIGHT) {
+					((Scenographer*)((Interface*)refView_)->getScenographer())->camPosX(-0.5);
+					needRender = true;
+				}
+			}
+			if (needRender) {
+				((Interface*)refView_)->render();
+				needRender = false;
 			}
 		}
 	}
@@ -140,4 +160,5 @@ void Director::logAction(int index) {
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
 

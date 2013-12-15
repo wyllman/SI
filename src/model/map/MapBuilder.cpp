@@ -7,15 +7,9 @@
 
 #include <model/map/MapBuilder.h>
 
-#ifdef __linux
-	#include <boost/random/mersenne_twister.hpp>
-	#include <boost/random/uniform_int_distribution.hpp>
-	#include <boost/random/binomial_distribution.hpp>
-#elif __APPLE__
-	#ifdef TARGET_OS_MAC
-	// includes
-	#endif
-#endif
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_int_distribution.hpp>
+#include <boost/random/binomial_distribution.hpp>
 
 #include <cmath>
 #include <cstdlib>

@@ -36,12 +36,15 @@ public:
 	GLfloat* getProjectionMatrix();
 	const float* getVertexFloor() const;
 	float* getVertexFloor(int);
+	const float* getVertexFloorColor() const;
+	float* getVertexFloorColor(int);
 
 private:
 	const Interface* refInterface_;
 	GLfloat modelviewMatrix_[16];
 	GLfloat projectionMatrix_[16];
 	float* vertexFloor_;
+	float* vertexFloorColor_;
 
 	void logAction(int);
 };

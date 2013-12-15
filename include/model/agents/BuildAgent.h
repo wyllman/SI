@@ -8,7 +8,7 @@
 #ifndef BUILDAGENT_H_
 #define BUILDAGENT_H_
 
-#include "WorkingAgent.h"
+#include <model/agents/WorkingAgent.h>
 
 class BuildAgent: public WorkingAgent {
 public:

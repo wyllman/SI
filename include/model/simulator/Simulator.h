@@ -19,6 +19,10 @@
 #include <iostream>
 
 #include <model/abstracts/Model.h>
+#include <controller/director/Director.h>
+#include <Tools.h>
+#include <model/map/Map.h>
+#include  <model/map/MapConsoleInterface.h>
 
 class Map;
 
@@ -29,6 +33,7 @@ public:
 
 	void init();
 	void stop();
+	const Map* getMap() const;
 
 private:
 	Map* map_;

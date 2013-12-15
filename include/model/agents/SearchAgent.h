@@ -8,7 +8,7 @@
 #ifndef SEARCHAGENT_H_
 #define SEARCHAGENT_H_
 
-#include "WorkingAgent.h"
+#include <model/agents/WorkingAgent.h>
 
 class SearchAgent: public WorkingAgent {
 public:

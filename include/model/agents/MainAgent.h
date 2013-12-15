@@ -8,7 +8,7 @@
 #ifndef MAINAGENT_H_
 #define MAINAGENT_H_
 
-#include "Agent.h"
+#include <model/agents/Agent.h>
 
 /**
  * \class MainAgent

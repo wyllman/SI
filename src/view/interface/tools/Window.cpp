@@ -20,8 +20,6 @@
 
 #include <iostream>
 
-
-
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Window::Window(const Interface& interface) {

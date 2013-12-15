@@ -16,6 +16,9 @@
 #ifndef BUREAUCRAT_H_
 #define BUREAUCRAT_H_
 
+#include <view/interface/Interface.h>
+#include <Tools.h>
+
 class Interface;
 
 class Bureaucrat {

@@ -19,9 +19,9 @@ add_library (
 )
 
 if (PROJECT_OS MATCHES "Linux")
-	target_link_libraries (Scenographer Interface ${GLEW_LIBRARIES})
+	target_link_libraries (Scenographer Interface MapConsoleInterface ${GLEW_LIBRARIES})
 else (PROJECT_OS MATCHES "Linux")
-	target_link_libraries (Scenographer Interface ${OPENGL_LIBRARIES})
+	target_link_libraries (Scenographer Interface MapConsoleInterface ${OPENGL_LIBRARIES})
 endif (PROJECT_OS MATCHES "Linux")
 
 set (CMAKE_POSITION_INDEPENDENT_CODE FALSE)

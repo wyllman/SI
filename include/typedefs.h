@@ -9,7 +9,7 @@
 #define TYPEDEFS_H_
 
 #include <map>
-//#include <bits/stl_pair.h>
+#include <bits/stl_pair.h>
 
 typedef unsigned char BYTE;
 typedef std::pair<int, int> Point;

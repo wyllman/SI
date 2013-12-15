@@ -53,6 +53,9 @@ void Context::init() {
 GLuint Context::getProgramGsl() const {
 	return programGSL_;
 }
+const uint* Context::getVboId() const {
+	return vboID_;
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -67,16 +70,18 @@ void Context::initShaders() {
 #endif
 					"  uniform      mat4 modelview_matrix;    "
 					"  uniform      mat4 projection_matrix;   "
-					"attribute vec2 coord2d;                  "
+					"attribute vec3 coord3d;                  "
+					"attribute vec3 colorRGB;                  "
+					"varying vec3 f_color;                    "
 					"void main(void) {                        "
-					"  vec4 pos = modelview_matrix * vec4(coord2d[0], -0.5 , coord2d[1], 1.0); "
+					"  vec4 pos = modelview_matrix * vec4(coord3d[0], coord3d[1] , coord3d[2], 1.0); "
 					"  gl_Position = projection_matrix * pos; "
+					"  f_color = colorRGB;                     "
 					"}";
 	const char *fs_source = "#version 120           \n"
+			"varying vec3 f_color;                  "
 			"void main(void) {        "
-			"  gl_FragColor[0] = 0.9; "
-			"  gl_FragColor[1] = 0.4; "
-			"  gl_FragColor[2] = 0.2; "
+			"  gl_FragColor = vec4(f_color[0], f_color[1], f_color[2], 1);"
 			"}";
 
 	vertexShader_ = glCreateShader(GL_VERTEX_SHADER);  //Crear el vertex shader
@@ -114,8 +119,10 @@ void Context::initShaders() {
 
 void Context::initBuffers() {
 	glGenBuffers(1, &bufferVertex_);
-	glBindBuffer(GL_ARRAY_BUFFER, bufferVertex_);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glGenBuffers(1, &bufferVertexColor_);
+
+	vboID_[0] = bufferVertex_;
+	vboID_[1] = bufferVertexColor_;
 }
 void Context::logAction(int index) {
 	if (BASIC_LOG) {

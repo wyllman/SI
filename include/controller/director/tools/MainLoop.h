@@ -15,6 +15,10 @@
 #ifndef MAINLOOP_H_
 #define MAINLOOP_H_
 
+#include <controller/director/Director.h>
+#include <controller/director/tools/FileLog.h>
+#include <Tools.h>
+
 class Director;
 
 class MainLoop {

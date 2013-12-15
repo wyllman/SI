@@ -46,7 +46,6 @@ int main() {
 
 	// Inicializando la ejecución del simulador
 	directorSim->init();
-	modelSim->init();
 	directorSim->start();
 
 	// Terminando la ejecución del simulador

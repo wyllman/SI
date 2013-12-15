@@ -25,6 +25,12 @@ enum {
 	LOG_F_LOOP = 6
 };
 
+const int MAP_WIDTH = 100;
+const int MAP_HEIGHT = 100;
+
+const int WIN_WIDTH = 1000;
+const int WIN_HEIGHT = 500;
+
 enum {
 	LOG_ERROR_1 = -101,
 	LOG_INIT_1 = 101,

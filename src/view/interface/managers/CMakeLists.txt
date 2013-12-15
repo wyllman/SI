@@ -1,3 +1,5 @@
+set (CMAKE_POSITION_INDEPENDENT_CODE TRUE)
+
 add_library (
 	Bureaucrat
 	STATIC
@@ -21,3 +23,5 @@ if (PROJECT_OS MATCHES "Linux")
 else (PROJECT_OS MATCHES "Linux")
 	target_link_libraries (Scenographer Interface ${OPENGL_LIBRARIES})
 endif (PROJECT_OS MATCHES "Linux")
+
+set (CMAKE_POSITION_INDEPENDENT_CODE FALSE)

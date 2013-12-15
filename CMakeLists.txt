@@ -110,7 +110,7 @@ link_directories (
 	${PROJECT_BINARY_DIR}/model/simulator
 )
 
-### Final compilation and linkage ###
+# ### Final compilation and linkage ###
 if (CMAKE_BUILD_TYPE MATCHES Debug)
 	set (PROJECT_EXEC_NAME ${PROJECT_NAME}-Debug)
 else (CMAKE_BUILD_TYPE MATCHES Debug)
@@ -118,10 +118,10 @@ else (CMAKE_BUILD_TYPE MATCHES Debug)
 endif (CMAKE_BUILD_TYPE MATCHES Debug)
 
 add_executable (${PROJECT_EXEC_NAME} ${PROJECT_SOURCE_DIR}/PreColonia.cpp)
+
 target_link_libraries (
 	${PROJECT_EXEC_NAME}
 	Director
 	Interface
 	Simulator
-	Controller
 )

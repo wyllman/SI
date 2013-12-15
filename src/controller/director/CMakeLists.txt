@@ -2,12 +2,13 @@ add_subdirectory (tools)
 
 add_library (
 	Director
-	STATIC
+	SHARED
 	Director.cpp
 )
 
 target_link_libraries (
 	Director
+	Controller
 	FileLog
 	MainLoop
 )

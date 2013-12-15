@@ -1,3 +1,5 @@
+set (CMAKE_POSITION_INDEPENDENT_CODE TRUE)
+
 add_library (
 	Context
 	STATIC
@@ -25,3 +27,5 @@ add_library (
 )
 
 target_link_libraries (Window Interface ${SDL2_LIBRARY})
+
+set (CMAKE_POSITION_INDEPENDENT_CODE FALSE)

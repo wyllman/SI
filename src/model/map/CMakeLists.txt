@@ -1,4 +1,5 @@
 include_directories (${PROJECT_DIR}/assets)
+set (CMAKE_POSITION_INDEPENDENT_CODE TRUE)
 
 add_library (
 	MapBuilder
@@ -17,3 +18,5 @@ add_library (
 )
 
 target_link_libraries (Map MapBuilder)
+
+set (CMAKE_POSITION_INDEPENDENT_CODE FALSE)

@@ -1,5 +1,9 @@
+set (CMAKE_POSITION_INDEPENDENT_CODE TRUE)
+
 add_library (
 	Controller
 	STATIC
 	Controller.cpp
 )
+
+set (CMAKE_POSITION_INDEPENDENT_CODE FALSE)

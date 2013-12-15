@@ -70,13 +70,26 @@ if (DEBUG_BUILD)
 endif (DEBUG_BUILD)
 
 # ### Package finding ###
+find_file (
+	FINDGLEW_FOUND
+	FindGLEW.cmake
+	PATHS ${CMAKE_ROOT}/Modules/
+)
+
 find_package (Boost REQUIRED)
 if (Boost_FOUND)
 	include_directories (${Boost_INCLUDE_DIRS})
 endif (Boost_FOUND)
 
 if (${PROJECT_OS} MATCHES "Linux")
-	find_package (GLEW)
+	if (FINDGLEW_FOUND)
+		set (CMAKE_MODULE_PATH "")
+		find_package (GLEW REQUIRED)
+		set (CMAKE_MODULE_PATH ${PROJECT_DIR}/cmake/modules)
+	else (FINDGLEW_FOUND)
+		find_package (GLEW)
+	endif (FINDGLEW_FOUND)
+	
 	if (GLEW_FOUND)
 		include_directories (${GLEW_INCLUDE_DIR})
 	endif (GLEW_FOUND)

@@ -56,13 +56,12 @@ void Bureaucrat::initOGL() {
 	if (GLEW_OK != err) {
 		exit(-1);
 	}
-	#else
+	#endif
 	glShadeModel( GL_SMOOTH );
 	glClearDepth( 100.0f );
 	glEnable( GL_DEPTH_TEST );
 	glDepthFunc( GL_LEQUAL );
 	glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
-	#endif
 	// loadShader();
 }
 void Bureaucrat::loadShader() {

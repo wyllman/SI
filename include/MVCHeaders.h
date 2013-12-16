@@ -2,10 +2,14 @@
  *      Nombre: MVCHeaders.h
  *
  *   Creado en: 06/12/2013
- *     Version: v0.0
- *     Autores: tenerent
+ *     Versión: v0.003
+ *     Autores: Tinguaro Cubas Saiz
+ *              Juan Henández Hernández
+ *              Miguel Pérez Bello
+ *              Guillermo Rodríguez Pardo
  *
- * Descripcion:
+ * Descripción: Archivo de cabecera con el conjunto de clases a ser incluidas
+ *              en el archivo de código principal del simulador.
  *
  */
 

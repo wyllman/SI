@@ -2,7 +2,7 @@
  *      Nombre: Controller.cpp
  *
  *   Creado en: 02/12/2013
- *     Versión: v0.0
+ *     Versión: v0.003
  *     Autores: Tinguaro Cubas Saiz
  *              Juan Henández Hernández
  *              Miguel Pérez Bello
@@ -19,12 +19,12 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Controller::Controller() {
-	refView_ = NULL;
-	refModel_ = NULL;
+   refView_ = NULL;
+   refModel_ = NULL;
 }
 
 Controller::~Controller() {
-	// TODO Auto-generated destructor stub
+   // TODO Auto-generated destructor stub
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -38,8 +38,8 @@ Controller::~Controller() {
 // ___________________________________________________________________________________
 // Manejadores públicos:
 void Controller::setReferences(const View& view, const Model& model) {
-	refView_ = &view;
-	refModel_ = &model;
+   refView_ = &view;
+   refModel_ = &model;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

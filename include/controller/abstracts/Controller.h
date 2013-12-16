@@ -2,7 +2,7 @@
  *      Nombre: Controller.h
  *
  *   Creado en: 02/12/2013
- *     Versión: v0.0
+ *     Versión: v0.003
  *     Autores: Tinguaro Cubas Saiz
  *              Juan Henández Hernández
  *              Miguel Pérez Bello
@@ -19,18 +19,18 @@ class View;
 class Model;
 
 class Controller {
-public:
-	Controller();
-	virtual ~Controller();
+   public:
+      Controller();
+      virtual ~Controller();
 
-	virtual void init () {};
-	virtual void start () {};
-	virtual void stop () {};
-	void setReferences (const View&, const Model&);
+      virtual void init () {};
+      virtual void start () {};
+      virtual void stop () {};
+      void setReferences (const View&, const Model&);
 
-protected:
-	const View* refView_;
-	const Model* refModel_;
+   protected:
+      const View* refView_;
+      const Model* refModel_;
 };
 
 #endif /* CONTROLLER_H_ */

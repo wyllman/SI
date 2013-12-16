@@ -2,7 +2,7 @@
  *      Nombre: Simulator.h
  *
  *   Creado en: 05/12/2013
- *     Versión: v0.0
+ *     Versión: v0.003
  *     Autores: Tinguaro Cubas Saiz
  *              Juan Henández Hernández
  *              Miguel Pérez Bello
@@ -19,18 +19,18 @@
 class Map;
 
 class Simulator: public Model {
-public:
-	Simulator(const Controller&);
-	virtual ~Simulator();
+   public:
+      Simulator(const Controller&);
+      virtual ~Simulator();
 
-	void init();
-	void stop();
-	const Map* getMap() const;
+      void init();
+      void stop();
+      const Map* getMap() const;
 
-private:
-	Map* map_;
+   private:
+      Map* map_;
 
-	void logAction(int);
+      void logAction(int);
 };
 
 #endif /* SIMULATOR_H_ */

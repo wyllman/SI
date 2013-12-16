@@ -2,7 +2,7 @@
  *      Nombre: View.h
  *
  *   Creado en: 02/12/2013
- *     Versión: v0.0
+ *     Versión: v0.003
  *     Autores: Tinguaro Cubas Saiz
  *              Juan Henández Hernández
  *              Miguel Pérez Bello
@@ -18,17 +18,17 @@
 class Controller;
 
 class View {
-public:
-	View(const Controller&);
-	virtual ~View();
+   public:
+      View(const Controller&);
+      virtual ~View();
 
-	virtual void init () {};
-	virtual void update () {};
-	virtual void reset () {};
-	virtual void stop () {};
+      virtual void init () {};
+      virtual void update () {};
+      virtual void reset () {};
+      virtual void stop () {};
 
-protected:
-	const Controller* refController_;
+   protected:
+      const Controller* refController_;
 };
 
 #endif /* VIEW_H_ */

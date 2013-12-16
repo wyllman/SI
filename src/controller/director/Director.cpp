@@ -2,7 +2,7 @@
  *      Nombre: Director.cpp
  *
  *   Creado en: 02/12/2013
- *     Versión: v0.0
+ *     Versión: v0.003
  *     Autores: Tinguaro Cubas Saiz
  *              Juan Henández Hernández
  *              Miguel Pérez Bello
@@ -24,9 +24,9 @@
 #include <Tools.h>
 
 #ifdef __linux
-	#include <SDL2/SDL.h>
+   #include <SDL2/SDL.h>
 #else
-	#include <SDL.h>
+   #include <SDL.h>
 #endif
 
 #include <iostream>
@@ -34,15 +34,15 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Director::Director() {
-	logAction(LOG_INIT);
-	regAccErr_ = new FileLog;
-	regAccErr_->init();
-	mainLoop_ = 0;
+   logAction(LOG_INIT);
+   regAccErr_ = new FileLog;
+   regAccErr_->init();
+   mainLoop_ = NULL;
 }
 
 Director::~Director() {
-	logAction(LOG_END);
-	stop();
+   logAction(LOG_END);
+   stop();
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -50,27 +50,26 @@ Director::~Director() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 void Director::init() {
-	mainLoop_ = new MainLoop(*this);
-	logAction(LOG_F_INIT);
+   mainLoop_ = new MainLoop(*this);
+   logAction(LOG_F_INIT);
 }
 void Director::start() {
-	const_cast<Model*>(refModel_)->init();
-	const_cast<View*>(refView_)->init();
-
-	mainLoop();
+   const_cast<Model*>(refModel_)->init();
+   const_cast<View*>(refView_)->init();
+   mainLoop();
 }
 void Director::stop() {
-	if (mainLoop_ != 0) {
-		delete (mainLoop_);
-		mainLoop_ = 0;
-	}
+   if (mainLoop_ != NULL) {
+      delete (mainLoop_);
+      mainLoop_ = NULL;
+   }
 
-	logAction(LOG_F_STOP);
+   logAction(LOG_F_STOP);
 
-	if (regAccErr_ != 0) {
-		delete (regAccErr_);
-		regAccErr_ = 0;
-	}
+   if (regAccErr_ != NULL) {
+      delete (regAccErr_);
+      regAccErr_ = NULL;
+   }
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -78,10 +77,10 @@ void Director::stop() {
 // ___________________________________________________________________________________
 // Manejadores públicos:
 const FileLog* Director::getRegAccErr() const {
-	return regAccErr_;
+   return regAccErr_;
 }
 const Map* Director::getMap() const {
-	return (((Simulator*)refModel_)->getMap());
+   return (dynamic_cast<Simulator*>(const_cast<Model*>(refModel_))->getMap());
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -89,82 +88,80 @@ const Map* Director::getMap() const {
 // ___________________________________________________________________________________
 // Métodos privados:
 void Director::mainLoop() {
-	SDL_Event eventSDL;
-	logAction(LOG_F_LOOP);
-	bool needRender = false;
+   SDL_Event eventSDL;
+   logAction(LOG_F_LOOP);
+   bool needRender = false;
 
-	mainLoop_->init();
-	while (mainLoop_->isContinue()) {
-		while (SDL_PollEvent(&eventSDL)) {
-			if (eventSDL.type == SDL_QUIT) {
-				mainLoop_->stop();
-			} else if (eventSDL.type == SDL_KEYDOWN && eventSDL.key.state == SDL_PRESSED) {
-				if (eventSDL.key.keysym.sym == SDLK_UP) {
-					((Scenographer*)((Interface*)refView_)->getScenographer())->projZoom(-0.75);
-					needRender = true;
-				} else if (eventSDL.key.keysym.sym == SDLK_DOWN) {
-					((Scenographer*)((Interface*)refView_)->getScenographer())->projZoom(0.75);
-					needRender = true;
-				} else if (eventSDL.key.keysym.sym == SDLK_LEFT) {
-					((Scenographer*)((Interface*)refView_)->getScenographer())->camPosX(0.5);
-					needRender = true;
-				} else if (eventSDL.key.keysym.sym == SDLK_RIGHT) {
-					((Scenographer*)((Interface*)refView_)->getScenographer())->camPosX(-0.5);
-					needRender = true;
-				}
-			}
-			if (needRender) {
-				((Interface*)refView_)->render();
-				needRender = false;
-			}
-		}
-	}
+   mainLoop_->init();
+   while (mainLoop_->isContinue()) {
+      while (SDL_PollEvent(&eventSDL)) {
+         if (eventSDL.type == SDL_QUIT) {
+            mainLoop_->stop();
+         } else if (eventSDL.type == SDL_KEYDOWN && eventSDL.key.state == SDL_PRESSED) {
+            if (eventSDL.key.keysym.sym == SDLK_UP) {
+               const_cast<Scenographer*>(dynamic_cast<Interface*>(const_cast<View*>(refView_))->getScenographer())->projZoom(-0.75);
+               needRender = true;
+            } else if (eventSDL.key.keysym.sym == SDLK_DOWN) {
+               const_cast<Scenographer*>(dynamic_cast<Interface*>(const_cast<View*>(refView_))->getScenographer())->projZoom(0.75);
+               needRender = true;
+            } else if (eventSDL.key.keysym.sym == SDLK_LEFT) {
+               const_cast<Scenographer*>(dynamic_cast<Interface*>(const_cast<View*>(refView_))->getScenographer())->camPosX(0.5);
+               needRender = true;
+            } else if (eventSDL.key.keysym.sym == SDLK_RIGHT) {
+               const_cast<Scenographer*>(dynamic_cast<Interface*>(const_cast<View*>(refView_))->getScenographer())->camPosX(-0.5);
+               needRender = true;
+            }
+         }
+         if (needRender) {
+            dynamic_cast<Interface*>(const_cast<View*>(refView_))->render();
+            needRender = false;
+         }
+      }
+   }
 }
 void Director::logAction(int index) {
-	if (BASIC_LOG) {
-		switch (index) {
-		case LOG_INIT:
-			std::cout << "---Generado el coordinador Director " << std::endl;
-			break;
-		case LOG_END:
-			std::cout << "---Destruyendo el coordinador Director " << std::endl;
-			break;
-		case LOG_F_INIT:
-			std::cout << "---Llamando a la funcion init del Director" << std::endl;
-			break;
-		case LOG_F_STOP:
-			std::cout << "---Llamando a la funcion stop del Director" << std::endl;
-			break;
-		case LOG_F_LOOP:
-			std::cout << "---Llamando a la función mainLoop del Director" << std::endl;
-			break;
-		default:
-			break;
-		}
-	}
-	if (ADVAN_LOG) {
-		switch (index) {
-		case LOG_F_INIT:
-			regAccErr_->insertLine("---Llamando a la funcion init del Director");
-			break;
-		case LOG_F_STOP:
-			if (regAccErr_ != 0) {
-				regAccErr_->insertLine("---Llamando a la funcion stop del Director");
-				regAccErr_->insertLine("******************************************");
-				regAccErr_->showConsole();
-				regAccErr_->save();
-			}
-			break;
-		case LOG_F_LOOP:
-			regAccErr_->insertLine("---Llamando a la función mainLoop del Director");
-			break;
-		default:
-			break;
-		}
-	}
+   if (BASIC_LOG) {
+      switch (index) {
+         case LOG_INIT:
+            std::cout << "---Generado el coordinador Director " << std::endl;
+            break;
+         case LOG_END:
+            std::cout << "---Destruyendo el coordinador Director " << std::endl;
+            break;
+         case LOG_F_INIT:
+            std::cout << "---Llamando a la funcion init del Director" << std::endl;
+            break;
+         case LOG_F_STOP:
+            std::cout << "---Llamando a la funcion stop del Director" << std::endl;
+            break;
+         case LOG_F_LOOP:
+            std::cout << "---Llamando a la función mainLoop del Director" << std::endl;
+            break;
+         default:
+            break;
+      }
+   }
+   if (ADVAN_LOG) {
+      switch (index) {
+         case LOG_F_INIT:
+            regAccErr_->insertLine("---Llamando a la funcion init del Director");
+            break;
+         case LOG_F_STOP:
+            if (regAccErr_ != NULL) {
+               regAccErr_->insertLine("---Llamando a la funcion stop del Director");
+               regAccErr_->insertLine("******************************************");
+               regAccErr_->showConsole();
+               regAccErr_->save();
+            }
+            break;
+         case LOG_F_LOOP:
+            regAccErr_->insertLine("---Llamando a la función mainLoop del Director");
+            break;
+         default:
+            break;
+      }
+   }
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
-

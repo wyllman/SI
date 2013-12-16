@@ -2,7 +2,7 @@
  *      Nombre: Interface.cpp
  *
  *   Creado en: 02/12/2013
- *     Versión: v0.0
+ *     Versión: v0.003
  *     Autores: Tinguaro Cubas Saiz
  *              Juan Henández Hernández
  *              Miguel Pérez Bello
@@ -34,18 +34,18 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Interface::Interface(const Controller& controller) :
-		View(controller) {
-	logAction(LOG_INIT);
-	bureaucrat_ = NULL;
-	scenographer_ = NULL;
+      View(controller) {
+   logAction(LOG_INIT);
+   bureaucrat_ = NULL;
+   scenographer_ = NULL;
 
-	window_ = NULL;
-	context_ = NULL;
-	scene_ = NULL;
+   window_ = NULL;
+   context_ = NULL;
+   scene_ = NULL;
 }
 Interface::~Interface() {
-	logAction(LOG_END);
-	stop();
+   logAction(LOG_END);
+   stop();
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -53,56 +53,53 @@ Interface::~Interface() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 void Interface::init() {
-	logAction(LOG_F_INIT);
-	bureaucrat_ = new Bureaucrat(*this);
+   logAction(LOG_F_INIT);
+   bureaucrat_ = new Bureaucrat(*this);
 
-	window_ = new Window(*this);
-	context_ = new Context(*this);
+   window_ = new Window(*this);
+   context_ = new Context(*this);
 
-	scene_ = new Scene(*this);
-	scenographer_ = new Scenographer(*this, *scene_, *dynamic_cast<Director*>(const_cast<Controller*>(refController_))->getMap());
+   scene_ = new Scene(*this);
+   scenographer_ = new Scenographer(*this, *scene_, *dynamic_cast<Director*>(const_cast<Controller*>(refController_))->getMap());
 
-	bureaucrat_->initSDL();
-	window_->init(WIN_WIDTH, WIN_HEIGHT);
+   bureaucrat_->initSDL();
+   window_->init(WIN_WIDTH, WIN_HEIGHT);
 	
-	bureaucrat_->initOGL();
-	context_->init();
+   bureaucrat_->initOGL();
+   context_->init();
 
-	scenographer_->init();
+   scenographer_->init();
 
-	render();
+   render();
 }
 void Interface::stop() {
-	logAction(LOG_F_STOP);
-	if (bureaucrat_ != NULL) {
-		delete (bureaucrat_);
-		bureaucrat_ = NULL;
-	}
-	if (scenographer_ != NULL) {
-		delete (scenographer_);
-		scenographer_ = NULL;
-	}
-	if (window_ != NULL) {
-		delete (window_);
-		window_ = NULL;
-	}
-	if (context_ != NULL) {
-		delete (context_);
-		context_ = NULL;
-	}
-	if (scene_ != NULL) {
-		delete (scene_);
-		scene_ = NULL;
-	}
+   logAction(LOG_F_STOP);
+   if (bureaucrat_ != NULL) {
+      delete (bureaucrat_);
+      bureaucrat_ = NULL;
+   }
+   if (scenographer_ != NULL) {
+      delete (scenographer_);
+      scenographer_ = NULL;
+   }
+   if (window_ != NULL) {
+      delete (window_);
+      window_ = NULL;
+   }
+   if (context_ != NULL) {
+      delete (context_);
+      context_ = NULL;
+   }
+   if (scene_ != NULL) {
+      delete (scene_);
+      scene_ = NULL;
+   }
 }
 void Interface::log(const char* line) {
-	if (ADVAN_LOG) {
-		FileLog* fileLogTmp =
-			const_cast<FileLog*>(
-				dynamic_cast<Director*>(
-					const_cast<Controller*>(refController_))->getRegAccErr());
-		fileLogTmp->insertLine(line);
-	}
+   if (ADVAN_LOG) {
+      FileLog* fileLogTmp = const_cast<FileLog*>(dynamic_cast<Director*>(const_cast<Controller*>(refController_))->getRegAccErr());
+      fileLogTmp->insertLine(line);
+   }
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -110,10 +107,10 @@ void Interface::log(const char* line) {
 // ___________________________________________________________________________________
 // Manejadores públicos:
 const Scene* Interface::getScene() const {
-	return scene_;
+   return scene_;
 }
 const Scenographer* Interface::getScenographer() const {
-	return scenographer_;
+   return scenographer_;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -121,95 +118,77 @@ const Scenographer* Interface::getScenographer() const {
 // ___________________________________________________________________________________
 // Métodos privados:
 void Interface::render() {
-	// Clear the background as white
-	glClearColor(1.0, 1.0, 0.9, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   // Clear the background as white
+   glClearColor(1.0, 1.0, 0.9, 1.0);
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glUseProgram(context_->getProgramGsl());
+   glUseProgram(context_->getProgramGsl());
 
-	// Enviar la proyección al shader
-	glUniformMatrix4fv(
-			glGetUniformLocation(context_->getProgramGsl(),
-					"projection_matrix"), 1, GL_FALSE,
-			scene_->getProjectionMatrix());
-	// Enviar la cámara al shader
-	glUniformMatrix4fv(
-			glGetUniformLocation(context_->getProgramGsl(), "modelview_matrix"),
-			1, GL_FALSE, scene_->getModelviewMatrix());
+   // Enviar la proyección al shader
+   glUniformMatrix4fv(glGetUniformLocation(context_->getProgramGsl(), "projection_matrix"), 1, GL_FALSE, scene_->getProjectionMatrix());
+   // Enviar la cámara al shader
+   glUniformMatrix4fv(glGetUniformLocation(context_->getProgramGsl(), "modelview_matrix"), 1, GL_FALSE, scene_->getModelviewMatrix());
 
-	// Enviar el suelo al shader y pintarlo.
-	//    Buffer de vertices
-	glBindBuffer(GL_ARRAY_BUFFER, context_->getVboId()[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 100 * 100 * 3 * 4 * 5,
-			scene_->getVertexFloor(), GL_STATIC_DRAW);
-	glVertexAttribPointer(glGetAttribLocation(context_->getProgramGsl(), "coord3d")
-				, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	//    Buffer de colores
-	glBindBuffer(GL_ARRAY_BUFFER, context_->getVboId()[1]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 100 * 100 * 3 * 4 * 5,
-				scene_->getVertexFloorColor(), GL_STATIC_DRAW);
-	glVertexAttribPointer(glGetAttribLocation(context_->getProgramGsl(), "colorRGB")
-					, 3, GL_FLOAT, GL_FALSE, 0, 0);
+   // Enviar el suelo al shader y pintarlo.
+   //    Buffer de vertices
+   glBindBuffer(GL_ARRAY_BUFFER, context_->getVboId()[0]);
+   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 100 * 100 * 3 * 4 * 5, scene_->getVertexFloor(), GL_STATIC_DRAW);
+   glVertexAttribPointer(glGetAttribLocation(context_->getProgramGsl(), "coord3d"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+   //    Buffer de colores
+   glBindBuffer(GL_ARRAY_BUFFER, context_->getVboId()[1]);
+   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 100 * 100 * 3 * 4 * 5, scene_->getVertexFloorColor(), GL_STATIC_DRAW);
+   glVertexAttribPointer(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"), 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	glEnableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "coord3d"));
-	glEnableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"));
+   glEnableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "coord3d"));
+   glEnableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"));
 
-	glDrawArrays(GL_QUADS, 0, 100 * 100 * 4 * 5);
+   glDrawArrays(GL_QUADS, 0, 100 * 100 * 4 * 5);
 
-	glDisableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "coord3d"));
-	glDisableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"));
-	glUseProgram(0);
+   glDisableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "coord3d"));
+   glDisableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"));
+   glUseProgram(0);
 
-	window_->update();
+   window_->update();
 }
 void Interface::logAction(int index) {
-	if (BASIC_LOG) {
-		switch (index) {
-		case LOG_INIT:
-			std::cout << "---Generado la vista Interfaz " << std::endl;
-			break;
-		case LOG_END:
-			std::cout << "---Destruyendo la vista Interfaz " << std::endl;
-			break;
-		case LOG_F_INIT:
-			std::cout << "---Llamano a la función init de la clase Interface."
-					<< std::endl;
-			break;
-		case LOG_F_STOP:
-			std::cout << "---Llamano a la función stop de la clase Interface."
-					<< std::endl;
-			break;
-		default:
-			break;
-		}
-	}
-	if (ADVAN_LOG) {
-		FileLog* fileLogTmp =
-				const_cast<FileLog*>(
-					dynamic_cast<Director*>(
-						const_cast<Controller*>(refController_))->getRegAccErr());
-		switch (index) {
-		case LOG_INIT:
-			fileLogTmp->insertLine("---Generando la vista Interfaz ");
-			break;
-		case LOG_END:
-			fileLogTmp->insertLine("---Destruyendo la vista Interfaz ");
-			break;
-		case LOG_F_INIT:
-			fileLogTmp->insertLine(
-					"---Llamano a la función init de la clase Interface.");
-			break;
-		case LOG_F_STOP:
-			fileLogTmp->insertLine(
-					"---Llamano a la función stop de la clase Interface.");
-			break;
-		default:
-			break;
-		}
-	}
+   if (BASIC_LOG) {
+      switch (index) {
+         case LOG_INIT:
+            std::cout << "---Generado la vista Interfaz " << std::endl;
+            break;
+         case LOG_END:
+            std::cout << "---Destruyendo la vista Interfaz " << std::endl;
+            break;
+         case LOG_F_INIT:
+            std::cout << "---Llamano a la función init de la clase Interface." << std::endl;
+            break;
+         case LOG_F_STOP:
+            std::cout << "---Llamano a la función stop de la clase Interface." << std::endl;
+            break;
+         default:
+            break;
+      }
+   }
+   if (ADVAN_LOG) {
+      FileLog* fileLogTmp = const_cast<FileLog*>(dynamic_cast<Director*>(const_cast<Controller*>(refController_))->getRegAccErr());
+      switch (index) {
+         case LOG_INIT:
+            fileLogTmp->insertLine("---Generando la vista Interfaz ");
+            break;
+         case LOG_END:
+            fileLogTmp->insertLine("---Destruyendo la vista Interfaz ");
+            break;
+         case LOG_F_INIT:
+            fileLogTmp->insertLine("---Llamano a la función init de la clase Interface.");
+            break;
+         case LOG_F_STOP:
+            fileLogTmp->insertLine("---Llamano a la función stop de la clase Interface.");
+            break;
+         default:
+            break;
+      }
+   }
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
-

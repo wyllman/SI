@@ -2,7 +2,7 @@
  *      Nombre: Simulator.cpp
  *
  *   Creado en: 05/12/2013
- *     Versión: v0.0
+ *     Versión: v0.003
  *     Autores: Tinguaro Cubas Saiz
  *              Juan Henández Hernández
  *              Miguel Pérez Bello
@@ -12,7 +12,6 @@
  *              terreno y la gestión de los agentes que intervienen en la simulación.
  *
  */
-
 
 #include <controller/director/Director.h>
 #include <controller/director/tools/FileLog.h>
@@ -27,16 +26,16 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Simulator::Simulator(const Controller& controller) :
-		Model(controller) {
-	logAction(LOG_INIT);
+      Model(controller) {
+   logAction(LOG_INIT);
 }
 Simulator::~Simulator() {
-	if (map_ != NULL) {
- 		delete map_;
- 		map_ = NULL;
- 	}
-	logAction(LOG_END);
-	stop();
+   if (map_ != NULL) {
+      delete (map_);
+      map_ = NULL;
+   }
+   logAction(LOG_END);
+   stop();
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -44,20 +43,20 @@ Simulator::~Simulator() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 void Simulator::init() {
-	logAction(LOG_F_INIT);
-	map_ = new Map();
+   logAction(LOG_F_INIT);
+   map_ = new Map();
 
-	MapConsoleInterface mapci(*map_);
+   MapConsoleInterface mapci(*map_);
 
-	for (uint32_t i = 0; i < map_->size(); i++) {
-		for (uint32_t j = 0; j < map_->size(); j++) {
-				std::cout << mapci(i, j);
-		}
-		std::cout << std::endl;
-	 }
+   for (uint32_t i = 0; i < map_->size(); i++) {
+      for (uint32_t j = 0; j < map_->size(); j++) {
+         std::cout << mapci(i, j);
+      }
+      std::cout << std::endl;
+   }
 }
 void Simulator::stop() {
-	logAction(LOG_F_STOP);
+   logAction(LOG_F_STOP);
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -65,7 +64,7 @@ void Simulator::stop() {
 // ___________________________________________________________________________________
 // Manejadores públicos:
 const Map* Simulator::getMap() const {
-	return map_;
+   return map_;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -73,51 +72,44 @@ const Map* Simulator::getMap() const {
 // ___________________________________________________________________________________
 // Métodos privados:
 void Simulator::logAction(int index) {
-	if (BASIC_LOG) {
-		switch (index) {
-		case LOG_INIT:
-			std::cout << "---Generado el modelo Simulator " << std::endl;
-			break;
-		case LOG_END:
-			std::cout << "---Destruyendo el modelo Simulator " << std::endl;
-			break;
-		case LOG_F_INIT:
-			std::cout << "---Llamano a la función init de la clase Simulator "
-					<< std::endl;
-			break;
-		case LOG_F_STOP:
-			std::cout << "---Llamano a la función stop de la clase Simulator "
-					<< std::endl;
-			break;
-		default:
-			break;
-		}
-	}
-	if (ADVAN_LOG) {
-		FileLog* fileLogTmp = const_cast<FileLog*>(
-			dynamic_cast<Director*>(
-				const_cast<Controller*>(refController_))->getRegAccErr());
-		switch (index) {
-		case LOG_INIT:
-			fileLogTmp->insertLine("---Generando el modelo Simulator ");
-			break;
-		case LOG_END:
-			fileLogTmp->insertLine("---Destruyendo el modelo Simulator ");
-			break;
-		case LOG_F_INIT:
-			fileLogTmp->insertLine(
-					"---Llamano a la función init de la clase Simulator.");
-			break;
-		case LOG_F_STOP:
-			fileLogTmp->insertLine(
-					"---Llamano a la función stop de la clase Simulator.");
-			break;
-		default:
-			break;
-		}
-	}
+   if (BASIC_LOG) {
+      switch (index) {
+         case LOG_INIT:
+            std::cout << "---Generado el modelo Simulator " << std::endl;
+            break;
+         case LOG_END:
+            std::cout << "---Destruyendo el modelo Simulator " << std::endl;
+            break;
+         case LOG_F_INIT:
+            std::cout << "---Llamano a la función init de la clase Simulator " << std::endl;
+            break;
+         case LOG_F_STOP:
+            std::cout << "---Llamano a la función stop de la clase Simulator " << std::endl;
+            break;
+         default:
+            break;
+      }
+   }
+   if (ADVAN_LOG) {
+      FileLog* fileLogTmp = const_cast<FileLog*>(dynamic_cast<Director*>(const_cast<Controller*>(refController_))->getRegAccErr());
+      switch (index) {
+         case LOG_INIT:
+            fileLogTmp->insertLine("---Generando el modelo Simulator ");
+            break;
+         case LOG_END:
+            fileLogTmp->insertLine("---Destruyendo el modelo Simulator ");
+            break;
+         case LOG_F_INIT:
+            fileLogTmp->insertLine("---Llamano a la función init de la clase Simulator.");
+            break;
+         case LOG_F_STOP:
+            fileLogTmp->insertLine("---Llamano a la función stop de la clase Simulator.");
+            break;
+         default:
+            break;
+      }
+   }
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-

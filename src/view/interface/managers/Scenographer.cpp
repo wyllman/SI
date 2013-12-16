@@ -2,7 +2,7 @@
  *      Nombre: Scenographer.cpp
  *
  *   Creado en: 02/12/2013
- *     Versión: v0.0
+ *     Versión: v0.003
  *     Autores: Tinguaro Cubas Saiz
  *              Juan Henández Hernández
  *              Miguel Pérez Bello
@@ -21,23 +21,23 @@
 
 #include <iostream>
 #ifdef __linux
-	#include <GL/gl.h>
-	#include <GL/glu.h>
+   #include <GL/gl.h>
+   #include <GL/glu.h>
 #else
-	#include <GL.h>
-	#include <GLU.h>
+   #include <GL.h>
+   #include <GLU.h>
 #endif
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Scenographer::Scenographer(const Interface& interface, const Scene& scene, const Map& map) {
-	refInterface_ = &interface;
-	refScene_ = &scene;
-	refMap_ = &map;
-	logAction(LOG_INIT);
+   refInterface_ = &interface;
+   refScene_ = &scene;
+   refMap_ = &map;
+   logAction(LOG_INIT);
 }
 Scenographer::~Scenographer() {
-	logAction(LOG_END);
+   logAction(LOG_END);
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -45,22 +45,22 @@ Scenographer::~Scenographer() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 void Scenographer::init() {
-	float camPos[3] = {0.0, 5.0, -12.0};
-	float viewPoint[3] = {0.0, 0.0, 0.0};
-	float vectorUp[3] = {0.0, 1.0, 0.0};
-	initProy(45.0, WIN_WIDTH / WIN_HEIGHT, 1, 1000);
-	initCam(camPos, viewPoint, vectorUp);
-	initFloor();
+   float camPos[3] = {0.0, 5.0, -12.0};
+   float viewPoint[3] = {0.0, 0.0, 0.0};
+   float vectorUp[3] = {0.0, 1.0, 0.0};
+   initProy(45.0, WIN_WIDTH / WIN_HEIGHT, 1, 1000);
+   initCam(camPos, viewPoint, vectorUp);
+   initFloor();
 }
 void Scenographer::update() {
 }
 void Scenographer::projZoom(float value) {
-	projAng_ += value;
-	updateProy();
+   projAng_ += value;
+   updateProy();
 }
 void Scenographer::camPosX(float value) {
-	camPos_[0] += value;
-	updateCam();
+   camPos_[0] += value;
+   updateCam();
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -74,109 +74,104 @@ void Scenographer::camPosX(float value) {
 // ___________________________________________________________________________________
 // Métodos privados:
 void Scenographer::initProy(float ang, float ratio, int near, int far) {
-	projAng_ = ang;
-	projRatio_ = ratio;
-	projNear_ = near;
-	projFar_ = far;
-	updateProy();
+   projAng_ = ang;
+   projRatio_ = ratio;
+   projNear_ = near;
+   projFar_ = far;
+   updateProy();
 }
 void Scenographer::initCam(float camPos[3], float viewPoint[3], float vectorUp[3]) {
-	camPos_[0] = camPos[0];
-	camPos_[1] = camPos[1];
-	camPos_[2] = camPos[2];
+   camPos_[0] = camPos[0];
+   camPos_[1] = camPos[1];
+   camPos_[2] = camPos[2];
 
-	camViewPoint_[0] = viewPoint[0];
-	camViewPoint_[1] = viewPoint[1];
-	camViewPoint_[2] = viewPoint[2];
+   camViewPoint_[0] = viewPoint[0];
+   camViewPoint_[1] = viewPoint[1];
+   camViewPoint_[2] = viewPoint[2];
 
-	camVectorUp_[0] = vectorUp[0];
-	camVectorUp_[1] = vectorUp[1];
-	camVectorUp_[2] = vectorUp[2];
-	updateCam();
+   camVectorUp_[0] = vectorUp[0];
+   camVectorUp_[1] = vectorUp[1];
+   camVectorUp_[2] = vectorUp[2];
+   updateCam();
 }
 void Scenographer::initFloor() {
-	updateFloor(MAP_WIDTH, MAP_HEIGHT);
+   updateFloor(MAP_WIDTH, MAP_HEIGHT);
 }
 void Scenographer::updateProy() {
-	glMatrixMode (GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(projAng_, projRatio_, projNear_, projFar_);
+   glMatrixMode (GL_PROJECTION);
+   glLoadIdentity();
+   gluPerspective(projAng_, projRatio_, projNear_, projFar_);
 
-	glGetFloatv(GL_PROJECTION_MATRIX,
-			((Scene*) refScene_)->getProjectionMatrix());
-	glMatrixMode(0);
+   glGetFloatv(GL_PROJECTION_MATRIX, const_cast<Scene*>(refScene_)->getProjectionMatrix());
+   glMatrixMode(0);
 }
 void Scenographer::updateCam() {
-	glMatrixMode (GL_MODELVIEW);
-	glLoadIdentity();
-	gluLookAt(camPos_[0], camPos_[1], camPos_[2]
-	         , camViewPoint_[0], camViewPoint_[1], camViewPoint_[2]
-	         , camVectorUp_[0], camVectorUp_[1], camVectorUp_[2]);
+   glMatrixMode (GL_MODELVIEW);
+   glLoadIdentity();
+   gluLookAt(camPos_[0], camPos_[1], camPos_[2]
+            , camViewPoint_[0], camViewPoint_[1], camViewPoint_[2]
+            , camVectorUp_[0], camVectorUp_[1], camVectorUp_[2]);
 
-	glGetFloatv(GL_MODELVIEW_MATRIX,
-			((Scene*) refScene_)->getModelviewMatrix());
-	glMatrixMode(0);
+   glGetFloatv(GL_MODELVIEW_MATRIX, const_cast<Scene*>(refScene_)->getModelviewMatrix());
+   glMatrixMode(0);
 }
 void Scenographer::updateFloor(int width, int height) {
-	const int NUM_VER_POINT = 3 * 4 * 5;
-	float* vertexFloor = ((Scene*) refScene_)->getVertexFloor(
-			100 * 100 * NUM_VER_POINT);
-	float* vertexFloorColor = ((Scene*) refScene_)->getVertexFloorColor(
-			100 * 100 * NUM_VER_POINT);
-	float color[3] = {0.0, 0.0, 0.0};
+   const int NUM_VER_POINT = 3 * 4 * 5;
+   float* vertexFloor = ((Scene*) refScene_)->getVertexFloor(100 * 100 * NUM_VER_POINT);
+   float* vertexFloorColor = ((Scene*) refScene_)->getVertexFloorColor(100 * 100 * NUM_VER_POINT);
+   float color[3] = {0.0, 0.0, 0.0};
 
-	for (int i = 0; i < MAP_WIDTH; i++) {
-		for (int j = 0; j < MAP_HEIGHT; j++) {
-			switch ((*refMap_)(i, j)) {
-				case TERRAIN_GROUND:
-					color[0] = 0.0;
-					color[1] = 1.0;
-					color [2] = 0.0;
+   for (int i = 0; i < MAP_WIDTH; i++) {
+      for (int j = 0; j < MAP_HEIGHT; j++) {
+         switch ((*refMap_)(i, j)) {
+            case TERRAIN_GROUND:
+               color[0] = 0.0;
+               color[1] = 1.0;
+               color [2] = 0.0;
 
-					createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 0);
-					createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 1);
-					createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 2);
-					createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 3);
-					createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 4);
-					break;
-				case TERRAIN_ELEVATION:
-					color[0] = 0.0;
-					color[1] = 0.5;
-					color [2] = 0.0;
+               createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 0);
+               createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 1);
+               createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 2);
+               createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 3);
+               createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 4);
+               break;
+            case TERRAIN_ELEVATION:
+               color[0] = 0.0;
+               color[1] = 0.5;
+               color [2] = 0.0;
 
-					createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 0);
-					createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 1);
-					createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 2);
-					createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 3);
-					createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 4);
-					break;
-				case TERRAIN_WATER:
-					color[0] = 0.0;
-					color[1] = 0.0;
-					color [2] = 1.0;
+               createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 0);
+               createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 1);
+               createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 2);
+               createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 3);
+               createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 4);
+               break;
+            case TERRAIN_WATER:
+               color[0] = 0.0;
+               color[1] = 0.0;
+               color [2] = 1.0;
 
-					createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 0);
-					createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 1);
-					createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 2);
-					createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 3);
-					createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 4);
-					break;
-				default:
-					color[0] = 0.0;
-					color[1] = 1.0;
-					color [2] = 0.0;
+               createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 0);
+               createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 1);
+               createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 2);
+               createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 3);
+               createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 4);
+               break;
+            default:
+               color[0] = 0.0;
+               color[1] = 1.0;
+               color [2] = 0.0;
 
-					createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 0);
-					createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 1);
-					createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 2);
-					createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 3);
-					createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 4);
-					break;
-			}
-		}
-	}
+               createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 0);
+               createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 1);
+               createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 2);
+               createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 3);
+               createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 4);
+               break;
+         }
+      }
+   }
 }
-
 void Scenographer::createUp(int row, int col, float height, float color[3], float* vertexFloor, float* vertexFloorColor, int side) {
 	const int NUM_VER_POINT = 3 * 4 * 5;
 	if (side == 0 || side == 2 || side == 4) {
@@ -271,11 +266,8 @@ void Scenographer::createUp(int row, int col, float height, float color[3], floa
 
 
 }
-
 void Scenographer::createLeft() {
 }
-
-
 
 void Scenographer::logAction(int index) {
 	if (BASIC_LOG) {

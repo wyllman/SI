@@ -2,7 +2,7 @@
  *      Nombre: FileLog.h
  *
  *   Creado en: 02/12/2013
- *     Versión: v0.0
+ *     Versión: v0.003
  *     Autores: Tinguaro Cubas Saiz
  *              Juan Henández Hernández
  *              Miguel Pérez Bello
@@ -20,24 +20,23 @@
 #include <string>
 
 class FileLog {
-public:
-	FileLog();
-	virtual ~FileLog();
+   public:
+      FileLog();
+      virtual ~FileLog();
 
-	void init();
-	void reset();
-	void save();
+      void init();
+      void reset();
+      void save();
 
-	void showConsole();
+      void showConsole();
 
-	void insertLine (const char*);
+      void insertLine (const char*);
 
-private:
-	std::vector<std::string> regAccErr_;
-	int lineNumber_;
+   private:
+      std::vector<std::string> regAccErr_;
+      int lineNumber_;
 
-	void logAction (int);
-
+      void logAction (int);
 };
 
 #endif /* FILELOG_H_ */

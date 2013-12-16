@@ -62,5 +62,9 @@
  *              - Enlazando la clase Map con la clase Simulator y su función init(). Además
  *              se muestra por consola el mapa generado.
  *              - Refactorizado de los "includes" del proyecto.
+ *              - Creada la visualización gráfica(OGL) del mapa.
+ *              - Creados los movimientos de cámara básicos (Zoom y desplazamiento en eje X).
+ *
+ *       v0.003:
  */
 

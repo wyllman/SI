@@ -2,7 +2,7 @@
  *      Nombre: View.cpp
  *
  *   Creado en: 02/12/2013
- *     Versión: v0.0
+ *     Versión: v0.003
  *     Autores: Tinguaro Cubas Saiz
  *              Juan Henández Hernández
  *              Miguel Pérez Bello
@@ -17,11 +17,10 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 View::View(const Controller& controller) {
-	refController_ = &controller;
+   refController_ = &controller;
 }
-
 View::~View() {
-	// TODO Auto-generated destructor stub
+   // TODO Auto-generated destructor stub
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -44,4 +43,3 @@ View::~View() {
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-

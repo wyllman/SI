@@ -2,7 +2,7 @@
  *      Nombre: MainLoop.h
  *
  *   Creado en: 02/12/2013
- *     Versión: v0.0
+ *     Versión: v0.003
  *     Autores: Tinguaro Cubas Saiz
  *              Juan Henández Hernández
  *              Miguel Pérez Bello
@@ -18,28 +18,28 @@
 class Director;
 
 class MainLoop {
-public:
-	MainLoop(const Director&);
-	virtual ~MainLoop();
+   public:
+      MainLoop(const Director&);
+      virtual ~MainLoop();
 
-	void init();
-	void pauseResume();
-	void reset();
-	void stop();
+      void init();
+      void pauseResume();
+      void reset();
+      void stop();
 
-	bool isContinue() const;
-	bool isPause() const;
-	bool isRequireReset() const;
-	bool isRequireUpdate() const;
+      bool isContinue() const;
+      bool isPause() const;
+      bool isRequireReset() const;
+      bool isRequireUpdate() const;
 
-private:
-	const Director* refDirector_;
-	bool continue_;
-	bool pause_;
-	bool requireReset_;
-	bool requireUpdate_;
+   private:
+      const Director* refDirector_;
+      bool continue_;
+      bool pause_;
+      bool requireReset_;
+      bool requireUpdate_;
 
-	void logAction (int);
+      void logAction (int);
 };
 
 #endif /* MAINLOOP_H_ */

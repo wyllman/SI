@@ -2,10 +2,13 @@
  *      Nombre: Model.h
  *
  *   Creado en: 04/12/2013
- *     Version: v0.0
- *     Autores: tenerent
+ *     Version: v0.03
+ *     Autores: Tinguaro Cubas Saiz
+ *              Juan Henández Hernández
+ *              Miguel Pérez Bello
+ *              Guillermo Rodríguez Pardo
  *
- * Descripcion:
+ * Descripción: Clase abstracta para el model base del simulador.
  *
  */
 
@@ -15,18 +18,17 @@
 class Controller;
 
 class Model {
-public:
-	Model(const Controller&);
-	virtual ~Model();
+   public:
+      Model(const Controller&);
+      virtual ~Model();
 
-	virtual void init () {};
-	virtual void update () {};
-	virtual void reset () {};
-	virtual void stop () {};
+      virtual void init () {};
+      virtual void update () {};
+      virtual void reset () {};
+      virtual void stop () {};
 
-protected:
-	const Controller* refController_;
-
+   protected:
+   const Controller* refController_;
 };
 
 #endif /* MODEL_H_ */

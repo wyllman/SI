@@ -2,10 +2,13 @@
  *      Nombre: Model.cpp
  *
  *   Creado en: 04/12/2013
- *     Versión: v0.0
- *     Autores: tenerent
+ *     Versión: v0.003
+ *     Autores: Tinguaro Cubas Saiz
+ *              Juan Henández Hernández
+ *              Miguel Pérez Bello
+ *              Guillermo Rodríguez Pardo
  *
- * Descripción:
+ * Descripción: Clase abstracta para el model base del simulador.
  *
  */
 
@@ -14,11 +17,10 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Model::Model(const Controller& controller) {
-	refController_ = &controller;
+   refController_ = &controller;
 }
-
 Model::~Model() {
-	// TODO Auto-generated destructor stub
+   // TODO Auto-generated destructor stub
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -41,4 +43,3 @@ Model::~Model() {
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-

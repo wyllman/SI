@@ -2,7 +2,7 @@
  *      Nombre: Director.h
  *
  *   Creado en: 02/12/2013
- *     Versión: v0.0
+ *     Versión: v0.003
  *     Autores: Tinguaro Cubas Saiz
  *              Juan Henández Hernández
  *              Miguel Pérez Bello
@@ -23,23 +23,22 @@ class FileLog;
 class Map;
 
 class Director: public Controller {
-public:
-	Director();
-	virtual ~Director();
+   public:
+      Director();
+      virtual ~Director();
 
-	void init ();
-	void start ();
-	void stop ();
-	const FileLog* getRegAccErr() const;
-	const Map* getMap() const;
+      void init ();
+      void start ();
+      void stop ();
+      const FileLog* getRegAccErr() const;
+      const Map* getMap() const;
 
-private:
-	FileLog* regAccErr_;
-	MainLoop* mainLoop_;
+   private:
+      FileLog* regAccErr_;
+      MainLoop* mainLoop_;
 
-	void mainLoop ();
-	void logAction (int);
-
+      void mainLoop ();
+      void logAction (int);
 };
 
 #endif /* DIRECTOR_H_ */

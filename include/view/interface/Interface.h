@@ -2,7 +2,7 @@
  *      Nombre: Interface.h
  *
  *   Creado en: 02/12/2013
- *     Versión: v0.0
+ *     Versión: v0.003
  *     Autores: Tinguaro Cubas Saiz
  *              Juan Henández Hernández
  *              Miguel Pérez Bello
@@ -26,28 +26,28 @@ class Context;
 class Scene;
 
 class Interface: public View {
-public:
-	Interface(const Controller&);
-	virtual ~Interface();
+   public:
+      Interface(const Controller&);
+      virtual ~Interface();
 
-	void init();
-	void stop();
-	void render();
+      void init();
+      void stop();
+      void render();
 
-	void log(const char*);
-	const Scene* getScene() const;
-	const Scenographer* getScenographer() const;
+      void log(const char*);
+      const Scene* getScene() const;
+      const Scenographer* getScenographer() const;
 
-private:
-	Bureaucrat* bureaucrat_;
-	Scenographer* scenographer_;
+   private:
+      Bureaucrat* bureaucrat_;
+      Scenographer* scenographer_;
 
-	Window* window_;
-	Context* context_;
-	Scene* scene_;
+      Window* window_;
+      Context* context_;
+      Scene* scene_;
 
-	void createFloor(int, int);
-	void logAction(int);
+      void createFloor(int, int);
+      void logAction(int);
 };
 
 #endif /* INTERFACE_H_ */

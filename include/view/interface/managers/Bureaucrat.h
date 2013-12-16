@@ -2,7 +2,7 @@
  *      Nombre: Bureaucrat.h
  *
  *   Creado en: 02/12/2013
- *     Versión: v0.0
+ *     Versión: v0.003
  *     Autores: Tinguaro Cubas Saiz
  *              Juan Henández Hernández
  *              Miguel Pérez Bello
@@ -19,19 +19,19 @@
 class Interface;
 
 class Bureaucrat {
-public:
-	Bureaucrat(const Interface&);
-	virtual ~Bureaucrat();
+   public:
+      Bureaucrat(const Interface&);
+      virtual ~Bureaucrat();
 
-	void initSDL ();
-	void initOGL ();
+      void initSDL ();
+      void initOGL ();
 
-	void loadShader ();
+      void loadShader ();
 
-private:
-	Interface* refInterface_;
+   private:
+      Interface* refInterface_;
 
-	void logAction(int);
+      void logAction(int);
 };
 
 #endif /* BUREAUCRAT_H_ */

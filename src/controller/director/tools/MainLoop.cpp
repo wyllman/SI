@@ -2,7 +2,7 @@
  *      Nombre: MainLoop.cpp
  *
  *   Creado en: 02/12/2013
- *     Versión: v0.0
+ *     Versión: v0.003
  *     Autores: Tinguaro Cubas Saiz
  *              Juan Henández Hernández
  *              Miguel Pérez Bello
@@ -22,16 +22,15 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 MainLoop::MainLoop(const Director& director) {
-	refDirector_ = &director;
-	logAction(LOG_INIT);
-	continue_ = false;
-	pause_ = false;
-	requireReset_ = false;
-	requireUpdate_ = false;
+   refDirector_ = &director;
+   logAction(LOG_INIT);
+   continue_ = false;
+   pause_ = false;
+   requireReset_ = false;
+   requireUpdate_ = false;
 }
-
 MainLoop::~MainLoop() {
-	logAction(LOG_END);
+   logAction(LOG_END);
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -39,26 +38,23 @@ MainLoop::~MainLoop() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 void MainLoop::init() {
-	continue_ = true;
-	pause_ = false;
-	requireReset_ = false;
-	requireUpdate_ = false;
+   continue_ = true;
+   pause_ = false;
+   requireReset_ = false;
+   requireUpdate_ = false;
 }
-
 void MainLoop::pauseResume() {
-	if (pause_) {
-		pause_ = false;
-	} else {
-		pause_ = true;
-	}
+   if (pause_) {
+      pause_ = false;
+   } else {
+      pause_ = true;
+   }
 }
-
 void MainLoop::reset() {
-	requireReset_ = true;
+   requireReset_ = true;
 }
-
 void MainLoop::stop() {
-	continue_ = false;
+   continue_ = false;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -66,16 +62,16 @@ void MainLoop::stop() {
 // ___________________________________________________________________________________
 // Manejadores públicos:
 bool MainLoop::isContinue() const {
-	return continue_;
+   return continue_;
 }
 bool MainLoop::isPause() const {
-	return pause_;
+   return pause_;
 }
 bool MainLoop::isRequireReset() const {
-	return requireReset_;
+   return requireReset_;
 }
 bool MainLoop::isRequireUpdate() const {
-	return requireUpdate_;
+   return requireUpdate_;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -83,34 +79,32 @@ bool MainLoop::isRequireUpdate() const {
 // ___________________________________________________________________________________
 // Métodos privados:
 void MainLoop::logAction(int index) {
-	if (BASIC_LOG) {
-		switch (index) {
-		case LOG_INIT:
-			std::cout << "------Generado la herramienta MainLoop para el Director " << std::endl;
-			break;
-		case LOG_END:
-			std::cout << "------Destruyendo la herramienta MainLoop para el Director " << std::endl;
-			break;
-		default:
-			break;
-		}
-	}
-	if (ADVAN_LOG) {
-		FileLog* regist = const_cast<FileLog*>(refDirector_->getRegAccErr());
-		switch (index) {
-		case LOG_INIT:
-			regist->insertLine("------Generado la herramienta MainLoop para el Director ");
-			break;
-		case LOG_END:
-			regist->insertLine("------Destruyendo la herramienta MainLoop para el Director ");
-			break;
-		default:
-			break;
-		}
-	}
+   if (BASIC_LOG) {
+      switch (index) {
+         case LOG_INIT:
+            std::cout << "------Generado la herramienta MainLoop para el Director " << std::endl;
+            break;
+         case LOG_END:
+            std::cout << "------Destruyendo la herramienta MainLoop para el Director " << std::endl;
+            break;
+         default:
+            break;
+      }
+   }
+   if (ADVAN_LOG) {
+      FileLog* regist = const_cast<FileLog*>(refDirector_->getRegAccErr());
+      switch (index) {
+         case LOG_INIT:
+            regist->insertLine("------Generado la herramienta MainLoop para el Director ");
+            break;
+         case LOG_END:
+            regist->insertLine("------Destruyendo la herramienta MainLoop para el Director ");
+            break;
+         default:
+            break;
+      }
+   }
 }
-
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-

@@ -125,7 +125,7 @@ void Scenographer::updateFloor(int width, int height) {
 
    for (int i = 0; i < MAP_WIDTH; i++) {
       for (int j = 0; j < MAP_HEIGHT; j++) {
-         switch ((*refMap_)(i, j)) {
+         switch ((*refMap_)(i, j) & MASK_TERRAIN) {
             case TERRAIN_GROUND:
                color[0] = 0.0;
                color[1] = 1.0;

@@ -15,17 +15,17 @@ typedef unsigned char BYTE;
 typedef std::pair<int, int> Point;
 
 enum {
-	TERRAIN_GROUND = 0x0,
-	TERRAIN_ELEVATION = 0x1,
-	TERRAIN_WATER = 0x2,
-	RESOURCE_WATER = 0x4,
-	RESOURCE_FOOD = 0x8,
-	RESOURCE_MINERAL = 0x12
+	TERRAIN_GROUND = 0x1,
+	TERRAIN_ELEVATION = 0x2,
+	TERRAIN_WATER = 0x4,
+	RESOURCE_METAL = 0x8,
+	RESOURCE_FOOD = 0xF,
+	RESOURCE_MINERAL = 0x20
 };
 
 enum {
-	MASK_TERRAIN = 0x2,		// bits 1-2 (0x1-0x2)
-	MASK_RESOURCE = 0x12	// bits 3-4 (0x4-0xC)
+	MASK_TERRAIN = 0x7,	// bits 1-3 (0x1-0x4)
+	MASK_RESOURCE = 0x37	// bits 4-6 (0x8-0x20)
 };
 
 #endif /* TYPEDEFS_H_ */

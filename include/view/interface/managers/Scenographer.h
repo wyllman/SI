@@ -50,7 +50,7 @@ class Scenographer {
       void updateProy ();
       void updateCam ();
       void updateFloor (int, int);
-      void createUp (int, int, float, float [3], float*, float*, int);
+      void createSideFloor (int, int, float, float [3], float*, float*, int);
       void createLeft ();
 
       void logAction(int);

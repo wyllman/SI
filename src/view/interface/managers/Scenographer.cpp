@@ -131,50 +131,50 @@ void Scenographer::updateFloor(int width, int height) {
                color[1] = 1.0;
                color [2] = 0.0;
 
-               createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 0);
-               createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 1);
-               createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 2);
-               createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 3);
-               createUp(i, j, 0.0, color, vertexFloor, vertexFloorColor, 4);
+               createSideFloor(i, j, 0.0, color, vertexFloor, vertexFloorColor, 0);
+               createSideFloor(i, j, 0.0, color, vertexFloor, vertexFloorColor, 1);
+               createSideFloor(i, j, 0.0, color, vertexFloor, vertexFloorColor, 2);
+               createSideFloor(i, j, 0.0, color, vertexFloor, vertexFloorColor, 3);
+               createSideFloor(i, j, 0.0, color, vertexFloor, vertexFloorColor, 4);
                break;
             case TERRAIN_ELEVATION:
                color[0] = 0.0;
                color[1] = 0.5;
                color [2] = 0.0;
 
-               createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 0);
-               createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 1);
-               createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 2);
-               createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 3);
-               createUp(i, j, 0.5, color, vertexFloor, vertexFloorColor, 4);
+               createSideFloor(i, j, 0.5, color, vertexFloor, vertexFloorColor, 0);
+               createSideFloor(i, j, 0.5, color, vertexFloor, vertexFloorColor, 1);
+               createSideFloor(i, j, 0.5, color, vertexFloor, vertexFloorColor, 2);
+               createSideFloor(i, j, 0.5, color, vertexFloor, vertexFloorColor, 3);
+               createSideFloor(i, j, 0.5, color, vertexFloor, vertexFloorColor, 4);
                break;
             case TERRAIN_WATER:
                color[0] = 0.0;
                color[1] = 0.0;
                color [2] = 1.0;
 
-               createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 0);
-               createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 1);
-               createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 2);
-               createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 3);
-               createUp(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 4);
+               createSideFloor(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 0);
+               createSideFloor(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 1);
+               createSideFloor(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 2);
+               createSideFloor(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 3);
+               createSideFloor(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 4);
                break;
             default:
                color[0] = 0.0;
                color[1] = 1.0;
                color [2] = 0.0;
 
-               createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 0);
-               createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 1);
-               createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 2);
-               createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 3);
-               createUp(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 4);
+               createSideFloor(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 0);
+               createSideFloor(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 1);
+               createSideFloor(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 2);
+               createSideFloor(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 3);
+               createSideFloor(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 4);
                break;
          }
       }
    }
 }
-void Scenographer::createUp(int row, int col, float height, float color[3], float* vertexFloor, float* vertexFloorColor, int side) {
+void Scenographer::createSideFloor(int row, int col, float height, float color[3], float* vertexFloor, float* vertexFloorColor, int side) {
 	const int NUM_VER_POINT = 3 * 4 * 5;
 	if (side == 0 || side == 2 || side == 4) {
 		vertexFloor[((row * 100) + col) * NUM_VER_POINT + (side * 12)] = (row - (100.0 / 2)) / 10.0;

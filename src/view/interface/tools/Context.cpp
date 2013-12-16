@@ -53,7 +53,8 @@ void Context::init() {
 GLuint Context::getProgramGsl() const {
 	return programGSL_;
 }
-const uint* Context::getVboId() const {
+
+const uint32_t* Context::getVboId() const {
 	return vboID_;
 }
 // FIN -------------------------------------------------------------------------------

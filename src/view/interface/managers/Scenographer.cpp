@@ -117,8 +117,10 @@ void Scenographer::updateCam() {
 }
 void Scenographer::updateFloor(int width, int height) {
    const int NUM_VER_POINT = 3 * 4 * 5;
-   float* vertexFloor = ((Scene*) refScene_)->getVertexFloor(100 * 100 * NUM_VER_POINT);
-   float* vertexFloorColor = ((Scene*) refScene_)->getVertexFloorColor(100 * 100 * NUM_VER_POINT);
+   float* vertexFloor = const_cast<Scene*>(refScene_)
+                           ->getVertexFloor(100 * 100 * NUM_VER_POINT);
+   float* vertexFloorColor = const_cast<Scene*>(refScene_)
+                                ->getVertexFloorColor(100 * 100 * NUM_VER_POINT);
    float color[3] = {0.0, 0.0, 0.0};
 
    for (int i = 0; i < MAP_WIDTH; i++) {
@@ -231,21 +233,21 @@ void Scenographer::createUp(int row, int col, float height, float color[3], floa
 	}
 
 	if (side == 0) {
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + (side * 12)] = color[0];
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 1 + (side * 12)] = color[1];
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 2 + (side * 12)] = color[2];
+		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + (side * 12)] = color[0];
+		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 1 + (side * 12)] = color[1];
+		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 2 + (side * 12)] = color[2];
 
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 3 + (side * 12)] = color[0];
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 4 + (side * 12)] = color[1];
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 5 + (side * 12)] = color[2];
+		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 3 + (side * 12)] = color[0];
+		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 4 + (side * 12)] = color[1];
+		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 5 + (side * 12)] = color[2];
 
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 6 + (side * 12)] = color[0];
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 7 + (side * 12)] = color[1];
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 8 + (side * 12)] = color[2];
+		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 6 + (side * 12)] = color[0];
+		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 7 + (side * 12)] = color[1];
+		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 8 + (side * 12)] = color[2];
 
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 9 + (side * 12)] = color[0];
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 10 + (side * 12)] = color[1];
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 11 + (side * 12)] = color[2];
+		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 9 + (side * 12)] = color[0];
+		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 10 + (side * 12)] = color[1];
+		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 11 + (side * 12)] = color[2];
 	} else {
 		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + (side * 12)] = color[0] / 2;
 		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 1 + (side * 12)] = color[1] / 2;
@@ -289,10 +291,12 @@ void Scenographer::logAction(int index) {
 	if (ADVAN_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			const_cast<Interface*>(refInterface_)->log("------Generado el gestor Scenographer para la vista Interfaz ");
+			const_cast<Interface*>(refInterface_)
+				->log("------Generado el gestor Scenographer para la vista Interfaz ");
 			break;
 		case LOG_END:
-			const_cast<Interface*>(refInterface_)->log("------Destruyendo el gestor Scenographer para la vista Interfaz ");
+			const_cast<Interface*>(refInterface_)
+				->log("------Destruyendo el gestor Scenographer para la vista Interfaz ");
 			break;
 		default:
 			break;

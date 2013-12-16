@@ -30,7 +30,7 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Bureaucrat::Bureaucrat(const Interface& interface) {
-   refInterface_ = const_cast<Interface*>(&interface);
+   refInterface_ = &interface;
    logAction(LOG_F_INIT);
 }
 Bureaucrat::~Bureaucrat() {
@@ -45,7 +45,7 @@ void Bureaucrat::initSDL() {
    logAction(LOG_F_INIT);
    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
       logAction(LOG_ERROR);
-      refInterface_->stop();
+      const_cast<Interface*>(refInterface_)->stop();
    }
 }
 void Bureaucrat::initOGL() {
@@ -65,7 +65,7 @@ void Bureaucrat::initOGL() {
 }
 void Bureaucrat::loadShader() {
    if (ADVAN_LOG) {
-      refInterface_->log("------Cargando Shaders en la clase Bureaucrat. ");
+      const_cast<Interface*>(refInterface_)->log("------Cargando Shaders en la clase Bureaucrat. ");
    }
 }
 // FIN -------------------------------------------------------------------------------
@@ -104,19 +104,19 @@ void Bureaucrat::logAction(int index) {
    if (ADVAN_LOG) {
       switch (index) {
          case LOG_INIT:
-            refInterface_->log("------Generado el gestor Bureaucrat para la vista Interfaz ");
+            const_cast<Interface*>(refInterface_)->log("------Generado el gestor Bureaucrat para la vista Interfaz ");
             break;
          case LOG_END:
-            refInterface_->log("------Destruyendo el gestor Bureaucrat para la vista Interfaz ");
+            const_cast<Interface*>(refInterface_)->log("------Destruyendo el gestor Bureaucrat para la vista Interfaz ");
             break;
          case LOG_F_INIT:
-            refInterface_->log("------Inicializando SDL en la clase Bureaucrat. ");
+            const_cast<Interface*>(refInterface_)->log("------Inicializando SDL en la clase Bureaucrat. ");
             break;
          case LOG_F_INIT_1:
-            refInterface_->log("------Inicializando OGL en la clase Bureaucrat. ");
+            const_cast<Interface*>(refInterface_)->log("------Inicializando OGL en la clase Bureaucrat. ");
             break;
          case LOG_ERROR:
-            refInterface_->log("------ERROR!! No se pudo iniciar SDL ");
+            const_cast<Interface*>(refInterface_)->log("------ERROR!! No se pudo iniciar SDL ");
             break;
          default:
             break;

@@ -29,7 +29,7 @@ class Bureaucrat {
       void loadShader ();
 
    private:
-      Interface* refInterface_;
+      const Interface* refInterface_;
 
       void logAction(int);
 };

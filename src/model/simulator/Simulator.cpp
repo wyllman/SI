@@ -30,10 +30,6 @@ Simulator::Simulator(const Controller& controller) :
    logAction(LOG_INIT);
 }
 Simulator::~Simulator() {
-   if (map_ != NULL) {
-      delete (map_);
-      map_ = NULL;
-   }
    logAction(LOG_END);
    stop();
 }
@@ -57,6 +53,10 @@ void Simulator::init() {
 }
 void Simulator::stop() {
    logAction(LOG_F_STOP);
+   if (map_ != NULL) {
+      delete (map_);
+      map_ = NULL;
+   }
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -91,7 +91,9 @@ void Simulator::logAction(int index) {
       }
    }
    if (ADVAN_LOG) {
-      FileLog* fileLogTmp = const_cast<FileLog*>(dynamic_cast<Director*>(const_cast<Controller*>(refController_))->getRegAccErr());
+      FileLog* fileLogTmp = const_cast<FileLog*>(
+                               dynamic_cast<Director*>(
+                               const_cast<Controller*>(refController_))->getRegAccErr());
       switch (index) {
          case LOG_INIT:
             fileLogTmp->insertLine("---Generando el modelo Simulator ");

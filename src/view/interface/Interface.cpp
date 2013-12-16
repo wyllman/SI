@@ -54,20 +54,22 @@ Interface::~Interface() {
 // Métodos públicos:
 void Interface::init() {
    logAction(LOG_F_INIT);
+   // Crear los gestores y las herramientas
    bureaucrat_ = new Bureaucrat(*this);
-
    window_ = new Window(*this);
    context_ = new Context(*this);
-
    scene_ = new Scene(*this);
-   scenographer_ = new Scenographer(*this, *scene_, *dynamic_cast<Director*>(const_cast<Controller*>(refController_))->getMap());
+   scenographer_ = new Scenographer(*this, *scene_
+                                   , *dynamic_cast<Director*>(
+                                         const_cast<Controller*>(refController_))->getMap());
 
+   // Iniciar la ventana del simulador
    bureaucrat_->initSDL();
    window_->init(WIN_WIDTH, WIN_HEIGHT);
-	
+
+   // Iniciar el contexto y la escena OpenGL
    bureaucrat_->initOGL();
    context_->init();
-
    scenographer_->init();
 
    render();
@@ -97,7 +99,9 @@ void Interface::stop() {
 }
 void Interface::log(const char* line) {
    if (ADVAN_LOG) {
-      FileLog* fileLogTmp = const_cast<FileLog*>(dynamic_cast<Director*>(const_cast<Controller*>(refController_))->getRegAccErr());
+      FileLog* fileLogTmp = const_cast<FileLog*>(
+                               dynamic_cast<Director*>(
+                               const_cast<Controller*>(refController_))->getRegAccErr());
       fileLogTmp->insertLine(line);
    }
 }
@@ -125,19 +129,25 @@ void Interface::render() {
    glUseProgram(context_->getProgramGsl());
 
    // Enviar la proyección al shader
-   glUniformMatrix4fv(glGetUniformLocation(context_->getProgramGsl(), "projection_matrix"), 1, GL_FALSE, scene_->getProjectionMatrix());
+   glUniformMatrix4fv(glGetUniformLocation(context_->getProgramGsl(), "projection_matrix")
+                     , 1, GL_FALSE, scene_->getProjectionMatrix());
    // Enviar la cámara al shader
-   glUniformMatrix4fv(glGetUniformLocation(context_->getProgramGsl(), "modelview_matrix"), 1, GL_FALSE, scene_->getModelviewMatrix());
+   glUniformMatrix4fv(glGetUniformLocation(context_->getProgramGsl(), "modelview_matrix")
+                     , 1, GL_FALSE, scene_->getModelviewMatrix());
 
    // Enviar el suelo al shader y pintarlo.
    //    Buffer de vertices
    glBindBuffer(GL_ARRAY_BUFFER, context_->getVboId()[0]);
-   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 100 * 100 * 3 * 4 * 5, scene_->getVertexFloor(), GL_STATIC_DRAW);
-   glVertexAttribPointer(glGetAttribLocation(context_->getProgramGsl(), "coord3d"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 100 * 100 * 3 * 4 * 5
+               , scene_->getVertexFloor(), GL_STATIC_DRAW);
+   glVertexAttribPointer(glGetAttribLocation(context_->getProgramGsl(), "coord3d")
+                        , 3, GL_FLOAT, GL_FALSE, 0, 0);
    //    Buffer de colores
    glBindBuffer(GL_ARRAY_BUFFER, context_->getVboId()[1]);
-   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 100 * 100 * 3 * 4 * 5, scene_->getVertexFloorColor(), GL_STATIC_DRAW);
-   glVertexAttribPointer(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 100 * 100 * 3 * 4 * 5
+               , scene_->getVertexFloorColor(), GL_STATIC_DRAW);
+   glVertexAttribPointer(glGetAttribLocation(context_->getProgramGsl(), "colorRGB")
+                        , 3, GL_FLOAT, GL_FALSE, 0, 0);
 
    glEnableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "coord3d"));
    glEnableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"));
@@ -170,7 +180,9 @@ void Interface::logAction(int index) {
       }
    }
    if (ADVAN_LOG) {
-      FileLog* fileLogTmp = const_cast<FileLog*>(dynamic_cast<Director*>(const_cast<Controller*>(refController_))->getRegAccErr());
+      FileLog* fileLogTmp = const_cast<FileLog*>(
+                               dynamic_cast<Director*>(
+                               const_cast<Controller*>(refController_))->getRegAccErr());
       switch (index) {
          case LOG_INIT:
             fileLogTmp->insertLine("---Generando la vista Interfaz ");

@@ -59,6 +59,16 @@ void Director::start() {
    mainLoop();
 }
 void Director::stop() {
+   if (refModel_ != NULL) {
+      const_cast<Model*>(refModel_)->stop();
+      delete (const_cast<Model*>(refModel_));
+      refModel_ = NULL;
+   }
+   if (refView_ != NULL) {
+      const_cast<View*>(refView_)->stop();
+      delete (const_cast<View*>(refView_));
+      refView_ = NULL;
+   }
    if (mainLoop_ != NULL) {
       delete (mainLoop_);
       mainLoop_ = NULL;

@@ -17,17 +17,17 @@
 17. ------Inicializando OGL en la clase Bureaucrat. 
 18. ------Iniciando el contexto OGL de la herramienta Context 
 19. ---Llamando a la función mainLoop del Director
-20. ---Llamano a la función stop de la clase Interface.
-21. ------Destruyendo el gestor Bureaucrat para la vista Interfaz 
-22. ------Destruyendo el gestor Scenographer para la vista Interfaz 
-23. ------Destruyendo la herramienta Window para la vista Interfaz 
-24. ------Destruyendo la herramienta Context para la vista Interfaz 
-25. ------Destruyendo la herramienta Scene para la vista Interfaz 
-26. ---Llamano a la función stop de la clase Simulator.
-27. ---Destruyendo la vista Interfaz 
-28. ---Llamano a la función stop de la clase Interface.
-29. ---Destruyendo el modelo Simulator 
-30. ---Llamano a la función stop de la clase Simulator.
+20. ---Llamano a la función stop de la clase Simulator.
+21. ---Destruyendo el modelo Simulator 
+22. ---Llamano a la función stop de la clase Simulator.
+23. ---Llamano a la función stop de la clase Interface.
+24. ------Destruyendo el gestor Bureaucrat para la vista Interfaz 
+25. ------Destruyendo el gestor Scenographer para la vista Interfaz 
+26. ------Destruyendo la herramienta Window para la vista Interfaz 
+27. ------Destruyendo la herramienta Context para la vista Interfaz 
+28. ------Destruyendo la herramienta Scene para la vista Interfaz 
+29. ---Destruyendo la vista Interfaz 
+30. ---Llamano a la función stop de la clase Interface.
 31. ------Destruyendo la herramienta MainLoop para el Director 
 32. ---Llamando a la funcion stop del Director
 33. ******************************************

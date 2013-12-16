@@ -66,5 +66,8 @@
  *              - Creados los movimientos de cámara básicos (Zoom y desplazamiento en eje X).
  *
  *       v0.003:
+ *              - Reorganizada la ejecución de las llamadas en PreColonia.cpp (la llamada a la
+ *                función stop() de la vista y el modelo se realiza desde la función stop() de
+ *                la clase controlador).
  */
 

@@ -47,22 +47,13 @@ int main() {
    directorSim->init();
    directorSim->start();
 
-   // Terminando la ejecución del simulador
-   interfaceSim->stop();
-   modelSim->stop();
-
-   // Destruyendo los objetos creados para el patrón MVC
-   if (interfaceSim != NULL) {
-      delete (interfaceSim);
-      interfaceSim = NULL;
-   }
-   if (modelSim != NULL) {
-      delete (modelSim);
-      modelSim = NULL;
-   }
-
-   // Terminando y destruyendo al Director del simulador
+   // Terminando la ejecución y
+   // destruyendo los objetos creados para el patrón MVC
    directorSim->stop();
+   interfaceSim = NULL;
+   modelSim = NULL;
+
+   // Destruyendo al Director del simulador
    if(directorSim != NULL) {
       delete (directorSim);
       directorSim = NULL;

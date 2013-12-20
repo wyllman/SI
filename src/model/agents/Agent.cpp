@@ -5,10 +5,10 @@
  *      Author: manwe
  */
 
-#include "../../../include/model/agents/Agent.h"
-#include "../../../include/model/bdi/BeliefSet.h"
-#include "../../../include/model/bdi/Goals.h"
-#include "../../../include/model/bdi/Intentions.h"
+#include <model/agents/Agent.h>
+#include <model/bdi/BeliefSet.h>
+#include <model/bdi/Goals.h>
+#include <model/bdi/Intentions.h>
 
 Agent::Agent() {
 	// TODO Auto-generated constructor stub
@@ -19,3 +19,19 @@ Agent::~Agent() {
 	// TODO Auto-generated destructor stub
 }
 
+bool Agent::move(Movement movement) {
+	switch(movement) {
+	case NORTH:
+		--m_position.second;
+		break;
+	case SOUTH:
+		++m_position.second;
+		break;
+	case EAST:
+		++m_position.first;
+		break;
+	case WEST:
+		--m_position.first;
+		break;
+	}
+}

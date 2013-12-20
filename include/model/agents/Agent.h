@@ -22,12 +22,21 @@ class Intentions;
  */
 class Agent {
 private:
+	Point m_position;
 	BeliefSet* m_beliefSet;
 	Goals* m_goals;
 	Intentions* m_intentions;
+protected:
+	bool move(Movement);
 public:
+	enum {
+		NORTH = 0,
+		SOUTH,
+		EAST,
+		WEST
+	} Movement:
 	Agent();
-	virtual ~Agent();
+	virtual ~Agent() = 0;
 };
 
 #endif /* AGENT_H_ */

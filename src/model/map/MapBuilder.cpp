@@ -156,7 +156,7 @@ void MapBuilder::generateElevation() {
 }
 
 void MapBuilder::generateResources() {
-
+	
 }
 
 const int* MapBuilder::splitArray(const char* cstr) {

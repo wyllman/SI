@@ -8,7 +8,7 @@
 #ifndef MAPBUILDER_H_
 #define MAPBUILDER_H_
 
-#include <typedefs.h>
+#include <Tools.h>
 #include <stdint.h>
 
 /*
@@ -27,7 +27,9 @@ private:
 	void generateMap();
 	void generateElevation();
 	void generateResources();
-	const int* splitArray(const char* cstr);
+	void generateVein(BYTE, Point);
+	void generateDeposit(BYTE, Point);
+	const int* splitArray(const char*);
 public:
 	MapBuilder(uint32_t);
 	/*

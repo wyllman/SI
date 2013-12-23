@@ -8,7 +8,7 @@
 #ifndef MAP_H_
 #define MAP_H_
 
-#include <typedefs.h>
+#include <Tools.h>
 #include <stdint.h>
 
 class MapBuilder;

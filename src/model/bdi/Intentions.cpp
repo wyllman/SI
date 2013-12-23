@@ -5,7 +5,7 @@
  *      Author: manwe
  */
 
-#include "../../../include/model/bdi/Intentions.h"
+#include <model/bdi/Intentions.h>
 
 Intentions::Intentions() {
 	// TODO Auto-generated constructor stub

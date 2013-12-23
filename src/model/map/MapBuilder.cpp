@@ -10,6 +10,7 @@
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int_distribution.hpp>
 #include <boost/random/binomial_distribution.hpp>
+#include <boost/random/negative_binomial_distribution.hpp>
 
 #include <cmath>
 #include <cstdlib>
@@ -84,6 +85,7 @@ MapBuilder::MapBuilder() {
 			}
 		}
 	}
+	generateResources();
 }
 
 MapBuilder::~MapBuilder() {
@@ -156,7 +158,45 @@ void MapBuilder::generateElevation() {
 }
 
 void MapBuilder::generateResources() {
+	enum {
+		DEPOSIT = 0,
+		VEIN
+	} ResourceDistribution;
+	boost::random::mt11213b resourceLayoutRNG;
+	boost::random::mt11213b resourceProbabilityRNG;
+	boost::random::mt11213b resourcePositionRNG;
+	boost::random::mt11213b resourceTypeRNG;
+	boost::random::negative_binomial_distribution<> resourceDistrib(3, 0.5);
+	boost::random::uniform_int_distribution<> layoutDistrib(0, 1);
+	boost::random::uniform_int_distribution<> positionDistrib(0, m_mapSize);
+	boost::random::uniform_int_distribution<> typeDistrib(3, 5);
+	Point p;
 	
+	resourceProbabilityRNG.seed(time(NULL));
+	resourceLayoutRNG.seed(time(NULL));
+	resourcePositionRNG.seed(time(NULL));
+	resourceTypeRNG.seed(time(NULL));
+	// probabilidad de generar un recurso
+	do {
+		// posicion del recurso
+		resourcePositionRNG();
+		p.first = positionDistrib(resourcePositionRNG);
+		resourcePositionRNG();
+		p.second = positionDistrib(resourcePositionRNG);
+		// tipo del recurso
+		resourceTypeRNG();
+		// disposicion del recurso
+		resourceLayoutRNG();
+		switch(layoutDistrib(resourceLayoutRNG)) {
+		case DEPOSIT:
+			generateDeposit(pow(2, typeDistrib(resourceTypeRNG)), p);
+			break;
+		case VEIN:
+			generateVein(pow(2, typeDistrib(resourceTypeRNG)), p);
+			break;
+		}
+		
+	} while(resourceDistrib(resourceProbabilityRNG) < 6);
 }
 
 const int* MapBuilder::splitArray(const char* cstr) {
@@ -175,4 +215,43 @@ const int* MapBuilder::splitArray(const char* cstr) {
 		}
 	}
 	return tmp;
+}
+
+void MapBuilder::generateDeposit(BYTE type, Point loc) {
+	std::cout << "creando deposito del tipo 0x" << std::hex << static_cast<int>(type) << " en la posicion (" << std::dec <<loc.first << "," << loc.second << ")" << std::endl;
+	
+	uint32_t size;
+	uint32_t width;
+	
+	boost::random::mt11213b sizeRNG;
+	boost::random::mt11213b directionRNG;
+	boost::random::mt11213b widthRNG;
+	boost::random::uniform_int_distribution<> sizeDistrib(4, 8);
+	boost::random::uniform_int_distribution<> directionDistrib(0, 3);
+	boost::random::uniform_int_distribution<> widthDistrib(5, 10);
+	
+	sizeRNG.seed(std::time(NULL));
+	directionRNG.seed(std::time(NULL));
+	widthRNG.seed(std::time(NULL));
+	size = sizeDistrib(sizeRNG);
+	for(int32_t i = 0; i < size; ++i) {
+		widthRNG();
+		width = widthDistrib(widthRNG);
+		
+		directionRNG();
+		switch(directionDistrib(directionRNG)) {
+			case 0:
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+		}
+	}
+}
+
+void MapBuilder::generateVein(BYTE type, Point loc) {
+	std::cout << "creando veta del tipo 0x" << std::hex << static_cast<int>(type) << " en la posicion (" << std::dec << loc.first << "," << loc.second << ")" << std::endl;
 }

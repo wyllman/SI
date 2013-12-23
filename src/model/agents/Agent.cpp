@@ -19,8 +19,9 @@ Agent::~Agent() {
 	// TODO Auto-generated destructor stub
 }
 
-bool Agent::move(Movement movement) {
-	switch(movement) {
+bool Agent::move(Movement theMovement) {
+	bool result = false;
+	switch(theMovement) {
 	case NORTH:
 		--m_position.second;
 		break;
@@ -34,4 +35,5 @@ bool Agent::move(Movement movement) {
 		--m_position.first;
 		break;
 	}
+	return result;
 }

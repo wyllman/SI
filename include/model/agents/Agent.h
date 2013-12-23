@@ -32,8 +32,6 @@ private:
 protected:
 	bool move(Movement);
 public:
-
-
 	Agent();
 	virtual ~Agent() = 0;
 };

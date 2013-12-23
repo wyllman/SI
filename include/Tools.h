@@ -17,6 +17,12 @@
 #ifndef TOOLS_H_
 #define TOOLS_H_
 
+#include <map>
+#include <bits/stl_pair.h>
+
+typedef unsigned char BYTE;
+typedef std::pair<int, int> Point;
+
 const bool BASIC_LOG = true;
 const bool ADVAN_LOG = true;
 
@@ -46,5 +52,27 @@ enum {
    LOG_F_LOOP_1 = 106,
    LOG_ERROR_2 = -201
 };
+
+enum {
+	TERRAIN_GROUND = 0x1,
+	TERRAIN_ELEVATION = 0x2,
+	TERRAIN_WATER = 0x4,
+	RESOURCE_METAL = 0x8,
+	RESOURCE_FOOD = 0xF,
+	RESOURCE_MINERAL = 0x20
+};
+
+enum {
+	MASK_TERRAIN = 0x7,	// bits 1-3 (0x1-0x4)
+	MASK_RESOURCE = 0x37	// bits 4-6 (0x8-0x20)
+};
+
+enum Movement {
+	NORTH = 0,
+	SOUTH = 1,
+	EAST = 2,
+	WEST = 3
+};
+
 
 #endif /* TOOLS_H_ */

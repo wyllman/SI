@@ -7,3 +7,5 @@ Release/
 .project
 .kateproject
 .kateproject.d/
+.kdev4/
+SI.kdev4

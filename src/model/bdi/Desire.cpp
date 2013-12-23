@@ -5,7 +5,7 @@
  *      Author: manwe
  */
 
-#include "../../../include/model/bdi/Desire.h"
+#include <model/bdi/Desire.h>
 
 Desire::Desire() {
 	// TODO Auto-generated constructor stub

@@ -34,6 +34,10 @@ Scene::~Scene() {
 		delete [] vertexFloor_;
 		vertexFloor_ = NULL;
 	}
+	if (vertexFloorColor_ != NULL) {
+		delete [] vertexFloorColor_;
+		vertexFloorColor_ = NULL;
+	}
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

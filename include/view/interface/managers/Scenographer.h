@@ -15,7 +15,7 @@
 #ifndef SCENOGRAPHER_H_
 #define SCENOGRAPHER_H_
 
-#include <typedefs.h>
+#include <Tools.h>
 
 class Interface;
 class Scene;

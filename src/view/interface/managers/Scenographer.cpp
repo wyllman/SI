@@ -17,7 +17,7 @@
 #include <view/interface/Interface.h>
 #include <view/interface/tools/Scene.h>
 #include <Tools.h>
-#include <typedefs.h>
+//#include <typedefs.h>
 
 #include <iostream>
 #ifdef __linux
@@ -141,7 +141,7 @@ void Scenographer::updateFloor(int width, int height) {
 
    for (int i = 0; i < MAP_WIDTH; i++) {
       for (int j = 0; j < MAP_HEIGHT; j++) {
-         switch ((*refMap_)(i, j)) {
+         switch ((*refMap_)(i, j) & MASK_TERRAIN) {
             case TERRAIN_GROUND:
                color[0] = 0.0;
                color[1] = 1.0;
@@ -397,7 +397,7 @@ float Scenographer::getHeight(int row, int col) {
 
 float Scenographer::getHeight(BYTE value) {
    float result = -10;
-   switch (value) {
+   switch (value & MASK_TERRAIN) {
       case TERRAIN_GROUND:
          result = 0.0;
          break;

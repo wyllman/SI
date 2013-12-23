@@ -37,7 +37,6 @@ private:
 	SDL_RendererInfo* displayRendererInfo_;
 
 	void logAction(int);
-
 };
 
 #endif /* WINDOW_H_ */

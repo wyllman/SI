@@ -121,12 +121,12 @@ void Director::mainLoop() {
             } else if (eventSDL.key.keysym.sym == SDLK_LEFT) {
                const_cast<Scenographer*>(
                   dynamic_cast<Interface*>(
-                  const_cast<View*>(refView_))->getScenographer())->camPosX(0.5);
+                  const_cast<View*>(refView_))->getScenographer())->camRotationPos(2.5);
                needRender = true;
             } else if (eventSDL.key.keysym.sym == SDLK_RIGHT) {
                const_cast<Scenographer*>(
                   dynamic_cast<Interface*>(
-                  const_cast<View*>(refView_))->getScenographer())->camPosX(-0.5);
+                  const_cast<View*>(refView_))->getScenographer())->camRotationPos(-2.5);
                needRender = true;
             }
          }

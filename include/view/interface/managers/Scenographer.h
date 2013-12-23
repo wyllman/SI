@@ -15,6 +15,8 @@
 #ifndef SCENOGRAPHER_H_
 #define SCENOGRAPHER_H_
 
+#include <typedefs.h>
+
 class Interface;
 class Scene;
 class Map;
@@ -28,6 +30,7 @@ class Scenographer {
       void update ();
       void projZoom (float);
       void camPosX (float);
+      void camRotationPos (float);
 
    private:
       const Interface* refInterface_;
@@ -39,6 +42,7 @@ class Scenographer {
       int projNear_;
       int projFar_;
 
+      float camRotAngle_;
       float camPos_[3];
       float camViewPoint_[3];
       float camVectorUp_[3];
@@ -50,8 +54,16 @@ class Scenographer {
       void updateProy ();
       void updateCam ();
       void updateFloor (int, int);
+      void createSideUpFloor (int, int, float, float [3], float*, float*);
       void createSideFloor (int, int, float, float [3], float*, float*, int);
-      void createLeft ();
+
+      bool checkHeightNorth (int, int);
+      bool checkHeightEast (int, int);
+      bool checkHeightSouth (int, int);
+      bool checkHeightWest (int, int);
+
+      float getHeight(int, int);
+      float getHeight(BYTE);
 
       void logAction(int);
 };

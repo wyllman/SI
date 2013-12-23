@@ -33,8 +33,8 @@ enum {
 const int MAP_WIDTH = 100;
 const int MAP_HEIGHT = 100;
 
-const int WIN_WIDTH = 1000;
-const int WIN_HEIGHT = 500;
+const int WIN_WIDTH = 1300;
+const int WIN_HEIGHT = 650;
 
 enum {
    LOG_ERROR_1 = -101,

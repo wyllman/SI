@@ -53,13 +53,24 @@ void Bureaucrat::initOGL() {
    #ifdef __linux
       GLenum err = glewInit();
       if (GLEW_OK != err) {
-         exit(-1);
+         //exit(-1);
+         const_cast<Interface*>(refInterface_)->stop();
       }
    #endif
    glShadeModel( GL_SMOOTH );
-   glClearDepth( 100.0f );
+
    glEnable( GL_DEPTH_TEST );
+   glDepthMask(GL_TRUE);
    glDepthFunc( GL_LEQUAL );
+   glDepthRange(0.0f, 1.0f);
+   glClearDepth( 1.0f );
+
+   glEnable( GL_BLEND );
+   //glBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE);
+
+   glEnable(GL_CULL_FACE);
+   glCullFace(GL_FRONT);
+
    glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
    // loadShader();
 }

@@ -2,6 +2,45 @@
 cmake_minimum_required (VERSION 2.8)
 cmake_policy (VERSION 2.8)
 
+# ### Options ###
+option (
+	USE_CLANG
+	"Build application with clang (Default=OFF)"
+	OFF
+)
+
+option (
+	VERBOSE_BUILD
+	"Sets VERBOSE=1 for debugging purposes (Default=OFF)"
+	OFF
+)
+
+option (
+	CONSOLE_BUILD
+	"Sets the console build instead of the OpenGL (Default=OFF)"
+	OFF
+)
+
+option (
+	DEBUG_BUILD
+	"Sets CMAKE_BUILD_TYPE to Debug to compile debuggins symbols (Default=ON)"
+	ON
+)
+
+option (
+	BUILD_DOCUMENTATION
+	"Poseso"
+	OFF
+)
+
+# ### Compiler option parsing (must be done before setting the project) ###
+if (USE_CLANG)
+	set (ENV{CC} /usr/bin/clang)
+	set (ENV{CXX} /usr/bin/clang++)
+	set (CMAKE_USER_MAKE_RULES_OVERRIDE ./ClangOverrides.txt)
+endif (USE_CLANG)
+
+# ### Project configuration ###
 project (SI C CXX)
 set (SI_VERSION_MAJOR 0)
 set (SI_VERSION_MINOR 3)
@@ -20,37 +59,6 @@ configure_file (
 	"${PROJECT_BINARY_DIR}/SIConfig.h"
 )
 
-# ### Platform detection ###
-if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-	set (PROJECT_OS "Linux")
-elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-	set (PROJECT_OS "OSX")
-endif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-
-# ### Options ###
-option (
-	VERBOSE_BUILD
-	"Sets VERBOSE=1 for debugging purposes"
-	OFF
-)
-
-option (
-	CONSOLE_BUILD
-	"Sets the console build instead of the OpenGL"
-	OFF
-)
-
-option (
-	DEBUG_BUILD
-	"Sets CMAKE_BUILD_TYPE to Debug to compile debuggins symbols (Default=ON)"
-	ON
-)
-
-option (
-	BUILD_DOCUMENTATION
-	"Poseso"
-	OFF
-)
 # ### Options parsing ###
 if (BUILD_DOCUMENTATION)
 	generate_documentation (${PROJECT_DIR}/Doxyfile)
@@ -66,8 +74,15 @@ if (CONSOLE_BUILD)
 endif (CONSOLE_BUILD)
 
 if (DEBUG_BUILD)
-	set (CMAKE_BUILD_TYPE Debug)
+	set (CMAKE_BUILD_TYPE DEBUG)
 endif (DEBUG_BUILD)
+
+# ### Platform detection ###
+if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+	set (PROJECT_OS "Linux")
+elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+	set (PROJECT_OS "OSX")
+endif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 # ### Package finding ###
 find_file (
@@ -124,11 +139,13 @@ link_directories (
 )
 
 # ### Final compilation and linkage ###
-if (CMAKE_BUILD_TYPE MATCHES Debug)
+if (CMAKE_BUILD_TYPE MATCHES DEBUG)
 	set (PROJECT_EXEC_NAME ${PROJECT_NAME}-Debug)
-else (CMAKE_BUILD_TYPE MATCHES Debug)
+	message ("-- Building Debug Project --")
+else (CMAKE_BUILD_TYPE MATCHES DEBUG)
 	set (PROJECT_EXEC_NAME ${PROJECT_NAME}-Release)
-endif (CMAKE_BUILD_TYPE MATCHES Debug)
+	message ("-- Building Release Project --")
+endif (CMAKE_BUILD_TYPE MATCHES DEBUG)
 
 add_executable (${PROJECT_EXEC_NAME} ${PROJECT_SOURCE_DIR}/PreColonia.cpp)
 

@@ -11,17 +11,6 @@
 #include <cstdlib>
 #include <cstring>
 
-Map::Map(uint32_t size) :
-		m_size(size), m_mapArray(NULL) {
-	m_builder = new MapBuilder(m_size);
-	m_mapArray = m_builder->generatedMap();
-
-	if (m_builder != NULL) {
-		delete m_builder;
-		m_builder = NULL;
-	}
-}
-
 Map::Map() {
 	m_builder = new MapBuilder();
 	m_size = m_builder->mapSize();

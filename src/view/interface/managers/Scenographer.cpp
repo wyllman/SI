@@ -28,7 +28,11 @@
    #include <GLU.h>
 #endif
 
-#include <Math.h>
+#ifdef __linux
+	#include <math.h>
+#else
+	#include <Math.h>
+#endif
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:

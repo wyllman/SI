@@ -20,20 +20,43 @@
 
 #include <map2.c>
 
-MapBuilder::MapBuilder(uint32_t size) :
-m_mapSize(size) {
+MapBuilder::MapBuilder() {
 	m_map = new BYTE*[m_mapSize];
 
 	for (uint32_t i = 0; i < m_mapSize; i++) {
 		m_map[i] = new BYTE[m_mapSize];
 	}
-
-	generateMap();
+	
 	generateElevation();
 	generateResources();
 }
 
-MapBuilder::MapBuilder() {
+MapBuilder::~MapBuilder() {
+	if (m_map != NULL) {
+		for (uint32_t i = 0; i < m_mapSize; i++) {
+			delete [] m_map[i];
+			m_map[i] = NULL;
+		}
+		delete [] m_map;
+		m_map = NULL;
+	}
+}
+
+void MapBuilder::generateMap() {
+	unsigned char* tmpString;
+	tmpString = new BYTE[m_mapSize];
+
+	memset(tmpString, '_', m_mapSize * sizeof(BYTE));
+	for (uint32_t i = 0; i < m_mapSize; i++) {
+		memcpy(m_map[i], tmpString, (m_mapSize) * sizeof(BYTE));
+	}
+	if (tmpString != NULL) {
+		delete[] tmpString;
+		tmpString = NULL;
+	}
+}
+
+void MapBuilder::generateElevation() {
 	boost::random::mt11213b mersenneGenerator;
 	uint32_t lowerBound;
 	uint32_t upperBound;
@@ -42,14 +65,6 @@ MapBuilder::MapBuilder() {
 
 	m_mapSize = gimp.width;
 	bytesPerPixel = gimp.bytes_per_pixel;
-
-	m_map = new BYTE*[m_mapSize];
-
-	// reserva de memoria
-	for (uint32_t i = 0; i < m_mapSize; i++) {
-		m_map[i] = new BYTE[m_mapSize];
-	}
-
 	// bucle para hallar el rango de colores
 	uint32_t max;
 	uint32_t min;
@@ -85,76 +100,6 @@ MapBuilder::MapBuilder() {
 			}
 		}
 	}
-	generateResources();
-}
-
-MapBuilder::~MapBuilder() {
-	if (m_map != NULL) {
-		for (uint32_t i = 0; i < m_mapSize; i++) {
-			delete [] m_map[i];
-			m_map[i] = NULL;
-		}
-		delete [] m_map;
-		m_map = NULL;
-	}
-}
-
-void MapBuilder::generateMap() {
-	unsigned char* tmpString;
-	tmpString = new BYTE[m_mapSize];
-
-	memset(tmpString, '_', m_mapSize * sizeof(BYTE));
-	for (uint32_t i = 0; i < m_mapSize; i++) {
-		memcpy(m_map[i], tmpString, (m_mapSize) * sizeof(BYTE));
-	}
-	if (tmpString != NULL) {
-		delete[] tmpString;
-		tmpString = NULL;
-	}
-}
-
-void MapBuilder::generateElevation() {
-	boost::random::mt11213b mersenneGenerator;
-	uint32_t elevations;
-	Point point;
-	int32_t min;
-	int32_t radius;
-
-	min = sqrt(m_mapSize) / 2;
-	elevations = sqrt(m_mapSize);
-	mersenneGenerator.seed(time(NULL));
-	boost::random::uniform_int_distribution<> elevationDist(0, m_mapSize);
-
-	for (uint32_t i = 0; i < elevations; i++) {
-		mersenneGenerator();
-		point.first = elevationDist(mersenneGenerator);
-		point.second = elevationDist(mersenneGenerator);
-		boost::random::uniform_int_distribution<> radiusDist(min, sqrt(m_mapSize));
-		radius = radiusDist(mersenneGenerator);
-
-		for (int32_t i = 0; static_cast<uint32_t>(i) < m_mapSize; i++) {
-			for (int32_t j = 0; static_cast<uint32_t>(j) < m_mapSize; j++) {
-				if ((sqrt(pow(i - point.first, 2) + pow(j - point.second, 2)) <= radius)) {
-					m_map[i][j] = TERRAIN_ELEVATION;
-				}
-			}
-		}
-	}
-	for (uint32_t i = 0; i < elevations; i++) {
-		mersenneGenerator();
-		point.first = elevationDist(mersenneGenerator);
-		point.second = elevationDist(mersenneGenerator);
-		boost::random::uniform_int_distribution<> radiusDist(min, sqrt(m_mapSize));
-		radius = radiusDist(mersenneGenerator);
-
-		for (int32_t i = 0; static_cast<uint32_t>(i) < m_mapSize; i++) {
-			for (int32_t j = 0; static_cast<uint32_t>(j) < m_mapSize; j++) {
-				if ((sqrt(pow(i - point.first, 2) + pow(j - point.second, 2)) <= radius)) {
-					m_map[i][j] = TERRAIN_WATER;
-				}
-			}
-		}
-	}
 }
 
 void MapBuilder::generateResources() {
@@ -170,7 +115,7 @@ void MapBuilder::generateResources() {
 	boost::random::uniform_int_distribution<> layoutDistrib(0, 1);
 	boost::random::uniform_int_distribution<> positionDistrib(0, m_mapSize);
 	boost::random::uniform_int_distribution<> typeDistrib(3, 5);
-	Point p;
+	Point point;
 	
 	resourceProbabilityRNG.seed(time(NULL));
 	resourceLayoutRNG.seed(time(NULL));
@@ -180,19 +125,19 @@ void MapBuilder::generateResources() {
 	do {
 		// posicion del recurso
 		resourcePositionRNG();
-		p.first = positionDistrib(resourcePositionRNG);
+		point.first = positionDistrib(resourcePositionRNG);
 		resourcePositionRNG();
-		p.second = positionDistrib(resourcePositionRNG);
+		point.second = positionDistrib(resourcePositionRNG);
 		// tipo del recurso
 		resourceTypeRNG();
 		// disposicion del recurso
 		resourceLayoutRNG();
 		switch(layoutDistrib(resourceLayoutRNG)) {
 		case DEPOSIT:
-			generateDeposit(pow(2, typeDistrib(resourceTypeRNG)), p);
+			generateDeposit(pow(2, typeDistrib(resourceTypeRNG)), point);
 			break;
 		case VEIN:
-			generateVein(pow(2, typeDistrib(resourceTypeRNG)), p);
+			generateVein(pow(2, typeDistrib(resourceTypeRNG)), point);
 			break;
 		}
 		
@@ -222,6 +167,8 @@ void MapBuilder::generateDeposit(BYTE type, Point loc) {
 	
 	uint32_t size;
 	uint32_t width;
+	uint32_t i;
+	i = 0;
 	
 	boost::random::mt11213b sizeRNG;
 	boost::random::mt11213b directionRNG;
@@ -234,22 +181,42 @@ void MapBuilder::generateDeposit(BYTE type, Point loc) {
 	directionRNG.seed(std::time(NULL));
 	widthRNG.seed(std::time(NULL));
 	size = sizeDistrib(sizeRNG);
-	for(int32_t i = 0; i < size; ++i) {
+	
+	do {
 		widthRNG();
 		width = widthDistrib(widthRNG);
 		
+		for(uint32_t j = loc.first - width; j < loc.first + width; ++j) {
+			for (uint32_t k = loc.second - width; k < loc.second + width; ++k) {
+				if(j >= 0 && j < m_mapSize && k >= 0 && k < m_mapSize) {
+					if(abs(sqrt(pow(j, 2) + pow(k, 2))
+						- sqrt(pow(loc.first, 2)
+						+ pow(loc.second, 2))) <= width) {
+						m_map[j][k] |= type;
+						std::cout << m_map[j][k] << std::endl;
+						std::cin.get();
+					}
+				}
+			}
+		}
+		
 		directionRNG();
 		switch(directionDistrib(directionRNG)) {
-			case 0:
+			case NORTH:
+				--loc.first;
 				break;
-			case 1:
+			case SOUTH:
+				++loc.first;
 				break;
-			case 2:
+			case EAST:
+				++loc.second;
 				break;
-			case 3:
+			case WEST:
+				--loc.second;
 				break;
-		}
-	}
+		}		
+	} while (i++ < size);
+
 }
 
 void MapBuilder::generateVein(BYTE type, Point loc) {

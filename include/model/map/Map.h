@@ -28,7 +28,6 @@ class Map {
 		MapBuilder* m_builder;
 		BYTE** m_mapArray;
 	public:
-		Map(uint32_t size);
 		Map();
 		Map(const Map& map);
 		~Map();

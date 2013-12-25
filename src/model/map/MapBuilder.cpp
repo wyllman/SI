@@ -21,6 +21,7 @@
 #include <map2.c>
 
 MapBuilder::MapBuilder() {
+	m_mapSize = gimp.width;
 	m_map = new BYTE*[m_mapSize];
 
 	for (uint32_t i = 0; i < m_mapSize; i++) {
@@ -63,7 +64,6 @@ void MapBuilder::generateElevation() {
 	uint32_t bytesPerPixel;
 	uint32_t pixelGrayscaleValue;
 
-	m_mapSize = gimp.width;
 	bytesPerPixel = gimp.bytes_per_pixel;
 	// bucle para hallar el rango de colores
 	uint32_t max;

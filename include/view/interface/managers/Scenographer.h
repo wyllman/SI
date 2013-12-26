@@ -64,6 +64,7 @@ class Scenographer {
 
       float getHeight(int, int);
       float getHeight(BYTE);
+      float* getcolor(BYTE);
 
       void logAction(int);
 };

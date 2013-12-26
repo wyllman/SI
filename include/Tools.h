@@ -64,7 +64,7 @@ enum {
 
 enum {
    MASK_TERRAIN = 0x7,	// bits 1-3 (0x1-0x4)
-   MASK_RESOURCE = 0x28	// bits 4-6 (0x8-0x20)
+   MASK_RESOURCE = 0x38	// bits 4-6 (0x8-0x20)
 };
 
 enum Movement {

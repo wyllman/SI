@@ -28,11 +28,8 @@
    #include <GLU.h>
 #endif
 
-#ifdef __linux
-	#include <math.h>
-#else
-	#include <Math.h>
-#endif
+#include <math.h>
+
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
@@ -142,10 +139,12 @@ void Scenographer::updateFloor(int width, int height) {
    float* vertexFloorColor = const_cast<Scene*>(refScene_)
                                 ->getVertexFloorColor(100 * 100 * NUM_VER_POINT);
    float color[3] = {0.0, 0.0, 0.0};
+   BYTE slot;
 
    for (int i = 0; i < MAP_WIDTH; i++) {
       for (int j = 0; j < MAP_HEIGHT; j++) {
-         switch ((*refMap_)(i, j) & MASK_TERRAIN) {
+         slot = (*refMap_)(i, j);
+         switch (slot & MASK_TERRAIN) {
             case TERRAIN_GROUND:
                color[0] = 0.0;
                color[1] = 1.0;
@@ -416,6 +415,10 @@ float Scenographer::getHeight(BYTE value) {
          break;
    }
    return result;
+}
+
+float* Scenographer::getcolor(BYTE unsignedChar) {
+
 }
 
 void Scenographer::logAction(int index) {

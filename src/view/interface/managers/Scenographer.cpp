@@ -449,9 +449,9 @@ float* Scenographer::getcolor(BYTE value) {
          color[2] = 0;
          break;
       default:
-         color[0] = 0;
+         color[0] = 1;
          color[1] = 0;
-         color[2] = 0;
+         color[2] = 1;
          break;
    }
    return color;

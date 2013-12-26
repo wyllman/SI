@@ -58,13 +58,13 @@ enum {
    TERRAIN_ELEVATION = 0x2,
    TERRAIN_WATER = 0x4,
    RESOURCE_METAL = 0x8,
-   RESOURCE_FOOD = 0xF,
+   RESOURCE_FOOD = 0x10,
    RESOURCE_MINERAL = 0x20
 };
 
 enum {
    MASK_TERRAIN = 0x7,	// bits 1-3 (0x1-0x4)
-   MASK_RESOURCE = 0x37	// bits 4-6 (0x8-0x20)
+   MASK_RESOURCE = 0x28	// bits 4-6 (0x8-0x20)
 };
 
 enum Movement {

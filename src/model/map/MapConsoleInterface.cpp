@@ -16,6 +16,14 @@ MapConsoleInterface::MapConsoleInterface(const Map& map) :
 	m_consoleMapping.insert(std::pair<BYTE, BYTE>(TERRAIN_GROUND | RESOURCE_FOOD, 'x'));
 	m_consoleMapping.insert(std::pair<BYTE, BYTE>(TERRAIN_GROUND | RESOURCE_METAL, 'y'));
 	m_consoleMapping.insert(std::pair<BYTE, BYTE>(TERRAIN_GROUND | RESOURCE_MINERAL, 'z'));
+
+	m_consoleMapping.insert(std::pair<BYTE, BYTE>(TERRAIN_ELEVATION | RESOURCE_FOOD, 'A'));
+	m_consoleMapping.insert(std::pair<BYTE, BYTE>(TERRAIN_ELEVATION | RESOURCE_METAL, 'A'));
+	m_consoleMapping.insert(std::pair<BYTE, BYTE>(TERRAIN_ELEVATION | RESOURCE_MINERAL, 'A'));
+
+	m_consoleMapping.insert(std::pair<BYTE, BYTE>(TERRAIN_WATER | RESOURCE_FOOD, 'w'));
+	m_consoleMapping.insert(std::pair<BYTE, BYTE>(TERRAIN_WATER | RESOURCE_METAL, 'w'));
+	m_consoleMapping.insert(std::pair<BYTE, BYTE>(TERRAIN_WATER | RESOURCE_MINERAL, 'w'));
 }
 
 MapConsoleInterface::~MapConsoleInterface() {

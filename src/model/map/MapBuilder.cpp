@@ -114,7 +114,7 @@ void MapBuilder::generateResources() {
 	boost::random::negative_binomial_distribution<> resourceDistrib(3, 0.5);
 	boost::random::uniform_int_distribution<> layoutDistrib(0, 1);
 	boost::random::uniform_int_distribution<> positionDistrib(0, m_mapSize);
-	boost::random::uniform_int_distribution<> typeDistrib(3, 5);
+	boost::random::uniform_int_distribution<> typeDistrib(5, 5);
 	Point point;
 	
 	resourceProbabilityRNG.seed(time(NULL));
@@ -193,8 +193,8 @@ void MapBuilder::generateDeposit(BYTE type, Point loc) {
 						- sqrt(pow(loc.first, 2)
 						+ pow(loc.second, 2))) <= width) {
 						m_map[j][k] |= type;
-						std::cout << m_map[j][k] << std::endl;
-						std::cin.get();
+						//std::cout << m_map[j][k] << std::endl;
+						//std::cin.get();
 					}
 				}
 			}
@@ -214,7 +214,7 @@ void MapBuilder::generateDeposit(BYTE type, Point loc) {
 			case WEST:
 				--loc.second;
 				break;
-		}		
+		}
 	} while (i++ < size);
 
 }

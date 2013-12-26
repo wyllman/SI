@@ -138,7 +138,10 @@ void Scenographer::updateFloor(int width, int height) {
                            ->getVertexFloor(100 * 100 * NUM_VER_POINT);
    float* vertexFloorColor = const_cast<Scene*>(refScene_)
                                 ->getVertexFloorColor(100 * 100 * NUM_VER_POINT);
-   float color[3] = {0.0, 0.0, 0.0};
+   float* color = new float[3];
+   color[0] = 0;
+   color[1] = 0;
+   color[2] = 0;
    BYTE slot;
 
    for (int i = 0; i < MAP_WIDTH; i++) {
@@ -146,11 +149,20 @@ void Scenographer::updateFloor(int width, int height) {
          slot = (*refMap_)(i, j);
          switch (slot & MASK_TERRAIN) {
             case TERRAIN_GROUND:
+               if (slot != TERRAIN_GROUND) {
+                  delete [] (color);
+                  color = getcolor(slot & MASK_RESOURCE);
+                  createSideUpFloor(i, j, 0.0, color, vertexFloor, vertexFloorColor);
+               }
+
                color[0] = 0.0;
                color[1] = 1.0;
                color [2] = 0.0;
 
-               createSideUpFloor(i, j, 0.0, color, vertexFloor, vertexFloorColor);
+               if (slot == TERRAIN_GROUND) {
+                  createSideUpFloor(i, j, 0.0, color, vertexFloor, vertexFloorColor);
+               }
+
                createSideFloor(i, j, 0.0, color, vertexFloor, vertexFloorColor, 1);
                createSideFloor(i, j, 0.0, color, vertexFloor, vertexFloorColor, 2);
                createSideFloor(i, j, 0.0, color, vertexFloor, vertexFloorColor, 3);
@@ -192,6 +204,7 @@ void Scenographer::updateFloor(int width, int height) {
          }
       }
    }
+   delete [] (color);
 }
 void Scenographer::createSideUpFloor(int row, int col, float height, float color[3], float* vertexFloor, float* vertexFloorColor) {
 	const int NUM_VER_POINT = 3 * 4 * 5;
@@ -417,8 +430,31 @@ float Scenographer::getHeight(BYTE value) {
    return result;
 }
 
-float* Scenographer::getcolor(BYTE unsignedChar) {
-
+float* Scenographer::getcolor(BYTE value) {
+   float* color = new float[3];
+   switch (value) {
+      case RESOURCE_METAL:
+         color[0] = 0.75;
+         color[1] = 0.75;
+         color[2] = 0.75;
+         break;
+      case RESOURCE_FOOD:
+         color[0] = 1;
+         color[1] = 0;
+         color[2] = 0;
+         break;
+      case RESOURCE_MINERAL:
+         color[0] = 0;
+         color[1] = 0;
+         color[2] = 0;
+         break;
+      default:
+         color[0] = 0;
+         color[1] = 0;
+         color[2] = 0;
+         break;
+   }
+   return color;
 }
 
 void Scenographer::logAction(int index) {

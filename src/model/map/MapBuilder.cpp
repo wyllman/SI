@@ -105,7 +105,7 @@ void MapBuilder::generateElevation() {
 void MapBuilder::generateResources() {
 	enum {
 		DEPOSIT = 0,
-		VEIN
+		VEIN = 1
 	} ResourceDistribution;
 	boost::random::mt11213b resourceLayoutRNG;
 	boost::random::mt11213b resourceProbabilityRNG;

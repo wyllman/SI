@@ -122,6 +122,7 @@ const Scenographer* Interface::getScenographer() const {
 // ___________________________________________________________________________________
 // Métodos privados:
 void Interface::render() {
+   const int NUM_VER = scene_->getNumberVertex();
    // Clear the background as white
    glClearColor(1.0, 1.0, 0.9, 1.0);
    glClearDepth( 1.0f );
@@ -139,13 +140,13 @@ void Interface::render() {
    // Enviar el suelo al shader y pintarlo.
    //    Buffer de vertices
    glBindBuffer(GL_ARRAY_BUFFER, context_->getVboId()[0]);
-   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 100 * 100 * 3 * 4 * 5
+   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * NUM_VER * 3
                , scene_->getVertexFloor(), GL_STATIC_DRAW);
    glVertexAttribPointer(glGetAttribLocation(context_->getProgramGsl(), "coord3d")
                         , 3, GL_FLOAT, GL_FALSE, 0, 0);
    //    Buffer de colores
    glBindBuffer(GL_ARRAY_BUFFER, context_->getVboId()[1]);
-   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 100 * 100 * 3 * 4 * 5
+   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * NUM_VER * 3
                , scene_->getVertexFloorColor(), GL_STATIC_DRAW);
    glVertexAttribPointer(glGetAttribLocation(context_->getProgramGsl(), "colorRGB")
                         , 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -153,7 +154,7 @@ void Interface::render() {
    glEnableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "coord3d"));
    glEnableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"));
 
-   glDrawArrays(GL_QUADS, 0, 100 * 100 * 4 * 5);
+   glDrawArrays(GL_QUADS, 0, NUM_VER);
 
    glDisableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "coord3d"));
    glDisableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"));

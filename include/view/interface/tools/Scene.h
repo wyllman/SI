@@ -38,13 +38,27 @@ class Scene {
       float* getVertexFloor(int);
       const float* getVertexFloorColor() const;
       float* getVertexFloorColor(int);
+      const float* getVertexObjects() const;
+      float* getVertexObjects(int);
+      const float* getVertexObjectsColor() const;
+      float* getVertexObjectsColor(int);
+      int getNumberVertex() const;
+      void setNumberVertex(int numberVertex);
+      int getNumberQuadsFloor() const;
+      void setNumberQuadsFloor(int numberQuadsFloor);
 
    private:
       const Interface* refInterface_;
       GLfloat modelviewMatrix_[16];
       GLfloat projectionMatrix_[16];
+      int numberVertex_;
+
+      int numberQuadsFloor_;
       float* vertexFloor_;
       float* vertexFloorColor_;
+
+      float* vertexObjects_;
+      float* vertexObjectsColor_;
 
       void logAction(int);
 };

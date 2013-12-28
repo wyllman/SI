@@ -207,45 +207,51 @@ void Scenographer::updateFloor(int width, int height) {
    delete [] (color);
 }
 void Scenographer::createSideUpFloor(int row, int col, float height, float color[3], float* vertexFloor, float* vertexFloorColor) {
-	const int NUM_VER_POINT = 3 * 4 * 5;
+   const int NUM_VER = (const_cast<Scene*> (refScene_)->getNumberVertex()) * 3;
+   const int NUM_QUADS = const_cast<Scene*> (refScene_)->getNumberQuadsFloor();
 
-	// Eje X
-	vertexFloor[((row * 100) + col) * NUM_VER_POINT] = (row - (100.0 / 2.0)) / 1.0;
-	vertexFloor[((row * 100) + col) * NUM_VER_POINT + 3] = ((row + 1) - (100.0 / 2.0)) / 1.0;
-	vertexFloor[((row * 100) + col) * NUM_VER_POINT + 6] = ((row + 1) - (100.0 / 2.0)) / 1.0;
-	vertexFloor[((row * 100) + col) * NUM_VER_POINT + 9] = (row - (100.0 / 2.0)) / 1.0;
+   // Eje X
+//   vertexFloor[((row * 100) + col) * NUM_VER_POINT] = (row - (100.0 / 2.0)) / 1.0;
+   vertexFloor[NUM_VER] = (row - (100.0 / 2.0)) / 1.0;
+   vertexFloor[NUM_VER + 3] = ((row + 1) - (100.0 / 2.0)) / 1.0;
+   vertexFloor[NUM_VER + 6] = ((row + 1) - (100.0 / 2.0)) / 1.0;
+   vertexFloor[NUM_VER + 9] = (row - (100.0 / 2.0)) / 1.0;
 
-	// Eje Y
-	vertexFloor[((row * 100) + col) * NUM_VER_POINT + 1] = height;
-	vertexFloor[((row * 100) + col) * NUM_VER_POINT + 4] = height;
-	vertexFloor[((row * 100) + col) * NUM_VER_POINT + 7] = height;
-	vertexFloor[((row * 100) + col) * NUM_VER_POINT + 10] = height;
+   // Eje Y
+   vertexFloor[NUM_VER + 1] = height;
+   vertexFloor[NUM_VER + 4] = height;
+   vertexFloor[NUM_VER + 7] = height;
+   vertexFloor[NUM_VER + 10] = height;
 
 	// Eje Z
-   vertexFloor[((row * 100) + col) * NUM_VER_POINT + 2] = (col - (100.0 / 2.0)) / 1.0;
-   vertexFloor[((row * 100) + col) * NUM_VER_POINT + 5] = (col - (100.0 / 2.0)) / 1.0;
-   vertexFloor[((row * 100) + col) * NUM_VER_POINT + 8] = ((col + 1) - (100.0 / 2.0)) / 1.0;
-   vertexFloor[((row * 100) + col) * NUM_VER_POINT + 11] = ((col + 1) - (100.0 / 2.0)) / 1.0;
+   vertexFloor[NUM_VER + 2] = (col - (100.0 / 2.0)) / 1.0;
+   vertexFloor[NUM_VER + 5] = (col - (100.0 / 2.0)) / 1.0;
+   vertexFloor[NUM_VER + 8] = ((col + 1) - (100.0 / 2.0)) / 1.0;
+   vertexFloor[NUM_VER + 11] = ((col + 1) - (100.0 / 2.0)) / 1.0;
 
+   vertexFloorColor[NUM_VER] = color[0];
+   vertexFloorColor[NUM_VER + 1] = color[1];
+   vertexFloorColor[NUM_VER + 2] = color[2];
 
-   vertexFloorColor[((row * 100) + col) * NUM_VER_POINT] = color[0];
-   vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 1] = color[1];
-   vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 2] = color[2];
+   vertexFloorColor[NUM_VER + 3] = color[0];
+   vertexFloorColor[NUM_VER + 4] = color[1];
+   vertexFloorColor[NUM_VER + 5] = color[2];
 
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 3] = color[0];
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 4] = color[1];
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 5] = color[2];
+   vertexFloorColor[NUM_VER + 6] = color[0];
+   vertexFloorColor[NUM_VER + 7] = color[1];
+   vertexFloorColor[NUM_VER + 8] = color[2];
 
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 6] = color[0];
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 7] = color[1];
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 8] = color[2];
+   vertexFloorColor[NUM_VER + 9] = color[0];
+   vertexFloorColor[NUM_VER + 10] = color[1];
+   vertexFloorColor[NUM_VER + 11] = color[2];
 
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 9] = color[0];
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 10] = color[1];
-	vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 11] = color[2];
+   const_cast<Scene*> (refScene_)->setNumberVertex((NUM_VER / 3) + 4);
+   const_cast<Scene*> (refScene_)->setNumberQuadsFloor(NUM_QUADS + 1);
 }
 void Scenographer::createSideFloor(int row, int col, float height, float color[3], float* vertexFloor, float* vertexFloorColor, int side) {
    const int NUM_VER_POINT = 3 * 4 * 5;
+   const int NUM_VER = (const_cast<Scene*> (refScene_)->getNumberVertex()) * 3;
+   const int NUM_QUADS = const_cast<Scene*> (refScene_)->getNumberQuadsFloor();
    bool paintQuad = false;
    float heightDown = -1;
 
@@ -287,82 +293,83 @@ void Scenographer::createSideFloor(int row, int col, float height, float color[3
    }
 
    if (paintQuad) {
-	   // Eje X
-	   if (side == 2 || side == 4) {
-		  vertexFloor[((row * 100) + col) * NUM_VER_POINT + (side * 12)] = (row - (100.0 / 2.0)) / 1.0;
-		  vertexFloor[((row * 100) + col) * NUM_VER_POINT + 3 + (side * 12)] = ((row + 1) - (100.0 / 2.0)) / 1.0;
-		  vertexFloor[((row * 100) + col) * NUM_VER_POINT + 6 + (side * 12)] = ((row + 1) - (100.0 / 2.0)) / 1.0;
-		  vertexFloor[((row * 100) + col) * NUM_VER_POINT + 9 + (side * 12)] = (row - (100.0 / 2.0)) / 1.0;
-	   } else if (side == 1) {
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + (side * 12)] = (row - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 3 + (side * 12)] = (row - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 6 + (side * 12)] = (row - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 9 + (side * 12)] = (row - (100.0 / 2.0)) / 1.0;
-	   } else if (side == 3) {
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + (side * 12)] = ((row + 1) - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 3 + (side * 12)] = ((row + 1) - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 6 + (side * 12)] = ((row + 1) - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 9 + (side * 12)] = ((row + 1) - (100.0 / 2.0)) / 1.0;
-	   }
+      // Eje X
+      if (side == 2 || side == 4) {
+         vertexFloor[NUM_VER] = (row - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 3] = ((row + 1) - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 6] = ((row + 1) - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 9] = (row - (100.0 / 2.0)) / 1.0;
+      } else if (side == 1) {
+         vertexFloor[NUM_VER] = (row - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 3] = (row - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 6] = (row - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 9] = (row - (100.0 / 2.0)) / 1.0;
+      } else if (side == 3) {
+         vertexFloor[NUM_VER] = ((row + 1) - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 3] = ((row + 1) - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 6] = ((row + 1) - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 9] = ((row + 1) - (100.0 / 2.0)) / 1.0;
+      }
 
-	   // Eje Y
-	   if (side == 1 || side == 3) {
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 1 + (side * 12)] = height;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 4 + (side * 12)] = heightDown;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 7 + (side * 12)] = heightDown;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 10 + (side * 12)] = height;
-	   } else if (side == 2) {
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 1 + (side * 12)] = heightDown;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 4 + (side * 12)] = heightDown;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 7 + (side * 12)] = height;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 10 + (side * 12)] = height;
-	   } else if (side == 4) {
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 1 + (side * 12)] = height;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 4 + (side * 12)] = height;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 7 + (side * 12)] = heightDown;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 10 + (side * 12)] = heightDown;
-	   }
+      // Eje Y
+      if (side == 1 || side == 3) {
+         vertexFloor[NUM_VER + 1] = height;
+         vertexFloor[NUM_VER + 4] = heightDown;
+         vertexFloor[NUM_VER + 7] = heightDown;
+         vertexFloor[NUM_VER + 10] = height;
+      } else if (side == 2) {
+         vertexFloor[NUM_VER + 1] = heightDown;
+         vertexFloor[NUM_VER + 4] = heightDown;
+         vertexFloor[NUM_VER + 7] = height;
+         vertexFloor[NUM_VER + 10] = height;
+      } else if (side == 4) {
+         vertexFloor[NUM_VER + 1] = height;
+         vertexFloor[NUM_VER + 4] = height;
+         vertexFloor[NUM_VER + 7] = heightDown;
+         vertexFloor[NUM_VER + 10] = heightDown;
+      }
 
-	   // Eje Z
-	   if (side == 3) {
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 2 + (side * 12)] = (col - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 5 + (side * 12)] = (col - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 8 + (side * 12)] = ((col + 1) - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 11 + (side * 12)] = ((col + 1) - (100.0 / 2.0)) / 1.0;
-	   }  else if (side == 1) {
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 2 + (side * 12)] = ((col + 1) - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 5 + (side * 12)] = ((col + 1) - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 8 + (side * 12)] = (col - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 11 + (side * 12)] = (col - (100.0 / 2.0)) / 1.0;
-	   } else if (side == 2) {
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 2 + (side * 12)] = (col - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 5 + (side * 12)] = (col - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 8 + (side * 12)] = (col - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 11 + (side * 12)] = (col - (100.0 / 2.0)) / 1.0;
-	   } else if (side == 4) {
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 2 + (side * 12)] = ((col + 1) - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 5 + (side * 12)] = ((col + 1) - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 8 + (side * 12)] = ((col + 1) - (100.0 / 2.0)) / 1.0;
-			vertexFloor[((row * 100) + col) * NUM_VER_POINT + 11 + (side * 12)] = ((col + 1) - (100.0 / 2.0)) / 1.0;
-	   }
+      // Eje Z
+      if (side == 3) {
+         vertexFloor[NUM_VER + 2] = (col - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 5] = (col - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 8] = ((col + 1) - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 11] = ((col + 1) - (100.0 / 2.0)) / 1.0;
+      }  else if (side == 1) {
+         vertexFloor[NUM_VER + 2] = ((col + 1) - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 5] = ((col + 1) - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 8] = (col - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 11] = (col - (100.0 / 2.0)) / 1.0;
+      } else if (side == 2) {
+         vertexFloor[NUM_VER + 2] = (col - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 5] = (col - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 8] = (col - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 11] = (col - (100.0 / 2.0)) / 1.0;
+      } else if (side == 4) {
+         vertexFloor[NUM_VER + 2] = ((col + 1) - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 5] = ((col + 1) - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 8] = ((col + 1) - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 11] = ((col + 1) - (100.0 / 2.0)) / 1.0;
+      }
 
-		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + (side * 12)] = color[0] / 2;
-		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 1 + (side * 12)] = color[1] / 2;
-		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 2 + (side * 12)] = color[2] / 2;
+      vertexFloorColor[NUM_VER] = color[0] / 2;
+      vertexFloorColor[NUM_VER + 1] = color[1] / 2;
+      vertexFloorColor[NUM_VER + 2] = color[2] / 2;
 
-		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 3 + (side * 12)] = color[0] / 2;
-		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 4 + (side * 12)] = color[1] / 2;
-		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 5 + (side * 12)] = color[2] / 2;
+      vertexFloorColor[NUM_VER + 3] = color[0] / 2;
+      vertexFloorColor[NUM_VER + 4] = color[1] / 2;
+      vertexFloorColor[NUM_VER + 5] = color[2] / 2;
 
-		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 6 + (side * 12)] = color[0] / 2;
-		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 7 + (side * 12)] = color[1] / 2;
-		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 8 + (side * 12)] = color[2] / 2;
+      vertexFloorColor[NUM_VER + 6] = color[0] / 2;
+      vertexFloorColor[NUM_VER + 7] = color[1] / 2;
+      vertexFloorColor[NUM_VER + 8] = color[2] / 2;
 
-		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 9 + (side * 12)] = color[0] / 2;
-		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 10 + (side * 12)] = color[1] / 2;
-		vertexFloorColor[((row * 100) + col) * NUM_VER_POINT + 11 + (side * 12)] = color[2] / 2;
+      vertexFloorColor[NUM_VER + 9] = color[0] / 2;
+      vertexFloorColor[NUM_VER + 10] = color[1] / 2;
+      vertexFloorColor[NUM_VER + 11] = color[2] / 2;
 
-
+      const_cast<Scene*> (refScene_)->setNumberVertex((NUM_VER / 3) + 4);
+      const_cast<Scene*> (refScene_)->setNumberQuadsFloor(NUM_QUADS + 1);
    }
 }
 
@@ -458,8 +465,8 @@ float* Scenographer::getcolor(BYTE value) {
 }
 
 void Scenographer::logAction(int index) {
-	if (BASIC_LOG) {
-		switch (index) {
+   if (BASIC_LOG) {
+      switch (index) {
 		case LOG_INIT:
 			std::cout
 					<< "------Generado el gestor Scenographer para la vista Interfaz "
@@ -472,10 +479,10 @@ void Scenographer::logAction(int index) {
 			break;
 		default:
 			break;
-		}
-	}
-	if (ADVAN_LOG) {
-		switch (index) {
+      }
+   }
+   if (ADVAN_LOG) {
+      switch (index) {
 		case LOG_INIT:
 			const_cast<Interface*>(refInterface_)
 				->log("------Generado el gestor Scenographer para la vista Interfaz ");
@@ -486,8 +493,8 @@ void Scenographer::logAction(int index) {
 			break;
 		default:
 			break;
-		}
-	}
+      }
+   }
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

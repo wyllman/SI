@@ -74,12 +74,15 @@ enum {
    MASK_RESOURCE = 0x38	// bits 4-6 (0x8-0x20)
 };
 
-enum Movement {
+enum Direction {
    NORTH = 0,
-   SOUTH = 1,
-   EAST = 2,
-   WEST = 3
+   SOUTH,
+   EAST,
+   WEST,
+   NEAST,
+   NWEST,
+   SEAST,
+   SWEST
 };
-
 
 #endif /* TOOLS_H_ */

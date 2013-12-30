@@ -8,11 +8,9 @@
 #include <model/bdi/Desire.h>
 
 Desire::Desire() {
-	// TODO Auto-generated constructor stub
 
 }
 
 Desire::~Desire() {
-	// TODO Auto-generated destructor stub
 }
 

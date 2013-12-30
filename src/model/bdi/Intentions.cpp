@@ -8,11 +8,9 @@
 #include <model/bdi/Intentions.h>
 
 Intentions::Intentions() {
-	// TODO Auto-generated constructor stub
 
 }
 
 Intentions::~Intentions() {
-	// TODO Auto-generated destructor stub
 }
 

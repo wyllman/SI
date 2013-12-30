@@ -8,11 +8,9 @@
 #include <model/agents/BuildAgent.h>
 
 BuildAgent::BuildAgent() {
-	// TODO Auto-generated constructor stub
 
 }
 
 BuildAgent::~BuildAgent() {
-	// TODO Auto-generated destructor stub
 }
 

@@ -11,12 +11,10 @@
 #include <model/bdi/Intentions.h>
 
 Agent::Agent() {
-	// TODO Auto-generated constructor stub
 
 }
 
 Agent::~Agent() {
-	// TODO Auto-generated destructor stub
 }
 
 bool Agent::move(Movement theMovement) {

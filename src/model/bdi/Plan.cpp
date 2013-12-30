@@ -8,11 +8,9 @@
 #include <model/bdi/Plan.h>
 
 Plan::Plan() {
-	// TODO Auto-generated constructor stub
 
 }
 
 Plan::~Plan() {
-	// TODO Auto-generated destructor stub
 }
 

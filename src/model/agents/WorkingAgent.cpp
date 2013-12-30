@@ -8,11 +8,9 @@
 #include <model/agents/WorkingAgent.h>
 
 WorkingAgent::WorkingAgent() {
-	// TODO Auto-generated constructor stub
 
 }
 
 WorkingAgent::~WorkingAgent() {
-	// TODO Auto-generated destructor stub
 }
 

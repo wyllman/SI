@@ -8,11 +8,9 @@
 #include <model/bdi/Belief.h>
 
 Belief::Belief() {
-	// TODO Auto-generated constructor stub
 
 }
 
 Belief::~Belief() {
-	// TODO Auto-generated destructor stub
 }
 

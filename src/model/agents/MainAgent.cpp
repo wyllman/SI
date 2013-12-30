@@ -8,11 +8,9 @@
 #include <model/agents/MainAgent.h>
 
 MainAgent::MainAgent() {
-	// TODO Auto-generated constructor stub
 
 }
 
 MainAgent::~MainAgent() {
-	// TODO Auto-generated destructor stub
 }
 

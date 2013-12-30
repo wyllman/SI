@@ -18,13 +18,11 @@
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
-Controller::Controller() {
-   refView_ = NULL;
-   refModel_ = NULL;
+Controller::Controller() :
+	refView_(NULL), refModel_(NULL) {
 }
 
 Controller::~Controller() {
-   // TODO Auto-generated destructor stub
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------

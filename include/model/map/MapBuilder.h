@@ -25,8 +25,19 @@ private:
 	void generateMap();
 	void generateElevation();
 	void generateResources();
-	void generateVein(BYTE, Point);
-	void generateDeposit(BYTE, Point);
+	/**
+	 * @fn generateResourceType(BYTE, Point)
+	 * @brief Genera recursos del tipo deposit
+	 * 
+	 * @param byte El tipo de recurso segun el enum bla.
+	 * @param point El punto desde donde se empieza a generar el recurso.
+	 * 
+	 * Genera un recurso del typo @byte distribuido aleatoriamente a partir
+	 * del punto @point.
+	 * Se recorren  los puntos en la distancia manhattan alrededor de @point
+	 * y se comprueban con \f$|\sqrt{(x_0+d)^{2}+(y_0+d)^{2}}-\sqrt{x_0^{2}+y_0^{2}}|<=d\f$
+	 */
+	void generateResourceType(BYTE, Point);
 	const int* splitArray(const char*);
 public:
 	/**

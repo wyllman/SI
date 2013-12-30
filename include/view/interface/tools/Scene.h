@@ -51,9 +51,9 @@ class Scene {
       const Interface* refInterface_;
       GLfloat modelviewMatrix_[16];
       GLfloat projectionMatrix_[16];
-      int numberVertex_;
+      int numberVertex_;  // Número de vertices a pintar.
 
-      int numberQuadsFloor_;
+      int numberQuadsFloor_; // Número de Quads creados al construir el terreno.
       float* vertexFloor_;
       float* vertexFloorColor_;
 

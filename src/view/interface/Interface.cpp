@@ -156,7 +156,8 @@ void Interface::render() {
    glEnableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"));
 
    glDrawArrays(GL_QUADS, 0, NUM_QUADS_FLOOR * 4);
-   glDrawArrays(GL_TRIANGLES, NUM_QUADS_FLOOR * 4, (12 * 2));
+   glDrawArrays(GL_TRIANGLES, NUM_QUADS_FLOOR * 4, (12 * 2) + 12);
+   glDrawArrays(GL_QUADS, (NUM_QUADS_FLOOR * 4) + (12 * 3), (4 * 5));
 
    glDisableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "coord3d"));
    glDisableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"));

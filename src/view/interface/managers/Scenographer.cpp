@@ -222,6 +222,8 @@ void Scenographer::updateObjects() {
    float* vertexColor = const_cast<float*>(const_cast<Scene*>(refScene_)
                            ->getVertexFloorColor());
    createMainAgent(50, 50, 0.1, vertexPos, vertexColor);
+   createSearchAgent(51, 51, 0.01, vertexPos, vertexColor);
+   createWorkingAgent(49, 49, 0.01, vertexPos, vertexColor);
 }
 
 // ---Crear:
@@ -399,115 +401,115 @@ void Scenographer::createMainAgent(int row, int col, float height, float* vertex
    // Triangulo 1 (Inf.)
    // ---Eje X
    vertexPos[(NUM_QUADS * 4 * 3)] = centralPosX;
-   vertexPos[(NUM_QUADS * 4 * 3) + 3] = centralPosX + 1;
-   vertexPos[(NUM_QUADS * 4 * 3) + 6] = centralPosX - 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 3] = centralPosX + (1 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 6] = centralPosX - (1 * MAIN_AGENT_SCALE);
    // ---Eje Y
    vertexPos[(NUM_QUADS * 4 * 3) + 1] = centralPosY;
-   vertexPos[(NUM_QUADS * 4 * 3) + 4] = centralPosY + 3;
-   vertexPos[(NUM_QUADS * 4 * 3) + 7] = centralPosY + 3;
+   vertexPos[(NUM_QUADS * 4 * 3) + 4] = centralPosY + (3 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 7] = centralPosY + (3 * MAIN_AGENT_SCALE);
    // ---Eje Z
    vertexPos[(NUM_QUADS * 4 * 3) + 2] = centralPosZ;
-   vertexPos[(NUM_QUADS * 4 * 3) + 5] = centralPosZ - 1;
-   vertexPos[(NUM_QUADS * 4 * 3) + 8] = centralPosZ - 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 5] = centralPosZ - (1 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 8] = centralPosZ - (1 * MAIN_AGENT_SCALE);
 
    // Triangulo 2
    // ---Eje X
    vertexPos[(NUM_QUADS * 4 * 3) + 9] = centralPosX;
-   vertexPos[(NUM_QUADS * 4 * 3) + 12] = centralPosX + 1;
-   vertexPos[(NUM_QUADS * 4 * 3) + 15] = centralPosX + 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 12] = centralPosX + (1 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 15] = centralPosX + (1 * MAIN_AGENT_SCALE);
    // ---Eje Y
    vertexPos[(NUM_QUADS * 4 * 3) + 10] = centralPosY;
-   vertexPos[(NUM_QUADS * 4 * 3) + 13] = centralPosY + 3;
-   vertexPos[(NUM_QUADS * 4 * 3) + 16] = centralPosY + 3;
+   vertexPos[(NUM_QUADS * 4 * 3) + 13] = centralPosY + (3 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 16] = centralPosY + (3 * MAIN_AGENT_SCALE);
    // ---Eje Z
    vertexPos[(NUM_QUADS * 4 * 3) + 11] = centralPosZ;
-   vertexPos[(NUM_QUADS * 4 * 3) + 14] = centralPosZ + 1;
-   vertexPos[(NUM_QUADS * 4 * 3) + 17] = centralPosZ - 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 14] = centralPosZ + (1 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 17] = centralPosZ - (1 * MAIN_AGENT_SCALE);
 
    // Triangulo 3
    // ---Eje X
    vertexPos[(NUM_QUADS * 4 * 3) + 18] = centralPosX;
-   vertexPos[(NUM_QUADS * 4 * 3) + 21] = centralPosX - 1;
-   vertexPos[(NUM_QUADS * 4 * 3) + 24] = centralPosX + 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 21] = centralPosX - (1 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 24] = centralPosX + (1 * MAIN_AGENT_SCALE);
    // ---Eje Y
    vertexPos[(NUM_QUADS * 4 * 3) + 19] = centralPosY;
-   vertexPos[(NUM_QUADS * 4 * 3) + 22] = centralPosY + 3;
-   vertexPos[(NUM_QUADS * 4 * 3) + 25] = centralPosY + 3;
+   vertexPos[(NUM_QUADS * 4 * 3) + 22] = centralPosY + (3 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 25] = centralPosY + (3 * MAIN_AGENT_SCALE);
    // ---Eje Z
    vertexPos[(NUM_QUADS * 4 * 3) + 20] = centralPosZ;
-   vertexPos[(NUM_QUADS * 4 * 3) + 23] = centralPosZ + 1;
-   vertexPos[(NUM_QUADS * 4 * 3) + 26] = centralPosZ + 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 23] = centralPosZ + (1 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 26] = centralPosZ + (1 * MAIN_AGENT_SCALE);
 
    // Triangulo 4
    // ---Eje X
    vertexPos[(NUM_QUADS * 4 * 3) + 27] = centralPosX;
-   vertexPos[(NUM_QUADS * 4 * 3) + 30] = centralPosX - 1;
-   vertexPos[(NUM_QUADS * 4 * 3) + 33] = centralPosX - 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 30] = centralPosX - (1 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 33] = centralPosX - (1 * MAIN_AGENT_SCALE);
    // ---Eje Y
    vertexPos[(NUM_QUADS * 4 * 3) + 28] = centralPosY;
-   vertexPos[(NUM_QUADS * 4 * 3) + 31] = centralPosY + 3;
-   vertexPos[(NUM_QUADS * 4 * 3) + 34] = centralPosY + 3;
+   vertexPos[(NUM_QUADS * 4 * 3) + 31] = centralPosY + (3 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 34] = centralPosY + (3 * MAIN_AGENT_SCALE);
    // ---Eje Z
    vertexPos[(NUM_QUADS * 4 * 3) + 29] = centralPosZ;
-   vertexPos[(NUM_QUADS * 4 * 3) + 32] = centralPosZ - 1;
-   vertexPos[(NUM_QUADS * 4 * 3) + 35] = centralPosZ + 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 32] = centralPosZ - (1 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 35] = centralPosZ + (1 * MAIN_AGENT_SCALE);
 
    //-----------------
    // Triangulo 1 (Sup.)
    // ---Eje X
    vertexPos[(NUM_QUADS * 4 * 3) + 36] = centralPosX;
-   vertexPos[(NUM_QUADS * 4 * 3) + 3 + 36] = centralPosX - 1;
-   vertexPos[(NUM_QUADS * 4 * 3) + 6 + 36] = centralPosX + 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 3 + 36] = centralPosX - (1 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 6 + 36] = centralPosX + (1 * MAIN_AGENT_SCALE);
    // ---Eje Y
-   vertexPos[(NUM_QUADS * 4 * 3) + 1 + 36] = centralPosY + 6;
-   vertexPos[(NUM_QUADS * 4 * 3) + 4 + 36] = centralPosY + 3;
-   vertexPos[(NUM_QUADS * 4 * 3) + 7 + 36] = centralPosY + 3;
+   vertexPos[(NUM_QUADS * 4 * 3) + 1 + 36] = centralPosY + (6 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 4 + 36] = centralPosY + (3 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 7 + 36] = centralPosY + (3 * MAIN_AGENT_SCALE);
    // ---Eje Z
    vertexPos[(NUM_QUADS * 4 * 3) + 2 + 36] = centralPosZ;
-   vertexPos[(NUM_QUADS * 4 * 3) + 5 + 36] = centralPosZ - 1;
-   vertexPos[(NUM_QUADS * 4 * 3) + 8 + 36] = centralPosZ - 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 5 + 36] = centralPosZ - (1 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 8 + 36] = centralPosZ - (1 * MAIN_AGENT_SCALE);
 
    // Triangulo 2 (Sup.)
    // ---Eje X
    vertexPos[(NUM_QUADS * 4 * 3) + 9 + 36] = centralPosX;
-   vertexPos[(NUM_QUADS * 4 * 3) + 12 + 36] = centralPosX + 1;
-   vertexPos[(NUM_QUADS * 4 * 3) + 15 + 36] = centralPosX + 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 12 + 36] = centralPosX + (1 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 15 + 36] = centralPosX + (1 * MAIN_AGENT_SCALE);
    // ---Eje Y
-   vertexPos[(NUM_QUADS * 4 * 3) + 10 + 36] = centralPosY + 6;
-   vertexPos[(NUM_QUADS * 4 * 3) + 13 + 36] = centralPosY + 3;
-   vertexPos[(NUM_QUADS * 4 * 3) + 16 + 36] = centralPosY + 3;
+   vertexPos[(NUM_QUADS * 4 * 3) + 10 + 36] = centralPosY + (6 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 13 + 36] = centralPosY + (3 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 16 + 36] = centralPosY + (3 * MAIN_AGENT_SCALE);
    // ---Eje Z
    vertexPos[(NUM_QUADS * 4 * 3) + 11 + 36] = centralPosZ;
-   vertexPos[(NUM_QUADS * 4 * 3) + 14 + 36] = centralPosZ - 1;
-   vertexPos[(NUM_QUADS * 4 * 3) + 17 + 36] = centralPosZ + 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 14 + 36] = centralPosZ - (1 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 17 + 36] = centralPosZ + (1 * MAIN_AGENT_SCALE);
 
    // Triangulo 3 (Sup.)
    // ---Eje X
    vertexPos[(NUM_QUADS * 4 * 3) + 18 + 36] = centralPosX;
-   vertexPos[(NUM_QUADS * 4 * 3) + 21 + 36] = centralPosX + 1;
-   vertexPos[(NUM_QUADS * 4 * 3) + 24 + 36] = centralPosX - 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 21 + 36] = centralPosX + (1 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 24 + 36] = centralPosX - (1 * MAIN_AGENT_SCALE);
    // ---Eje Y
-   vertexPos[(NUM_QUADS * 4 * 3) + 19 + 36] = centralPosY + 6;
-   vertexPos[(NUM_QUADS * 4 * 3) + 22 + 36] = centralPosY + 3;
-   vertexPos[(NUM_QUADS * 4 * 3) + 25 + 36] = centralPosY + 3;
+   vertexPos[(NUM_QUADS * 4 * 3) + 19 + 36] = centralPosY + (6 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 22 + 36] = centralPosY + (3 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 25 + 36] = centralPosY + (3 * MAIN_AGENT_SCALE);
    // ---Eje Z
    vertexPos[(NUM_QUADS * 4 * 3) + 20 + 36] = centralPosZ;
-   vertexPos[(NUM_QUADS * 4 * 3) + 23 + 36] = centralPosZ + 1;
-   vertexPos[(NUM_QUADS * 4 * 3) + 26 + 36] = centralPosZ + 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 23 + 36] = centralPosZ + (1 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 26 + 36] = centralPosZ + (1 * MAIN_AGENT_SCALE);
 
    // Triangulo 4 (Sup.)
    // ---Eje X
    vertexPos[(NUM_QUADS * 4 * 3) + 27 + 36] = centralPosX;
-   vertexPos[(NUM_QUADS * 4 * 3) + 30 + 36] = centralPosX - 1;
-   vertexPos[(NUM_QUADS * 4 * 3) + 33 + 36] = centralPosX - 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 30 + 36] = centralPosX - (1 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 33 + 36] = centralPosX - (1 * MAIN_AGENT_SCALE);
    // ---Eje Y
-   vertexPos[(NUM_QUADS * 4 * 3) + 28 + 36] = centralPosY + 6;
-   vertexPos[(NUM_QUADS * 4 * 3) + 31 + 36] = centralPosY + 3;
-   vertexPos[(NUM_QUADS * 4 * 3) + 34 + 36] = centralPosY + 3;
+   vertexPos[(NUM_QUADS * 4 * 3) + 28 + 36] = centralPosY + (6 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 31 + 36] = centralPosY + (3 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 34 + 36] = centralPosY + (3 * MAIN_AGENT_SCALE);
    // ---Eje Z
    vertexPos[(NUM_QUADS * 4 * 3) + 29 + 36] = centralPosZ;
-   vertexPos[(NUM_QUADS * 4 * 3) + 32 + 36] = centralPosZ + 1;
-   vertexPos[(NUM_QUADS * 4 * 3) + 35 + 36] = centralPosZ - 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 32 + 36] = centralPosZ + (1 * MAIN_AGENT_SCALE);
+   vertexPos[(NUM_QUADS * 4 * 3) + 35 + 36] = centralPosZ - (1 * MAIN_AGENT_SCALE);
 
 
    // Colores de los vértices RGB (Inf.)
@@ -611,7 +613,308 @@ void Scenographer::createMainAgent(int row, int col, float height, float* vertex
 
    const_cast<Scene*> (refScene_)->setNumberVertex(NUM_VER + (12 * 2));
 }
+void Scenographer::createSearchAgent(int row, int col, float height,
+      float* vertexPos, float* vertexColor) {
+   const int NUM_VER = (const_cast<Scene*> (refScene_)->getNumberVertex());
+   const int NUM_QUADS = (const_cast<Scene*> (refScene_)->getNumberQuadsFloor()) * 4 * 3;
+   const int NUM_VER_MAIN = 24 *  3;
+   float centralPosX = ((row - (MAP_HEIGHT / 2.0)) * MAP_SCALE) + (MAP_SCALE / 2.0);
+   float centralPosY = height * MAP_UP_SCALE;
+   float centralPosZ = ((col - (MAP_WIDTH / 2.0)) * MAP_SCALE) + (MAP_SCALE / 2.0);
 
+   //-----------------
+   // Triangulo 1 (Sup.)
+   // ---Eje X
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN)] = centralPosX;
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 3] = centralPosX - (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 6] = centralPosX + (1 * SECOND_AGENT_SCALE);
+   // ---Eje Y
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 1] = centralPosY + (2 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 4] = centralPosY;
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 7] = centralPosY;
+   // ---Eje Z
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 2] = centralPosZ;
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 5] = centralPosZ - (1  * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 8] = centralPosZ - (1 * SECOND_AGENT_SCALE);
+
+   // Triangulo 2 (Sup.)
+   // ---Eje X
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 9] = centralPosX;
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 12] = centralPosX + (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 15] = centralPosX + (1 * SECOND_AGENT_SCALE);
+   // ---Eje Y
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 10] = centralPosY + (2 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 13] = centralPosY;
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 16] = centralPosY;
+   // ---Eje Z
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 11] = centralPosZ;
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 14] = centralPosZ - (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 17] = centralPosZ + (1 * SECOND_AGENT_SCALE);
+
+   // Triangulo 3 (Sup.)
+   // ---Eje X
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 18] = centralPosX;
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 21] = centralPosX + (1  * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 24] = centralPosX - (1  * SECOND_AGENT_SCALE);
+   // ---Eje Y
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 19] = centralPosY + (2 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 22] = centralPosY;
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 25] = centralPosY;
+   // ---Eje Z
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 20] = centralPosZ;
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 23] = centralPosZ + (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 26] = centralPosZ + (1 * SECOND_AGENT_SCALE);
+
+   // Triangulo 4 (Sup.)
+   // ---Eje X
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 27] = centralPosX;
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 30] = centralPosX - (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 33] = centralPosX - (1 * SECOND_AGENT_SCALE);
+   // ---Eje Y
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 28] = centralPosY + (2 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 31] = centralPosY;
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 34] = centralPosY;
+   // ---Eje Z
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 29] = centralPosZ;
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 32] = centralPosZ + (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN) + 35] = centralPosZ - (1 * SECOND_AGENT_SCALE);
+
+   // Colores de los vértices RGB (Inf.)
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN)] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 1] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 2] = 1;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 3] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 4] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 5] = 0;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 6] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 7] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 8] = 0;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 9] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 10] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 11] = 1;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 12] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 13] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 14] = 0;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 15] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 16] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 17] = 0;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 18] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 19] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 20] = 1;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 21] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 22] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 23] = 0;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 24] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 25] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 26] = 0;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 27] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 28] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 29] = 1;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 30] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 31] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 32] = 0;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 33] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 34] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN) + 35] = 0;
+
+   const_cast<Scene*> (refScene_)->setNumberVertex(NUM_VER + 12);
+
+}
+void Scenographer::createWorkingAgent(int row, int col, float height,
+      float* vertexPos, float* vertexColor) {
+   const int NUM_VER = (const_cast<Scene*> (refScene_)->getNumberVertex());
+   const int NUM_QUADS = (const_cast<Scene*> (refScene_)->getNumberQuadsFloor()) * 4 * 3;
+   const int NUM_VER_MAIN_SEARCH = (24 * 3) + (12 * 3);
+   float centralPosX = ((row - (MAP_HEIGHT / 2.0)) * MAP_SCALE) + (MAP_SCALE / 2.0);
+   float centralPosY = height * MAP_UP_SCALE;
+   float centralPosZ = ((col - (MAP_WIDTH / 2.0)) * MAP_SCALE) + (MAP_SCALE / 2.0);
+
+   //-----------------
+   // Cuadrado 0 (Sup.)
+   // ---Eje X
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH)] = centralPosX + (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 3] = centralPosX - (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 6] = centralPosX - (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 9] = centralPosX + (1 * SECOND_AGENT_SCALE);
+   // ---Eje Y
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 1] = centralPosY + (2 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 4] = centralPosY + (2 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 7] = centralPosY + (2 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 10] = centralPosY + (2 * SECOND_AGENT_SCALE);
+   // ---Eje Z
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 2] = centralPosZ + (1  * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 5] = centralPosZ + (1  * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 8] = centralPosZ - (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 11] = centralPosZ - (1  * SECOND_AGENT_SCALE);
+
+
+   // Cuadrado 1 (Oeste)
+   // ---Eje X
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 12] = centralPosX - (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 15] = centralPosX - (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 18] = centralPosX - (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 21] = centralPosX - (1 * SECOND_AGENT_SCALE);
+   // ---Eje Y
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 13] = centralPosY + (2 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 16] = centralPosY + (2 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 19] = centralPosY;
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 22] = centralPosY;
+   // ---Eje Z
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 14] = centralPosZ - (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 17] = centralPosZ + (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 20] = centralPosZ + (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 23] = centralPosZ - (1 * SECOND_AGENT_SCALE);
+
+   // Cuadrado 2 (Norte)
+   // ---Eje X
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 24] = centralPosX + (1  * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 27] = centralPosX - (1  * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 30] = centralPosX - (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 33] = centralPosX + (1 * SECOND_AGENT_SCALE);
+   // ---Eje Y
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 25] = centralPosY + (2 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 28] = centralPosY + (2 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 31] = centralPosY;
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 34] = centralPosY;
+   // ---Eje Z
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 26] = centralPosZ - (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 29] = centralPosZ - (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 32] = centralPosZ - (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 35] = centralPosZ - (1 * SECOND_AGENT_SCALE);
+
+   // Cuadrado 3 (Este)
+   // ---Eje X
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 36] = centralPosX + (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 39] = centralPosX + (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 42] = centralPosX + (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 45] = centralPosX + (1 * SECOND_AGENT_SCALE);
+   // ---Eje Y
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 37] = centralPosY + (2 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 40] = centralPosY + (2 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 43] = centralPosY;
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 46] = centralPosY;
+   // ---Eje Z
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 38] = centralPosZ + (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 41] = centralPosZ - (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 44] = centralPosZ - (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 47] = centralPosZ + (1 * SECOND_AGENT_SCALE);
+
+   // Cuadrado 4 (Sur)
+   // ---Eje X
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 48] = centralPosX - (1  * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 51] = centralPosX + (1  * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 54] = centralPosX + (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 57] = centralPosX - (1 * SECOND_AGENT_SCALE);
+   // ---Eje Y
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 49] = centralPosY + (2 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 52] = centralPosY + (2 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 55] = centralPosY;
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 58] = centralPosY;
+   // ---Eje Z
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 50] = centralPosZ + (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 53] = centralPosZ + (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 56] = centralPosZ + (1 * SECOND_AGENT_SCALE);
+   vertexPos[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 59] = centralPosZ + (1 * SECOND_AGENT_SCALE);
+
+   // Colores de los vértices RGB
+   // Cuadrado 0 (Sup.)
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH)] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 1] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 2] = 1;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 3] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 4] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 5] = 1;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 6] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 7] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 8] = 1;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 9] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 10] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 11] = 1;
+
+   // Cuadrado 1 (Oeste)
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 12] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 13] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 14] = 1;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 15] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 16] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 17] = 1;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 18] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 19] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 20] = 0;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 21] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 22] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 23] = 0;
+
+   // Cuadrado 2 (Norte)
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 24] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 25] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 26] = 1;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 27] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 28] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 29] = 1;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 30] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 31] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 32] = 0;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 33] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 34] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 35] = 0;
+
+   // Cuadrado 3 (Este)
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 36] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 37] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 38] = 1;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 39] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 40] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 41] = 1;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 42] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 43] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 44] = 0;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 45] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 46] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 47] = 0;
+
+   // Cuadrado 4 (Sur)
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 48] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 49] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 50] = 1;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 51] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 52] = 1;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 53] = 1;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 54] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 55] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 56] = 0;
+
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 57] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 58] = 0;
+   vertexColor[(NUM_QUADS + NUM_VER_MAIN_SEARCH) + 59] = 0;
+
+   const_cast<Scene*> (refScene_)->setNumberVertex(NUM_VER + (4 * 5));
+}
 // ---Comprobar:
 bool Scenographer::checkHeightNorth(int row, int col) {
    bool result = false;

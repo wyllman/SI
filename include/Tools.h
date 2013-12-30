@@ -36,6 +36,9 @@ const int MAP_WIDTH = 100;
 const int MAP_HEIGHT = 100;
 const float MAP_SCALE = 1;
 const float MAP_UP_SCALE = 2.5;
+//   Agentes:
+const float MAIN_AGENT_SCALE = 1;
+const float SECOND_AGENT_SCALE = 0.5;
 
 // Conjunto de constantes auxiliares para la integración del sistema
 // de seguimiento

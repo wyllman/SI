@@ -65,6 +65,8 @@ class Scenographer {
       // Funciones para la creación de los lados de cada uno de los objetos de la
       // escena
       void createMainAgent (int row, int col, float height, float* vertexPos, float* vertexColor);
+      void createSearchAgent (int row, int col, float height, float* vertexPos, float* vertexColor);
+      void createWorkingAgent (int row, int col, float height, float* vertexPos, float* vertexColor);
 
       // Funciones para las comprobaciones de alturas, de terreno, en la eliminación
       // de quads internos.

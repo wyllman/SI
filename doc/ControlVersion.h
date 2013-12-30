@@ -69,5 +69,10 @@
  *              - Reorganizada la ejecución de las llamadas en PreColonia.cpp (la llamada a la
  *                función stop() de la vista y el modelo se realiza desde la función stop() de
  *                la clase controlador).
+ *              - Cambiado el movimiento de la cámara en el eje X por uno de rotación alrededor
+ *                del punto central del mapa.
+ *              - Eliminados los Quads interiores de la representación gráfica del terreno.
+ *              - Refactorización para la mejora del uso de los buffer de vertices y colores.
+ *              - Representación gráfica del agente principal creada.
  */
 

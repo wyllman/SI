@@ -123,6 +123,7 @@ const Scenographer* Interface::getScenographer() const {
 // Métodos privados:
 void Interface::render() {
    const int NUM_VER = scene_->getNumberVertex();
+   const int NUM_QUADS_FLOOR = scene_->getNumberQuadsFloor();
    // Clear the background as white
    glClearColor(1.0, 1.0, 0.9, 1.0);
    glClearDepth( 1.0f );
@@ -154,7 +155,8 @@ void Interface::render() {
    glEnableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "coord3d"));
    glEnableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"));
 
-   glDrawArrays(GL_QUADS, 0, NUM_VER);
+   glDrawArrays(GL_QUADS, 0, NUM_QUADS_FLOOR * 4);
+   glDrawArrays(GL_TRIANGLES, NUM_QUADS_FLOOR * 4, (12 * 2));
 
    glDisableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "coord3d"));
    glDisableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"));

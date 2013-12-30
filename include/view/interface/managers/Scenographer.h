@@ -50,18 +50,30 @@ class Scenographer {
       void initProy (float, float, int, int);
       void initCam (float [3], float [3], float [3]);
       void initFloor ();
+      void initObjects ();
 
       void updateProy ();
       void updateCam ();
       void updateFloor (int, int);
+      void updateObjects ();
+
+      // Funciones para la creación de cada uno de los diferentes tipos de quads del
+      // terreno.
       void createSideUpFloor (int, int, float, float [3], float*, float*);
       void createSideFloor (int, int, float, float [3], float*, float*, int);
 
+      // Funciones para la creación de los lados de cada uno de los objetos de la
+      // escena
+      void createMainAgent (int row, int col, float height, float* vertexPos, float* vertexColor);
+
+      // Funciones para las comprobaciones de alturas, de terreno, en la eliminación
+      // de quads internos.
       bool checkHeightNorth (int, int);
       bool checkHeightEast (int, int);
       bool checkHeightSouth (int, int);
       bool checkHeightWest (int, int);
 
+      // Funciones auxiliares para la creación del terreno.
       float getHeight(int, int);
       float getHeight(BYTE);
       float* getcolor(BYTE);

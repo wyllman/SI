@@ -55,6 +55,7 @@ void Scenographer::init() {
    initProy(45.0, WIN_WIDTH / WIN_HEIGHT, 1, 1000);
    initCam(camPos, viewPoint, vectorUp);
    initFloor();
+   initObjects();
 }
 void Scenographer::update() {
 }
@@ -81,6 +82,7 @@ void Scenographer::camRotationPos(float value) {
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Métodos privados:
+// ---Inicializar:
 void Scenographer::initProy(float ang, float ratio, int near, int far) {
    projAng_ = ang;
    projRatio_ = ratio;
@@ -107,6 +109,11 @@ void Scenographer::initCam(float camPos[3], float viewPoint[3], float vectorUp[3
 void Scenographer::initFloor() {
    updateFloor(MAP_WIDTH, MAP_HEIGHT);
 }
+void Scenographer::initObjects() {
+   updateObjects();
+}
+
+// ---Actualizar:
 void Scenographer::updateProy() {
    glMatrixMode (GL_PROJECTION);
    glLoadIdentity();
@@ -135,14 +142,18 @@ void Scenographer::updateCam() {
 void Scenographer::updateFloor(int width, int height) {
    const int NUM_VER_POINT = 3 * 4 * 5;
    float* vertexFloor = const_cast<Scene*>(refScene_)
-                           ->getVertexFloor(100 * 100 * NUM_VER_POINT);
+                           ->getVertexFloor(MAP_WIDTH * MAP_HEIGHT * NUM_VER_POINT);
    float* vertexFloorColor = const_cast<Scene*>(refScene_)
-                                ->getVertexFloorColor(100 * 100 * NUM_VER_POINT);
+                                ->getVertexFloorColor(MAP_WIDTH * MAP_HEIGHT
+                                		* NUM_VER_POINT);
    float* color = new float[3];
    color[0] = 0;
    color[1] = 0;
    color[2] = 0;
    BYTE slot;
+
+   const_cast<Scene*> (refScene_)->setNumberVertex(0);
+   const_cast<Scene*> (refScene_)->setNumberQuadsFloor(0);
 
    for (int i = 0; i < MAP_WIDTH; i++) {
       for (int j = 0; j < MAP_HEIGHT; j++) {
@@ -157,7 +168,7 @@ void Scenographer::updateFloor(int width, int height) {
 
                color[0] = 0.0;
                color[1] = 1.0;
-               color [2] = 0.0;
+               color[2] = 0.0;
 
                if (slot == TERRAIN_GROUND) {
                   createSideUpFloor(i, j, 0.0, color, vertexFloor, vertexFloorColor);
@@ -171,7 +182,7 @@ void Scenographer::updateFloor(int width, int height) {
             case TERRAIN_ELEVATION:
                color[0] = 0.0;
                color[1] = 0.5;
-               color [2] = 0.0;
+               color[2] = 0.0;
 
                createSideUpFloor(i, j, 0.5, color, vertexFloor, vertexFloorColor);
                createSideFloor(i, j, 0.5, color, vertexFloor, vertexFloorColor, 1);
@@ -182,7 +193,7 @@ void Scenographer::updateFloor(int width, int height) {
             case TERRAIN_WATER:
                color[0] = 0.0;
                color[1] = 0.0;
-               color [2] = 1.0;
+               color[2] = 1.0;
 
                createSideUpFloor(i, j, - 0.2, color, vertexFloor, vertexFloorColor);
                createSideFloor(i, j, - 0.2, color, vertexFloor, vertexFloorColor, 1);
@@ -193,7 +204,7 @@ void Scenographer::updateFloor(int width, int height) {
             default:
                color[0] = 0.0;
                color[1] = 1.0;
-               color [2] = 0.0;
+               color[2] = 0.0;
 
                createSideUpFloor(i, j, - 0.01, color, vertexFloor, vertexFloorColor);
                createSideFloor(i, j, - 0.01, color, vertexFloor, vertexFloorColor, 1);
@@ -206,28 +217,35 @@ void Scenographer::updateFloor(int width, int height) {
    }
    delete [] (color);
 }
+void Scenographer::updateObjects() {
+   float* vertexPos = const_cast<float*>(const_cast<Scene*>(refScene_)->getVertexFloor());
+   float* vertexColor = const_cast<float*>(const_cast<Scene*>(refScene_)
+                           ->getVertexFloorColor());
+   createMainAgent(50, 50, 0.1, vertexPos, vertexColor);
+}
+
+// ---Crear:
 void Scenographer::createSideUpFloor(int row, int col, float height, float color[3], float* vertexFloor, float* vertexFloorColor) {
    const int NUM_VER = (const_cast<Scene*> (refScene_)->getNumberVertex()) * 3;
    const int NUM_QUADS = const_cast<Scene*> (refScene_)->getNumberQuadsFloor();
 
    // Eje X
-//   vertexFloor[((row * 100) + col) * NUM_VER_POINT] = (row - (100.0 / 2.0)) / 1.0;
-   vertexFloor[NUM_VER] = (row - (100.0 / 2.0)) / 1.0;
-   vertexFloor[NUM_VER + 3] = ((row + 1) - (100.0 / 2.0)) / 1.0;
-   vertexFloor[NUM_VER + 6] = ((row + 1) - (100.0 / 2.0)) / 1.0;
-   vertexFloor[NUM_VER + 9] = (row - (100.0 / 2.0)) / 1.0;
+   vertexFloor[NUM_VER] = (row - (MAP_HEIGHT / 2.0)) * MAP_SCALE;
+   vertexFloor[NUM_VER + 3] = ((row + 1) - (MAP_HEIGHT / 2.0)) * MAP_SCALE;
+   vertexFloor[NUM_VER + 6] = ((row + 1) - (MAP_HEIGHT / 2.0)) * MAP_SCALE;
+   vertexFloor[NUM_VER + 9] = (row - (MAP_HEIGHT / 2.0)) * MAP_SCALE;
 
    // Eje Y
-   vertexFloor[NUM_VER + 1] = height;
-   vertexFloor[NUM_VER + 4] = height;
-   vertexFloor[NUM_VER + 7] = height;
-   vertexFloor[NUM_VER + 10] = height;
+   vertexFloor[NUM_VER + 1] = height * MAP_UP_SCALE;
+   vertexFloor[NUM_VER + 4] = height * MAP_UP_SCALE;
+   vertexFloor[NUM_VER + 7] = height * MAP_UP_SCALE;
+   vertexFloor[NUM_VER + 10] = height * MAP_UP_SCALE;
 
 	// Eje Z
-   vertexFloor[NUM_VER + 2] = (col - (100.0 / 2.0)) / 1.0;
-   vertexFloor[NUM_VER + 5] = (col - (100.0 / 2.0)) / 1.0;
-   vertexFloor[NUM_VER + 8] = ((col + 1) - (100.0 / 2.0)) / 1.0;
-   vertexFloor[NUM_VER + 11] = ((col + 1) - (100.0 / 2.0)) / 1.0;
+   vertexFloor[NUM_VER + 2] = (col - (MAP_WIDTH / 2.0)) * MAP_SCALE;
+   vertexFloor[NUM_VER + 5] = (col - (MAP_WIDTH / 2.0)) * MAP_SCALE;
+   vertexFloor[NUM_VER + 8] = ((col + 1) - (MAP_WIDTH / 2.0)) * MAP_SCALE;
+   vertexFloor[NUM_VER + 11] = ((col + 1) - (MAP_WIDTH / 2.0)) * MAP_SCALE;
 
    vertexFloorColor[NUM_VER] = color[0];
    vertexFloorColor[NUM_VER + 1] = color[1];
@@ -249,21 +267,12 @@ void Scenographer::createSideUpFloor(int row, int col, float height, float color
    const_cast<Scene*> (refScene_)->setNumberQuadsFloor(NUM_QUADS + 1);
 }
 void Scenographer::createSideFloor(int row, int col, float height, float color[3], float* vertexFloor, float* vertexFloorColor, int side) {
-   const int NUM_VER_POINT = 3 * 4 * 5;
    const int NUM_VER = (const_cast<Scene*> (refScene_)->getNumberVertex()) * 3;
    const int NUM_QUADS = const_cast<Scene*> (refScene_)->getNumberQuadsFloor();
    bool paintQuad = false;
    float heightDown = -1;
 
    switch (side) {
-      case 2:
-         if (col == 0) {
-            paintQuad = true;
-         } else if (checkHeightWest(row, col)) {
-            paintQuad = true;
-            heightDown = getHeight(row, col - 1);
-         }
-         break;
       case 1:
          if (row == 0) {
             paintQuad = true;
@@ -272,12 +281,12 @@ void Scenographer::createSideFloor(int row, int col, float height, float color[3
             heightDown = getHeight(row - 1, col);
          }
          break;
-      case 4:
-         if (col == (MAP_WIDTH - 1)) {
+      case 2:
+         if (col == 0) {
             paintQuad = true;
-         } else if (checkHeightEast(row, col)) {
+         } else if (checkHeightWest(row, col)) {
             paintQuad = true;
-            heightDown = getHeight(row, col + 1);
+            heightDown = getHeight(row, col - 1);
          }
          break;
       case 3:
@@ -288,68 +297,76 @@ void Scenographer::createSideFloor(int row, int col, float height, float color[3
             heightDown = getHeight(row + 1, col);
          }
          break;
-   default:
-      break;
+      case 4:
+         if (col == (MAP_WIDTH - 1)) {
+            paintQuad = true;
+         } else if (checkHeightEast(row, col)) {
+            paintQuad = true;
+            heightDown = getHeight(row, col + 1);
+         }
+         break;
+      default:
+         break;
    }
 
    if (paintQuad) {
       // Eje X
       if (side == 2 || side == 4) {
-         vertexFloor[NUM_VER] = (row - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 3] = ((row + 1) - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 6] = ((row + 1) - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 9] = (row - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER] = (row - (MAP_HEIGHT / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 3] = ((row + 1) - (MAP_HEIGHT / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 6] = ((row + 1) - (MAP_HEIGHT / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 9] = (row - (MAP_HEIGHT / 2.0)) * MAP_SCALE;
       } else if (side == 1) {
-         vertexFloor[NUM_VER] = (row - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 3] = (row - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 6] = (row - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 9] = (row - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER] = (row - (MAP_HEIGHT / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 3] = (row - (MAP_HEIGHT / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 6] = (row - (MAP_HEIGHT / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 9] = (row - (MAP_HEIGHT / 2.0)) * MAP_SCALE;
       } else if (side == 3) {
-         vertexFloor[NUM_VER] = ((row + 1) - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 3] = ((row + 1) - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 6] = ((row + 1) - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 9] = ((row + 1) - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER] = ((row + 1) - (MAP_HEIGHT / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 3] = ((row + 1) - (MAP_HEIGHT / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 6] = ((row + 1) - (MAP_HEIGHT / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 9] = ((row + 1) - (MAP_HEIGHT / 2.0)) * MAP_SCALE;
       }
 
       // Eje Y
       if (side == 1 || side == 3) {
-         vertexFloor[NUM_VER + 1] = height;
-         vertexFloor[NUM_VER + 4] = heightDown;
-         vertexFloor[NUM_VER + 7] = heightDown;
-         vertexFloor[NUM_VER + 10] = height;
+         vertexFloor[NUM_VER + 1] = height * MAP_UP_SCALE;
+         vertexFloor[NUM_VER + 4] = heightDown * MAP_UP_SCALE;
+         vertexFloor[NUM_VER + 7] = heightDown * MAP_UP_SCALE;
+         vertexFloor[NUM_VER + 10] = height * MAP_UP_SCALE;
       } else if (side == 2) {
-         vertexFloor[NUM_VER + 1] = heightDown;
-         vertexFloor[NUM_VER + 4] = heightDown;
-         vertexFloor[NUM_VER + 7] = height;
-         vertexFloor[NUM_VER + 10] = height;
+         vertexFloor[NUM_VER + 1] = heightDown * MAP_UP_SCALE;
+         vertexFloor[NUM_VER + 4] = heightDown * MAP_UP_SCALE;
+         vertexFloor[NUM_VER + 7] = height * MAP_UP_SCALE;
+         vertexFloor[NUM_VER + 10] = height * MAP_UP_SCALE;
       } else if (side == 4) {
-         vertexFloor[NUM_VER + 1] = height;
-         vertexFloor[NUM_VER + 4] = height;
-         vertexFloor[NUM_VER + 7] = heightDown;
-         vertexFloor[NUM_VER + 10] = heightDown;
+         vertexFloor[NUM_VER + 1] = height * MAP_UP_SCALE;
+         vertexFloor[NUM_VER + 4] = height * MAP_UP_SCALE;
+         vertexFloor[NUM_VER + 7] = heightDown * MAP_UP_SCALE;
+         vertexFloor[NUM_VER + 10] = heightDown * MAP_UP_SCALE;
       }
 
       // Eje Z
       if (side == 3) {
-         vertexFloor[NUM_VER + 2] = (col - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 5] = (col - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 8] = ((col + 1) - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 11] = ((col + 1) - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 2] = (col - (MAP_WIDTH / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 5] = (col - (MAP_WIDTH / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 8] = ((col + 1) - (MAP_WIDTH / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 11] = ((col + 1) - (MAP_WIDTH / 2.0)) * MAP_SCALE;
       }  else if (side == 1) {
-         vertexFloor[NUM_VER + 2] = ((col + 1) - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 5] = ((col + 1) - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 8] = (col - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 11] = (col - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 2] = ((col + 1) - (MAP_WIDTH / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 5] = ((col + 1) - (MAP_WIDTH / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 8] = (col - (MAP_WIDTH / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 11] = (col - (MAP_WIDTH / 2.0)) * MAP_SCALE;
       } else if (side == 2) {
-         vertexFloor[NUM_VER + 2] = (col - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 5] = (col - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 8] = (col - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 11] = (col - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 2] = (col - (MAP_WIDTH / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 5] = (col - (MAP_WIDTH / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 8] = (col - (MAP_WIDTH / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 11] = (col - (MAP_WIDTH / 2.0)) * MAP_SCALE;
       } else if (side == 4) {
-         vertexFloor[NUM_VER + 2] = ((col + 1) - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 5] = ((col + 1) - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 8] = ((col + 1) - (100.0 / 2.0)) / 1.0;
-         vertexFloor[NUM_VER + 11] = ((col + 1) - (100.0 / 2.0)) / 1.0;
+         vertexFloor[NUM_VER + 2] = ((col + 1) - (MAP_WIDTH / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 5] = ((col + 1) - (MAP_WIDTH / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 8] = ((col + 1) - (MAP_WIDTH / 2.0)) * MAP_SCALE;
+         vertexFloor[NUM_VER + 11] = ((col + 1) - (MAP_WIDTH / 2.0)) * MAP_SCALE;
       }
 
       vertexFloorColor[NUM_VER] = color[0] / 2;
@@ -372,7 +389,230 @@ void Scenographer::createSideFloor(int row, int col, float height, float color[3
       const_cast<Scene*> (refScene_)->setNumberQuadsFloor(NUM_QUADS + 1);
    }
 }
+void Scenographer::createMainAgent(int row, int col, float height, float* vertexPos,
+      float* vertexColor) {
+   const int NUM_VER = (const_cast<Scene*> (refScene_)->getNumberVertex());
+   const int NUM_QUADS = const_cast<Scene*> (refScene_)->getNumberQuadsFloor();
+   float centralPosX = ((row - (MAP_HEIGHT / 2.0)) * MAP_SCALE) + (MAP_SCALE / 2.0);
+   float centralPosY = height * MAP_UP_SCALE;
+   float centralPosZ = ((col - (MAP_WIDTH / 2.0)) * MAP_SCALE) + (MAP_SCALE / 2.0);
+   // Triangulo 1 (Inf.)
+   // ---Eje X
+   vertexPos[(NUM_QUADS * 4 * 3)] = centralPosX;
+   vertexPos[(NUM_QUADS * 4 * 3) + 3] = centralPosX + 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 6] = centralPosX - 1;
+   // ---Eje Y
+   vertexPos[(NUM_QUADS * 4 * 3) + 1] = centralPosY;
+   vertexPos[(NUM_QUADS * 4 * 3) + 4] = centralPosY + 3;
+   vertexPos[(NUM_QUADS * 4 * 3) + 7] = centralPosY + 3;
+   // ---Eje Z
+   vertexPos[(NUM_QUADS * 4 * 3) + 2] = centralPosZ;
+   vertexPos[(NUM_QUADS * 4 * 3) + 5] = centralPosZ - 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 8] = centralPosZ - 1;
 
+   // Triangulo 2
+   // ---Eje X
+   vertexPos[(NUM_QUADS * 4 * 3) + 9] = centralPosX;
+   vertexPos[(NUM_QUADS * 4 * 3) + 12] = centralPosX + 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 15] = centralPosX + 1;
+   // ---Eje Y
+   vertexPos[(NUM_QUADS * 4 * 3) + 10] = centralPosY;
+   vertexPos[(NUM_QUADS * 4 * 3) + 13] = centralPosY + 3;
+   vertexPos[(NUM_QUADS * 4 * 3) + 16] = centralPosY + 3;
+   // ---Eje Z
+   vertexPos[(NUM_QUADS * 4 * 3) + 11] = centralPosZ;
+   vertexPos[(NUM_QUADS * 4 * 3) + 14] = centralPosZ + 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 17] = centralPosZ - 1;
+
+   // Triangulo 3
+   // ---Eje X
+   vertexPos[(NUM_QUADS * 4 * 3) + 18] = centralPosX;
+   vertexPos[(NUM_QUADS * 4 * 3) + 21] = centralPosX - 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 24] = centralPosX + 1;
+   // ---Eje Y
+   vertexPos[(NUM_QUADS * 4 * 3) + 19] = centralPosY;
+   vertexPos[(NUM_QUADS * 4 * 3) + 22] = centralPosY + 3;
+   vertexPos[(NUM_QUADS * 4 * 3) + 25] = centralPosY + 3;
+   // ---Eje Z
+   vertexPos[(NUM_QUADS * 4 * 3) + 20] = centralPosZ;
+   vertexPos[(NUM_QUADS * 4 * 3) + 23] = centralPosZ + 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 26] = centralPosZ + 1;
+
+   // Triangulo 4
+   // ---Eje X
+   vertexPos[(NUM_QUADS * 4 * 3) + 27] = centralPosX;
+   vertexPos[(NUM_QUADS * 4 * 3) + 30] = centralPosX - 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 33] = centralPosX - 1;
+   // ---Eje Y
+   vertexPos[(NUM_QUADS * 4 * 3) + 28] = centralPosY;
+   vertexPos[(NUM_QUADS * 4 * 3) + 31] = centralPosY + 3;
+   vertexPos[(NUM_QUADS * 4 * 3) + 34] = centralPosY + 3;
+   // ---Eje Z
+   vertexPos[(NUM_QUADS * 4 * 3) + 29] = centralPosZ;
+   vertexPos[(NUM_QUADS * 4 * 3) + 32] = centralPosZ - 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 35] = centralPosZ + 1;
+
+   //-----------------
+   // Triangulo 1 (Sup.)
+   // ---Eje X
+   vertexPos[(NUM_QUADS * 4 * 3) + 36] = centralPosX;
+   vertexPos[(NUM_QUADS * 4 * 3) + 3 + 36] = centralPosX - 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 6 + 36] = centralPosX + 1;
+   // ---Eje Y
+   vertexPos[(NUM_QUADS * 4 * 3) + 1 + 36] = centralPosY + 6;
+   vertexPos[(NUM_QUADS * 4 * 3) + 4 + 36] = centralPosY + 3;
+   vertexPos[(NUM_QUADS * 4 * 3) + 7 + 36] = centralPosY + 3;
+   // ---Eje Z
+   vertexPos[(NUM_QUADS * 4 * 3) + 2 + 36] = centralPosZ;
+   vertexPos[(NUM_QUADS * 4 * 3) + 5 + 36] = centralPosZ - 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 8 + 36] = centralPosZ - 1;
+
+   // Triangulo 2 (Sup.)
+   // ---Eje X
+   vertexPos[(NUM_QUADS * 4 * 3) + 9 + 36] = centralPosX;
+   vertexPos[(NUM_QUADS * 4 * 3) + 12 + 36] = centralPosX + 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 15 + 36] = centralPosX + 1;
+   // ---Eje Y
+   vertexPos[(NUM_QUADS * 4 * 3) + 10 + 36] = centralPosY + 6;
+   vertexPos[(NUM_QUADS * 4 * 3) + 13 + 36] = centralPosY + 3;
+   vertexPos[(NUM_QUADS * 4 * 3) + 16 + 36] = centralPosY + 3;
+   // ---Eje Z
+   vertexPos[(NUM_QUADS * 4 * 3) + 11 + 36] = centralPosZ;
+   vertexPos[(NUM_QUADS * 4 * 3) + 14 + 36] = centralPosZ - 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 17 + 36] = centralPosZ + 1;
+
+   // Triangulo 3 (Sup.)
+   // ---Eje X
+   vertexPos[(NUM_QUADS * 4 * 3) + 18 + 36] = centralPosX;
+   vertexPos[(NUM_QUADS * 4 * 3) + 21 + 36] = centralPosX + 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 24 + 36] = centralPosX - 1;
+   // ---Eje Y
+   vertexPos[(NUM_QUADS * 4 * 3) + 19 + 36] = centralPosY + 6;
+   vertexPos[(NUM_QUADS * 4 * 3) + 22 + 36] = centralPosY + 3;
+   vertexPos[(NUM_QUADS * 4 * 3) + 25 + 36] = centralPosY + 3;
+   // ---Eje Z
+   vertexPos[(NUM_QUADS * 4 * 3) + 20 + 36] = centralPosZ;
+   vertexPos[(NUM_QUADS * 4 * 3) + 23 + 36] = centralPosZ + 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 26 + 36] = centralPosZ + 1;
+
+   // Triangulo 4 (Sup.)
+   // ---Eje X
+   vertexPos[(NUM_QUADS * 4 * 3) + 27 + 36] = centralPosX;
+   vertexPos[(NUM_QUADS * 4 * 3) + 30 + 36] = centralPosX - 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 33 + 36] = centralPosX - 1;
+   // ---Eje Y
+   vertexPos[(NUM_QUADS * 4 * 3) + 28 + 36] = centralPosY + 6;
+   vertexPos[(NUM_QUADS * 4 * 3) + 31 + 36] = centralPosY + 3;
+   vertexPos[(NUM_QUADS * 4 * 3) + 34 + 36] = centralPosY + 3;
+   // ---Eje Z
+   vertexPos[(NUM_QUADS * 4 * 3) + 29 + 36] = centralPosZ;
+   vertexPos[(NUM_QUADS * 4 * 3) + 32 + 36] = centralPosZ + 1;
+   vertexPos[(NUM_QUADS * 4 * 3) + 35 + 36] = centralPosZ - 1;
+
+
+   // Colores de los vértices RGB (Inf.)
+   vertexColor[(NUM_QUADS * 4 * 3)] = 1;
+   vertexColor[(NUM_QUADS * 4 * 3) + 1] = 1;
+   vertexColor[(NUM_QUADS * 4 * 3) + 2] = 1;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 3] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 4] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 5] = 0;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 6] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 7] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 8] = 0;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 9] = 1;
+   vertexColor[(NUM_QUADS * 4 * 3) + 10] = 1;
+   vertexColor[(NUM_QUADS * 4 * 3) + 11] = 1;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 12] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 13] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 14] = 0;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 15] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 16] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 17] = 0;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 18] = 1;
+   vertexColor[(NUM_QUADS * 4 * 3) + 19] = 1;
+   vertexColor[(NUM_QUADS * 4 * 3) + 20] = 1;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 21] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 22] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 23] = 0;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 24] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 25] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 26] = 0;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 27] = 1;
+   vertexColor[(NUM_QUADS * 4 * 3) + 28] = 1;
+   vertexColor[(NUM_QUADS * 4 * 3) + 29] = 1;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 30] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 31] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 32] = 0;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 33] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 34] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 35] = 0;
+
+   //----
+   // Colores de los vértices RGB (Inf.)
+   vertexColor[(NUM_QUADS * 4 * 3) + 36] = 1;
+   vertexColor[(NUM_QUADS * 4 * 3) + 1 + 36] = 1;
+   vertexColor[(NUM_QUADS * 4 * 3) + 2 + 36] = 1;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 3 + 36] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 4 + 36] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 5 + 36] = 0;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 6 + 36] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 7 + 36] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 8 + 36] = 0;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 9 + 36] = 1;
+   vertexColor[(NUM_QUADS * 4 * 3) + 10 + 36] = 1;
+   vertexColor[(NUM_QUADS * 4 * 3) + 11 + 36] = 1;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 12 + 36] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 13 + 36] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 14 + 36] = 0;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 15 + 36] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 16 + 36] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 17 + 36] = 0;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 18 + 36] = 1;
+   vertexColor[(NUM_QUADS * 4 * 3) + 19 + 36] = 1;
+   vertexColor[(NUM_QUADS * 4 * 3) + 20 + 36] = 1;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 21 + 36] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 22 + 36] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 23 + 36] = 0;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 24 + 36] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 25 + 36] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 26 + 36] = 0;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 27 + 36] = 1;
+   vertexColor[(NUM_QUADS * 4 * 3) + 28 + 36] = 1;
+   vertexColor[(NUM_QUADS * 4 * 3) + 29 + 36] = 1;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 30 + 36] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 31 + 36] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 32 + 36] = 0;
+
+   vertexColor[(NUM_QUADS * 4 * 3) + 33 + 36] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 34 + 36] = 0;
+   vertexColor[(NUM_QUADS * 4 * 3) + 35 + 36] = 0;
+
+   const_cast<Scene*> (refScene_)->setNumberVertex(NUM_VER + (12 * 2));
+}
+
+// ---Comprobar:
 bool Scenographer::checkHeightNorth(int row, int col) {
    bool result = false;
    if ( row > 0) {
@@ -382,7 +622,6 @@ bool Scenographer::checkHeightNorth(int row, int col) {
    }
    return result;
 }
-
 bool Scenographer::checkHeightEast(int row, int col) {
    bool result = false;
    if ( col < MAP_WIDTH - 1) {
@@ -392,7 +631,6 @@ bool Scenographer::checkHeightEast(int row, int col) {
    }
    return result;
 }
-
 bool Scenographer::checkHeightSouth(int row, int col) {
    bool result = false;
    if ( row < MAP_HEIGHT - 1) {
@@ -402,7 +640,6 @@ bool Scenographer::checkHeightSouth(int row, int col) {
    }
    return result;
 }
-
 bool Scenographer::checkHeightWest(int row, int col) {
    bool result = false;
    if ( col > 0) {
@@ -413,11 +650,10 @@ bool Scenographer::checkHeightWest(int row, int col) {
    return result;
 }
 
-
+// ---Auxiliar:
 float Scenographer::getHeight(int row, int col) {
    return getHeight((*refMap_)(row, col));
 }
-
 float Scenographer::getHeight(BYTE value) {
    float result = -10;
    switch (value & MASK_TERRAIN) {
@@ -436,7 +672,6 @@ float Scenographer::getHeight(BYTE value) {
    }
    return result;
 }
-
 float* Scenographer::getcolor(BYTE value) {
    float* color = new float[3];
    switch (value) {
@@ -464,6 +699,7 @@ float* Scenographer::getcolor(BYTE value) {
    return color;
 }
 
+// ---LOG:
 void Scenographer::logAction(int index) {
    if (BASIC_LOG) {
       switch (index) {

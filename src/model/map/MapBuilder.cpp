@@ -159,6 +159,7 @@ void MapBuilder::generateResourceType(BYTE type, Point loc) {
 	uint32_t width;
 	uint32_t i;
 	i = 0;
+
 	boost::random_device rndDev;
 	boost::random::mt11213b sizeRNG;
 	boost::random::mt11213b directionRNG;
@@ -176,12 +177,12 @@ void MapBuilder::generateResourceType(BYTE type, Point loc) {
 		widthRNG();
 		widthDistrib.reset();
 		width = widthDistrib(widthRNG);
-
+		
 		// FIXME Evitar el solapamiento de recursos
 		for(uint32_t j = loc.first - width; j < loc.first + width; ++j) {
 			for (uint32_t k = loc.second - width; k < loc.second + width; ++k) {
 				if (j >= 0 && j < m_mapSize && k >= 0 && k < m_mapSize) {
-					if (m_map[j][k] & MASK_RESOURCE != 0x0) {
+					if ((m_map[j][k] & MASK_RESOURCE) == 0x0) {
 						if (abs(sqrt(pow(j, 2) + pow(k, 2))
 							- sqrt(pow(loc.first, 2)
 							+ pow(loc.second, 2))) <= width) {

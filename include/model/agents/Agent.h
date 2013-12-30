@@ -30,7 +30,7 @@ private:
 	Goals* m_goals;
 	Intentions* m_intentions;
 protected:
-	bool move(Movement);
+	bool move(Direction);
 public:
 	Agent();
 	virtual ~Agent() = 0;

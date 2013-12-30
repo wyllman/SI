@@ -17,7 +17,7 @@ Agent::Agent() {
 Agent::~Agent() {
 }
 
-bool Agent::move(Movement theMovement) {
+bool Agent::move(Direction theMovement) {
 	bool result = false;
 	switch(theMovement) {
 	case NORTH:

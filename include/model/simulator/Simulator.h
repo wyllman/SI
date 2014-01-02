@@ -17,6 +17,7 @@
 #define SIMULATOR_H_
  
 class Map;
+class MainAgent;
 
 class Simulator: public Model {
    public:
@@ -26,10 +27,11 @@ class Simulator: public Model {
       void init();
       void stop();
       const Map* getMap() const;
+      const MainAgent* getMainAgent () const;
 
    private:
       Map* map_;
-
+      MainAgent* m_MainAgent;
       void logAction(int);
 };
 

@@ -9,6 +9,7 @@
 #define MAINAGENT_H_
 
 #include <model/agents/Agent.h>
+#include <model/map/Map.h>
 
 /**
  * \class MainAgent
@@ -21,6 +22,13 @@ class MainAgent: public Agent {
 public:
 	MainAgent();
 	~MainAgent();
+
+	Point getPosition ();
+	void logAction(int);
+	void createRndInitialPos (Map*);
+
+private:
+	BeliefSet* m_beliefSet;
 };
 
 #endif /* MAINAGENT_H_ */

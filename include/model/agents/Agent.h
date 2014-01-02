@@ -25,12 +25,12 @@ class Intentions;
 class Agent {
 private:
 	// FIXME: la posicion deberia estar incluida en el conjunto de creencias
-	Point m_position;
 	BeliefSet* m_beliefSet;
 	Goals* m_goals;
 	Intentions* m_intentions;
 protected:
 	bool move(Direction);
+	Point m_position;
 public:
 	Agent();
 	virtual ~Agent() = 0;

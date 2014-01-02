@@ -19,6 +19,7 @@
 #include <model/simulator/Simulator.h>
 #include <model/map/Map.h>
 #include <model/map/MapConsoleInterface.h>
+#include <model/agents/MainAgent.h>
 #include <Tools.h>
 
 #include <iostream>
@@ -42,7 +43,7 @@ void Simulator::init() {
    logAction(LOG_F_INIT);
    map_ = new Map();
 
-   MapConsoleInterface mapci(*map_);
+   MapConsoleInterface mapci(*map_); // ¿JUAN: Porqué valor y no referencia? (by maikel xD)
 
    for (uint32_t i = 0; i < map_->size(); i++) {
       for (uint32_t j = 0; j < map_->size(); j++) {
@@ -50,6 +51,10 @@ void Simulator::init() {
       }
       std::cout << std::endl;
    }
+
+   MainAgent* mainAg = new MainAgent ();
+   mainAg -> createRndInitialPos(map_); // Da una posición inicial al agente principal
+   std::cout << "Simbolo en la posición generada: " << mapci(mainAg -> getPosition().first, mainAg -> getPosition().second) << std::endl;
 }
 void Simulator::stop() {
    logAction(LOG_F_STOP);
@@ -66,6 +71,9 @@ void Simulator::stop() {
 const Map* Simulator::getMap() const {
    return map_;
 }
+const MainAgent* Simulator::getMainAgent () const {
+	return m_MainAgent;
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -81,10 +89,10 @@ void Simulator::logAction(int index) {
             std::cout << "---Destruyendo el modelo Simulator " << std::endl;
             break;
          case LOG_F_INIT:
-            std::cout << "---Llamano a la función init de la clase Simulator " << std::endl;
+            std::cout << "---Llamando a la función init de la clase Simulator " << std::endl;
             break;
          case LOG_F_STOP:
-            std::cout << "---Llamano a la función stop de la clase Simulator " << std::endl;
+            std::cout << "---Llamando a la función stop de la clase Simulator " << std::endl;
             break;
          default:
             break;
@@ -102,10 +110,10 @@ void Simulator::logAction(int index) {
             fileLogTmp->insertLine("---Destruyendo el modelo Simulator ");
             break;
          case LOG_F_INIT:
-            fileLogTmp->insertLine("---Llamano a la función init de la clase Simulator.");
+            fileLogTmp->insertLine("---Llamando a la función init de la clase Simulator.");
             break;
          case LOG_F_STOP:
-            fileLogTmp->insertLine("---Llamano a la función stop de la clase Simulator.");
+            fileLogTmp->insertLine("---Llamando a la función stop de la clase Simulator.");
             break;
          default:
             break;

@@ -8,7 +8,7 @@
 #include <model/bdi/BeliefSet.h>
 
 BeliefSet::BeliefSet() {
-
+	m_map = new Map();
 }
 
 BeliefSet::~BeliefSet() {

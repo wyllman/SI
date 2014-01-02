@@ -5,7 +5,7 @@
 5. ---Generando el modelo Simulator 
 6. ------Generado la herramienta MainLoop para el Director 
 7. ---Llamando a la funcion init del Director
-8. ---Llamano a la función init de la clase Simulator.
+8. ---Llamando a la función init de la clase Simulator.
 9. ---Llamano a la función init de la clase Interface.
 10. ------Inicializando SDL en la clase Bureaucrat. 
 11. ------Generado la herramienta Window para la vista Interfaz 
@@ -17,9 +17,9 @@
 17. ------Inicializando OGL en la clase Bureaucrat. 
 18. ------Iniciando el contexto OGL de la herramienta Context 
 19. ---Llamando a la función mainLoop del Director
-20. ---Llamano a la función stop de la clase Simulator.
+20. ---Llamando a la función stop de la clase Simulator.
 21. ---Destruyendo el modelo Simulator 
-22. ---Llamano a la función stop de la clase Simulator.
+22. ---Llamando a la función stop de la clase Simulator.
 23. ---Llamano a la función stop de la clase Interface.
 24. ------Destruyendo el gestor Bureaucrat para la vista Interfaz 
 25. ------Destruyendo el gestor Scenographer para la vista Interfaz 

@@ -38,27 +38,38 @@ class Scene {
       float* getVertexFloor(int);
       const float* getVertexFloorColor() const;
       float* getVertexFloorColor(int);
-      const float* getVertexObjects() const;
-      float* getVertexObjects(int);
-      const float* getVertexObjectsColor() const;
-      float* getVertexObjectsColor(int);
       int getNumberVertex() const;
       void setNumberVertex(int numberVertex);
       int getNumberQuadsFloor() const;
       void setNumberQuadsFloor(int numberQuadsFloor);
 
+
+      void createUpQuads (float* position, float* color1, float scale, int memPos);
+      void createSideQuads (float* position, float height2, float* color1, float scale
+            , int memPos, int side);
+      void createSideQuads (float* position, float height2, float* color1, float* color2
+            , float scale, int memPos, int side);
+      void createSideTriangle (float* position, float height2, float* color1, float* color2
+            , float scale, int memPos, int side);
+      void createSideTriangleInf (float* position, float height2, float* color1, float* color2
+            , float scale, int memPos, int side);
+
    private:
       const Interface* refInterface_;
       GLfloat modelviewMatrix_[16];
       GLfloat projectionMatrix_[16];
+
       int numberVertex_;  // Número de vertices a pintar.
 
       int numberQuadsFloor_; // Número de Quads creados al construir el terreno.
+      int numberTriangMainA_;
+      int numberTriangSearchA_;
+      int numberQuadsWorkingA_;
+
       float* vertexFloor_;
       float* vertexFloorColor_;
 
-      float* vertexObjects_;
-      float* vertexObjectsColor_;
+
 
       void logAction(int);
 };

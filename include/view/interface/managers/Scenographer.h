@@ -57,16 +57,15 @@ class Scenographer {
       void updateFloor (int, int);
       void updateObjects ();
 
-      // Funciones para la creación de cada uno de los diferentes tipos de quads del
-      // terreno.
-      void createSideUpFloor (int, int, float, float [3], float*, float*);
-      void createSideFloor (int, int, float, float [3], float*, float*, int);
+      // Funciones para la creación de cada uno de las casillas del terreno.
+      void createSlotFloor (int, int, float, float [3]);
+      void createSlotFloor (int, int, float, float [3], float [3]);
 
       // Funciones para la creación de los lados de cada uno de los objetos de la
       // escena
-      void createMainAgent (int row, int col, float height, float* vertexPos, float* vertexColor);
-      void createSearchAgent (int row, int col, float height, float* vertexPos, float* vertexColor);
-      void createWorkingAgent (int row, int col, float height, float* vertexPos, float* vertexColor);
+      void createMainAgent (int row, int col, float height);
+      void createSearchAgent (int row, int col, float height);
+      void createWorkingAgent (int row, int col, float height);
 
       // Funciones para las comprobaciones de alturas, de terreno, en la eliminación
       // de quads internos.

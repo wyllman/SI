@@ -1,10 +1,11 @@
-src/model/agents/WorkingAgent.d: ../src/model/agents/WorkingAgent.cpp \
- /home/maikel/workspace/SI/include/model/agents/WorkingAgent.h \
- /home/maikel/workspace/SI/include/model/agents/Agent.h \
- /home/maikel/workspace/SI/include/Tools.h
+src/model/agents/WorkingAgent.d src/model/agents/WorkingAgent.o:  \
+ ../src/model/agents/WorkingAgent.cpp \
+  /Users/tenerent/Downloads/temporal/SI/include/model/agents/WorkingAgent.h \
+  /Users/tenerent/Downloads/temporal/SI/include/model/agents/Agent.h \
+  /Users/tenerent/Downloads/temporal/SI/include/Tools.h
 
-/home/maikel/workspace/SI/include/model/agents/WorkingAgent.h:
+/Users/tenerent/Downloads/temporal/SI/include/model/agents/WorkingAgent.h:
 
-/home/maikel/workspace/SI/include/model/agents/Agent.h:
+/Users/tenerent/Downloads/temporal/SI/include/model/agents/Agent.h:
 
-/home/maikel/workspace/SI/include/Tools.h:
+/Users/tenerent/Downloads/temporal/SI/include/Tools.h:

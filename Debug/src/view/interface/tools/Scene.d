@@ -1,13 +1,20 @@
-src/view/interface/tools/Scene.d: ../src/view/interface/tools/Scene.cpp \
- /home/maikel/workspace/SI/include/view/interface/tools/Scene.h \
- /home/maikel/workspace/SI/include/view/interface/Interface.h \
- /home/maikel/workspace/SI/include/view/abstracts/View.h \
- /home/maikel/workspace/SI/include/Tools.h
+src/view/interface/tools/Scene.d src/view/interface/tools/Scene.o:  \
+ ../src/view/interface/tools/Scene.cpp \
+  /Users/tenerent/Downloads/temporal/SI/include/view/interface/tools/Scene.h \
+  /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h \
+  /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h \
+  /Users/tenerent/Downloads/temporal/SI/include/view/interface/Interface.h \
+  /Users/tenerent/Downloads/temporal/SI/include/view/abstracts/View.h \
+  /Users/tenerent/Downloads/temporal/SI/include/Tools.h
 
-/home/maikel/workspace/SI/include/view/interface/tools/Scene.h:
+/Users/tenerent/Downloads/temporal/SI/include/view/interface/tools/Scene.h:
 
-/home/maikel/workspace/SI/include/view/interface/Interface.h:
+/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h:
 
-/home/maikel/workspace/SI/include/view/abstracts/View.h:
+/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h:
 
-/home/maikel/workspace/SI/include/Tools.h:
+/Users/tenerent/Downloads/temporal/SI/include/view/interface/Interface.h:
+
+/Users/tenerent/Downloads/temporal/SI/include/view/abstracts/View.h:
+
+/Users/tenerent/Downloads/temporal/SI/include/Tools.h:

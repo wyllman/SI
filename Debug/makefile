@@ -56,7 +56,7 @@ all: SI
 SI: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++  -o "SI" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L/opt/local/lib -framework Cocoa -framework SDL2 -framework OpenGL -o "SI" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

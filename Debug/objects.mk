@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -lSDL2 -lGL -lGLU -lGLEW -lboost_system -lboost_random
+LIBS := -lboost_system-mt -lboost_random-mt
 

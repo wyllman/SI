@@ -1,14 +1,20 @@
-src/view/interface/tools/Context.d: \
+src/view/interface/tools/Context.d src/view/interface/tools/Context.o:  \
  ../src/view/interface/tools/Context.cpp \
- /home/maikel/workspace/SI/include/view/interface/tools/Context.h \
- /home/maikel/workspace/SI/include/view/interface/Interface.h \
- /home/maikel/workspace/SI/include/view/abstracts/View.h \
- /home/maikel/workspace/SI/include/Tools.h
+  /Users/tenerent/Downloads/temporal/SI/include/view/interface/tools/Context.h \
+  /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h \
+  /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h \
+  /Users/tenerent/Downloads/temporal/SI/include/view/interface/Interface.h \
+  /Users/tenerent/Downloads/temporal/SI/include/view/abstracts/View.h \
+  /Users/tenerent/Downloads/temporal/SI/include/Tools.h
 
-/home/maikel/workspace/SI/include/view/interface/tools/Context.h:
+/Users/tenerent/Downloads/temporal/SI/include/view/interface/tools/Context.h:
 
-/home/maikel/workspace/SI/include/view/interface/Interface.h:
+/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h:
 
-/home/maikel/workspace/SI/include/view/abstracts/View.h:
+/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h:
 
-/home/maikel/workspace/SI/include/Tools.h:
+/Users/tenerent/Downloads/temporal/SI/include/view/interface/Interface.h:
+
+/Users/tenerent/Downloads/temporal/SI/include/view/abstracts/View.h:
+
+/Users/tenerent/Downloads/temporal/SI/include/Tools.h:

@@ -1,119 +1,150 @@
-src/view/interface/managers/Bureaucrat.d: \
+src/view/interface/managers/Bureaucrat.d \
+  src/view/interface/managers/Bureaucrat.o:  \
  ../src/view/interface/managers/Bureaucrat.cpp \
- /home/maikel/workspace/SI/include/view/interface/managers/Bureaucrat.h \
- /home/maikel/workspace/SI/include/view/interface/Interface.h \
- /home/maikel/workspace/SI/include/view/abstracts/View.h \
- /home/maikel/workspace/SI/include/Tools.h /usr/include/SDL2/SDL.h \
- /usr/include/SDL2/SDL_main.h /usr/include/SDL2/SDL_stdinc.h \
- /usr/include/SDL2/SDL_config.h /usr/include/SDL2/SDL_platform.h \
- /usr/include/SDL2/begin_code.h /usr/include/SDL2/close_code.h \
- /usr/include/SDL2/SDL_assert.h /usr/include/SDL2/SDL_atomic.h \
- /usr/include/SDL2/SDL_audio.h /usr/include/SDL2/SDL_error.h \
- /usr/include/SDL2/SDL_endian.h /usr/include/SDL2/SDL_mutex.h \
- /usr/include/SDL2/SDL_thread.h /usr/include/SDL2/SDL_rwops.h \
- /usr/include/SDL2/SDL_clipboard.h /usr/include/SDL2/SDL_cpuinfo.h \
- /usr/include/SDL2/SDL_events.h /usr/include/SDL2/SDL_video.h \
- /usr/include/SDL2/SDL_pixels.h /usr/include/SDL2/SDL_rect.h \
- /usr/include/SDL2/SDL_surface.h /usr/include/SDL2/SDL_blendmode.h \
- /usr/include/SDL2/SDL_keyboard.h /usr/include/SDL2/SDL_keycode.h \
- /usr/include/SDL2/SDL_scancode.h /usr/include/SDL2/SDL_mouse.h \
- /usr/include/SDL2/SDL_joystick.h /usr/include/SDL2/SDL_gamecontroller.h \
- /usr/include/SDL2/SDL_quit.h /usr/include/SDL2/SDL_gesture.h \
- /usr/include/SDL2/SDL_touch.h /usr/include/SDL2/SDL_haptic.h \
- /usr/include/SDL2/SDL_hints.h /usr/include/SDL2/SDL_loadso.h \
- /usr/include/SDL2/SDL_log.h /usr/include/SDL2/SDL_messagebox.h \
- /usr/include/SDL2/SDL_power.h /usr/include/SDL2/SDL_render.h \
- /usr/include/SDL2/SDL_system.h /usr/include/SDL2/SDL_timer.h \
- /usr/include/SDL2/SDL_version.h
+  /Users/tenerent/Downloads/temporal/SI/include/view/interface/managers/Bureaucrat.h \
+  /Users/tenerent/Downloads/temporal/SI/include/view/interface/Interface.h \
+  /Users/tenerent/Downloads/temporal/SI/include/view/abstracts/View.h \
+  /Users/tenerent/Downloads/temporal/SI/include/Tools.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_main.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_stdinc.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_config.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_platform.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/begin_code.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/close_code.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_config_macosx.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_assert.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_atomic.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_audio.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_error.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_endian.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_mutex.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_thread.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_rwops.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_clipboard.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_cpuinfo.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_events.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_video.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_pixels.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_rect.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_surface.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_blendmode.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_keyboard.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_keycode.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_scancode.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_mouse.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_joystick.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_gamecontroller.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_quit.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_gesture.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_touch.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_haptic.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_hints.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_loadso.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_log.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_messagebox.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_power.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_render.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_system.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_timer.h \
+  /Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_version.h \
+  /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h \
+  /System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h
 
-/home/maikel/workspace/SI/include/view/interface/managers/Bureaucrat.h:
+/Users/tenerent/Downloads/temporal/SI/include/view/interface/managers/Bureaucrat.h:
 
-/home/maikel/workspace/SI/include/view/interface/Interface.h:
+/Users/tenerent/Downloads/temporal/SI/include/view/interface/Interface.h:
 
-/home/maikel/workspace/SI/include/view/abstracts/View.h:
+/Users/tenerent/Downloads/temporal/SI/include/view/abstracts/View.h:
 
-/home/maikel/workspace/SI/include/Tools.h:
+/Users/tenerent/Downloads/temporal/SI/include/Tools.h:
 
-/usr/include/SDL2/SDL.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL.h:
 
-/usr/include/SDL2/SDL_main.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_main.h:
 
-/usr/include/SDL2/SDL_stdinc.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_stdinc.h:
 
-/usr/include/SDL2/SDL_config.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_config.h:
 
-/usr/include/SDL2/SDL_platform.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_platform.h:
 
-/usr/include/SDL2/begin_code.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/begin_code.h:
 
-/usr/include/SDL2/close_code.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/close_code.h:
 
-/usr/include/SDL2/SDL_assert.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_config_macosx.h:
 
-/usr/include/SDL2/SDL_atomic.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_assert.h:
 
-/usr/include/SDL2/SDL_audio.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_atomic.h:
 
-/usr/include/SDL2/SDL_error.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_audio.h:
 
-/usr/include/SDL2/SDL_endian.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_error.h:
 
-/usr/include/SDL2/SDL_mutex.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_endian.h:
 
-/usr/include/SDL2/SDL_thread.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_mutex.h:
 
-/usr/include/SDL2/SDL_rwops.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_thread.h:
 
-/usr/include/SDL2/SDL_clipboard.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_rwops.h:
 
-/usr/include/SDL2/SDL_cpuinfo.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_clipboard.h:
 
-/usr/include/SDL2/SDL_events.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_cpuinfo.h:
 
-/usr/include/SDL2/SDL_video.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_events.h:
 
-/usr/include/SDL2/SDL_pixels.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_video.h:
 
-/usr/include/SDL2/SDL_rect.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_pixels.h:
 
-/usr/include/SDL2/SDL_surface.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_rect.h:
 
-/usr/include/SDL2/SDL_blendmode.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_surface.h:
 
-/usr/include/SDL2/SDL_keyboard.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_blendmode.h:
 
-/usr/include/SDL2/SDL_keycode.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_keyboard.h:
 
-/usr/include/SDL2/SDL_scancode.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_keycode.h:
 
-/usr/include/SDL2/SDL_mouse.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_scancode.h:
 
-/usr/include/SDL2/SDL_joystick.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_mouse.h:
 
-/usr/include/SDL2/SDL_gamecontroller.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_joystick.h:
 
-/usr/include/SDL2/SDL_quit.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_gamecontroller.h:
 
-/usr/include/SDL2/SDL_gesture.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_quit.h:
 
-/usr/include/SDL2/SDL_touch.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_gesture.h:
 
-/usr/include/SDL2/SDL_haptic.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_touch.h:
 
-/usr/include/SDL2/SDL_hints.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_haptic.h:
 
-/usr/include/SDL2/SDL_loadso.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_hints.h:
 
-/usr/include/SDL2/SDL_log.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_loadso.h:
 
-/usr/include/SDL2/SDL_messagebox.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_log.h:
 
-/usr/include/SDL2/SDL_power.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_messagebox.h:
 
-/usr/include/SDL2/SDL_render.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_power.h:
 
-/usr/include/SDL2/SDL_system.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_render.h:
 
-/usr/include/SDL2/SDL_timer.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_system.h:
 
-/usr/include/SDL2/SDL_version.h:
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_timer.h:
+
+/Library/Frameworks/SDL2.framework/Versions/A/Headers/SDL_version.h:
+
+/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GL.h:
+
+/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/GLU.h:

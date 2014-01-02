@@ -1,4 +1,5 @@
-src/view/abstracts/View.d: ../src/view/abstracts/View.cpp \
- /home/maikel/workspace/SI/include/view/abstracts/View.h
+src/view/abstracts/View.d src/view/abstracts/View.o:  \
+ ../src/view/abstracts/View.cpp \
+  /Users/tenerent/Downloads/temporal/SI/include/view/abstracts/View.h
 
-/home/maikel/workspace/SI/include/view/abstracts/View.h:
+/Users/tenerent/Downloads/temporal/SI/include/view/abstracts/View.h:

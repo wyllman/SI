@@ -1,0 +1,11 @@
+*~
+build/
+doc/html/
+Debug/
+Release/
+.cproject
+.project
+.kateproject
+.kateproject.d/
+.kdev4/
+SI.kdev4

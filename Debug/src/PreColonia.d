@@ -1,25 +1,25 @@
-src/PreColonia.d: ../src/PreColonia.cpp \
- /home/maikel/workspace/SI/include/MVCHeaders.h \
- /home/maikel/workspace/SI/include/controller/abstracts/Controller.h \
- /home/maikel/workspace/SI/include/controller/director/Director.h \
- /home/maikel/workspace/SI/include/view/abstracts/View.h \
- /home/maikel/workspace/SI/include/view/interface/Interface.h \
- /home/maikel/workspace/SI/include/model/abstracts/Model.h \
- /home/maikel/workspace/SI/include/model/simulator/Simulator.h \
- /home/maikel/workspace/SI/include/Tools.h
+src/PreColonia.d src/PreColonia.o: ../src/PreColonia.cpp \
+  /Users/tenerent/Downloads/temporal/SI/include/MVCHeaders.h \
+  /Users/tenerent/Downloads/temporal/SI/include/controller/abstracts/Controller.h \
+  /Users/tenerent/Downloads/temporal/SI/include/controller/director/Director.h \
+  /Users/tenerent/Downloads/temporal/SI/include/view/abstracts/View.h \
+  /Users/tenerent/Downloads/temporal/SI/include/view/interface/Interface.h \
+  /Users/tenerent/Downloads/temporal/SI/include/model/abstracts/Model.h \
+  /Users/tenerent/Downloads/temporal/SI/include/model/simulator/Simulator.h \
+  /Users/tenerent/Downloads/temporal/SI/include/Tools.h
 
-/home/maikel/workspace/SI/include/MVCHeaders.h:
+/Users/tenerent/Downloads/temporal/SI/include/MVCHeaders.h:
 
-/home/maikel/workspace/SI/include/controller/abstracts/Controller.h:
+/Users/tenerent/Downloads/temporal/SI/include/controller/abstracts/Controller.h:
 
-/home/maikel/workspace/SI/include/controller/director/Director.h:
+/Users/tenerent/Downloads/temporal/SI/include/controller/director/Director.h:
 
-/home/maikel/workspace/SI/include/view/abstracts/View.h:
+/Users/tenerent/Downloads/temporal/SI/include/view/abstracts/View.h:
 
-/home/maikel/workspace/SI/include/view/interface/Interface.h:
+/Users/tenerent/Downloads/temporal/SI/include/view/interface/Interface.h:
 
-/home/maikel/workspace/SI/include/model/abstracts/Model.h:
+/Users/tenerent/Downloads/temporal/SI/include/model/abstracts/Model.h:
 
-/home/maikel/workspace/SI/include/model/simulator/Simulator.h:
+/Users/tenerent/Downloads/temporal/SI/include/model/simulator/Simulator.h:
 
-/home/maikel/workspace/SI/include/Tools.h:
+/Users/tenerent/Downloads/temporal/SI/include/Tools.h:

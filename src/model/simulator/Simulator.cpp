@@ -20,6 +20,7 @@
 #include <model/map/Map.h>
 #include <model/map/MapConsoleInterface.h>
 #include <model/agents/MainAgent.h>
+#include <model/agents/SearchAgent.h>
 #include <Tools.h>
 
 #include <iostream>
@@ -29,6 +30,8 @@
 Simulator::Simulator(const Controller& controller) :
       Model(controller) {
    logAction(LOG_INIT);
+   m_MainAgent = new MainAgent ();
+
 }
 Simulator::~Simulator() {
    logAction(LOG_END);
@@ -43,7 +46,7 @@ void Simulator::init() {
    logAction(LOG_F_INIT);
    map_ = new Map();
 
-   MapConsoleInterface mapci(*map_); // ¿JUAN: Porqué valor y no referencia? (by maikel xD)
+   MapConsoleInterface mapci(*map_);
 
    for (uint32_t i = 0; i < map_->size(); i++) {
       for (uint32_t j = 0; j < map_->size(); j++) {
@@ -52,10 +55,28 @@ void Simulator::init() {
       std::cout << std::endl;
    }
 
-   MainAgent* mainAg = new MainAgent ();
-   mainAg -> createRndInitialPos(map_); // Da una posición inicial al agente principal
-   std::cout << "Simbolo en la posición generada: " << mapci(mainAg -> getPosition().first, mainAg -> getPosition().second) << std::endl;
+   m_MainAgent -> createRndInitialPos(map_); // Da una posición inicial al agente principal
+   std::cout << "Simbolo en la posición generada: " << mapci(m_MainAgent -> getPosition().first, m_MainAgent -> getPosition().second) << std::endl;
+
+   // Prueba 1 de agente instanciado al lado de la nave
+   SearchAgent* searchg1 = new SearchAgent ();
+   searchg1 -> setPosition (Point (m_MainAgent -> getPosition().first + 1, m_MainAgent -> getPosition().second));
+   m_MainAgent -> getVAgents().push_back(searchg1);
+
+   std::cout << " - Posición del Ag. Trabajador:  x = " <<
+   		   m_MainAgent -> getVAgents().at(0) -> getPosition ().first << " , y = " <<
+   		   m_MainAgent -> getVAgents().at(0) -> getPosition ().second << std::endl;
+
+
+   // Prueba de movimiento hacia el sur de un agente
+   while (m_MainAgent -> getVAgents().at(0) -> getPosition().second < 100) {
+	   m_MainAgent -> getVAgents().at(0) -> move (SOUTH);
+	   std::cout << "Pos:  x = " << m_MainAgent -> getVAgents().at(0) -> getPosition().first <<
+			   " , y = " << m_MainAgent -> getVAgents().at(0) -> getPosition().second << std::endl;
+	   //std::cout << "Simbolo = " << mapci(searchg1 -> getPosition().first, searchg1 -> getPosition().second) << std::endl;
+   }
 }
+
 void Simulator::stop() {
    logAction(LOG_F_STOP);
    if (map_ != NULL) {

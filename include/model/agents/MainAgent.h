@@ -11,6 +11,8 @@
 #include <model/agents/Agent.h>
 #include <model/map/Map.h>
 
+#include <vector>
+
 /**
  * \class MainAgent
  * \brief Agente principal de la simulación.
@@ -23,12 +25,13 @@ public:
 	MainAgent();
 	~MainAgent();
 
-	Point getPosition ();
 	void logAction(int);
 	void createRndInitialPos (Map*);
+	std::vector<Agent*>& getVAgents ();
 
 private:
 	BeliefSet* m_beliefSet;
+	std::vector<Agent*> m_Vagents;
 };
 
 #endif /* MAINAGENT_H_ */

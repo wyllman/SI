@@ -15,7 +15,7 @@ class Belief;
 
 class BeliefSet {
 private:
-	std::vector<Belief*> m_beliefSet;
+	std::vector<Belief*> m_beliefSet; // ¿Hace falta?
 	Map* m_map; // Mapa del Sistema de Agentes
 public:
 	BeliefSet();

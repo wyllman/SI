@@ -32,7 +32,7 @@ void MainAgent::createRndInitialPos (Map* mainMap) {
 	boost::random::mt11213b positionRNG;
 	boost::random::mt11213b typeRNG;
 	boost::random::negative_binomial_distribution<> probabilityDistrib(3, 0.5);
-	boost::random::uniform_int_distribution<> positionDistrib(0, MAP_WIDTH); // Porque WIDTH = HEIGHT
+	boost::random::uniform_int_distribution<> positionDistrib(1, MAP_WIDTH - 1); // Porque WIDTH = HEIGHT
 	boost::random::uniform_int_distribution<> typeDistrib(3, 5);
 
 	bool condition = false; // Indica si está en una posición CORRECTA
@@ -49,8 +49,20 @@ void MainAgent::createRndInitialPos (Map* mainMap) {
 		positionDistrib.reset();
 		m_position.second = positionDistrib(positionRNG);
 
-		BYTE temp = ((*mainMap)(m_position.first, m_position.second) & MASK_TERRAIN);
-		if (temp == TERRAIN_GROUND){
+		// Comprobación de vecindad de la nave -> para la colocación de agentes
+		BYTE tempCentro = ((*mainMap)(m_position.first, m_position.second) & MASK_TERRAIN);
+		BYTE tempArrIzq = ((*mainMap)(m_position.first - 1, m_position.second - 1) & MASK_TERRAIN);
+		BYTE tempArr = ((*mainMap)(m_position.first, m_position.second - 1) & MASK_TERRAIN);
+		BYTE tempArrDer = ((*mainMap)(m_position.first + 1, m_position.second - 1) & MASK_TERRAIN);
+		BYTE tempIzq = ((*mainMap)(m_position.first - 1, m_position.second) & MASK_TERRAIN);
+		BYTE tempDer = ((*mainMap)(m_position.first + 1, m_position.second) & MASK_TERRAIN);
+		BYTE tempAbjIzq = ((*mainMap)(m_position.first - 1, m_position.second + 1) & MASK_TERRAIN);
+		BYTE tempAbj = ((*mainMap)(m_position.first, m_position.second + 1) & MASK_TERRAIN);
+		BYTE tempAbjDer = ((*mainMap)(m_position.first + 1, m_position.second + 1) & MASK_TERRAIN);
+
+		if (tempCentro == TERRAIN_GROUND && tempArrIzq == TERRAIN_GROUND && tempArr == TERRAIN_GROUND
+				&& tempArrDer == TERRAIN_GROUND && tempIzq == TERRAIN_GROUND && tempDer == TERRAIN_GROUND &&
+				tempAbjIzq == TERRAIN_GROUND && tempAbj == TERRAIN_GROUND && tempAbjDer == TERRAIN_GROUND){
 			condition = true;
 		}
 
@@ -77,6 +89,6 @@ void MainAgent::logAction(int index) {
    }
 }
 
-Point MainAgent::getPosition () {
-	return m_position;
+std::vector<Agent*>& MainAgent::getVAgents () {
+	return m_Vagents;
 }

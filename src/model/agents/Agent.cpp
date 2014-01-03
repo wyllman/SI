@@ -11,7 +11,6 @@
 #include <model/bdi/Intentions.h>
 
 Agent::Agent() {
-
 }
 
 Agent::~Agent() {
@@ -34,4 +33,8 @@ bool Agent::move(Direction theMovement) {
 		break;
 	}
 	return result;
+}
+
+Point Agent::getPosition () {
+	return m_position;
 }

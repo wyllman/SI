@@ -29,11 +29,13 @@ private:
 	Goals* m_goals;
 	Intentions* m_intentions;
 protected:
-	bool move(Direction);
 	Point m_position;
 public:
 	Agent();
 	virtual ~Agent() = 0;
+
+	bool move(Direction);
+	Point getPosition ();
 };
 
 #endif /* AGENT_H_ */

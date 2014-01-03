@@ -16,6 +16,8 @@
 #ifndef SIMULATOR_H_
 #define SIMULATOR_H_
  
+#include <Tools.h>
+
 class Map;
 class MainAgent;
 
@@ -28,6 +30,7 @@ class Simulator: public Model {
       void stop();
       const Map* getMap() const;
       const MainAgent* getMainAgent () const;
+      Point getPosMainAgent ();
 
    private:
       Map* map_;

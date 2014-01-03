@@ -101,6 +101,24 @@ int Scene::getNumberQuadsFloor() const {
 void Scene::setNumberQuadsFloor(int numberQuadsFloor) {
    numberQuadsFloor_ = numberQuadsFloor;
 }
+int Scene::getNumberQuadsWorkingA() const {
+   return numberQuadsWorkingA_;
+}
+void Scene::setNumberQuadsWorkingA(int numberQuadsWorkingA) {
+   numberQuadsWorkingA_ = numberQuadsWorkingA;
+}
+int Scene::getNumberTriangMainA() const {
+   return numberTriangMainA_;
+}
+void Scene::setNumberTriangMainA(int numberTriangMainA) {
+   numberTriangMainA_ = numberTriangMainA;
+}
+int Scene::getNumberTriangSearchA() const {
+   return numberTriangSearchA_;
+}
+void Scene::setNumberTriangSearchA(int numberTriangSearchA) {
+   numberTriangSearchA_ = numberTriangSearchA;
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

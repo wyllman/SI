@@ -55,6 +55,7 @@ void Simulator::init() {
       std::cout << std::endl;
    }
 
+   m_MainAgent = new MainAgent ();
    m_MainAgent -> createRndInitialPos(map_); // Da una posición inicial al agente principal
    std::cout << "Simbolo en la posición generada: " << mapci(m_MainAgent -> getPosition().first, m_MainAgent -> getPosition().second) << std::endl;
 
@@ -75,6 +76,7 @@ void Simulator::init() {
 			   " , y = " << m_MainAgent -> getVAgents().at(0) -> getPosition().second << std::endl;
 	   //std::cout << "Simbolo = " << mapci(searchg1 -> getPosition().first, searchg1 -> getPosition().second) << std::endl;
    }
+
 }
 
 void Simulator::stop() {
@@ -93,8 +95,12 @@ const Map* Simulator::getMap() const {
    return map_;
 }
 const MainAgent* Simulator::getMainAgent () const {
-	return m_MainAgent;
+   return m_MainAgent;
 }
+Point Simulator::getPosMainAgent() {
+   return (m_MainAgent->getPosition());
+}
+
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

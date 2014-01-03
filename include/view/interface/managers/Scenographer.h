@@ -31,6 +31,7 @@ class Scenographer {
       void projZoom (float);
       void camPosX (float);
       void camRotationPos (float);
+      void setMainAgentPos (float*);
 
    private:
       const Interface* refInterface_;
@@ -46,6 +47,8 @@ class Scenographer {
       float camPos_[3];
       float camViewPoint_[3];
       float camVectorUp_[3];
+
+      float mainAgentPos_[3];
 
       void initProy (float, float, int, int);
       void initCam (float [3], float [3], float [3]);

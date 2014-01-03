@@ -55,7 +55,21 @@ void Director::init() {
 }
 void Director::start() {
    const_cast<Model*>(refModel_)->init();
+
    const_cast<View*>(refView_)->init();
+
+   Point posTmp = (dynamic_cast<Simulator*> (
+                     const_cast<Model*>(refModel_)))->getPosMainAgent();
+   float* posTmp3D = new float[3];
+//   std::cout << "---------------Punto pos main: " << posTmp.first << std::endl;
+   posTmp3D[0] = posTmp.second;
+   posTmp3D[1] = 0.1;
+   posTmp3D[2] = posTmp.first;
+
+   const_cast<Scenographer*> (
+   (dynamic_cast<Interface*>(
+      const_cast<View*> (refView_))->getScenographer()))->setMainAgentPos((float*)posTmp3D);
+
    mainLoop();
 }
 void Director::stop() {
@@ -131,6 +145,7 @@ void Director::mainLoop() {
             }
          }
          if (needRender) {
+            dynamic_cast<Interface*>(const_cast<View*>(refView_))->update();
             dynamic_cast<Interface*>(const_cast<View*>(refView_))->render();
             needRender = false;
          }

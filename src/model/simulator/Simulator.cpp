@@ -52,9 +52,9 @@ void Simulator::init() {
       std::cout << std::endl;
    }
 
-   MainAgent* mainAg = new MainAgent ();
-   mainAg -> createRndInitialPos(map_); // Da una posición inicial al agente principal
-   std::cout << "Simbolo en la posición generada: " << mapci(mainAg -> getPosition().first, mainAg -> getPosition().second) << std::endl;
+   m_MainAgent = new MainAgent ();
+   m_MainAgent -> createRndInitialPos(map_); // Da una posición inicial al agente principal
+   std::cout << "Simbolo en la posición generada: " << mapci(m_MainAgent -> getPosition().first, m_MainAgent -> getPosition().second) << std::endl;
 }
 void Simulator::stop() {
    logAction(LOG_F_STOP);
@@ -72,8 +72,12 @@ const Map* Simulator::getMap() const {
    return map_;
 }
 const MainAgent* Simulator::getMainAgent () const {
-	return m_MainAgent;
+   return m_MainAgent;
 }
+Point Simulator::getPosMainAgent() {
+   return (m_MainAgent->getPosition());
+}
+
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

@@ -52,12 +52,14 @@ void Scenographer::init() {
    float viewPoint[3] = {0.0, 0.0, 0.0};
    float vectorUp[3] = {0.0, 1.0, 0.0};
 
+
    initProy(45.0, WIN_WIDTH / WIN_HEIGHT, 1, 1000);
    initCam(camPos, viewPoint, vectorUp);
    initFloor();
    initObjects();
 }
 void Scenographer::update() {
+   updateObjects();
 }
 void Scenographer::projZoom(float value) {
    projAng_ += value;
@@ -70,6 +72,11 @@ void Scenographer::camPosX(float value) {
 void Scenographer::camRotationPos(float value) {
    camRotAngle_ += value;
    updateCam();
+}
+void Scenographer::setMainAgentPos(float* pos) {
+   mainAgentPos_[0] = pos[0];
+   mainAgentPos_[1] = pos[1];
+   mainAgentPos_[2] = pos[2];
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -110,6 +117,9 @@ void Scenographer::initFloor() {
    updateFloor(MAP_WIDTH, MAP_HEIGHT);
 }
 void Scenographer::initObjects() {
+   mainAgentPos_ [0] = 50.0;
+   mainAgentPos_ [1] = 0.1;
+   mainAgentPos_ [2] = 50.0;
    updateObjects();
 }
 
@@ -207,7 +217,7 @@ void Scenographer::updateObjects() {
    const_cast<Scene*> (refScene_)->setNumberTriangSearchA(0);
    const_cast<Scene*> (refScene_)->setNumberQuadsWorkingA(0);
 
-   createMainAgent(50, 50, 0.1);
+   createMainAgent(mainAgentPos_[2], mainAgentPos_[0], mainAgentPos_[1]);
    createSearchAgent(51, 51, 0.01);
    createWorkingAgent(49, 49, 0.01);
 }

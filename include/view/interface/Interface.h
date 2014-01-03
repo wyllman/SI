@@ -31,6 +31,7 @@ class Interface: public View {
       virtual ~Interface();
 
       void init();
+      void update();
       void stop();
       void render();
 

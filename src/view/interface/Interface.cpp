@@ -74,6 +74,9 @@ void Interface::init() {
 
    render();
 }
+void Interface::update() {
+   const_cast<Scenographer*>(getScenographer())->update();
+}
 void Interface::stop() {
    logAction(LOG_F_STOP);
    if (bureaucrat_ != NULL) {
@@ -212,3 +215,4 @@ void Interface::logAction(int index) {
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+

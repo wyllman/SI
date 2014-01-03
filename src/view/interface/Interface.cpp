@@ -122,8 +122,11 @@ const Scenographer* Interface::getScenographer() const {
 // ___________________________________________________________________________________
 // Métodos privados:
 void Interface::render() {
-   const int NUM_VER = scene_->getNumberVertex();
-   const int NUM_QUADS_FLOOR = scene_->getNumberQuadsFloor();
+   const int NUM_VER = scene_->getNumberVertex() * 3;
+   const int NUM_QUADS_FLOOR = scene_->getNumberQuadsFloor() * 4;
+   const int NUM_TRIA_MAIN = scene_->getNumberTriangMainA() * 3;
+   const int NUM_TRIA_SA = scene_->getNumberTriangSearchA() * 3;
+   const int NUM_QUADS_WA = scene_->getNumberQuadsWorkingA() * 4;
    // Clear the background as white
    glClearColor(1.0, 1.0, 0.9, 1.0);
    glClearDepth( 1.0f );
@@ -141,13 +144,13 @@ void Interface::render() {
    // Enviar el suelo al shader y pintarlo.
    //    Buffer de vertices
    glBindBuffer(GL_ARRAY_BUFFER, context_->getVboId()[0]);
-   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * NUM_VER * 3
+   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * NUM_VER
                , scene_->getVertexFloor(), GL_STATIC_DRAW);
    glVertexAttribPointer(glGetAttribLocation(context_->getProgramGsl(), "coord3d")
                         , 3, GL_FLOAT, GL_FALSE, 0, 0);
    //    Buffer de colores
    glBindBuffer(GL_ARRAY_BUFFER, context_->getVboId()[1]);
-   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * NUM_VER * 3
+   glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * NUM_VER
                , scene_->getVertexFloorColor(), GL_STATIC_DRAW);
    glVertexAttribPointer(glGetAttribLocation(context_->getProgramGsl(), "colorRGB")
                         , 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -155,9 +158,9 @@ void Interface::render() {
    glEnableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "coord3d"));
    glEnableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"));
 
-   glDrawArrays(GL_QUADS, 0, NUM_QUADS_FLOOR * 4);
-   glDrawArrays(GL_TRIANGLES, NUM_QUADS_FLOOR * 4, (12 * 2) + 12);
-   glDrawArrays(GL_QUADS, (NUM_QUADS_FLOOR * 4) + (12 * 3), (4 * 5));
+   glDrawArrays(GL_QUADS, 0, NUM_QUADS_FLOOR);
+   glDrawArrays(GL_TRIANGLES, NUM_QUADS_FLOOR, NUM_TRIA_MAIN + NUM_TRIA_SA);
+   glDrawArrays(GL_QUADS, NUM_QUADS_FLOOR + NUM_TRIA_MAIN + NUM_TRIA_SA, NUM_QUADS_WA);
 
    glDisableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "coord3d"));
    glDisableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"));

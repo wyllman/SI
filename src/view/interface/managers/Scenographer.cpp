@@ -202,10 +202,14 @@ void Scenographer::updateObjects() {
    float* vertexPos = const_cast<float*>(const_cast<Scene*>(refScene_)->getVertexFloor());
    float* vertexColor = const_cast<float*>(const_cast<Scene*>(refScene_)
                            ->getVertexFloorColor());
+
+   const_cast<Scene*> (refScene_)->setNumberTriangMainA(0);
+   const_cast<Scene*> (refScene_)->setNumberTriangSearchA(0);
+   const_cast<Scene*> (refScene_)->setNumberQuadsWorkingA(0);
+
    createMainAgent(50, 50, 0.1);
    createSearchAgent(51, 51, 0.01);
    createWorkingAgent(49, 49, 0.01);
-
 }
 
 // ---Crear:
@@ -292,12 +296,14 @@ void Scenographer::createMainAgent(int row, int col, float height) {
    const_cast<Scene*>(refScene_)->createSideTriangleInf(pos, 1.25, color2, color, MAIN_AGENT_SCALE, numVer + (18 * 3), 3);
    const_cast<Scene*>(refScene_)->createSideTriangleInf(pos, 1.25, color2, color, MAIN_AGENT_SCALE, numVer + (21 * 3), 4);
 
-   const_cast<Scene*> (refScene_)->setNumberVertex(NUM_VER + (12 * 2));
+   const_cast<Scene*> (refScene_)->setNumberVertex (NUM_VER + (12 * 2));
+   const_cast<Scene*> (refScene_)->setNumberTriangMainA (8);
 }
 void Scenographer::createSearchAgent(int row, int col, float height) {
    const int NUM_VER = (const_cast<Scene*> (refScene_)->getNumberVertex());
    const int NUM_QUADS = (const_cast<Scene*> (refScene_)->getNumberQuadsFloor()) * 4 * 3;
-   const int NUM_VER_MAIN = 24 *  3;
+   const int NUM_VER_MAIN = (const_cast<Scene*> (refScene_)->getNumberTriangMainA()) * 3 * 3;
+   const int NUM_VER_SA = (const_cast<Scene*> (refScene_)->getNumberTriangSearchA());
    int numVer = NUM_QUADS + NUM_VER_MAIN;
    float pos[3] = {col, height, row};
    float color[3] = {0.25, 0.12, 0.0};
@@ -309,11 +315,15 @@ void Scenographer::createSearchAgent(int row, int col, float height) {
    const_cast<Scene*>(refScene_)->createSideTriangle(pos, 1.0, color2, color, SECOND_AGENT_SCALE, numVer + (9 * 3), 4);
 
    const_cast<Scene*> (refScene_)->setNumberVertex(NUM_VER + 12);
+   const_cast<Scene*> (refScene_)->setNumberTriangSearchA(NUM_VER_SA + 4);
 }
 void Scenographer::createWorkingAgent(int row, int col, float height) {
    const int NUM_VER = (const_cast<Scene*> (refScene_)->getNumberVertex());
    const int NUM_QUADS = (const_cast<Scene*> (refScene_)->getNumberQuadsFloor()) * 4 * 3;
-   const int NUM_VER_MAIN_SEARCH = (24 * 3) + (12 * 3);
+   const int NUM_VER_MAIN = (const_cast<Scene*> (refScene_)->getNumberTriangMainA()) * 3 * 3;
+   const int NUM_VER_SA = (const_cast<Scene*> (refScene_)->getNumberTriangSearchA()) * 3 * 3;
+   const int NUM_VER_WA = (const_cast<Scene*> (refScene_)->getNumberQuadsWorkingA());
+   const int NUM_VER_MAIN_SEARCH = NUM_VER_MAIN + NUM_VER_SA;
    int numVer = NUM_QUADS + NUM_VER_MAIN_SEARCH;
    float pos[3] = {col, ((height * MAP_UP_SCALE) + (1.0 * SECOND_AGENT_SCALE)) / MAP_UP_SCALE, row};
    float col1[3] = {1.0, 1.0, 1.0};
@@ -328,6 +338,7 @@ void Scenographer::createWorkingAgent(int row, int col, float height) {
    const_cast<Scene*>(refScene_)->createSideQuads(pos, heightTmp, col1, col2, SECOND_AGENT_SCALE, numVer + (16 * 3), 4);
 
    const_cast<Scene*> (refScene_)->setNumberVertex(NUM_VER + (4 * 5));
+   const_cast<Scene*> (refScene_)->setNumberQuadsWorkingA(NUM_VER_WA + 5);
 }
 // ---Comprobar:
 bool Scenographer::checkHeightNorth(int row, int col) {

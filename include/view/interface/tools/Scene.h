@@ -42,6 +42,12 @@ class Scene {
       void setNumberVertex(int numberVertex);
       int getNumberQuadsFloor() const;
       void setNumberQuadsFloor(int numberQuadsFloor);
+      int getNumberQuadsWorkingA() const;
+      void setNumberQuadsWorkingA(int numberQuadsWorkingA);
+      int getNumberTriangMainA() const;
+      void setNumberTriangMainA(int numberTriangMainA);
+      int getNumberTriangSearchA() const;
+      void setNumberTriangSearchA(int numberTriangSearchA);
 
 
       void createUpQuads (float* position, float* color1, float scale, int memPos);
@@ -53,6 +59,7 @@ class Scene {
             , float scale, int memPos, int side);
       void createSideTriangleInf (float* position, float height2, float* color1, float* color2
             , float scale, int memPos, int side);
+
 
    private:
       const Interface* refInterface_;

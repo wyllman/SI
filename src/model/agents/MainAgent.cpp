@@ -92,3 +92,7 @@ void MainAgent::logAction(int index) {
 std::vector<Agent*>& MainAgent::getVAgents () {
 	return m_Vagents;
 }
+
+std::vector<Agent*>& MainAgent::getWorVecAgents() {
+   return m_WorVecAgents;
+}

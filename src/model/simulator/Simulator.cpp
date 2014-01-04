@@ -21,6 +21,7 @@
 #include <model/map/MapConsoleInterface.h>
 #include <model/agents/MainAgent.h>
 #include <model/agents/SearchAgent.h>
+#include <model/agents/WorkingAgent.h>
 #include <Tools.h>
 
 #include <iostream>
@@ -63,6 +64,28 @@ void Simulator::init() {
    SearchAgent* searchg1 = new SearchAgent ();
    searchg1 -> setPosition (Point (m_MainAgent -> getPosition().first + 1, m_MainAgent -> getPosition().second));
    m_MainAgent -> getVAgents().push_back(searchg1);
+
+   SearchAgent* searchg2 = new SearchAgent ();
+   searchg2 -> setPosition (Point (m_MainAgent -> getPosition().first + 1, m_MainAgent -> getPosition().second + 1));
+   m_MainAgent -> getVAgents().push_back(searchg2);
+
+   SearchAgent* searchg3 = new SearchAgent ();
+   searchg3 -> setPosition (Point (m_MainAgent -> getPosition().first + 1, m_MainAgent -> getPosition().second - 1));
+   m_MainAgent -> getVAgents().push_back(searchg3);
+
+
+
+   WorkingAgent* working1 = new WorkingAgent ();
+   working1 -> setPosition (Point (m_MainAgent -> getPosition().first - 1, m_MainAgent -> getPosition().second));
+   m_MainAgent -> getWorVecAgents().push_back(working1);
+
+   WorkingAgent* working2 = new WorkingAgent ();
+   working2 -> setPosition (Point (m_MainAgent -> getPosition().first - 1, m_MainAgent -> getPosition().second + 1));
+   m_MainAgent -> getWorVecAgents().push_back(working2);
+
+   WorkingAgent* working3 = new WorkingAgent ();
+   working3 -> setPosition (Point (m_MainAgent -> getPosition().first - 1, m_MainAgent -> getPosition().second - 1));
+   m_MainAgent -> getWorVecAgents().push_back(working3);
 
    std::cout << " - Posición del Ag. Trabajador:  x = " <<
    		   m_MainAgent -> getVAgents().at(0) -> getPosition ().first << " , y = " <<

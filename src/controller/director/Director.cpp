@@ -103,6 +103,34 @@ void Director::start() {
       }
    }
 
+
+   // Obteniendo el número de agentes trabajadores y sus posiciones del modelo
+   // y pasarle la información a la vista.
+   if (!const_cast<MainAgent*> (
+      (dynamic_cast<Simulator*> (
+         const_cast<Model*>(refModel_)))
+            ->getMainAgent())
+               ->getWorVecAgents().empty()) {
+      numAgents = const_cast<MainAgent*> (
+                     (dynamic_cast<Simulator*> (
+                        const_cast<Model*>(refModel_)))
+                           ->getMainAgent())
+                              ->getWorVecAgents().size();
+      for (int i = 0; i < numAgents; i++) {
+         posTmp = const_cast<MainAgent*> (
+                 (dynamic_cast<Simulator*> (
+                    const_cast<Model*>(refModel_)))
+                       ->getMainAgent())
+                          ->getWorVecAgents()[i]->getPosition();
+         posTmp3D[0] = posTmp.second;
+         posTmp3D[1] = 0.1;
+         posTmp3D[2] = posTmp.first;
+         const_cast<Scenographer*> (
+         (dynamic_cast<Interface*>(
+            const_cast<View*> (refView_))->getScenographer()))->addWorkingAgent((float*)posTmp3D);
+      }
+   }
+
    // Iniciando el bucle principal de ejecución del programa
    mainLoop();
 }

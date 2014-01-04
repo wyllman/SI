@@ -21,17 +21,20 @@
  *
  */
 class MainAgent: public Agent {
-public:
-	MainAgent();
-	~MainAgent();
+   public:
+      MainAgent();
+      ~MainAgent();
 
-	void logAction(int);
-	void createRndInitialPos (Map*);
-	std::vector<Agent*>& getVAgents ();
+      void logAction(int);
+      void createRndInitialPos (Map*);
+      std::vector<Agent*>& getVAgents ();
+      std::vector<Agent*>& getWorVecAgents();
 
-private:
-	BeliefSet* m_beliefSet;
-	std::vector<Agent*> m_Vagents;
+   private:
+      BeliefSet* m_beliefSet;
+      std::vector<Agent*> m_Vagents;
+      std::vector<Agent*> m_WorVecAgents;
+
 };
 
 #endif /* MAINAGENT_H_ */

@@ -251,14 +251,19 @@ void Scenographer::updateObjects() {
 
    createMainAgent(mainAgentPos_[2], mainAgentPos_[0], mainAgentPos_[1]);
    if (!searchAgentVector_.empty()) {
+//      std::cout << "NUMERO DE AGENTES EXPLORADORES = "  << searchAgentVector_.size() << std::endl;
       for (int i = 0; i < searchAgentVector_.size(); i++) {
-         createSearchAgent(searchAgentVector_[i][2], searchAgentVector_[i][0], searchAgentVector_[i][1]);
+         createSearchAgent(searchAgentVector_[i][2] , searchAgentVector_[i][0], searchAgentVector_[i][1]);
+//         std::cout << "POSICION DEL AGENTE " << i << ": Fila = " << searchAgentVector_[i][2] << " Columna = "
+//            << searchAgentVector_[i][0] << " Altura = " << searchAgentVector_[i][1] << std::endl;
       }
    } else {
       createSearchAgent(51, 51, 0.01);
    }
    if (!workingAgentVector_.empty()) {
-
+      for (int i = 0; i < workingAgentVector_.size(); i++) {
+         createWorkingAgent(workingAgentVector_[i][2] , workingAgentVector_[i][0], workingAgentVector_[i][1]);
+      }
    } else {
       createWorkingAgent(49, 49, 0.01);
    }
@@ -356,7 +361,7 @@ void Scenographer::createSearchAgent(int row, int col, float height) {
    const int NUM_QUADS = (const_cast<Scene*> (refScene_)->getNumberQuadsFloor()) * 4 * 3;
    const int NUM_VER_MAIN = (const_cast<Scene*> (refScene_)->getNumberTriangMainA()) * 3 * 3;
    const int NUM_VER_SA = (const_cast<Scene*> (refScene_)->getNumberTriangSearchA());
-   int numVer = NUM_QUADS + NUM_VER_MAIN;
+   int numVer = NUM_QUADS + NUM_VER_MAIN + (NUM_VER_SA * 3 * 3);
    float pos[3] = {col, height, row};
    float color[3] = {0.25, 0.12, 0.0};
    float color2[3] = {1.0, 1.0, 1.0};
@@ -376,7 +381,7 @@ void Scenographer::createWorkingAgent(int row, int col, float height) {
    const int NUM_VER_SA = (const_cast<Scene*> (refScene_)->getNumberTriangSearchA()) * 3 * 3;
    const int NUM_VER_WA = (const_cast<Scene*> (refScene_)->getNumberQuadsWorkingA());
    const int NUM_VER_MAIN_SEARCH = NUM_VER_MAIN + NUM_VER_SA;
-   int numVer = NUM_QUADS + NUM_VER_MAIN_SEARCH;
+   int numVer = NUM_QUADS + NUM_VER_MAIN_SEARCH + (NUM_VER_WA * 4 * 3);
    float pos[3] = {col, ((height * MAP_UP_SCALE) + (1.0 * SECOND_AGENT_SCALE)) / MAP_UP_SCALE, row};
    float col1[3] = {1.0, 1.0, 1.0};
    float col2[3] = {0.25, 0.12, 0.0};

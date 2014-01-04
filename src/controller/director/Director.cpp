@@ -19,6 +19,9 @@
 #include <controller/director/tools/MainLoop.h>
 #include <model/abstracts/Model.h>
 #include <model/simulator/Simulator.h>
+
+#include <model/agents/MainAgent.h>
+
 #include <view/interface/Interface.h>
 #include <view/interface/managers/Scenographer.h>
 #include <Tools.h>
@@ -54,14 +57,17 @@ void Director::init() {
    logAction(LOG_F_INIT);
 }
 void Director::start() {
+   // Incializando el modelo (clase Simulator)
    const_cast<Model*>(refModel_)->init();
-
+   // Inicializando la vista (clase Interface)
    const_cast<View*>(refView_)->init();
 
+   // Obteniendo la posición inicial del agente principal creada en el modelo
+   // y pasarsela a la vista para que pueda mostrala en pantalla.
    Point posTmp = (dynamic_cast<Simulator*> (
                      const_cast<Model*>(refModel_)))->getPosMainAgent();
    float* posTmp3D = new float[3];
-//   std::cout << "---------------Punto pos main: " << posTmp.first << std::endl;
+   int numAgents;
    posTmp3D[0] = posTmp.second;
    posTmp3D[1] = 0.1;
    posTmp3D[2] = posTmp.first;
@@ -70,6 +76,34 @@ void Director::start() {
    (dynamic_cast<Interface*>(
       const_cast<View*> (refView_))->getScenographer()))->setMainAgentPos((float*)posTmp3D);
 
+   // Obteniendo el número de agentes exploradores y sus posiciones del modelo
+   // y pasarle la información a la vista.
+   if (!const_cast<MainAgent*> (
+      (dynamic_cast<Simulator*> (
+         const_cast<Model*>(refModel_)))
+            ->getMainAgent())
+               ->getVAgents().empty()) {
+      numAgents = const_cast<MainAgent*> (
+                     (dynamic_cast<Simulator*> (
+                        const_cast<Model*>(refModel_)))
+                           ->getMainAgent())
+                              ->getVAgents().size();
+      for (int i = 0; i < numAgents; i++) {
+         posTmp = const_cast<MainAgent*> (
+                 (dynamic_cast<Simulator*> (
+                    const_cast<Model*>(refModel_)))
+                       ->getMainAgent())
+                          ->getVAgents()[i]->getPosition();
+         posTmp3D[0] = posTmp.second;
+         posTmp3D[1] = 0.1;
+         posTmp3D[2] = posTmp.first;
+         const_cast<Scenographer*> (
+         (dynamic_cast<Interface*>(
+            const_cast<View*> (refView_))->getScenographer()))->addSearchAgent((float*)posTmp3D);
+      }
+   }
+
+   // Iniciando el bucle principal de ejecución del programa
    mainLoop();
 }
 void Director::stop() {

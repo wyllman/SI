@@ -16,6 +16,7 @@
 #define SCENOGRAPHER_H_
 
 #include <Tools.h>
+#include <vector.h>
 
 class Interface;
 class Scene;
@@ -32,6 +33,8 @@ class Scenographer {
       void camPosX (float);
       void camRotationPos (float);
       void setMainAgentPos (float*);
+      void addSearchAgent (float*);
+      void addWorkingAgent (float*);
 
    private:
       const Interface* refInterface_;
@@ -49,6 +52,8 @@ class Scenographer {
       float camVectorUp_[3];
 
       float mainAgentPos_[3];
+      vector<float*> searchAgentVector_;
+      vector<float*> workingAgentVector_;
 
       void initProy (float, float, int, int);
       void initCam (float [3], float [3], float [3]);

@@ -41,6 +41,18 @@ Scenographer::Scenographer(const Interface& interface, const Scene& scene, const
 }
 Scenographer::~Scenographer() {
    logAction(LOG_END);
+   if (!searchAgentVector_.empty()) {
+      for (int i = 0; i < searchAgentVector_.size(); i++) {
+         delete [] (searchAgentVector_[i]);
+      }
+      searchAgentVector_.clear();
+   }
+   if (!workingAgentVector_.empty()) {
+      for (int i = 0; i < workingAgentVector_.size(); i++) {
+         delete [] (workingAgentVector_[i]);
+      }
+      workingAgentVector_.clear();
+   }
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -77,6 +89,24 @@ void Scenographer::setMainAgentPos(float* pos) {
    mainAgentPos_[0] = pos[0];
    mainAgentPos_[1] = pos[1];
    mainAgentPos_[2] = pos[2];
+}
+void Scenographer::addSearchAgent(float* pos) {
+   float* posAgent = new float[3];
+
+   posAgent[0] = pos[0];
+   posAgent[1] = pos[1];
+   posAgent[2] = pos[2];
+
+   searchAgentVector_.push_back(posAgent);
+}
+void Scenographer::addWorkingAgent(float* pos) {
+   float* posAgent = new float[3];
+
+   posAgent[0] = pos[0];
+   posAgent[1] = pos[1];
+   posAgent[2] = pos[2];
+
+   workingAgentVector_.push_back(posAgent);
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -151,11 +181,15 @@ void Scenographer::updateCam() {
 }
 void Scenographer::updateFloor(int width, int height) {
    const int NUM_VER_POINT = 3 * 4 * 5;
+
+
+   // FIXME: Cambiar estas dos líneas a otra función (constructor/init de scene/scenographer)
    float* vertexFloor = const_cast<Scene*>(refScene_)
                            ->getVertexFloor(MAP_WIDTH * MAP_HEIGHT * NUM_VER_POINT);
    float* vertexFloorColor = const_cast<Scene*>(refScene_)
-                                ->getVertexFloorColor(MAP_WIDTH * MAP_HEIGHT
-                                		* NUM_VER_POINT);
+                                ->getVertexFloorColor(MAP_WIDTH * MAP_HEIGHT * NUM_VER_POINT);
+   // ---------------------------------
+
    float* color = new float[3];
    color[0] = 0;
    color[1] = 0;
@@ -209,17 +243,25 @@ void Scenographer::updateFloor(int width, int height) {
    delete [] (color);
 }
 void Scenographer::updateObjects() {
-   float* vertexPos = const_cast<float*>(const_cast<Scene*>(refScene_)->getVertexFloor());
-   float* vertexColor = const_cast<float*>(const_cast<Scene*>(refScene_)
-                           ->getVertexFloorColor());
-
-   const_cast<Scene*> (refScene_)->setNumberTriangMainA(0);
-   const_cast<Scene*> (refScene_)->setNumberTriangSearchA(0);
-   const_cast<Scene*> (refScene_)->setNumberQuadsWorkingA(0);
+   const int NUM_QUADS = const_cast<Scene*> (refScene_)->getNumberQuadsFloor();
+   const_cast<Scene*> (refScene_)->setNumberVertex (NUM_QUADS * 4);
+   const_cast<Scene*> (refScene_)->setNumberTriangMainA (0);
+   const_cast<Scene*> (refScene_)->setNumberTriangSearchA (0);
+   const_cast<Scene*> (refScene_)->setNumberQuadsWorkingA (0);
 
    createMainAgent(mainAgentPos_[2], mainAgentPos_[0], mainAgentPos_[1]);
-   createSearchAgent(51, 51, 0.01);
-   createWorkingAgent(49, 49, 0.01);
+   if (!searchAgentVector_.empty()) {
+      for (int i = 0; i < searchAgentVector_.size(); i++) {
+         createSearchAgent(searchAgentVector_[i][2], searchAgentVector_[i][0], searchAgentVector_[i][1]);
+      }
+   } else {
+      createSearchAgent(51, 51, 0.01);
+   }
+   if (!workingAgentVector_.empty()) {
+
+   } else {
+      createWorkingAgent(49, 49, 0.01);
+   }
 }
 
 // ---Crear:
@@ -341,7 +383,6 @@ void Scenographer::createWorkingAgent(int row, int col, float height) {
    float heightTmp = (height * MAP_UP_SCALE) / SECOND_AGENT_SCALE;
 
    const_cast<Scene*>(refScene_)->createUpQuads(pos, col1, SECOND_AGENT_SCALE, numVer);
-
    const_cast<Scene*>(refScene_)->createSideQuads(pos, heightTmp, col1, col2, SECOND_AGENT_SCALE, numVer + (4 * 3), 1);
    const_cast<Scene*>(refScene_)->createSideQuads(pos, heightTmp, col1, col2, SECOND_AGENT_SCALE, numVer + (8 * 3), 2);
    const_cast<Scene*>(refScene_)->createSideQuads(pos, heightTmp, col1, col2, SECOND_AGENT_SCALE, numVer + (12 * 3), 3);

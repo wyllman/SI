@@ -74,5 +74,8 @@
  *              - Eliminados los Quads interiores de la representación gráfica del terreno.
  *              - Refactorización para la mejora del uso de los buffer de vertices y colores.
  *              - Representación gráfica del agente principal creada.
+ *              - Representación gráfica de los agentes exploradores y trabajadores.
+ *              - Coordinar la información del agente principal y los exploradores con su
+ *                representación gráfica.
  */
 

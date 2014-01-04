@@ -68,7 +68,7 @@ void Simulator::init() {
    		   m_MainAgent -> getVAgents().at(0) -> getPosition ().first << " , y = " <<
    		   m_MainAgent -> getVAgents().at(0) -> getPosition ().second << std::endl;
 
-
+/*
    // Prueba de movimiento hacia el sur de un agente
    while (m_MainAgent -> getVAgents().at(0) -> getPosition().second < 100) {
 	   m_MainAgent -> getVAgents().at(0) -> move (SOUTH);
@@ -76,7 +76,7 @@ void Simulator::init() {
 			   " , y = " << m_MainAgent -> getVAgents().at(0) -> getPosition().second << std::endl;
 	   //std::cout << "Simbolo = " << mapci(searchg1 -> getPosition().first, searchg1 -> getPosition().second) << std::endl;
    }
-
+*/
 }
 
 void Simulator::stop() {

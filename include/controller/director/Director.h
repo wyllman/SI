@@ -37,6 +37,7 @@ class Director: public Controller {
       FileLog* regAccErr_;
       MainLoop* mainLoop_;
 
+      void getAgentsPos ();
       void mainLoop ();
       void logAction (int);
 };

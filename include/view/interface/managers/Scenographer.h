@@ -33,6 +33,7 @@ class Scenographer {
       void camPosX (float);
       void camRotationPos (float);
       void setMainAgentPos (float*);
+      void clearAgents ();
       void addSearchAgent (float*);
       void addWorkingAgent (float*);
 

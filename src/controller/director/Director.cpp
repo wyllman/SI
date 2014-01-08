@@ -62,6 +62,54 @@ void Director::start() {
    // Inicializando la vista (clase Interface)
    const_cast<View*>(refView_)->init();
 
+   getAgentsPos();
+
+   // Iniciando el bucle principal de ejecución del programa
+   mainLoop();
+}
+void Director::stop() {
+   if (refModel_ != NULL) {
+      const_cast<Model*>(refModel_)->stop();
+      delete (const_cast<Model*>(refModel_));
+      refModel_ = NULL;
+   }
+   if (refView_ != NULL) {
+      const_cast<View*>(refView_)->stop();
+      delete (const_cast<View*>(refView_));
+      refView_ = NULL;
+   }
+   if (mainLoop_ != NULL) {
+      delete (mainLoop_);
+      mainLoop_ = NULL;
+   }
+
+   logAction(LOG_F_STOP);
+
+   if (regAccErr_ != NULL) {
+      delete (regAccErr_);
+      regAccErr_ = NULL;
+   }
+}
+// FIN -------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+// |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+// ___________________________________________________________________________________
+// Manejadores públicos:
+const FileLog* Director::getRegAccErr() const {
+   return regAccErr_;
+}
+const Map* Director::getMap() const {
+   return (dynamic_cast<Simulator*>(const_cast<Model*>(refModel_))->getMap());
+}
+// FIN -------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+// |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+// ___________________________________________________________________________________
+// Métodos privados:
+void Director::getAgentsPos() {
+    const_cast<Scenographer*> (
+    (dynamic_cast<Interface*>(
+       const_cast<View*> (refView_))->getScenographer()))->clearAgents();
    // Obteniendo la posición inicial del agente principal creada en el modelo
    // y pasarsela a la vista para que pueda mostrala en pantalla.
    Point posTmp = (dynamic_cast<Simulator*> (
@@ -130,49 +178,7 @@ void Director::start() {
             const_cast<View*> (refView_))->getScenographer()))->addWorkingAgent((float*)posTmp3D);
       }
    }
-
-   // Iniciando el bucle principal de ejecución del programa
-   mainLoop();
 }
-void Director::stop() {
-   if (refModel_ != NULL) {
-      const_cast<Model*>(refModel_)->stop();
-      delete (const_cast<Model*>(refModel_));
-      refModel_ = NULL;
-   }
-   if (refView_ != NULL) {
-      const_cast<View*>(refView_)->stop();
-      delete (const_cast<View*>(refView_));
-      refView_ = NULL;
-   }
-   if (mainLoop_ != NULL) {
-      delete (mainLoop_);
-      mainLoop_ = NULL;
-   }
-
-   logAction(LOG_F_STOP);
-
-   if (regAccErr_ != NULL) {
-      delete (regAccErr_);
-      regAccErr_ = NULL;
-   }
-}
-// FIN -------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------
-// |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-// ___________________________________________________________________________________
-// Manejadores públicos:
-const FileLog* Director::getRegAccErr() const {
-   return regAccErr_;
-}
-const Map* Director::getMap() const {
-   return (dynamic_cast<Simulator*>(const_cast<Model*>(refModel_))->getMap());
-}
-// FIN -------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------
-// |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-// ___________________________________________________________________________________
-// Métodos privados:
 void Director::mainLoop() {
    SDL_Event eventSDL;
    logAction(LOG_F_LOOP);
@@ -260,3 +266,4 @@ void Director::logAction(int index) {
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+

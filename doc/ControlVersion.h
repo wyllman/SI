@@ -77,5 +77,7 @@
  *              - Representación gráfica de los agentes exploradores y trabajadores.
  *              - Coordinar la información del agente principal y los exploradores con su
  *                representación gráfica.
+ *              - Coordinada la información de los agentes trabjajadores con su representación
+ *                gráfica.
  */
 

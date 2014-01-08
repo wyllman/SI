@@ -41,18 +41,7 @@ Scenographer::Scenographer(const Interface& interface, const Scene& scene, const
 }
 Scenographer::~Scenographer() {
    logAction(LOG_END);
-   if (!searchAgentVector_.empty()) {
-      for (int i = 0; i < searchAgentVector_.size(); i++) {
-         delete [] (searchAgentVector_[i]);
-      }
-      searchAgentVector_.clear();
-   }
-   if (!workingAgentVector_.empty()) {
-      for (int i = 0; i < workingAgentVector_.size(); i++) {
-         delete [] (workingAgentVector_[i]);
-      }
-      workingAgentVector_.clear();
-   }
+   clearAgents();
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -89,6 +78,20 @@ void Scenographer::setMainAgentPos(float* pos) {
    mainAgentPos_[0] = pos[0];
    mainAgentPos_[1] = pos[1];
    mainAgentPos_[2] = pos[2];
+}
+void Scenographer::clearAgents() {
+   if (!searchAgentVector_.empty()) {
+      for (int i = 0; i < searchAgentVector_.size(); i++) {
+         delete [] (searchAgentVector_[i]);
+      }
+      searchAgentVector_.clear();
+   }
+   if (!workingAgentVector_.empty()) {
+      for (int i = 0; i < workingAgentVector_.size(); i++) {
+         delete [] (workingAgentVector_[i]);
+      }
+      workingAgentVector_.clear();
+   }
 }
 void Scenographer::addSearchAgent(float* pos) {
    float* posAgent = new float[3];
@@ -251,11 +254,8 @@ void Scenographer::updateObjects() {
 
    createMainAgent(mainAgentPos_[2], mainAgentPos_[0], mainAgentPos_[1]);
    if (!searchAgentVector_.empty()) {
-//      std::cout << "NUMERO DE AGENTES EXPLORADORES = "  << searchAgentVector_.size() << std::endl;
       for (int i = 0; i < searchAgentVector_.size(); i++) {
          createSearchAgent(searchAgentVector_[i][2] , searchAgentVector_[i][0], searchAgentVector_[i][1]);
-//         std::cout << "POSICION DEL AGENTE " << i << ": Fila = " << searchAgentVector_[i][2] << " Columna = "
-//            << searchAgentVector_[i][0] << " Altura = " << searchAgentVector_[i][1] << std::endl;
       }
    } else {
       createSearchAgent(51, 51, 0.01);

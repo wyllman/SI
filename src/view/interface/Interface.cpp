@@ -102,9 +102,8 @@ void Interface::stop() {
 }
 void Interface::log(const char* line) {
    if (ADVAN_LOG) {
-      FileLog* fileLogTmp = const_cast<FileLog*>(
-                               dynamic_cast<Director*>(
-                               const_cast<Controller*>(refController_))->getRegAccErr());
+      FileLog* fileLogTmp = dynamic_cast<Director*>(
+                               const_cast<Controller*>(refController_))->getRegAccErr();
       fileLogTmp->insertLine(line);
    }
 }
@@ -125,33 +124,38 @@ const Scenographer* Interface::getScenographer() const {
 // ___________________________________________________________________________________
 // Métodos privados:
 void Interface::render() {
+   // Inicializar las constantes de renderizado (índices para las posiciones de los
+   // vértice).
    const int NUM_VER = scene_->getNumberVertex() * 3;
    const int NUM_QUADS_FLOOR = scene_->getNumberQuadsFloor() * 4;
    const int NUM_TRIA_MAIN = scene_->getNumberTriangMainA() * 3;
    const int NUM_TRIA_SA = scene_->getNumberTriangSearchA() * 3;
    const int NUM_QUADS_WA = scene_->getNumberQuadsWorkingA() * 4;
-   // Clear the background as white
+
+   // Eliminar los datos referentes a anteriores renderizados.
    glClearColor(1.0, 1.0, 0.9, 1.0);
    glClearDepth( 1.0f );
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+   // Seleccionar el programa GLSL a usar.
    glUseProgram(context_->getProgramGsl());
 
    // Enviar la proyección al shader
    glUniformMatrix4fv(glGetUniformLocation(context_->getProgramGsl(), "projection_matrix")
                      , 1, GL_FALSE, scene_->getProjectionMatrix());
+
    // Enviar la cámara al shader
    glUniformMatrix4fv(glGetUniformLocation(context_->getProgramGsl(), "modelview_matrix")
                      , 1, GL_FALSE, scene_->getModelviewMatrix());
 
-   // Enviar el suelo al shader y pintarlo.
-   //    Buffer de vertices
+   // Enviar los datos todos los vértices de la escena al vertexShader.
+   // ---Buffer de vertices
    glBindBuffer(GL_ARRAY_BUFFER, context_->getVboId()[0]);
    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * NUM_VER
                , scene_->getVertexFloor(), GL_STATIC_DRAW);
    glVertexAttribPointer(glGetAttribLocation(context_->getProgramGsl(), "coord3d")
                         , 3, GL_FLOAT, GL_FALSE, 0, 0);
-   //    Buffer de colores
+   // ---Buffer de colores
    glBindBuffer(GL_ARRAY_BUFFER, context_->getVboId()[1]);
    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * NUM_VER
                , scene_->getVertexFloorColor(), GL_STATIC_DRAW);
@@ -161,14 +165,18 @@ void Interface::render() {
    glEnableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "coord3d"));
    glEnableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"));
 
+   // Pintar el suelo.
    glDrawArrays(GL_QUADS, 0, NUM_QUADS_FLOOR);
+   // Pintar el agente principal y los exploradores.
    glDrawArrays(GL_TRIANGLES, NUM_QUADS_FLOOR, NUM_TRIA_MAIN + NUM_TRIA_SA);
+   // Pintar los agentes trabajadores.
    glDrawArrays(GL_QUADS, NUM_QUADS_FLOOR + NUM_TRIA_MAIN + NUM_TRIA_SA, NUM_QUADS_WA);
 
    glDisableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "coord3d"));
    glDisableVertexAttribArray(glGetAttribLocation(context_->getProgramGsl(), "colorRGB"));
    glUseProgram(0);
 
+   // Actualizar la ventana SDL.
    window_->update();
 }
 void Interface::logAction(int index) {
@@ -191,9 +199,8 @@ void Interface::logAction(int index) {
       }
    }
    if (ADVAN_LOG) {
-      FileLog* fileLogTmp = const_cast<FileLog*>(
-                               dynamic_cast<Director*>(
-                               const_cast<Controller*>(refController_))->getRegAccErr());
+      FileLog* fileLogTmp = dynamic_cast<Director*>(
+                               const_cast<Controller*>(refController_))->getRegAccErr();
       switch (index) {
          case LOG_INIT:
             fileLogTmp->insertLine("---Generando la vista Interfaz ");

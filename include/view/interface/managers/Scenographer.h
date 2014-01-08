@@ -29,13 +29,18 @@ class Scenographer {
 
       void init ();
       void update ();
+
       void projZoom (float);
+
       void camPosX (float);
       void camRotationPos (float);
+
       void setMainAgentPos (float*);
+
       void clearAgents ();
       void addSearchAgent (float*);
       void addWorkingAgent (float*);
+      void requireUpdateFloor ();
 
    private:
       const Interface* refInterface_;
@@ -52,6 +57,9 @@ class Scenographer {
       float camViewPoint_[3];
       float camVectorUp_[3];
 
+      bool needUpdateObjects_;
+      bool needUpdateFloor_;
+
       float mainAgentPos_[3];
       vector<float*> searchAgentVector_;
       vector<float*> workingAgentVector_;
@@ -63,7 +71,7 @@ class Scenographer {
 
       void updateProy ();
       void updateCam ();
-      void updateFloor (int, int);
+      void updateFloor ();
       void updateObjects ();
 
       // Funciones para la creación de cada uno de las casillas del terreno.

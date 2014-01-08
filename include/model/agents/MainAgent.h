@@ -11,8 +11,11 @@
 #include <model/agents/Agent.h>
 #include <model/map/Map.h>
 
-#include <vector>
 
+#include <vector>
+#include <model/simulator/Simulator.h>
+
+class Simulator;
 /**
  * \class MainAgent
  * \brief Agente principal de la simulación.
@@ -22,7 +25,7 @@
  */
 class MainAgent: public Agent {
    public:
-      MainAgent();
+      MainAgent(Simulator*);
       ~MainAgent();
 
       void logAction(int);
@@ -31,6 +34,8 @@ class MainAgent: public Agent {
       std::vector<Agent*>& getWorVecAgents();
 
    private:
+      Simulator* refSimulator_;
+
       BeliefSet* m_beliefSet;
       std::vector<Agent*> m_Vagents;
       std::vector<Agent*> m_WorVecAgents;

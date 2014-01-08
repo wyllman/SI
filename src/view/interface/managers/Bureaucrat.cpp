@@ -43,6 +43,7 @@ Bureaucrat::~Bureaucrat() {
 // Métodos públicos:
 void Bureaucrat::initSDL() {
    logAction(LOG_F_INIT);
+   // Inicializar SDL y comprobar que no hubo ningún error básico.
    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
       logAction(LOG_ERROR);
       const_cast<Interface*>(refInterface_)->stop();
@@ -50,13 +51,16 @@ void Bureaucrat::initSDL() {
 }
 void Bureaucrat::initOGL() {
    logAction(LOG_F_INIT_1);
+   // En caso de compilar en linux, inicializar las librerías GLEW
+   // y comprobar que no hubo ningún error básico.
    #ifdef __linux
       GLenum err = glewInit();
       if (GLEW_OK != err) {
-         //exit(-1);
          const_cast<Interface*>(refInterface_)->stop();
       }
    #endif
+   // Configurar la máquina de estados de OpenGL para su correcta
+   // ejecución.
    glShadeModel( GL_SMOOTH );
 
    glEnable( GL_DEPTH_TEST );

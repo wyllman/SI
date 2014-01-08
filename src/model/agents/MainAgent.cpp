@@ -15,9 +15,11 @@
 #include <boost/random/negative_binomial_distribution.hpp>
 #include <boost/random/random_device.hpp>
 
-MainAgent::MainAgent() {
-	logAction(LOG_INIT);
-	m_beliefSet = new BeliefSet();
+MainAgent::MainAgent(Simulator* refModel): refSimulator_(refModel) {
+   logAction(LOG_INIT);
+   m_beliefSet = new BeliefSet();
+
+//   refSimulator_ = refModel;
 }
 
 MainAgent::~MainAgent() {
@@ -25,19 +27,19 @@ MainAgent::~MainAgent() {
 }
 
 void MainAgent::createRndInitialPos (Map* mainMap) {
-	   logAction(LOG_F_INIT);
-	boost::random::random_device rndDev;
-	boost::random::mt11213b probabilityRNG;
-	boost::random::mt11213b layoutRNG;
-	boost::random::mt11213b positionRNG;
-	boost::random::mt11213b typeRNG;
-	boost::random::negative_binomial_distribution<> probabilityDistrib(3, 0.5);
-	boost::random::uniform_int_distribution<> positionDistrib(1, MAP_WIDTH - 1); // Porque WIDTH = HEIGHT
-	boost::random::uniform_int_distribution<> typeDistrib(3, 5);
+   logAction(LOG_F_INIT);
+   boost::random::random_device rndDev;
+   boost::random::mt11213b probabilityRNG;
+   boost::random::mt11213b layoutRNG;
+   boost::random::mt11213b positionRNG;
+   boost::random::mt11213b typeRNG;
+   boost::random::negative_binomial_distribution<> probabilityDistrib(3, 0.5);
+   boost::random::uniform_int_distribution<> positionDistrib(1, MAP_WIDTH - 1); // Porque WIDTH = HEIGHT
+   boost::random::uniform_int_distribution<> typeDistrib(3, 5);
 
-	bool condition = false; // Indica si está en una posición CORRECTA
+   bool condition = false; // Indica si está en una posición CORRECTA
 
-	do {
+   do {
 		// posición x del agente principal
 		positionRNG.seed(rndDev());
 		positionRNG();
@@ -66,9 +68,9 @@ void MainAgent::createRndInitialPos (Map* mainMap) {
 			condition = true;
 		}
 
-	} while (!condition);
+   } while (!condition);
 
-	std::cout << "Position generated on: x = " << m_position.first << " , y = " << m_position.second << std::endl;
+   std::cout << "Position generated on: x = " << m_position.first << " , y = " << m_position.second << std::endl;
 }
 
 void MainAgent::logAction(int index) {
@@ -82,6 +84,21 @@ void MainAgent::logAction(int index) {
             break;
          case LOG_F_INIT:
         	 std::cout << "---Llamando a la función createRndInitialPos () del agente principal." << std::endl;
+            break;
+         default:
+            break;
+      }
+   }
+   if (ADVAN_LOG) {
+      switch (index) {
+         case LOG_INIT:
+            refSimulator_->log("---Generando el Agente principal ");
+            break;
+         case LOG_END:
+            refSimulator_->log("---Destruyendo el Agente principal ");
+            break;
+         case LOG_F_INIT:
+            refSimulator_->log("---Llamando a la función createRndInitialPos () del agente principal.");
             break;
          default:
             break;

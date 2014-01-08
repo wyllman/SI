@@ -23,16 +23,16 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Window::Window(const Interface& interface) {
-	refInterface_ = &interface;
-	logAction(LOG_INIT);
+   refInterface_ = &interface;
+   logAction(LOG_INIT);
 }
 
 Window::~Window() {
-	logAction(LOG_END);
-	delete (displayRendererInfo_);
-	SDL_DestroyRenderer(rendererScene_);
-	SDL_DestroyWindow(windowSDL_);
-	SDL_Quit();
+   logAction(LOG_END);
+   delete (displayRendererInfo_);
+   SDL_DestroyRenderer(rendererScene_);
+   SDL_DestroyWindow(windowSDL_);
+   SDL_Quit();
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -40,27 +40,28 @@ Window::~Window() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 void Window::init(int width, int height) {
-	logAction(LOG_F_INIT);
-	displayRendererInfo_ = new SDL_RendererInfo;
-	SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_OPENGL, &windowSDL_,
-			&rendererScene_);
-	SDL_GetRendererInfo(rendererScene_, displayRendererInfo_);
+   logAction(LOG_F_INIT);
+   displayRendererInfo_ = new SDL_RendererInfo;
+   SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_OPENGL, &windowSDL_,
+                               &rendererScene_);
+   SDL_GetRendererInfo(rendererScene_, displayRendererInfo_);
 
-	if ((displayRendererInfo_->flags & SDL_RENDERER_ACCELERATED) == 0) {
-		logAction(LOG_ERROR);
-		((Interface*) refInterface_)->stop();
-	}
-	if ((displayRendererInfo_->flags & SDL_RENDERER_TARGETTEXTURE) == 0) {
-		logAction(LOG_ERROR_1);
-		((Interface*) refInterface_)->stop();
-	}
+   if ((displayRendererInfo_->flags & SDL_RENDERER_ACCELERATED) == 0) {
+      logAction(LOG_ERROR);
+      const_cast<Interface*> (refInterface_)->stop();
+    }
+   if ((displayRendererInfo_->flags & SDL_RENDERER_TARGETTEXTURE) == 0) {
+      logAction(LOG_ERROR_1);
+      const_cast<Interface*> (refInterface_)->stop();
+   }
 
-	SDL_SetWindowTitle(windowSDL_, "Simulador PreColonia");
+   SDL_SetWindowTitle(windowSDL_, "Simulador PreColonia");
 }
 void Window::update() {
-	SDL_RenderPresent(rendererScene_);
+   SDL_RenderPresent(rendererScene_);
 }
 void Window::reshape() {
+   // TODO:
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -104,23 +105,23 @@ void Window::logAction(int index) {
 	if (ADVAN_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			((Interface*) refInterface_)->log(
+			const_cast<Interface*> (refInterface_)->log(
 					"------Generado la herramienta Window para la vista Interfaz ");
 			break;
 		case LOG_END:
-			((Interface*) refInterface_)->log(
+			const_cast<Interface*> (refInterface_)->log(
 					"------Destruyendo la herramienta Window para la vista Interfaz ");
 			break;
 		case LOG_F_INIT:
-			((Interface*) refInterface_)->log(
+			const_cast<Interface*> (refInterface_)->log(
 					"------Inicializando la ventana SDL");
 			break;
 		case LOG_ERROR:
-			((Interface*) refInterface_)->log(
+			const_cast<Interface*> (refInterface_)->log(
 					"------ERROR!! SDL RendererInfo (Sin aceleración gráfica) ");
 			break;
 		case LOG_ERROR_1:
-			((Interface*) refInterface_)->log(
+			const_cast<Interface*> (refInterface_)->log(
 					"------ERROR!! SDL RendererInfo (Sin ... textura?...) ");
 			break;
 		default:

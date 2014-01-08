@@ -92,7 +92,7 @@ void MainLoop::logAction(int index) {
       }
    }
    if (ADVAN_LOG) {
-      FileLog* regist = const_cast<FileLog*>(refDirector_->getRegAccErr());
+      FileLog* regist = const_cast<Director*>(refDirector_)->getRegAccErr();
       switch (index) {
          case LOG_INIT:
             regist->insertLine("------Generado la herramienta MainLoop para el Director ");

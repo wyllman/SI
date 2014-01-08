@@ -30,7 +30,8 @@ class Director: public Controller {
       void init ();
       void start ();
       void stop ();
-      const FileLog* getRegAccErr() const;
+
+      FileLog* getRegAccErr();
       const Map* getMap() const;
 
    private:

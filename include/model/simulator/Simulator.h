@@ -17,9 +17,11 @@
 #define SIMULATOR_H_
  
 #include <Tools.h>
+#include <model/abstracts/Model.h>
 
 class Map;
 class MainAgent;
+class Controller;
 
 class Simulator: public Model {
    public:
@@ -28,6 +30,8 @@ class Simulator: public Model {
 
       void init();
       void stop();
+
+      void log(const char*);
       const Map* getMap() const;
       const MainAgent* getMainAgent () const;
       Point getPosMainAgent ();

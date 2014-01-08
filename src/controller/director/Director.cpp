@@ -62,6 +62,8 @@ void Director::start() {
    // Inicializando la vista (clase Interface)
    const_cast<View*>(refView_)->init();
 
+   // Enviando a la vista la información necesaria de los
+   // agentes.
    getAgentsPos();
 
    // Iniciando el bucle principal de ejecución del programa
@@ -95,7 +97,7 @@ void Director::stop() {
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Manejadores públicos:
-const FileLog* Director::getRegAccErr() const {
+FileLog* Director::getRegAccErr() {
    return regAccErr_;
 }
 const Map* Director::getMap() const {
@@ -110,7 +112,7 @@ void Director::getAgentsPos() {
     const_cast<Scenographer*> (
     (dynamic_cast<Interface*>(
        const_cast<View*> (refView_))->getScenographer()))->clearAgents();
-   // Obteniendo la posición inicial del agente principal creada en el modelo
+   // Obteniendo la posición inicial del agente principal, creada en el modelo,
    // y pasarsela a la vista para que pueda mostrala en pantalla.
    Point posTmp = (dynamic_cast<Simulator*> (
                      const_cast<Model*>(refModel_)))->getPosMainAgent();
@@ -180,6 +182,8 @@ void Director::getAgentsPos() {
    }
 }
 void Director::mainLoop() {
+   const float ZOOM_DIFF = 0.75;
+   const float ROT_DIFF = 2.5;
    SDL_Event eventSDL;
    logAction(LOG_F_LOOP);
    bool needRender = false;
@@ -193,22 +197,22 @@ void Director::mainLoop() {
             if (eventSDL.key.keysym.sym == SDLK_UP) {
                const_cast<Scenographer*>(
                   dynamic_cast<Interface*>(
-                  const_cast<View*>(refView_))->getScenographer())->projZoom(-0.75);
+                  const_cast<View*>(refView_))->getScenographer())->projZoom (-ZOOM_DIFF);
                needRender = true;
             } else if (eventSDL.key.keysym.sym == SDLK_DOWN) {
                const_cast<Scenographer*>(
                   dynamic_cast<Interface*>(
-                  const_cast<View*>(refView_))->getScenographer())->projZoom(0.75);
+                  const_cast<View*>(refView_))->getScenographer())->projZoom (ZOOM_DIFF);
                needRender = true;
             } else if (eventSDL.key.keysym.sym == SDLK_LEFT) {
                const_cast<Scenographer*>(
                   dynamic_cast<Interface*>(
-                  const_cast<View*>(refView_))->getScenographer())->camRotationPos(2.5);
+                  const_cast<View*>(refView_))->getScenographer())->camRotationPos (ROT_DIFF);
                needRender = true;
             } else if (eventSDL.key.keysym.sym == SDLK_RIGHT) {
                const_cast<Scenographer*>(
                   dynamic_cast<Interface*>(
-                  const_cast<View*>(refView_))->getScenographer())->camRotationPos(-2.5);
+                  const_cast<View*>(refView_))->getScenographer())->camRotationPos (-ROT_DIFF);
                needRender = true;
             }
          }

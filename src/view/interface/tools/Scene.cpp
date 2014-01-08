@@ -22,12 +22,14 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Scene::Scene(const Interface& interface) {
+   const int NUM_VER_POINT = 3 * 4 * 5;
+   const int NUM_VER = MAP_WIDTH * MAP_HEIGHT * NUM_VER_POINT;
    refInterface_ = &interface;
    logAction(LOG_INIT);
    numberVertex_ = 0;
    numberQuadsFloor_ = 0;
-   vertexFloor_ = NULL;
-   vertexFloorColor_ = NULL;
+   vertexFloor_ = new float[NUM_VER];
+   vertexFloorColor_ = new float[NUM_VER];
 }
 
 Scene::~Scene() {
@@ -72,21 +74,7 @@ GLfloat* Scene::getProjectionMatrix() {
 const float* Scene::getVertexFloor() const {
    return vertexFloor_;
 }
-float* Scene::getVertexFloor(int size) {
-   if (vertexFloor_ != NULL) {
-      delete [] vertexFloor_;
-   }
-   vertexFloor_ = new float[size];
-   return vertexFloor_;
-}
 const float* Scene::getVertexFloorColor() const {
-   return vertexFloorColor_;
-}
-float* Scene::getVertexFloorColor(int size) {
-   if (vertexFloorColor_ != NULL) {
-      delete [] vertexFloorColor_;
-   }
-   vertexFloorColor_ = new float[size];
    return vertexFloorColor_;
 }
 int Scene::getNumberVertex() const {

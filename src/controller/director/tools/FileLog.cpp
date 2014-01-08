@@ -38,7 +38,9 @@ FileLog::~FileLog() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 void FileLog::init() {
-   reset();
+   if (!regAccErr_.empty()) {
+      reset();
+   }
    logAction(LOG_F_INIT);
 }
 void FileLog::reset() {

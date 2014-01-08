@@ -53,6 +53,8 @@ void Scenographer::init() {
    float viewPoint[3] = {0.0, 0.0, 0.0};
    float vectorUp[3] = {0.0, 1.0, 0.0};
 
+   needUpdateObjects_ = true;
+   needUpdateFloor_ = true;
 
    initProy(45.0, WIN_WIDTH / WIN_HEIGHT, 1, 1000);
    initCam(camPos, viewPoint, vectorUp);
@@ -60,7 +62,12 @@ void Scenographer::init() {
    initObjects();
 }
 void Scenographer::update() {
-   updateObjects();
+   if (needUpdateFloor_) {
+      updateFloor();
+      updateObjects();
+   } else if (needUpdateObjects_) {
+      updateObjects();
+   }
 }
 void Scenographer::projZoom(float value) {
    projAng_ += value;
@@ -78,6 +85,8 @@ void Scenographer::setMainAgentPos(float* pos) {
    mainAgentPos_[0] = pos[0];
    mainAgentPos_[1] = pos[1];
    mainAgentPos_[2] = pos[2];
+
+   needUpdateObjects_ = true;
 }
 void Scenographer::clearAgents() {
    if (!searchAgentVector_.empty()) {
@@ -92,6 +101,7 @@ void Scenographer::clearAgents() {
       }
       workingAgentVector_.clear();
    }
+   needUpdateObjects_ = true;
 }
 void Scenographer::addSearchAgent(float* pos) {
    float* posAgent = new float[3];
@@ -101,6 +111,7 @@ void Scenographer::addSearchAgent(float* pos) {
    posAgent[2] = pos[2];
 
    searchAgentVector_.push_back(posAgent);
+   needUpdateObjects_ = true;
 }
 void Scenographer::addWorkingAgent(float* pos) {
    float* posAgent = new float[3];
@@ -110,6 +121,11 @@ void Scenographer::addWorkingAgent(float* pos) {
    posAgent[2] = pos[2];
 
    workingAgentVector_.push_back(posAgent);
+   needUpdateObjects_ = true;
+}
+void Scenographer::requireUpdateFloor() {
+   needUpdateFloor_ = true;
+   needUpdateObjects_ = true;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -147,7 +163,7 @@ void Scenographer::initCam(float camPos[3], float viewPoint[3], float vectorUp[3
    updateCam();
 }
 void Scenographer::initFloor() {
-   updateFloor(MAP_WIDTH, MAP_HEIGHT);
+   updateFloor();
 }
 void Scenographer::initObjects() {
    mainAgentPos_ [0] = 50.0;
@@ -182,17 +198,7 @@ void Scenographer::updateCam() {
    glGetFloatv(GL_MODELVIEW_MATRIX, const_cast<Scene*>(refScene_)->getModelviewMatrix());
    glMatrixMode(0);
 }
-void Scenographer::updateFloor(int width, int height) {
-   const int NUM_VER_POINT = 3 * 4 * 5;
-
-
-   // FIXME: Cambiar estas dos líneas a otra función (constructor/init de scene/scenographer)
-   float* vertexFloor = const_cast<Scene*>(refScene_)
-                           ->getVertexFloor(MAP_WIDTH * MAP_HEIGHT * NUM_VER_POINT);
-   float* vertexFloorColor = const_cast<Scene*>(refScene_)
-                                ->getVertexFloorColor(MAP_WIDTH * MAP_HEIGHT * NUM_VER_POINT);
-   // ---------------------------------
-
+void Scenographer::updateFloor() {
    float* color = new float[3];
    color[0] = 0;
    color[1] = 0;
@@ -244,6 +250,7 @@ void Scenographer::updateFloor(int width, int height) {
       }
    }
    delete [] (color);
+   needUpdateFloor_ = false;
 }
 void Scenographer::updateObjects() {
    const int NUM_QUADS = const_cast<Scene*> (refScene_)->getNumberQuadsFloor();
@@ -267,6 +274,7 @@ void Scenographer::updateObjects() {
    } else {
       createWorkingAgent(49, 49, 0.01);
    }
+   needUpdateObjects_ = false;
 }
 
 // ---Crear:

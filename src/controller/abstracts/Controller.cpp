@@ -19,9 +19,8 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Controller::Controller() :
-	refView_(NULL), refModel_(NULL) {
+   refView_(NULL), refModel_(NULL) {
 }
-
 Controller::~Controller() {
 }
 // FIN -------------------------------------------------------------------------------

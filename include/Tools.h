@@ -20,6 +20,7 @@
 #include <map>
 #include <bits/stl_pair.h>
 
+// Definiciones de tipos propios para el proyecto.
 typedef unsigned char BYTE;
 typedef std::pair<int, int> Point;
 

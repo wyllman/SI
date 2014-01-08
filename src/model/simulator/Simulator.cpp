@@ -31,7 +31,7 @@
 Simulator::Simulator(const Controller& controller) :
       Model(controller) {
    logAction(LOG_INIT);
-   m_MainAgent = new MainAgent ();
+//   m_MainAgent = new MainAgent (this);
 
 }
 Simulator::~Simulator() {
@@ -56,7 +56,7 @@ void Simulator::init() {
       std::cout << std::endl;
    }
 
-   m_MainAgent = new MainAgent ();
+   m_MainAgent = new MainAgent (this);
    m_MainAgent -> createRndInitialPos(map_); // Da una posición inicial al agente principal
    std::cout << "Simbolo en la posición generada: " << mapci(m_MainAgent -> getPosition().first, m_MainAgent -> getPosition().second) << std::endl;
 
@@ -109,6 +109,13 @@ void Simulator::stop() {
       map_ = NULL;
    }
 }
+void Simulator::log(const char* line) {
+   if (ADVAN_LOG) {
+      FileLog* fileLogTmp = dynamic_cast<Director*>(
+                               const_cast<Controller*>(refController_))->getRegAccErr();
+      fileLogTmp->insertLine(line);
+   }
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -123,7 +130,6 @@ const MainAgent* Simulator::getMainAgent () const {
 Point Simulator::getPosMainAgent() {
    return (m_MainAgent->getPosition());
 }
-
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

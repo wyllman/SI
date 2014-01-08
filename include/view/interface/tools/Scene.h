@@ -35,9 +35,7 @@ class Scene {
       GLfloat* getModelviewMatrix();
       GLfloat* getProjectionMatrix();
       const float* getVertexFloor() const;
-      float* getVertexFloor(int);
       const float* getVertexFloorColor() const;
-      float* getVertexFloorColor(int);
       int getNumberVertex() const;
       void setNumberVertex(int numberVertex);
       int getNumberQuadsFloor() const;

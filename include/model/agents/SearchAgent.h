@@ -10,10 +10,12 @@
 
 #include <model/agents/WorkingAgent.h>
 
-class SearchAgent: public WorkingAgent {
+class SearchAgent: public Agent {
 public:
 	SearchAgent();
 	~SearchAgent();
+
+	void setPosition (Point p) { m_position = p; }
 };
 
 #endif /* SEARCHAGENT_H_ */

@@ -186,9 +186,10 @@ void Director::mainLoop() {
    const float ROT_DIFF = 2.5;
    SDL_Event eventSDL;
    logAction(LOG_F_LOOP);
-   bool needRender = false;
+
 
    mainLoop_->init();
+
    while (mainLoop_->isContinue()) {
       while (SDL_PollEvent(&eventSDL)) {
          if (eventSDL.type == SDL_QUIT) {
@@ -198,32 +199,53 @@ void Director::mainLoop() {
                const_cast<Scenographer*>(
                   dynamic_cast<Interface*>(
                   const_cast<View*>(refView_))->getScenographer())->projZoom (-ZOOM_DIFF);
-               needRender = true;
+               mainLoop_->render();
+
             } else if (eventSDL.key.keysym.sym == SDLK_DOWN) {
                const_cast<Scenographer*>(
                   dynamic_cast<Interface*>(
                   const_cast<View*>(refView_))->getScenographer())->projZoom (ZOOM_DIFF);
-               needRender = true;
+               mainLoop_->render();
             } else if (eventSDL.key.keysym.sym == SDLK_LEFT) {
                const_cast<Scenographer*>(
                   dynamic_cast<Interface*>(
                   const_cast<View*>(refView_))->getScenographer())->camRotationPos (ROT_DIFF);
-               needRender = true;
+               mainLoop_->render();
             } else if (eventSDL.key.keysym.sym == SDLK_RIGHT) {
                const_cast<Scenographer*>(
                   dynamic_cast<Interface*>(
                   const_cast<View*>(refView_))->getScenographer())->camRotationPos (-ROT_DIFF);
-               needRender = true;
+               mainLoop_->render();
             }
          }
-         if (needRender) {
-            dynamic_cast<Interface*>(const_cast<View*>(refView_))->update();
-            dynamic_cast<Interface*>(const_cast<View*>(refView_))->render();
-            needRender = false;
-         }
+         mainFunction();
       }
    }
 }
+
+void Director::mainFunction() {
+   if (!(mainLoop_->isPause()))  {
+		// Actualizar el simulador y comprobar si se ha movido algún agente para actualizar la inerfaz gráfica.
+		if (dynamic_cast<Simulator*>(
+				const_cast<Model*>(refModel_))->update()) {
+			mainLoop_->update();
+		}else {
+			mainLoop_->stopUpdate();
+		}
+		// En caso de requerirse, enviar la información necesaria sobe los agente a la interfaz gráfica.
+		if (mainLoop_->isRequireUpdate()) {
+			getAgentsPos();
+			mainLoop_->render();
+		}
+		// En caso de requerirse, actualizar los datos internos de la interfaz gráfica y renderizar la escena.
+		if (mainLoop_->isRequireRender()) {
+			dynamic_cast<Interface*>(const_cast<View*>(refView_))->update();
+			dynamic_cast<Interface*>(const_cast<View*>(refView_))->render();
+			mainLoop_->stopRender();
+		}
+   }
+}
+
 void Director::logAction(int index) {
    if (BASIC_LOG) {
       switch (index) {

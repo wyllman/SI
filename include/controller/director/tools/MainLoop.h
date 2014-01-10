@@ -24,6 +24,10 @@ class MainLoop {
 
       void init();
       void pauseResume();
+      void update();
+      void stopUpdate();
+      void render();
+      void stopRender();
       void reset();
       void stop();
 
@@ -31,6 +35,7 @@ class MainLoop {
       bool isPause() const;
       bool isRequireReset() const;
       bool isRequireUpdate() const;
+      bool isRequireRender() const;
 
    private:
       const Director* refDirector_;
@@ -38,6 +43,7 @@ class MainLoop {
       bool pause_;
       bool requireReset_;
       bool requireUpdate_;
+      bool requireRender_;
 
       void logAction (int);
 };

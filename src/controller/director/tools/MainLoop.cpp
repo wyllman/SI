@@ -28,6 +28,7 @@ MainLoop::MainLoop(const Director& director) {
    pause_ = false;
    requireReset_ = false;
    requireUpdate_ = false;
+   requireRender_ = false;
 }
 MainLoop::~MainLoop() {
    logAction(LOG_END);
@@ -42,6 +43,7 @@ void MainLoop::init() {
    pause_ = false;
    requireReset_ = false;
    requireUpdate_ = false;
+   requireRender_ = false;
 }
 void MainLoop::pauseResume() {
    if (pause_) {
@@ -49,6 +51,18 @@ void MainLoop::pauseResume() {
    } else {
       pause_ = true;
    }
+}
+void MainLoop::update() {
+   requireUpdate_ = true;
+}
+void MainLoop::stopUpdate() {
+   requireUpdate_ = false;
+}
+void MainLoop::render() {
+   requireRender_ = true;
+}
+void MainLoop::stopRender() {
+   requireRender_ = false;
 }
 void MainLoop::reset() {
    requireReset_ = true;
@@ -72,6 +86,9 @@ bool MainLoop::isRequireReset() const {
 }
 bool MainLoop::isRequireUpdate() const {
    return requireUpdate_;
+}
+bool MainLoop::isRequireRender() const {
+   return requireRender_;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -108,3 +125,5 @@ void MainLoop::logAction(int index) {
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+

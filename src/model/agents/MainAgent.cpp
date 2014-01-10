@@ -18,8 +18,6 @@
 MainAgent::MainAgent(Simulator* refModel): refSimulator_(refModel) {
    logAction(LOG_INIT);
    m_beliefSet = new BeliefSet();
-
-//   refSimulator_ = refModel;
 }
 
 MainAgent::~MainAgent() {

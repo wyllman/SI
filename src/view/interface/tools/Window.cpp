@@ -75,9 +75,9 @@ void Window::reshape() {
 // ___________________________________________________________________________________
 // Métodos privados:
 void Window::logAction(int index) {
-	if (BASIC_LOG) {
-		switch (index) {
-		case LOG_INIT:
+   if (BASIC_LOG) {
+      switch (index) {
+         case LOG_INIT:
 			std::cout
 					<< "------Generado la herramienta Window para la vista Interfaz "
 					<< std::endl;

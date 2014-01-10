@@ -23,7 +23,7 @@ class Model {
       virtual ~Model();
 
       virtual void init () {};
-      virtual void update () {};
+      virtual bool update () {};
       virtual void reset () {};
       virtual void stop () {};
 

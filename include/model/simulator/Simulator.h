@@ -29,6 +29,7 @@ class Simulator: public Model {
       virtual ~Simulator();
 
       void init();
+      bool update ();
       void stop();
 
       void log(const char*);

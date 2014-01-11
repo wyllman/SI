@@ -15,6 +15,8 @@
 #ifndef MAINLOOP_H_
 #define MAINLOOP_H_
 
+#include <sys/time.h>
+
 class Director;
 
 class MainLoop {
@@ -32,6 +34,10 @@ class MainLoop {
       void stopReset();
       void stop();
 
+      void initTime ();
+      void endTime ();
+      double diffTmie ();
+
       bool isContinue() const;
       bool isPause() const;
       bool isRequireReset() const;
@@ -40,11 +46,15 @@ class MainLoop {
 
    private:
       const Director* refDirector_;
+
       bool continue_;
       bool pause_;
       bool requireReset_;
       bool requireUpdate_;
       bool requireRender_;
+
+      struct timeval timeInit_;
+      struct timeval timeFinal_;
 
       void logAction (int);
 };

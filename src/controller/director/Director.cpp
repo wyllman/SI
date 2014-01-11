@@ -33,7 +33,6 @@
 #endif
 
 #include <iostream>
-#include <sys/time.h>
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
@@ -186,18 +185,9 @@ void Director::mainLoop() {
    const float ZOOM_DIFF = 0.75;
    const float ROT_DIFF = 2.5;
    SDL_Event eventSDL;
-   struct timeval timeIni;
-   double timeIniSeg;
-   struct timeval timeFin;
-   double timeFinSeg;
-   double timeDiff;
    logAction(LOG_F_LOOP);
 
    mainLoop_->init();
-   // FIXME: pasarle el control del tiempo a la clase MainLoop y crear las funciones adecuadas
-   // para su uso.
-   gettimeofday(&timeIni, NULL);
-   timeIniSeg = timeIni.tv_sec + (timeIni.tv_usec / 1000000.0);
 
    while (mainLoop_->isContinue()) {
       while (SDL_PollEvent(&eventSDL)) {
@@ -229,13 +219,10 @@ void Director::mainLoop() {
             }
          }
          // Atributos para el control del tiempo en la ejecución.
-         gettimeofday(&timeFin, NULL);
-         timeFinSeg = timeFin.tv_sec + (timeFin.tv_usec / 1000000.0);
-         timeDiff = timeFinSeg - timeIniSeg;
+         mainLoop_->endTime();
 
-         if (timeDiff > (1 / 45)) { // Control del tiempo (nada mayor de 45 veces por segundo)
-            gettimeofday(&timeIni, NULL);
-            timeIniSeg = timeIni.tv_sec + (timeIni.tv_usec / 1000000.0);
+         if ((mainLoop_->diffTmie()) > (MIN_TIME_DIFF)) { // Control del tiempo
+              mainLoop_->initTime();
             mainFunction();
          }
       }
@@ -254,14 +241,13 @@ void Director::mainFunction() {
          if (dynamic_cast<Simulator*>(
                const_cast<Model*>(refModel_))->update()) {
             mainLoop_->update();
-         }else {
-            mainLoop_->stopUpdate();
          }
       }
       // En caso de requerirse, enviar la información necesaria sobe los agente a la interfaz gráfica.
       if (mainLoop_->isRequireUpdate()) {
          getAgentsPos();
          mainLoop_->render();
+         mainLoop_->stopUpdate();
       }
       // En caso de requerirse, actualizar los datos internos de la interfaz gráfica y renderizar la escena.
       if (mainLoop_->isRequireRender()) {

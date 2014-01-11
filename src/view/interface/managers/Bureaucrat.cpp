@@ -79,6 +79,7 @@ void Bureaucrat::initOGL() {
    // loadShader();
 }
 void Bureaucrat::loadShader() {
+   // TODO:
    if (ADVAN_LOG) {
       const_cast<Interface*>(refInterface_)->log("------Cargando Shaders en la clase Bureaucrat. ");
    }

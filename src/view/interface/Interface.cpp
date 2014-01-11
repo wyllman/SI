@@ -148,7 +148,7 @@ void Interface::render() {
    glUniformMatrix4fv(glGetUniformLocation(context_->getProgramGsl(), "modelview_matrix")
                      , 1, GL_FALSE, scene_->getModelviewMatrix());
 
-   // Enviar los datos todos los vértices de la escena al vertexShader.
+   // Enviar los datos de todos los vértices de la escena al vertexShader.
    // ---Buffer de vertices
    glBindBuffer(GL_ARRAY_BUFFER, context_->getVboId()[0]);
    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * NUM_VER

@@ -44,6 +44,7 @@ void MainLoop::init() {
    requireReset_ = false;
    requireUpdate_ = false;
    requireRender_ = false;
+   initTime ();
 }
 void MainLoop::pauseResume() {
    if (pause_) {
@@ -72,6 +73,17 @@ void MainLoop::stopReset() {
 }
 void MainLoop::stop() {
    continue_ = false;
+}
+void MainLoop::initTime() {
+   gettimeofday(&timeInit_, NULL);
+}
+void MainLoop::endTime() {
+	gettimeofday(&timeFinal_, NULL);
+}
+double MainLoop::diffTmie() {
+   double timeInitSeg = timeInit_.tv_sec + (timeInit_.tv_usec / 1000000.0);
+   double timeFinalSeg = timeFinal_.tv_sec + (timeFinal_.tv_usec / 1000000.0);
+   return (timeFinalSeg - timeInitSeg);
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -128,5 +140,4 @@ void MainLoop::logAction(int index) {
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-
 

@@ -29,6 +29,7 @@ class MainLoop {
       void render();
       void stopRender();
       void reset();
+      void stopReset();
       void stop();
 
       bool isContinue() const;

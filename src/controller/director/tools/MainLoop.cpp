@@ -67,6 +67,9 @@ void MainLoop::stopRender() {
 void MainLoop::reset() {
    requireReset_ = true;
 }
+void MainLoop::stopReset() {
+   requireReset_ = false;
+}
 void MainLoop::stop() {
    continue_ = false;
 }

@@ -33,6 +33,7 @@
 #endif
 
 #include <iostream>
+#include <sys/time.h>
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
@@ -185,16 +186,25 @@ void Director::mainLoop() {
    const float ZOOM_DIFF = 0.75;
    const float ROT_DIFF = 2.5;
    SDL_Event eventSDL;
+   struct timeval timeIni;
+   double timeIniSeg;
+   struct timeval timeFin;
+   double timeFinSeg;
+   double timeDiff;
    logAction(LOG_F_LOOP);
 
-
    mainLoop_->init();
+   // FIXME: pasarle el control del tiempo a la clase MainLoop y crear las funciones adecuadas
+   // para su uso.
+   gettimeofday(&timeIni, NULL);
+   timeIniSeg = timeIni.tv_sec + (timeIni.tv_usec / 1000000.0);
 
    while (mainLoop_->isContinue()) {
       while (SDL_PollEvent(&eventSDL)) {
          if (eventSDL.type == SDL_QUIT) {
             mainLoop_->stop();
          } else if (eventSDL.type == SDL_KEYDOWN && eventSDL.key.state == SDL_PRESSED) {
+            // Controlar los eventos de teclado.
             if (eventSDL.key.keysym.sym == SDLK_UP) {
                const_cast<Scenographer*>(
                   dynamic_cast<Interface*>(
@@ -218,31 +228,47 @@ void Director::mainLoop() {
                mainLoop_->render();
             }
          }
-         mainFunction();
+         // Atributos para el control del tiempo en la ejecución.
+         gettimeofday(&timeFin, NULL);
+         timeFinSeg = timeFin.tv_sec + (timeFin.tv_usec / 1000000.0);
+         timeDiff = timeFinSeg - timeIniSeg;
+
+         if (timeDiff > (1 / 45)) { // Control del tiempo (nada mayor de 45 veces por segundo)
+            gettimeofday(&timeIni, NULL);
+            timeIniSeg = timeIni.tv_sec + (timeIni.tv_usec / 1000000.0);
+            mainFunction();
+         }
       }
    }
 }
 
 void Director::mainFunction() {
    if (!(mainLoop_->isPause()))  {
-		// Actualizar el simulador y comprobar si se ha movido algún agente para actualizar la inerfaz gráfica.
-		if (dynamic_cast<Simulator*>(
-				const_cast<Model*>(refModel_))->update()) {
-			mainLoop_->update();
-		}else {
-			mainLoop_->stopUpdate();
-		}
-		// En caso de requerirse, enviar la información necesaria sobe los agente a la interfaz gráfica.
-		if (mainLoop_->isRequireUpdate()) {
-			getAgentsPos();
-			mainLoop_->render();
-		}
-		// En caso de requerirse, actualizar los datos internos de la interfaz gráfica y renderizar la escena.
-		if (mainLoop_->isRequireRender()) {
-			dynamic_cast<Interface*>(const_cast<View*>(refView_))->update();
-			dynamic_cast<Interface*>(const_cast<View*>(refView_))->render();
-			mainLoop_->stopRender();
-		}
+      // En caso de requerirse, resetear todos los datos internos del simulador.
+      if (mainLoop_->isRequireReset()) {
+         dynamic_cast<Simulator*>(const_cast<Model*>(refModel_))->reset();
+         mainLoop_->stopReset();
+         mainLoop_->update();
+      } else {
+         // Actualizar el simulador y comprobar si se ha movido algún agente para actualizar la inerfaz gráfica.
+         if (dynamic_cast<Simulator*>(
+               const_cast<Model*>(refModel_))->update()) {
+            mainLoop_->update();
+         }else {
+            mainLoop_->stopUpdate();
+         }
+      }
+      // En caso de requerirse, enviar la información necesaria sobe los agente a la interfaz gráfica.
+      if (mainLoop_->isRequireUpdate()) {
+         getAgentsPos();
+         mainLoop_->render();
+      }
+      // En caso de requerirse, actualizar los datos internos de la interfaz gráfica y renderizar la escena.
+      if (mainLoop_->isRequireRender()) {
+         dynamic_cast<Interface*>(const_cast<View*>(refView_))->update();
+         dynamic_cast<Interface*>(const_cast<View*>(refView_))->render();
+         mainLoop_->stopRender();
+      }
    }
 }
 

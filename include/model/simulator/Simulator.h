@@ -30,6 +30,7 @@ class Simulator: public Model {
 
       void init();
       bool update ();
+      void reset();
       void stop();
 
       void log(const char*);

@@ -109,7 +109,9 @@ bool Simulator::update() {
    // TODO:
    return result;
 }
-
+void Simulator::reset() {
+   // TODO:
+}
 void Simulator::stop() {
    logAction(LOG_F_STOP);
    if (map_ != NULL) {

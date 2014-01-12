@@ -79,5 +79,7 @@
  *                representación gráfica.
  *              - Coordinada la información de los agentes trabjajadores con su representación
  *                gráfica.
+ *              - Mejorada la ejecución del bucle principal para el control del tiempo de
+ *                ejecución tanto par los eventos como para la actualización del simulador.
  */
 

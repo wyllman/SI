@@ -18,6 +18,12 @@
 
 #include <controller/abstracts/Controller.h>
 
+#ifdef __linux
+   #include <SDL2/SDL.h>
+#else
+   #include <SDL.h>
+#endif
+
 class MainLoop;
 class FileLog;
 class Map;
@@ -42,6 +48,7 @@ class Director: public Controller {
       void mainLoop ();
       void mainFunction ();
       void iddleFunction ();
+      void keyEvents (SDL_Event& eventSDL);
       void logAction (int);
 };
 

@@ -8,7 +8,11 @@
 #ifndef SEARCHAGENT_H_
 #define SEARCHAGENT_H_
 
+#include <iostream>
+#include <cstdlib>
+
 #include <model/agents/WorkingAgent.h>
+#include <model/fipa/Package.h>
 
 class SearchAgent: public Agent {
 public:
@@ -16,6 +20,9 @@ public:
 	~SearchAgent();
 
 	void setPosition (Point p) { m_position = p; }
+	Package* readFIPAPackage (Package*);
+
+	void localDireccionalSearch (std::string);
 };
 
 #endif /* SEARCHAGENT_H_ */

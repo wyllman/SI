@@ -9,6 +9,7 @@
 #define AGENT_H_
 
 #include <Tools.h>
+#include <model/fipa/Package.h>
 
 class BeliefSet;
 class Goals;
@@ -28,6 +29,11 @@ private:
 	BeliefSet* m_beliefSet;
 	Goals* m_goals;
 	Intentions* m_intentions;
+
+	// FIXME: dejo aquí que un agente conoce en qué comunicación está embebido
+	unsigned int m_idComm;
+	char* m_nameAgent;
+
 protected:
 	Point m_position;
 public:
@@ -36,6 +42,12 @@ public:
 
 	bool move(Direction);
 	Point getPosition ();
+	unsigned int getIdComm() const;
+	void setIdComm(unsigned int idComm);
+	char* getNameAgent() const;
+	void setNameAgent(char* nameAgent);
+
+	virtual Package* readFIPAPackage (Package*) { return NULL; };
 };
 
 #endif /* AGENT_H_ */

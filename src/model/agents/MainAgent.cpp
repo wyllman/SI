@@ -18,6 +18,7 @@
 MainAgent::MainAgent(Simulator* refModel): refSimulator_(refModel) {
    logAction(LOG_INIT);
    m_beliefSet = new BeliefSet();
+   setNameAgent("MAIN_AGENT");
 }
 
 MainAgent::~MainAgent() {
@@ -104,10 +105,48 @@ void MainAgent::logAction(int index) {
    }
 }
 
+Package* MainAgent::readFIPAPackage (Package* p) {
+	Package* answer = new Package (getNameAgent(), p -> getSender(), NOT_UNDERSTOOD);
+
+		// Comprobamos que el paquete es de la conversación actual
+		if (p -> getIdComm() == getIdComm()) {
+			// Comprobamos que el paquete va destinado al agente correcto
+			if (p -> getReceiver() == getNameAgent()) {
+				switch (p -> getType()) {
+				case NOT_UNDERSTOOD:
+					std::cout << "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible" << std::endl;
+					break;
+				case CONFIRM:
+					std::cout << "CONFIRM: Confirmada la operación." << std::endl;
+					break;
+				case MAP_UPDATE:
+					break;
+				case LOCATED_OBSTACLE:
+					break;
+				case END_LIMITS:
+					break;
+				default:
+					std::cout << "No se entiende el tipo del paquete recibido." << std::endl;
+				}
+			}
+
+		}
+}
+
+Package* MainAgent::createFIPAPackage () {
+	Package* p = new Package (getNameAgent(), getVAgents().at(0) -> getNameAgent(), CONFIRM);
+	std::cout << "Creado paquete CONFIRM por la nave principal: " << p -> getSender() << p -> getReceiver() << p -> getType() << std::endl;
+	return p;
+}
+
 std::vector<Agent*>& MainAgent::getVAgents () {
 	return m_Vagents;
 }
 
 std::vector<Agent*>& MainAgent::getWorVecAgents() {
    return m_WorVecAgents;
+}
+
+std::vector<Package*>& MainAgent::getPackagesFipa() {
+	return m_packagesFIPA;
 }

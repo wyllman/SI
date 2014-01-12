@@ -32,6 +32,10 @@ class MainAgent: public Agent {
       void createRndInitialPos (Map*);
       std::vector<Agent*>& getVAgents ();
       std::vector<Agent*>& getWorVecAgents();
+      std::vector<Package*>& getPackagesFipa();
+
+      Package* readFIPAPackage (Package*);
+      Package* createFIPAPackage ();
 
    private:
       Simulator* refSimulator_;
@@ -39,6 +43,8 @@ class MainAgent: public Agent {
       BeliefSet* m_beliefSet;
       std::vector<Agent*> m_Vagents;
       std::vector<Agent*> m_WorVecAgents;
+
+      std::vector<Package*> m_packagesFIPA;
 
 };
 

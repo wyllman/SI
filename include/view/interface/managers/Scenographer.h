@@ -16,7 +16,7 @@
 #define SCENOGRAPHER_H_
 
 #include <Tools.h>
-#include <vector.h>
+#include <vector>
 
 class Interface;
 class Scene;
@@ -62,8 +62,8 @@ class Scenographer {
       bool needUpdateFloor_;
 
       float mainAgentPos_[3];
-      vector<float*> searchAgentVector_;
-      vector<float*> workingAgentVector_;
+      std::vector<float*> searchAgentVector_;
+      std::vector<float*> workingAgentVector_;
 
       void initProy (float, float, int, int);
       void initCam (float [3], float [3], float [3]);

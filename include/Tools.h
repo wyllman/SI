@@ -92,18 +92,27 @@ enum Direction {
    SWEST
 };
 
-enum Type {	NOT_UNDERSTOOD = 0,
-			CONFIRM,
-			MAP_UPDATE,
-			LOCATED_OBSTACLE,
-			END_LIMITS,
-			MAP_UPDATE_OK,
-			MAP_UPDATE_ERROR,
-			DIRECTION_SEARCH,
-			SECTOR_SEARCH,
-			COME_BACK,
-			GO_RESOURCE_LOCATION,
-			PUT_RESOURCE_LOCATION
+enum Type {
+	NOT_UNDERSTOOD = 0,
+	CONFIRM,
+	MAP_UPDATE,
+	LOCATED_OBSTACLE,
+	END_LIMITS,
+	MAP_UPDATE_OK,
+	MAP_UPDATE_ERROR,
+	DIRECTION_SEARCH,
+	SECTOR_SEARCH,
+	COME_BACK,
+	GO_RESOURCE_LOCATION,
+	PUT_RESOURCE_LOCATION
+};
+
+enum States {
+	AVAILABLE = 0, // esperando a una tarea ...
+	SEARCHING,	   // realizando una exploración
+	RECOLECTING,   // parado frente a fuente de recursos y recolectando
+	FOLLOWING_ROUTE, // Siguiendo una ruta enviada por paquete
+	PUTTING_RESOURCE // parada en emplazamiento temporal descargando recursos
 };
 
 #endif /* TOOLS_H_ */

@@ -57,7 +57,9 @@ void Simulator::init() {
    }
 
    reset ();
-   m_MainAgent -> getVAgents().at(0) -> readFIPAPackage(m_MainAgent -> createFIPAPackage());
+   //m_MainAgent -> getVAgents().at(0) -> readFIPAPackage(m_MainAgent -> createFIPAPackage());
+   m_MainAgent -> getWorVecAgents().at(0) -> readFIPAPackage(m_MainAgent -> createFIPAPackage());
+
 /*
    // Prueba de movimiento hacia el sur de un agente
    while (m_MainAgent -> getVAgents().at(0) -> getPosition().second < 100) {
@@ -72,7 +74,7 @@ void Simulator::init() {
 bool Simulator::update() {
    bool result = false;
    // TODO: Implementar cada paso en para los movimientos y cálculos del sist. int.
-   m_MainAgent -> getVAgents().at(0) -> move (NORTH);
+   //m_MainAgent -> getVAgents().at(0) -> move (NORTH);
    result = true;
 
    return result;

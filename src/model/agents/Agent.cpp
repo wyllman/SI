@@ -35,6 +35,22 @@ bool Agent::move(Direction theMovement) {
 	return result;
 }
 
+unsigned int Agent::getIdComm() const {
+	return m_idComm;
+}
+
+char* Agent::getNameAgent() const {
+	return m_nameAgent;
+}
+
+void Agent::setNameAgent(char* nameAgent) {
+	m_nameAgent = nameAgent;
+}
+
+void Agent::setIdComm(unsigned int idComm) {
+	m_idComm = idComm;
+}
+
 Point Agent::getPosition () {
 	return m_position;
 }

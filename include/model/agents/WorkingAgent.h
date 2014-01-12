@@ -16,6 +16,7 @@ public:
 	~WorkingAgent();
 
 	void setPosition (Point p) { m_position = p; }
+
 };
 
 #endif /* WORKINGAGENT_H_ */

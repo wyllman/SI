@@ -89,6 +89,9 @@ void Simulator::init() {
    working3 -> setPosition (Point (m_MainAgent -> getPosition().first - 1, m_MainAgent -> getPosition().second - 1));
    m_MainAgent -> getWorVecAgents().push_back(working3);
 
+
+   m_MainAgent -> getVAgents().at(0) -> readFIPAPackage(m_MainAgent -> createFIPAPackage());
+
 //   std::cout << " - Posición del Ag. Trabajador:  x = " <<
 //            m_MainAgent -> getVAgents().at(0) -> getPosition ().first << " , y = " <<
 //            m_MainAgent -> getVAgents().at(0) -> getPosition ().second << std::endl;

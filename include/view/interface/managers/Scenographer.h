@@ -33,6 +33,7 @@ class Scenographer {
       void projZoom (float);
 
       void camPosX (float);
+      void camPosZ (float);
       void camRotationPos (float);
 
       void setMainAgentPos (float*);

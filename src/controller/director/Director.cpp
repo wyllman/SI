@@ -216,6 +216,28 @@ void Director::mainLoop() {
                   dynamic_cast<Interface*>(
                   const_cast<View*>(refView_))->getScenographer())->camRotationPos (-ROT_DIFF);
                mainLoop_->render();
+            } else if (eventSDL.key.keysym.sym == SDLK_r) { // Resetear el simulador.
+
+            } else if (eventSDL.key.keysym.sym == SDLK_w) { // mover la cámara en Z positivo
+                const_cast<Scenographer*>(
+                   dynamic_cast<Interface*>(
+                   const_cast<View*>(refView_))->getScenographer())->camPosZ(1);
+                mainLoop_->render();
+            } else if (eventSDL.key.keysym.sym == SDLK_s) { // mover la cámara en Z negativo
+                const_cast<Scenographer*>(
+                   dynamic_cast<Interface*>(
+                   const_cast<View*>(refView_))->getScenographer())->camPosZ(-1);
+                mainLoop_->render();
+            } else if (eventSDL.key.keysym.sym == SDLK_a) { // mover la cámara en X positivo
+                const_cast<Scenographer*>(
+                   dynamic_cast<Interface*>(
+                   const_cast<View*>(refView_))->getScenographer())->camPosX(1);
+                mainLoop_->render();
+            } else if (eventSDL.key.keysym.sym == SDLK_d) { // mover la cámara en X negativo
+                const_cast<Scenographer*>(
+                   dynamic_cast<Interface*>(
+                   const_cast<View*>(refView_))->getScenographer())->camPosX(-1);
+                mainLoop_->render();
             }
          }
          // Atributos para el control del tiempo en la ejecución.

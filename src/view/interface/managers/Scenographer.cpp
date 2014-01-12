@@ -74,6 +74,12 @@ void Scenographer::projZoom(float value) {
 }
 void Scenographer::camPosX(float value) {
    camPos_[0] += value;
+   camViewPoint_[0] += value;
+   updateCam();
+}
+void Scenographer::camPosZ(float value) {
+   camPos_[2] += value;
+   camViewPoint_[2] += value;
    updateCam();
 }
 void Scenographer::camRotationPos(float value) {
@@ -187,6 +193,9 @@ void Scenographer::updateCam() {
 
    camPos_[0] = sinf(camRotAngle_ * (3.1416 / 180)) * (camDistance);
    camPos_[2] = cosf(camRotAngle_ * (3.1416 / 180)) * (camDistance);
+
+   camPos_[0] += camViewPoint_[0];
+   camPos_[2] += camViewPoint_[2];
 
    glMatrixMode (GL_MODELVIEW);
    glLoadIdentity();

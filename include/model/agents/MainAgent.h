@@ -28,6 +28,8 @@ class MainAgent: public Agent {
       MainAgent(Simulator*);
       ~MainAgent();
 
+      void update ();
+
       void logAction(int);
       void createRndInitialPos (Map*);
       std::vector<Agent*>& getVAgents ();

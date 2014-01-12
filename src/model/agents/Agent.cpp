@@ -17,7 +17,7 @@ Agent::~Agent() {
 }
 
 bool Agent::move(Direction theMovement) {
-   const float MOV_DIFF = 0.01;
+   const float MOV_DIFF = 1;
    bool result = false;
 
    switch(theMovement) {

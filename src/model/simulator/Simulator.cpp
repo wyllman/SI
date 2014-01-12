@@ -106,20 +106,6 @@ void Simulator::reset() {
    working3 -> setPosition (Point (m_MainAgent -> getPosition().first - 1, m_MainAgent -> getPosition().second - 1));
    m_MainAgent -> getWorVecAgents().push_back(working3);
 
-
-//   std::cout << " - Posición del Ag. Trabajador:  x = " <<
-//            m_MainAgent -> getVAgents().at(0) -> getPosition ().first << " , y = " <<
-//            m_MainAgent -> getVAgents().at(0) -> getPosition ().second << std::endl;
-
-/*
-   // Prueba de movimiento hacia el sur de un agente
-   while (m_MainAgent -> getVAgents().at(0) -> getPosition().second < 100) {
-	   m_MainAgent -> getVAgents().at(0) -> move (SOUTH);
-	   std::cout << "Pos:  x = " << m_MainAgent -> getVAgents().at(0) -> getPosition().first <<
-			   " , y = " << m_MainAgent -> getVAgents().at(0) -> getPosition().second << std::endl;
-	   //std::cout << "Simbolo = " << mapci(searchg1 -> getPosition().first, searchg1 -> getPosition().second) << std::endl;
-   }
-*/
 }
 void Simulator::stop() {
    logAction(LOG_F_STOP);

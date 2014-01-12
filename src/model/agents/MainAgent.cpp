@@ -18,11 +18,15 @@
 MainAgent::MainAgent(Simulator* refModel): refSimulator_(refModel) {
    logAction(LOG_INIT);
    m_beliefSet = new BeliefSet();
-   setNameAgent("MAIN_AGENT");
+   setNameAgent(const_cast<char*>("MAIN_AGENT"));
 }
 
 MainAgent::~MainAgent() {
    logAction(LOG_END);
+}
+
+void MainAgent::update () {
+   // TODO: actualización por cada paso.
 }
 
 void MainAgent::createRndInitialPos (Map* mainMap) {
@@ -131,6 +135,7 @@ Package* MainAgent::readFIPAPackage (Package* p) {
 			}
 
 		}
+	return answer;
 }
 
 Package* MainAgent::createFIPAPackage () {

@@ -19,24 +19,18 @@
 19. ------Inicializando OGL en la clase Bureaucrat. 
 20. ------Iniciando el contexto OGL de la herramienta Context 
 21. ---Llamando a la función mainLoop del Director
-22. ---Generando el Agente principal 
-23. ---Llamando a la función createRndInitialPos () del agente principal.
-24. ---Generando el Agente principal 
-25. ---Llamando a la función createRndInitialPos () del agente principal.
-26. ---Generando el Agente principal 
-27. ---Llamando a la función createRndInitialPos () del agente principal.
-28. ---Llamando a la función stop de la clase Simulator.
-29. ---Destruyendo el Agente principal 
-30. ---Destruyendo el modelo Simulator 
-31. ---Llamando a la función stop de la clase Simulator.
-32. ---Llamano a la función stop de la clase Interface.
-33. ------Destruyendo el gestor Bureaucrat para la vista Interfaz 
-34. ------Destruyendo el gestor Scenographer para la vista Interfaz 
-35. ------Destruyendo la herramienta Window para la vista Interfaz 
-36. ------Destruyendo la herramienta Context para la vista Interfaz 
-37. ------Destruyendo la herramienta Scene para la vista Interfaz 
-38. ---Destruyendo la vista Interfaz 
-39. ---Llamano a la función stop de la clase Interface.
-40. ------Destruyendo la herramienta MainLoop para el Director 
-41. ---Llamando a la funcion stop del Director
-42. ******************************************
+22. ---Llamando a la función stop de la clase Simulator.
+23. ---Destruyendo el Agente principal 
+24. ---Destruyendo el modelo Simulator 
+25. ---Llamando a la función stop de la clase Simulator.
+26. ---Llamano a la función stop de la clase Interface.
+27. ------Destruyendo el gestor Bureaucrat para la vista Interfaz 
+28. ------Destruyendo el gestor Scenographer para la vista Interfaz 
+29. ------Destruyendo la herramienta Window para la vista Interfaz 
+30. ------Destruyendo la herramienta Context para la vista Interfaz 
+31. ------Destruyendo la herramienta Scene para la vista Interfaz 
+32. ---Destruyendo la vista Interfaz 
+33. ---Llamano a la función stop de la clase Interface.
+34. ------Destruyendo la herramienta MainLoop para el Director 
+35. ---Llamando a la funcion stop del Director
+36. ******************************************

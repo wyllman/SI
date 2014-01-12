@@ -38,6 +38,7 @@ Package* SearchAgent::readFIPAPackage (Package* p) {
 			}
 		//}
 	//}
+	return NULL;
 }
 
 void SearchAgent::localDireccionalSearch (std::string  d) {

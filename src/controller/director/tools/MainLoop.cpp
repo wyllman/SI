@@ -43,7 +43,7 @@ void MainLoop::init() {
    pause_ = false;
    requireReset_ = false;
    requireUpdate_ = false;
-   requireRender_ = false;
+   requireRender_ = true;
    initTime ();
 }
 void MainLoop::pauseResume() {

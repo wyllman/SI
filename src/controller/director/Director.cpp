@@ -153,7 +153,6 @@ void Director::getAgentsPos() {
       }
    }
 
-
    // Obteniendo el número de agentes trabajadores y sus posiciones del modelo
    // y pasarle la información a la vista.
    if (!const_cast<MainAgent*> (
@@ -190,6 +189,7 @@ void Director::mainLoop() {
    mainLoop_->init();
 
    while (mainLoop_->isContinue()) {
+      // Para cada evento del tope de la pila de eventos.
       while (SDL_PollEvent(&eventSDL)) {
          if (eventSDL.type == SDL_QUIT) {
             mainLoop_->stop();
@@ -225,6 +225,13 @@ void Director::mainLoop() {
               mainLoop_->initTime();
             mainFunction();
          }
+      }
+      // Cuando el programa se queda sin eventos.
+      mainLoop_->endTime();
+
+      if ((mainLoop_->diffTmie()) > (MIN_TIME_DIFF)) { // Control del tiempo
+           mainLoop_->initTime();
+         mainFunction();
       }
    }
 }

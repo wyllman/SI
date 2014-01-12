@@ -225,22 +225,25 @@ void Director::mainFunction() {
    }
 }
 void Director::iddleFunction() {
-    // Cuando el programa se queda sin eventos.
-    mainLoop_->end2Time();
+   if (!(mainLoop_->isPause())) {
+      // Cuando el programa se queda sin eventos.
+      mainLoop_->end2Time();
 
-    if ((mainLoop_->diff2Tmie()) > (MIN_TIME2_DIFF)) { // Control del tiempo
-         mainLoop_->init2Time();
-       // Actualizar el simulador y comprobar si se ha movido algún agente para actualizar la inerfaz gráfica.
-       if (dynamic_cast<Simulator*>(
-               const_cast<Model*>(refModel_))->update()) {
-          mainLoop_->update();
-       }
-       mainFunction();
-    }
+      if ((mainLoop_->diff2Tmie()) > (MIN_TIME2_DIFF)) { // Control del tiempo
+           mainLoop_->init2Time();
+         // Actualizar el simulador y comprobar si se ha movido algún agente para actualizar la inerfaz gráfica.
+         if (dynamic_cast<Simulator*>(
+                 const_cast<Model*>(refModel_))->update()) {
+            mainLoop_->update();
+         }
+         mainFunction();
+      }
+   }
 }
 void Director::keyEvents (SDL_Event& eventSDL){
    const float ZOOM_DIFF = 0.75;
    const float ROT_DIFF = 2.5;
+   const float MOV_DIFF = 1;
    // Controlar los eventos de teclado.
    if (eventSDL.key.keysym.sym == SDLK_UP) { // Zoom negativo
       const_cast<Scenographer*>(
@@ -267,23 +270,25 @@ void Director::keyEvents (SDL_Event& eventSDL){
    } else if (eventSDL.key.keysym.sym == SDLK_w) { // mover la cámara en Z positivo
        const_cast<Scenographer*>(
           dynamic_cast<Interface*>(
-          const_cast<View*>(refView_))->getScenographer())->camPosZ(1);
+          const_cast<View*>(refView_))->getScenographer())->camPosZ(MOV_DIFF);
        mainLoop_->render();
    } else if (eventSDL.key.keysym.sym == SDLK_s) { // mover la cámara en Z negativo
        const_cast<Scenographer*>(
           dynamic_cast<Interface*>(
-          const_cast<View*>(refView_))->getScenographer())->camPosZ(-1);
+          const_cast<View*>(refView_))->getScenographer())->camPosZ(-MOV_DIFF);
        mainLoop_->render();
    } else if (eventSDL.key.keysym.sym == SDLK_a) { // mover la cámara en X positivo
        const_cast<Scenographer*>(
           dynamic_cast<Interface*>(
-          const_cast<View*>(refView_))->getScenographer())->camPosX(1);
+          const_cast<View*>(refView_))->getScenographer())->camPosX(MOV_DIFF);
        mainLoop_->render();
    } else if (eventSDL.key.keysym.sym == SDLK_d) { // mover la cámara en X negativo
        const_cast<Scenographer*>(
           dynamic_cast<Interface*>(
-          const_cast<View*>(refView_))->getScenographer())->camPosX(-1);
+          const_cast<View*>(refView_))->getScenographer())->camPosX(-MOV_DIFF);
        mainLoop_->render();
+   } else if (eventSDL.key.keysym.sym == SDLK_p) {
+      mainLoop_->pauseResume();
    }
 }
 void Director::logAction(int index) {

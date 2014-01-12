@@ -11,6 +11,7 @@
 #include <model/bdi/Intentions.h>
 
 Agent::Agent() {
+	setIdComm(0);
 }
 
 Agent::~Agent() {

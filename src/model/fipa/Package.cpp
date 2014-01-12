@@ -11,6 +11,7 @@ Package::Package(char* send, char* receiv, Type type) {
 	setSender(send);
 	setReceiver(receiv);
 	setType(type);
+	setIdComm(0);
 }
 
 Package::~Package() {

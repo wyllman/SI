@@ -217,7 +217,7 @@ void Director::mainLoop() {
                   const_cast<View*>(refView_))->getScenographer())->camRotationPos (-ROT_DIFF);
                mainLoop_->render();
             } else if (eventSDL.key.keysym.sym == SDLK_r) { // Resetear el simulador.
-
+               mainLoop_->reset();
             } else if (eventSDL.key.keysym.sym == SDLK_w) { // mover la cámara en Z positivo
                 const_cast<Scenographer*>(
                    dynamic_cast<Interface*>(
@@ -247,14 +247,9 @@ void Director::mainLoop() {
               mainLoop_->initTime();
             mainFunction();
          }
+         iddleFunction ();
       }
-      // Cuando el programa se queda sin eventos.
-      mainLoop_->endTime();
-
-      if ((mainLoop_->diffTmie()) > (MIN_TIME_DIFF)) { // Control del tiempo
-           mainLoop_->initTime();
-         mainFunction();
-      }
+      iddleFunction ();
    }
 }
 
@@ -265,13 +260,8 @@ void Director::mainFunction() {
          dynamic_cast<Simulator*>(const_cast<Model*>(refModel_))->reset();
          mainLoop_->stopReset();
          mainLoop_->update();
-      } else {
-         // Actualizar el simulador y comprobar si se ha movido algún agente para actualizar la inerfaz gráfica.
-         if (dynamic_cast<Simulator*>(
-               const_cast<Model*>(refModel_))->update()) {
-            mainLoop_->update();
-         }
       }
+
       // En caso de requerirse, enviar la información necesaria sobe los agente a la interfaz gráfica.
       if (mainLoop_->isRequireUpdate()) {
          getAgentsPos();
@@ -286,7 +276,20 @@ void Director::mainFunction() {
       }
    }
 }
+void Director::iddleFunction() {
+    // Cuando el programa se queda sin eventos.
+    mainLoop_->end2Time();
 
+    if ((mainLoop_->diff2Tmie()) > (MIN_TIME2_DIFF)) { // Control del tiempo
+         mainLoop_->init2Time();
+       // Actualizar el simulador y comprobar si se ha movido algún agente para actualizar la inerfaz gráfica.
+       if (dynamic_cast<Simulator*>(
+               const_cast<Model*>(refModel_))->update()) {
+          mainLoop_->update();
+       }
+       mainFunction();
+    }
+}
 void Director::logAction(int index) {
    if (BASIC_LOG) {
       switch (index) {

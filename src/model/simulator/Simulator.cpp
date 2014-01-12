@@ -56,42 +56,7 @@ void Simulator::init() {
       std::cout << std::endl;
    }
 
-   m_MainAgent = new MainAgent (this);
-   m_MainAgent -> createRndInitialPos(map_); // Da una posición inicial al agente principal
-//   std::cout << "Simbolo en la posición generada: "
-//      << mapci(m_MainAgent -> getPosition().first, m_MainAgent -> getPosition().second)
-//      << std::endl;
-
-   // Prueba 1 de agente instanciado al lado de la nave
-   SearchAgent* searchg1 = new SearchAgent ();
-   searchg1 -> setPosition (Point (m_MainAgent -> getPosition().first + 1, m_MainAgent -> getPosition().second));
-   m_MainAgent -> getVAgents().push_back(searchg1);
-
-   SearchAgent* searchg2 = new SearchAgent ();
-   searchg2 -> setPosition (Point (m_MainAgent -> getPosition().first + 1, m_MainAgent -> getPosition().second + 1));
-   m_MainAgent -> getVAgents().push_back(searchg2);
-
-   SearchAgent* searchg3 = new SearchAgent ();
-   searchg3 -> setPosition (Point (m_MainAgent -> getPosition().first + 1, m_MainAgent -> getPosition().second - 1));
-   m_MainAgent -> getVAgents().push_back(searchg3);
-
-
-
-   WorkingAgent* working1 = new WorkingAgent ();
-   working1 -> setPosition (Point (m_MainAgent -> getPosition().first - 1, m_MainAgent -> getPosition().second));
-   m_MainAgent -> getWorVecAgents().push_back(working1);
-
-   WorkingAgent* working2 = new WorkingAgent ();
-   working2 -> setPosition (Point (m_MainAgent -> getPosition().first - 1, m_MainAgent -> getPosition().second + 1));
-   m_MainAgent -> getWorVecAgents().push_back(working2);
-
-   WorkingAgent* working3 = new WorkingAgent ();
-   working3 -> setPosition (Point (m_MainAgent -> getPosition().first - 1, m_MainAgent -> getPosition().second - 1));
-   m_MainAgent -> getWorVecAgents().push_back(working3);
-
-//   std::cout << " - Posición del Ag. Trabajador:  x = " <<
-//            m_MainAgent -> getVAgents().at(0) -> getPosition ().first << " , y = " <<
-//            m_MainAgent -> getVAgents().at(0) -> getPosition ().second << std::endl;
+   reset ();
 
 /*
    // Prueba de movimiento hacia el sur de un agente
@@ -106,11 +71,40 @@ void Simulator::init() {
 
 bool Simulator::update() {
    bool result = false;
-   // TODO:
+   // TODO: Implementar cada paso en para los movimientos y cálculos del sist. int.
+   m_MainAgent -> getVAgents().at(0) -> move (NORTH);
+   result = true;
+
    return result;
 }
 void Simulator::reset() {
-   // TODO:
+   m_MainAgent = new MainAgent (this);
+   m_MainAgent -> createRndInitialPos(map_); // Da una posición inicial al agente principal
+
+   // Prueba 1 de agente instanciado al lado de la nave
+   SearchAgent* searchg1 = new SearchAgent ();
+   searchg1 -> setPosition (Point (m_MainAgent -> getPosition().first + 1, m_MainAgent -> getPosition().second));
+   m_MainAgent -> getVAgents().push_back(searchg1);
+
+   SearchAgent* searchg2 = new SearchAgent ();
+   searchg2 -> setPosition (Point (m_MainAgent -> getPosition().first + 1, m_MainAgent -> getPosition().second + 1));
+   m_MainAgent -> getVAgents().push_back(searchg2);
+
+   SearchAgent* searchg3 = new SearchAgent ();
+   searchg3 -> setPosition (Point (m_MainAgent -> getPosition().first + 1, m_MainAgent -> getPosition().second - 1));
+   m_MainAgent -> getVAgents().push_back(searchg3);
+
+   WorkingAgent* working1 = new WorkingAgent ();
+   working1 -> setPosition (Point (m_MainAgent -> getPosition().first - 1, m_MainAgent -> getPosition().second));
+   m_MainAgent -> getWorVecAgents().push_back(working1);
+
+   WorkingAgent* working2 = new WorkingAgent ();
+   working2 -> setPosition (Point (m_MainAgent -> getPosition().first - 1, m_MainAgent -> getPosition().second + 1));
+   m_MainAgent -> getWorVecAgents().push_back(working2);
+
+   WorkingAgent* working3 = new WorkingAgent ();
+   working3 -> setPosition (Point (m_MainAgent -> getPosition().first - 1, m_MainAgent -> getPosition().second - 1));
+   m_MainAgent -> getWorVecAgents().push_back(working3);
 }
 void Simulator::stop() {
    logAction(LOG_F_STOP);

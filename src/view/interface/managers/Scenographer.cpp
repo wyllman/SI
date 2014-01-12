@@ -29,7 +29,6 @@
 
 #include <math.h>
 
-
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Scenographer::Scenographer(const Interface& interface, const Scene& scene, const Map& map) {
@@ -68,6 +67,7 @@ void Scenographer::update() {
       updateObjects();
    }
 }
+// --- Métedos específicos para el control de la cámara desde el controlador
 void Scenographer::projZoom(float value) {
    projAng_ += value;
    updateProy();
@@ -86,6 +86,8 @@ void Scenographer::camRotationPos(float value) {
    camRotAngle_ += value;
    updateCam();
 }
+// --- Métodos específicos para el control de la representación de
+//     los agentes y el terreno desde el controlador.
 void Scenographer::setMainAgentPos(float* pos) {
    mainAgentPos_[0] = pos[0];
    mainAgentPos_[1] = pos[1];

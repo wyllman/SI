@@ -41,6 +41,7 @@ class Director: public Controller {
       void getAgentsPos ();
       void mainLoop ();
       void mainFunction ();
+      void iddleFunction ();
       void logAction (int);
 };
 

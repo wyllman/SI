@@ -17,20 +17,38 @@ Agent::~Agent() {
 }
 
 bool Agent::move(Direction theMovement) {
-	bool result = false;
-	switch(theMovement) {
-	case NORTH:
-		--m_position.second;
-		break;
-	case SOUTH:
-		++m_position.second;
-		break;
-	case EAST:
-		++m_position.first;
-		break;
-	case WEST:
-		--m_position.first;
-		break;
+   const float MOV_DIFF = 0.01;
+   bool result = false;
+
+   switch(theMovement) {
+      case NORTH:
+         m_position.second -= MOV_DIFF;
+         break;
+      case SOUTH:
+         m_position.second += MOV_DIFF;
+         break;
+      case EAST:
+         m_position.first += MOV_DIFF;
+         break;
+      case WEST:
+         m_position.first -= MOV_DIFF;
+         break;
+      case NEAST:
+         m_position.second -= MOV_DIFF;
+         m_position.first += MOV_DIFF;
+         break;
+      case NWEST:
+         m_position.second -= MOV_DIFF;
+         m_position.first -= MOV_DIFF;
+         break;
+      case SEAST:
+         m_position.second += MOV_DIFF;
+         m_position.first += MOV_DIFF;
+         break;
+      case SWEST:
+         m_position.second += MOV_DIFF;
+         m_position.first -= MOV_DIFF;
+         break;
 	}
 	return result;
 }

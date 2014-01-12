@@ -37,6 +37,9 @@ class MainLoop {
       void initTime ();
       void endTime ();
       double diffTmie ();
+      void init2Time ();
+      void end2Time ();
+      double diff2Tmie ();
 
       bool isContinue() const;
       bool isPause() const;
@@ -55,6 +58,8 @@ class MainLoop {
 
       struct timeval timeInit_;
       struct timeval timeFinal_;
+      struct timeval time2Init_;
+      struct timeval time2Final_;
 
       void logAction (int);
 };

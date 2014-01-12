@@ -56,11 +56,30 @@ void Simulator::init() {
       std::cout << std::endl;
    }
 
+   reset ();
+   m_MainAgent -> getVAgents().at(0) -> readFIPAPackage(m_MainAgent -> createFIPAPackage());
+/*
+   // Prueba de movimiento hacia el sur de un agente
+   while (m_MainAgent -> getVAgents().at(0) -> getPosition().second < 100) {
+	   m_MainAgent -> getVAgents().at(0) -> move (SOUTH);
+	   std::cout << "Pos:  x = " << m_MainAgent -> getVAgents().at(0) -> getPosition().first <<
+			   " , y = " << m_MainAgent -> getVAgents().at(0) -> getPosition().second << std::endl;
+	   //std::cout << "Simbolo = " << mapci(searchg1 -> getPosition().first, searchg1 -> getPosition().second) << std::endl;
+   }
+*/
+}
+
+bool Simulator::update() {
+   bool result = false;
+   // TODO: Implementar cada paso en para los movimientos y cálculos del sist. int.
+   m_MainAgent -> getVAgents().at(0) -> move (NORTH);
+   result = true;
+
+   return result;
+}
+void Simulator::reset() {
    m_MainAgent = new MainAgent (this);
    m_MainAgent -> createRndInitialPos(map_); // Da una posición inicial al agente principal
-//   std::cout << "Simbolo en la posición generada: "
-//      << mapci(m_MainAgent -> getPosition().first, m_MainAgent -> getPosition().second)
-//      << std::endl;
 
    // Prueba 1 de agente instanciado al lado de la nave
    SearchAgent* searchg1 = new SearchAgent ();
@@ -75,8 +94,6 @@ void Simulator::init() {
    searchg3 -> setPosition (Point (m_MainAgent -> getPosition().first + 1, m_MainAgent -> getPosition().second - 1));
    m_MainAgent -> getVAgents().push_back(searchg3);
 
-
-
    WorkingAgent* working1 = new WorkingAgent ();
    working1 -> setPosition (Point (m_MainAgent -> getPosition().first - 1, m_MainAgent -> getPosition().second));
    m_MainAgent -> getWorVecAgents().push_back(working1);
@@ -89,8 +106,6 @@ void Simulator::init() {
    working3 -> setPosition (Point (m_MainAgent -> getPosition().first - 1, m_MainAgent -> getPosition().second - 1));
    m_MainAgent -> getWorVecAgents().push_back(working3);
 
-
-   m_MainAgent -> getVAgents().at(0) -> readFIPAPackage(m_MainAgent -> createFIPAPackage());
 
 //   std::cout << " - Posición del Ag. Trabajador:  x = " <<
 //            m_MainAgent -> getVAgents().at(0) -> getPosition ().first << " , y = " <<
@@ -105,15 +120,6 @@ void Simulator::init() {
 	   //std::cout << "Simbolo = " << mapci(searchg1 -> getPosition().first, searchg1 -> getPosition().second) << std::endl;
    }
 */
-}
-
-bool Simulator::update() {
-   bool result = false;
-   // TODO:
-   return result;
-}
-void Simulator::reset() {
-   // TODO:
 }
 void Simulator::stop() {
    logAction(LOG_F_STOP);

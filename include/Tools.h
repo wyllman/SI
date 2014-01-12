@@ -28,7 +28,8 @@ typedef std::pair<int, int> Point;
 const bool BASIC_LOG = true;
 const bool ADVAN_LOG = true;
 // Conjunto de constantes para la configuración del controlador
-const double MIN_TIME_DIFF = 1 / 45; // Un máximo de 45 veces por segundo.
+const double MIN_TIME_DIFF = 1 / 45; // Tiempo de actualización para los eventos.
+const double MIN_TIME2_DIFF = 1 / 1; // Tiempo de actualización para el simulador.
 
 // Conjunto de constantes de configuración de la interfaz gráfica
 //   Ventana:

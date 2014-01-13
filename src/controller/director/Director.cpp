@@ -188,13 +188,14 @@ void Director::mainLoop() {
          } else if (eventSDL.type == SDL_KEYDOWN && eventSDL.key.state == SDL_PRESSED) {
            keyEvents(eventSDL);
          }
-         if (!(mainLoop_->isPause()))  {
+
             // Atributos para el control del tiempo en la ejecución.
             mainLoop_->endTime();
             if ((mainLoop_->diffTmie()) > (MIN_TIME_DIFF)) { // Control del tiempo
                  mainLoop_->initTime();
                mainFunction();
             }
+            if (!(mainLoop_->isPause()))  {
             iddleFunction ();
          }
       }
@@ -247,7 +248,7 @@ void Director::keyEvents (SDL_Event& eventSDL){
    // Controlar los eventos de teclado.
    if (eventSDL.key.keysym.sym == SDLK_p) {
       mainLoop_->pauseResume();
-   } else if (!(mainLoop_->isPause())){
+   } else {// if (!(mainLoop_->isPause())){
       if (eventSDL.key.keysym.sym == SDLK_UP) { // Zoom negativo
          const_cast<Scenographer*>(
             dynamic_cast<Interface*>(

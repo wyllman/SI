@@ -139,8 +139,14 @@ Package* MainAgent::readFIPAPackage (Package* p) {
 }
 
 Package* MainAgent::createFIPAPackage () {
-	Package* p = new Package (getNameAgent(), getVAgents().at(0) -> getNameAgent(), CONFIRM);
-	std::cout << "Creado paquete CONFIRM por la nave principal: " << p -> getSender() << p -> getReceiver() << p -> getType() << std::endl;
+	/*Package* p = new Package (getNameAgent(), getVAgents().at(0) -> getNameAgent(), CONFIRM);
+	std::cout << "Creado paquete CONFIRM por la nave principal: " << p -> getSender() << p -> getReceiver() << p -> getType() << std::endl;*/
+
+	Package* p = new Package (getNameAgent(), getWorVecAgents().at(0) -> getNameAgent(), GO_RESOURCE_LOCATION);
+	std::vector<std::string> temp;
+	temp.push_back("[EAST,EAST,EAST,EAST,EAST,EAST]");
+	p -> setContent(temp);
+	std::cout << "Creado paquete GO_RESOURCE_LOCATION por la nave principal: " << p -> getSender() << p -> getReceiver() << p -> getType() << std::endl;
 	return p;
 }
 

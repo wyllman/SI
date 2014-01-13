@@ -17,10 +17,10 @@ SearchAgent::~SearchAgent() {
 Package* SearchAgent::readFIPAPackage (Package* p) {
 	Package* answer = new Package (getNameAgent(), p -> getSender(), NOT_UNDERSTOOD);
 	// Comprobamos que el paquete es de la conversación actual
-	//if (p -> getIdComm() == getIdComm()) {
+	if (p -> getIdComm() == getIdComm()) {
 		// Comprobamos que el paquete va destinado al agente correcto
-		//if (p -> getReceiver() == getNameAgent()) {
-			switch ((Type) p -> getType()) {
+		if (p -> getReceiver() == getNameAgent()) {
+			switch (p -> getType()) {
 			case NOT_UNDERSTOOD:
 				std::cout << "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible" << std::endl;
 				return NULL;
@@ -36,9 +36,8 @@ Package* SearchAgent::readFIPAPackage (Package* p) {
 			default:
 				std::cout << "No se entiende el tipo del paquete recibido." << std::endl;
 			}
-		//}
-	//}
-	return NULL;
+		}
+	}
 }
 
 void SearchAgent::localDireccionalSearch (std::string  d) {

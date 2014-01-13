@@ -189,13 +189,13 @@ void Director::mainLoop() {
            keyEvents(eventSDL);
          }
 
-            // Atributos para el control del tiempo en la ejecución.
-            mainLoop_->endTime();
-            if ((mainLoop_->diffTmie()) > (MIN_TIME_DIFF)) { // Control del tiempo
-                 mainLoop_->initTime();
-               mainFunction();
-            }
-            if (!(mainLoop_->isPause()))  {
+         // Atributos para el control del tiempo en la ejecución.
+         mainLoop_->endTime();
+         if ((mainLoop_->diffTmie()) > (MIN_TIME_DIFF)) { // Control del tiempo
+              mainLoop_->initTime();
+            mainFunction();
+         }
+         if (!(mainLoop_->isPause()))  {
             iddleFunction ();
          }
       }

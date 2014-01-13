@@ -23,32 +23,32 @@ bool Agent::move(Direction theMovement) {
 
    switch(theMovement) {
       case NORTH:
-         m_position.second -= MOV_DIFF;
+         m_position.first -= MOV_DIFF;
          break;
       case SOUTH:
-         m_position.second += MOV_DIFF;
+         m_position.first += MOV_DIFF;
          break;
       case EAST:
-         m_position.first += MOV_DIFF;
+         m_position.second += MOV_DIFF;
          break;
       case WEST:
-         m_position.first -= MOV_DIFF;
+         m_position.second -= MOV_DIFF;
          break;
       case NEAST:
-         m_position.second -= MOV_DIFF;
-         m_position.first += MOV_DIFF;
+         m_position.first -= MOV_DIFF;
+         m_position.second += MOV_DIFF;
          break;
       case NWEST:
-         m_position.second -= MOV_DIFF;
          m_position.first -= MOV_DIFF;
+         m_position.second -= MOV_DIFF;
          break;
       case SEAST:
-         m_position.second += MOV_DIFF;
          m_position.first += MOV_DIFF;
+         m_position.second += MOV_DIFF;
          break;
       case SWEST:
-         m_position.second += MOV_DIFF;
-         m_position.first -= MOV_DIFF;
+         m_position.first += MOV_DIFF;
+         m_position.second -= MOV_DIFF;
          break;
 	}
 	return result;

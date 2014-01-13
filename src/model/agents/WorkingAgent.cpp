@@ -43,7 +43,6 @@ Package* WorkingAgent::readFIPAPackage (Package* p) {
 void WorkingAgent::followRoute(std::string route) {
 	cout << "SEGUIR LA RUTA: " << route << endl;
 	vector<Direction> camino;
-	// [NORTH, NORTH, ...]
 	int posIni = route.find("[");
 	int posCorchFin = route.find("]");
 	cout << "Pos ini:" << posIni << " posFin: " << posCorchFin << endl;

@@ -28,7 +28,8 @@ class MainAgent: public Agent {
       MainAgent(Simulator*);
       ~MainAgent();
 
-      void update ();
+      void initAgents ();
+      bool update ();
 
       void logAction(int);
       void createRndInitialPos (Map*);

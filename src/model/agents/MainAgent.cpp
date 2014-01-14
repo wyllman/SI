@@ -83,17 +83,17 @@ bool MainAgent::update () {
 
    if (m_WorVecAgents[0]->checkRouteMoves()) {
       if (m_WorVecAgents[0]->routedMove()) {
-    	  cout << "MOVIENDO AGENTE TRABAJADOR EN RUTA"  << endl;
+//         cout << "MOVIENDO AGENTE TRABAJADOR EN RUTA"  << endl;
          result = true;
       }
    } else if (m_WorVecAgents[0]->controledMove(NWEST)) {
       result = true;
    }
    if (m_WorVecAgents[1]->controledMove(NEAST)) {
-   result = true;
+      result = true;
    }
    if (m_WorVecAgents[2]->controledMove(SEAST)) {
-	   result = true;
+      result = true;
    }
    if (m_WorVecAgents[3]->controledMove(SWEST)) {
       result = true;

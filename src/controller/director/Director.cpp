@@ -291,6 +291,7 @@ void Director::keyEvents (SDL_Event& eventSDL){
              dynamic_cast<Interface*>(
              const_cast<View*>(refView_))->getScenographer())->camPosX(-MOV_DIFF);
           mainLoop_->render();
+      // Controles para la velocidad de actualización del simulador.
       } else if (eventSDL.key.keysym.sym == SDLK_1) {
          simulatorVel_ = 1;
       } else if (eventSDL.key.keysym.sym == SDLK_2) {

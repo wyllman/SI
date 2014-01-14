@@ -17,7 +17,7 @@
 #include <boost/random/negative_binomial_distribution.hpp>
 #include <boost/random/random_device.hpp>
 
-MainAgent::MainAgent(Simulator* refModel, Map* theMap): Agent(theMap),  refSimulator_(refModel) {
+MainAgent::MainAgent(Simulator* refModel, Map* theMap): Agent(theMap), refSimulator_(refModel) {
    logAction(LOG_INIT);
    m_beliefSet = new BeliefSet();
    setNameAgent(const_cast<char*>("MAIN_AGENT"));
@@ -81,7 +81,12 @@ bool MainAgent::update () {
       result = true;
    }
 
-   if (m_WorVecAgents[0]->controledMove(NWEST)) {
+   if (m_WorVecAgents[0]->checkRouteMoves()) {
+      if (m_WorVecAgents[0]->routedMove()) {
+    	  cout << "MOVIENDO AGENTE TRABAJADOR EN RUTA"  << endl;
+         result = true;
+      }
+   } else if (m_WorVecAgents[0]->controledMove(NWEST)) {
       result = true;
    }
    if (m_WorVecAgents[1]->controledMove(NEAST)) {

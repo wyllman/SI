@@ -25,34 +25,37 @@ class Intentions;
  *
  */
 class Agent {
-private:
-	// FIXME: la posicion deberia estar incluida en el conjunto de creencias
-	BeliefSet* m_beliefSet;
-	Goals* m_goals;
-	Intentions* m_intentions;
+   private:
+      // FIXME: la posicion deberia estar incluida en el conjunto de creencias
+      BeliefSet* m_beliefSet;
+      Goals* m_goals;
+      Intentions* m_intentions;
 
-	// FIXME: dejo aquí que un agente conoce en qué comunicación está embebido
-	unsigned int m_idComm;
-	char* m_nameAgent;
+      // FIXME: dejo aquí que un agente conoce en qué comunicación está embebido
+      unsigned int m_idComm;
+      char* m_nameAgent;
 
-protected:
-	Point m_position;
-	Map* refMap_;
-public:
-	Agent(Map*);
-	virtual ~Agent() = 0;
+   protected:
+      Point m_position;
+      Map* refMap_;
+      std::vector<Direction> m_routes;
+   public:
+      Agent(Map*);
+      virtual ~Agent() = 0;
 
-	void move(Direction);
-    bool controledMove (Direction);
-    bool checkTerrain (Direction);
+      void move(Direction);
+      bool controledMove (Direction);
+      bool checkTerrain (Direction);
+      bool routedMove ();
+      bool checkRouteMoves ();
 
-	Point getPosition ();
-	unsigned int getIdComm() const;
-	void setIdComm(unsigned int idComm);
-	char* getNameAgent() const;
-	void setNameAgent(char* nameAgent);
+      Point getPosition ();
+      unsigned int getIdComm() const;
+      void setIdComm(unsigned int idComm);
+      char* getNameAgent() const;
+      void setNameAgent(char* nameAgent);
 
-	virtual Package* readFIPAPackage (Package*) { return NULL; };
+      virtual Package* readFIPAPackage (Package*) { return NULL; };
 };
 
 #endif /* AGENT_H_ */

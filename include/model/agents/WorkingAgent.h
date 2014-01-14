@@ -29,8 +29,6 @@ class WorkingAgent : public Agent {
 
    private:
       const MainAgent* refMainAgent_;
-
-      vector<Direction> m_routes;
 };
 
 #endif /* WORKINGAGENT_H_ */

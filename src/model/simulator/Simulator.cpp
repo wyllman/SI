@@ -57,7 +57,7 @@ void Simulator::init() {
 
    reset ();
    //m_MainAgent -> getVAgents().at(0) -> readFIPAPackage(m_MainAgent -> createFIPAPackage());
-   //m_MainAgent -> getWorVecAgents().at(0) -> readFIPAPackage(m_MainAgent -> createFIPAPackage());
+   m_MainAgent -> getWorVecAgents().at(0) -> readFIPAPackage(m_MainAgent -> createFIPAPackage());
 
 }
 

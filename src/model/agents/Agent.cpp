@@ -112,6 +112,14 @@ bool Agent::checkTerrain(Direction theMovement) {
    }
    return result;
 }
+bool Agent::routedMove() {
+   bool result = false;
+   if (!(m_routes.empty())) {
+      result = controledMove (m_routes.back());
+      m_routes.pop_back();
+   }
+   return result;
+}
 
 unsigned int Agent::getIdComm() const {
 	return m_idComm;
@@ -119,6 +127,14 @@ unsigned int Agent::getIdComm() const {
 
 char* Agent::getNameAgent() const {
 	return m_nameAgent;
+}
+
+bool Agent::checkRouteMoves() {
+   bool result = false;
+   if (m_routes.size() > 0) {
+      result = true;
+   }
+   return (result);
 }
 
 void Agent::setNameAgent(char* nameAgent) {

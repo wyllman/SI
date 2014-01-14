@@ -36,6 +36,7 @@ class MainAgent: public Agent {
       std::vector<Agent*>& getVAgents ();
       std::vector<Agent*>& getWorVecAgents();
       std::vector<Package*>& getPackagesFipa();
+      const Map* getMap() const;
 
       Package* readFIPAPackage (Package*);
       Package* createFIPAPackage ();

@@ -31,19 +31,19 @@ MainAgent::~MainAgent() {
 void MainAgent::initAgents() {
    // Creación inicial de los agentes exploradores
    // --- Primer agente (Norte)
-   SearchAgent* searchg1 = new SearchAgent ();
+   SearchAgent* searchg1 = new SearchAgent (this);
    searchg1 -> setPosition (Point (getPosition().first - 1, getPosition().second));
    m_Vagents.push_back(searchg1);
    // --- Segundo agente (Sur)
-   SearchAgent* searchg2 = new SearchAgent ();
+   SearchAgent* searchg2 = new SearchAgent (this);
    searchg2 -> setPosition (Point (getPosition().first + 1, getPosition().second));
    m_Vagents.push_back(searchg2);
    // --- Tercer agente (Este)
-   SearchAgent* searchg3 = new SearchAgent ();
+   SearchAgent* searchg3 = new SearchAgent (this);
    searchg3 -> setPosition (Point (getPosition().first, getPosition().second + 1));
    m_Vagents.push_back(searchg3);
    // --- Cuarto agente (Oeste)
-   SearchAgent* searchg4 = new SearchAgent ();
+   SearchAgent* searchg4 = new SearchAgent (this);
    searchg4 -> setPosition (Point (getPosition().first, getPosition().second - 1));
    m_Vagents.push_back(searchg4);
 
@@ -68,10 +68,10 @@ void MainAgent::initAgents() {
 bool MainAgent::update () {
    bool result = false;
    // Pruebas de movimiento
-   m_Vagents[0]->move(NORTH);
-   m_Vagents[1]->move(SOUTH);
-   m_Vagents[2]->move(EAST);
-   m_Vagents[3]->move(WEST);
+   (dynamic_cast<SearchAgent*>(m_Vagents[0]))->controledMove(NORTH);
+   (dynamic_cast<SearchAgent*>(m_Vagents[1]))->controledMove(SOUTH);
+   (dynamic_cast<SearchAgent*>(m_Vagents[2]))->controledMove(EAST);
+   (dynamic_cast<SearchAgent*>(m_Vagents[3]))->controledMove(WEST);
 
    m_WorVecAgents[0]->move(NWEST);
    m_WorVecAgents[1]->move(NEAST);
@@ -209,4 +209,7 @@ std::vector<Agent*>& MainAgent::getWorVecAgents() {
 }
 std::vector<Package*>& MainAgent::getPackagesFipa() {
    return m_packagesFIPA;
+}
+const Map* MainAgent::getMap() const {
+   return (refSimulator_->getMap());
 }

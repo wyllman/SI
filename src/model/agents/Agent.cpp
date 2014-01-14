@@ -17,9 +17,9 @@ Agent::Agent() {
 Agent::~Agent() {
 }
 
-bool Agent::move(Direction theMovement) {
+void Agent::move(Direction theMovement) {
    const float MOV_DIFF = 1;
-   bool result = false;
+//   bool result = false;
 
    switch(theMovement) {
       case NORTH:
@@ -51,7 +51,7 @@ bool Agent::move(Direction theMovement) {
          m_position.second -= MOV_DIFF;
          break;
 	}
-	return result;
+//	return result;
 }
 
 unsigned int Agent::getIdComm() const {

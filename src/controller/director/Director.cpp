@@ -195,13 +195,9 @@ void Director::mainLoop() {
               mainLoop_->initTime();
             mainFunction();
          }
-         if (!(mainLoop_->isPause()))  {
-            iddleFunction ();
-         }
-      }
-      if (!(mainLoop_->isPause()))  {
          iddleFunction ();
       }
+      iddleFunction ();
    }
 }
 
@@ -228,17 +224,19 @@ void Director::mainFunction() {
 
 }
 void Director::iddleFunction() {
-   // Cuando el programa se queda sin eventos.
-   mainLoop_->end2Time();
+   if (!(mainLoop_->isPause()))  {
+      // Cuando el programa se queda sin eventos.
+      mainLoop_->end2Time();
 
-   if ((mainLoop_->diff2Tmie()) > (MIN_TIME2_DIFF)) { // Control del tiempo
-        mainLoop_->init2Time();
-      // Actualizar el simulador y comprobar si se ha movido algún agente para actualizar la inerfaz gráfica.
-      if (dynamic_cast<Simulator*>(
-              const_cast<Model*>(refModel_))->update()) {
-         mainLoop_->update();
+      if ((mainLoop_->diff2Tmie()) > (MIN_TIME2_DIFF)) { // Control del tiempo
+           mainLoop_->init2Time();
+         // Actualizar el simulador y comprobar si se ha movido algún agente para actualizar la inerfaz gráfica.
+         if (dynamic_cast<Simulator*>(
+                 const_cast<Model*>(refModel_))->update()) {
+            mainLoop_->update();
+         }
+         mainFunction();
       }
-      mainFunction();
    }
 }
 void Director::keyEvents (SDL_Event& eventSDL){

@@ -11,18 +11,23 @@
 #include <iostream>
 #include <cstdlib>
 
+#include <model/agents/MainAgent.h>
 #include <model/agents/WorkingAgent.h>
 #include <model/fipa/Package.h>
 
 class SearchAgent: public Agent {
-public:
-	SearchAgent();
-	~SearchAgent();
+   public:
+      SearchAgent(MainAgent*);
+      ~SearchAgent();
 
-	void setPosition (Point p) { m_position = p; }
-	Package* readFIPAPackage (Package*);
+      void setPosition (Point p) { m_position = p; }
+      Package* readFIPAPackage (Package*);
 
-	void localDireccionalSearch (std::string);
+      void localDireccionalSearch (std::string);
+      bool controledMove (Direction);
+      bool checkTerrain (Direction);
+   private:
+      const MainAgent* refMainAgent_;
 };
 
 #endif /* SEARCHAGENT_H_ */

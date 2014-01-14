@@ -40,7 +40,7 @@ public:
 	Agent();
 	virtual ~Agent() = 0;
 
-	bool move(Direction);
+	void move(Direction);
 	Point getPosition ();
 	unsigned int getIdComm() const;
 	void setIdComm(unsigned int idComm);

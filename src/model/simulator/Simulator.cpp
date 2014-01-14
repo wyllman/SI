@@ -68,7 +68,7 @@ void Simulator::reset() {
    if (m_MainAgent != NULL) {
       delete (m_MainAgent);
    }
-   m_MainAgent = new MainAgent (this);
+   m_MainAgent = new MainAgent (this, map_);
 
 }
 void Simulator::stop() {

@@ -7,7 +7,7 @@
 
 #include <model/agents/BuildAgent.h>
 
-BuildAgent::BuildAgent() {
+BuildAgent::BuildAgent(): Agent (NULL) {
 
 }
 

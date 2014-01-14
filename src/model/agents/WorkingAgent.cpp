@@ -7,7 +7,7 @@
 
 #include <model/agents/WorkingAgent.h>
 
-WorkingAgent::WorkingAgent(MainAgent* mainAgent): refMainAgent_ (mainAgent) {
+WorkingAgent::WorkingAgent(MainAgent* mainAgent, Map* theMap): Agent (theMap), refMainAgent_ (mainAgent) {
    setNameAgent(const_cast<char*>("WORK_AGENT"));
 }
 
@@ -48,7 +48,7 @@ void WorkingAgent::followRoute(std::string route) {
 	int posCorchFin = route.find("]");
 	cout << "Pos ini:" << posIni << " posFin: " << posCorchFin << endl;
 	route = route.substr(1, route.length());
-	int posComa = 0, i = 0;
+	int posComa = 0; //, i = 0;
 	bool stop = false;
 	string dirTemp;
 	while (!stop) {
@@ -60,11 +60,12 @@ void WorkingAgent::followRoute(std::string route) {
 			dirTemp = route.substr(0, posComa);
 			route = route.substr(posComa + 1, route.length());
 		}
-		camino.push_back(translateRoute(dirTemp));
-		cout << translateRoute(dirTemp) << endl;
-		move(camino.at(i));
-		cout << "POS AGeNTE: " << m_position.first << ", "<< m_position.second << endl;
-		i++;
+		m_routes.push_back(translateRoute(dirTemp));
+		//camino.push_back(translateRoute(dirTemp));
+		//cout << translateRoute(dirTemp) << endl;
+		//move(camino.at(i));
+		//cout << "POS AGeNTE: " << m_position.first << ", "<< m_position.second << endl;
+		//i++;
 	}
 }
 
@@ -94,65 +95,4 @@ vector<Direction>& WorkingAgent::getRoutes() {
 
 void WorkingAgent::setRoutes(vector<Direction>& routes) {
 	m_routes = routes;
-}
-
-bool WorkingAgent::controledMove(Direction theMovement) {
-   bool result = false;
-   int posX, posZ;
-
-   posX = getPosition().first;
-   posZ = getPosition().second;
-
-   if ((posX > 0 && posX < (MAP_WIDTH - 1))
-       && (posZ > 0 && posZ < (MAP_HEIGHT - 1))
-       && checkTerrain(theMovement)) {
-      move(theMovement);
-      result = true;
-   }
-   return result;
-}
-
-bool WorkingAgent::checkTerrain(Direction theMovement) {
-   const float MOV_DIFF = 1;
-   bool result = false;
-   Map* refMap = const_cast<Map*>(refMainAgent_->getMap());
-   BYTE slot;
-   int posX = getPosition().first;
-   int posZ = getPosition().second;
-
-   switch(theMovement) {
-      case NORTH:
-         posX -= MOV_DIFF;
-         break;
-      case SOUTH:
-         posX += MOV_DIFF;
-         break;
-      case EAST:
-         posZ += MOV_DIFF;
-         break;
-      case WEST:
-         posZ -= MOV_DIFF;
-         break;
-      case NEAST:
-         posX -= MOV_DIFF;
-         posZ += MOV_DIFF;
-         break;
-      case NWEST:
-         posX -= MOV_DIFF;
-         posZ -= MOV_DIFF;
-         break;
-      case SEAST:
-         posX += MOV_DIFF;
-         posZ += MOV_DIFF;
-         break;
-      case SWEST:
-         posX += MOV_DIFF;
-         posZ -= MOV_DIFF;
-         break;
-   }
-   slot = (*refMap)(posX, posZ);
-   if ((slot & MASK_TERRAIN) == TERRAIN_GROUND) {
-      result = true;
-   }
-   return result;
 }

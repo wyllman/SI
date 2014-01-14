@@ -25,7 +25,7 @@ class Simulator;
  */
 class MainAgent: public Agent {
    public:
-      MainAgent(Simulator*);
+      MainAgent(Simulator*, Map*);
       ~MainAgent();
 
       void initAgents ();

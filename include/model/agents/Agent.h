@@ -9,6 +9,7 @@
 #define AGENT_H_
 
 #include <Tools.h>
+#include <model/map/Map.h>
 #include <model/fipa/Package.h>
 
 class BeliefSet;
@@ -36,11 +37,15 @@ private:
 
 protected:
 	Point m_position;
+	Map* refMap_;
 public:
-	Agent();
+	Agent(Map*);
 	virtual ~Agent() = 0;
 
 	void move(Direction);
+    bool controledMove (Direction);
+    bool checkTerrain (Direction);
+
 	Point getPosition ();
 	unsigned int getIdComm() const;
 	void setIdComm(unsigned int idComm);

@@ -7,7 +7,7 @@
 
 #include <model/agents/GatherAgent.h>
 
-GatherAgent::GatherAgent() {
+GatherAgent::GatherAgent(): Agent (NULL) {
 
 }
 

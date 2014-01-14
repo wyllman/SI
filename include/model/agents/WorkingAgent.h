@@ -15,7 +15,7 @@ using namespace std;
 
 class WorkingAgent : public Agent {
    public:
-      WorkingAgent(MainAgent*);
+      WorkingAgent(MainAgent*, Map*);
       ~WorkingAgent();
 
       void setPosition (Point p) { m_position = p; }
@@ -26,9 +26,6 @@ class WorkingAgent : public Agent {
 
       vector<Direction>& getRoutes();
       void setRoutes(vector<Direction>& routes);
-
-      bool controledMove (Direction);
-      bool checkTerrain (Direction);
 
    private:
       const MainAgent* refMainAgent_;

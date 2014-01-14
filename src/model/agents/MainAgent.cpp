@@ -17,7 +17,7 @@
 #include <boost/random/negative_binomial_distribution.hpp>
 #include <boost/random/random_device.hpp>
 
-MainAgent::MainAgent(Simulator* refModel): refSimulator_(refModel) {
+MainAgent::MainAgent(Simulator* refModel, Map* theMap): Agent(theMap),  refSimulator_(refModel) {
    logAction(LOG_INIT);
    m_beliefSet = new BeliefSet();
    setNameAgent(const_cast<char*>("MAIN_AGENT"));
@@ -31,66 +31,66 @@ MainAgent::~MainAgent() {
 void MainAgent::initAgents() {
    // Creación inicial de los agentes exploradores
    // --- Primer agente (Norte)
-   SearchAgent* searchg1 = new SearchAgent (this);
+   SearchAgent* searchg1 = new SearchAgent (this, refMap_);
    searchg1 -> setPosition (Point (getPosition().first - 1, getPosition().second));
    m_Vagents.push_back(searchg1);
    // --- Segundo agente (Sur)
-   SearchAgent* searchg2 = new SearchAgent (this);
+   SearchAgent* searchg2 = new SearchAgent (this, refMap_);
    searchg2 -> setPosition (Point (getPosition().first + 1, getPosition().second));
    m_Vagents.push_back(searchg2);
    // --- Tercer agente (Este)
-   SearchAgent* searchg3 = new SearchAgent (this);
+   SearchAgent* searchg3 = new SearchAgent (this, refMap_);
    searchg3 -> setPosition (Point (getPosition().first, getPosition().second + 1));
    m_Vagents.push_back(searchg3);
    // --- Cuarto agente (Oeste)
-   SearchAgent* searchg4 = new SearchAgent (this);
+   SearchAgent* searchg4 = new SearchAgent (this, refMap_);
    searchg4 -> setPosition (Point (getPosition().first, getPosition().second - 1));
    m_Vagents.push_back(searchg4);
 
    // Creación inicial de los agentes trabajadores
    // --- Primer agente (NOeste)
-   WorkingAgent* working1 = new WorkingAgent (this);
+   WorkingAgent* working1 = new WorkingAgent (this, refMap_);
    working1 -> setPosition (Point (getPosition().first - 1, getPosition().second - 1));
    m_WorVecAgents.push_back(working1);
    // --- Segundo agente (NEste)
-   WorkingAgent* working2 = new WorkingAgent (this);
+   WorkingAgent* working2 = new WorkingAgent (this, refMap_);
    working2 -> setPosition (Point (getPosition().first - 1, getPosition().second + 1));
    m_WorVecAgents.push_back(working2);
    // --- Tercer agente (SEste)
-   WorkingAgent* working3 = new WorkingAgent (this);
+   WorkingAgent* working3 = new WorkingAgent (this, refMap_);
    working3 -> setPosition (Point (getPosition().first + 1, getPosition().second + 1));
    m_WorVecAgents.push_back(working3);
    // --- Cuarto agente (SOeste)
-   WorkingAgent* working4 = new WorkingAgent (this);
+   WorkingAgent* working4 = new WorkingAgent (this, refMap_);
    working4 -> setPosition (Point (getPosition().first + 1, getPosition().second - 1));
    m_WorVecAgents.push_back(working4);
 }
 bool MainAgent::update () {
    bool result = false;
    // Pruebas de movimiento
-   if ((dynamic_cast<SearchAgent*>(m_Vagents[0]))->controledMove(NORTH)) {
+   if (m_Vagents[0]->controledMove(NORTH)) {
       result = true;
    }
-   if ((dynamic_cast<SearchAgent*>(m_Vagents[1]))->controledMove(SOUTH)) {
+   if (m_Vagents[1]->controledMove(SOUTH)) {
       result = true;
    }
-   if ((dynamic_cast<SearchAgent*>(m_Vagents[2]))->controledMove(EAST)) {
+   if (m_Vagents[2]->controledMove(EAST)) {
       result = true;
    }
-   if ((dynamic_cast<SearchAgent*>(m_Vagents[3]))->controledMove(WEST)) {
+   if (m_Vagents[3]->controledMove(WEST)) {
       result = true;
    }
 
-   if ((dynamic_cast<WorkingAgent*>(m_WorVecAgents[0]))->controledMove(NWEST)) {
+   if (m_WorVecAgents[0]->controledMove(NWEST)) {
       result = true;
    }
-   if ((dynamic_cast<WorkingAgent*>(m_WorVecAgents[1]))->controledMove(NEAST)) {
+   if (m_WorVecAgents[1]->controledMove(NEAST)) {
    result = true;
    }
-   if ((dynamic_cast<WorkingAgent*>(m_WorVecAgents[2]))->controledMove(SEAST)) {
+   if (m_WorVecAgents[2]->controledMove(SEAST)) {
 	   result = true;
    }
-   if ((dynamic_cast<WorkingAgent*>(m_WorVecAgents[3]))->controledMove(SWEST)) {
+   if (m_WorVecAgents[3]->controledMove(SWEST)) {
       result = true;
    }
    return result;

@@ -17,15 +17,14 @@
 
 class SearchAgent: public Agent {
    public:
-      SearchAgent(MainAgent*);
+      SearchAgent(MainAgent*, Map*);
       ~SearchAgent();
 
       void setPosition (Point p) { m_position = p; }
       Package* readFIPAPackage (Package*);
 
       void localDireccionalSearch (std::string);
-      bool controledMove (Direction);
-      bool checkTerrain (Direction);
+
    private:
       const MainAgent* refMainAgent_;
 };

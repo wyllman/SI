@@ -10,7 +10,7 @@
 
 #include <model/agents/WorkingAgent.h>
 
-class GatherAgent: public WorkingAgent {
+class GatherAgent: public Agent {
 public:
 	GatherAgent();
 	~GatherAgent();

@@ -9,25 +9,31 @@
 #define WORKINGAGENT_H_
 
 #include <model/agents/Agent.h>
+#include <model/agents/MainAgent.h>
 #include <cstring>
 using namespace std;
 
 class WorkingAgent : public Agent {
-public:
-	WorkingAgent();
-	~WorkingAgent();
+   public:
+      WorkingAgent(MainAgent*);
+      ~WorkingAgent();
 
-	void setPosition (Point p) { m_position = p; }
-	Package* readFIPAPackage (Package*);
+      void setPosition (Point p) { m_position = p; }
+      Package* readFIPAPackage (Package*);
 
-	void followRoute(std::string);
-	Direction translateRoute (std::string);
+      void followRoute(std::string);
+      Direction translateRoute (std::string);
 
-	vector<Direction>& getRoutes();
-	void setRoutes(vector<Direction>& routes);
+      vector<Direction>& getRoutes();
+      void setRoutes(vector<Direction>& routes);
 
-private:
-	vector<Direction> m_routes;
+      bool controledMove (Direction);
+      bool checkTerrain (Direction);
+
+   private:
+      const MainAgent* refMainAgent_;
+
+      vector<Direction> m_routes;
 };
 
 #endif /* WORKINGAGENT_H_ */

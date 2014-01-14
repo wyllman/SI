@@ -49,35 +49,50 @@ void MainAgent::initAgents() {
 
    // Creación inicial de los agentes trabajadores
    // --- Primer agente (NOeste)
-   WorkingAgent* working1 = new WorkingAgent ();
+   WorkingAgent* working1 = new WorkingAgent (this);
    working1 -> setPosition (Point (getPosition().first - 1, getPosition().second - 1));
    m_WorVecAgents.push_back(working1);
    // --- Segundo agente (NEste)
-   WorkingAgent* working2 = new WorkingAgent ();
+   WorkingAgent* working2 = new WorkingAgent (this);
    working2 -> setPosition (Point (getPosition().first - 1, getPosition().second + 1));
    m_WorVecAgents.push_back(working2);
    // --- Tercer agente (SEste)
-   WorkingAgent* working3 = new WorkingAgent ();
+   WorkingAgent* working3 = new WorkingAgent (this);
    working3 -> setPosition (Point (getPosition().first + 1, getPosition().second + 1));
    m_WorVecAgents.push_back(working3);
    // --- Cuarto agente (SOeste)
-   WorkingAgent* working4 = new WorkingAgent ();
+   WorkingAgent* working4 = new WorkingAgent (this);
    working4 -> setPosition (Point (getPosition().first + 1, getPosition().second - 1));
    m_WorVecAgents.push_back(working4);
 }
 bool MainAgent::update () {
    bool result = false;
    // Pruebas de movimiento
-   (dynamic_cast<SearchAgent*>(m_Vagents[0]))->controledMove(NORTH);
-   (dynamic_cast<SearchAgent*>(m_Vagents[1]))->controledMove(SOUTH);
-   (dynamic_cast<SearchAgent*>(m_Vagents[2]))->controledMove(EAST);
-   (dynamic_cast<SearchAgent*>(m_Vagents[3]))->controledMove(WEST);
+   if ((dynamic_cast<SearchAgent*>(m_Vagents[0]))->controledMove(NORTH)) {
+      result = true;
+   }
+   if ((dynamic_cast<SearchAgent*>(m_Vagents[1]))->controledMove(SOUTH)) {
+      result = true;
+   }
+   if ((dynamic_cast<SearchAgent*>(m_Vagents[2]))->controledMove(EAST)) {
+      result = true;
+   }
+   if ((dynamic_cast<SearchAgent*>(m_Vagents[3]))->controledMove(WEST)) {
+      result = true;
+   }
 
-   m_WorVecAgents[0]->move(NWEST);
-   m_WorVecAgents[1]->move(NEAST);
-   m_WorVecAgents[2]->move(SEAST);
-   m_WorVecAgents[3]->move(SWEST);
+   if ((dynamic_cast<WorkingAgent*>(m_WorVecAgents[0]))->controledMove(NWEST)) {
+      result = true;
+   }
+   if ((dynamic_cast<WorkingAgent*>(m_WorVecAgents[1]))->controledMove(NEAST)) {
    result = true;
+   }
+   if ((dynamic_cast<WorkingAgent*>(m_WorVecAgents[2]))->controledMove(SEAST)) {
+	   result = true;
+   }
+   if ((dynamic_cast<WorkingAgent*>(m_WorVecAgents[3]))->controledMove(SWEST)) {
+      result = true;
+   }
    return result;
 }
 

@@ -7,8 +7,8 @@
 
 #include <model/agents/WorkingAgent.h>
 
-WorkingAgent::WorkingAgent() {
-	setNameAgent("WORK_AGENT");
+WorkingAgent::WorkingAgent(MainAgent* mainAgent): refMainAgent_ (mainAgent) {
+   setNameAgent(const_cast<char*>("WORK_AGENT"));
 }
 
 WorkingAgent::~WorkingAgent() {
@@ -38,6 +38,7 @@ Package* WorkingAgent::readFIPAPackage (Package* p) {
 			}
 		}
 	}
+	return answer;
 }
 
 void WorkingAgent::followRoute(std::string route) {
@@ -93,4 +94,65 @@ vector<Direction>& WorkingAgent::getRoutes() {
 
 void WorkingAgent::setRoutes(vector<Direction>& routes) {
 	m_routes = routes;
+}
+
+bool WorkingAgent::controledMove(Direction theMovement) {
+   bool result = false;
+   int posX, posZ;
+
+   posX = getPosition().first;
+   posZ = getPosition().second;
+
+   if ((posX > 0 && posX < (MAP_WIDTH - 1))
+       && (posZ > 0 && posZ < (MAP_HEIGHT - 1))
+       && checkTerrain(theMovement)) {
+      move(theMovement);
+      result = true;
+   }
+   return result;
+}
+
+bool WorkingAgent::checkTerrain(Direction theMovement) {
+   const float MOV_DIFF = 1;
+   bool result = false;
+   Map* refMap = const_cast<Map*>(refMainAgent_->getMap());
+   BYTE slot;
+   int posX = getPosition().first;
+   int posZ = getPosition().second;
+
+   switch(theMovement) {
+      case NORTH:
+         posX -= MOV_DIFF;
+         break;
+      case SOUTH:
+         posX += MOV_DIFF;
+         break;
+      case EAST:
+         posZ += MOV_DIFF;
+         break;
+      case WEST:
+         posZ -= MOV_DIFF;
+         break;
+      case NEAST:
+         posX -= MOV_DIFF;
+         posZ += MOV_DIFF;
+         break;
+      case NWEST:
+         posX -= MOV_DIFF;
+         posZ -= MOV_DIFF;
+         break;
+      case SEAST:
+         posX += MOV_DIFF;
+         posZ += MOV_DIFF;
+         break;
+      case SWEST:
+         posX += MOV_DIFF;
+         posZ -= MOV_DIFF;
+         break;
+   }
+   slot = (*refMap)(posX, posZ);
+   if ((slot & MASK_TERRAIN) == TERRAIN_GROUND) {
+      result = true;
+   }
+   return result;
 }

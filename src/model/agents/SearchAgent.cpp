@@ -8,7 +8,7 @@
 #include <model/agents/SearchAgent.h>
 
 SearchAgent::SearchAgent(MainAgent* mainAgent, Map* theMap): Agent (theMap), refMainAgent_ (mainAgent) {
-   setNameAgent(const_cast<char*>("SEARCH_AGENT"));
+	setNameAgent(const_cast<char*>("SEARCH_AGENT"));
 }
 
 SearchAgent::~SearchAgent() {
@@ -43,30 +43,54 @@ Package* SearchAgent::readFIPAPackage (Package* p) {
 
 void SearchAgent::localDireccionalSearch (std::string  d) {
 	switch (atoi(d.c_str())) {
-		case NORTH:
-			std::cout << "Emprender búsqueda hacial el norte" << std::endl;
-			break;
-		case SOUTH:
-			std::cout << "Emprender búsqueda hacial el sur" << std::endl;
-			break;
-		case EAST:
-			std::cout << "Emprender búsqueda hacial el este" << std::endl;
-			break;
-		case WEST:
-			std::cout << "Emprender búsqueda hacial el oeste" << std::endl;
-			break;
-		case NEAST:
-			std::cout << "Emprender búsqueda hacial el noreste" << std::endl;
-			break;
-		case NWEST:
-			std::cout << "Emprender búsqueda hacial el noroeste" << std::endl;
-			break;
-		case SEAST:
-			std::cout << "Emprender búsqueda hacial el sureste" << std::endl;
-			break;
-		case SWEST:
-			std::cout << "Emprender búsqueda hacial el suroeste" << std::endl;
-			break;
+	case NORTH:
+		std::cout << "Emprender búsqueda hacial el norte" << std::endl;
+		break;
+	case SOUTH:
+		std::cout << "Emprender búsqueda hacial el sur" << std::endl;
+		break;
+	case EAST:
+		std::cout << "Emprender búsqueda hacial el este" << std::endl;
+		break;
+	case WEST:
+		std::cout << "Emprender búsqueda hacial el oeste" << std::endl;
+		break;
+	case NEAST:
+		std::cout << "Emprender búsqueda hacial el noreste" << std::endl;
+		break;
+	case NWEST:
+		std::cout << "Emprender búsqueda hacial el noroeste" << std::endl;
+		break;
+	case SEAST:
+		std::cout << "Emprender búsqueda hacial el sureste" << std::endl;
+		break;
+	case SWEST:
+		std::cout << "Emprender búsqueda hacial el suroeste" << std::endl;
+		break;
 	}
+}
 
+
+void SearchAgent::actDependingOfState () {
+	switch (getState()) {
+	case SEARCHING:
+
+		break;
+
+	case FOLLOWING_ROUTE:
+		if (!getRoutes().empty()) {
+			move(getRoutes().at(0));
+			getRoutes().erase(getRoutes().begin()); // FIXME: comprobar que elimina el primero!!
+		} else
+			setState(AVAILABLE);
+		break;
+	}
+}
+
+vector<Direction>& SearchAgent::getRoutes() {
+	return m_routes;
+}
+
+void SearchAgent::setRoutes(const vector<Direction>& routes) {
+	m_routes = routes;
 }

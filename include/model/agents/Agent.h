@@ -31,6 +31,8 @@ private:
 	Goals* m_goals;
 	Intentions* m_intentions;
 
+	State m_state;
+
 	// FIXME: dejo aquí que un agente conoce en qué comunicación está embebido
 	unsigned int m_idComm;
 	char* m_nameAgent;
@@ -51,8 +53,11 @@ public:
 	void setIdComm(unsigned int idComm);
 	char* getNameAgent() const;
 	void setNameAgent(char* nameAgent);
+	State getState() const;
+	void setState(State state);
 
-	virtual Package* readFIPAPackage (Package*) { return NULL; };
+	virtual Package* readFIPAPackage(Package*) { return NULL; };
+	virtual void actDependingOfState () { };
 };
 
 #endif /* AGENT_H_ */

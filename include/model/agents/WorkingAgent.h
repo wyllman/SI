@@ -27,9 +27,14 @@ class WorkingAgent : public Agent {
       vector<Direction>& getRoutes();
       void setRoutes(vector<Direction>& routes);
 
+      unsigned int getRecolectTime() const;
+      void setRecolectTime(unsigned int recolectTime);
+
+      void actDependingOfState ();
+
    private:
       const MainAgent* refMainAgent_;
-
+      unsigned int m_recolectTime;
       vector<Direction> m_routes;
 };
 

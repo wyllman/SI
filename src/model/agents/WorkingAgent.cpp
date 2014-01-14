@@ -89,10 +89,44 @@ Direction WorkingAgent::translateRoute (std::string dir) {
 	}
 }
 
+void WorkingAgent::actDependingOfState () {
+	switch (getState()) {
+		case RECOLECTING:
+			if (getRecolectTime() < 10)
+				setRecolectTime(getRecolectTime() + 1);
+			else {
+				setState(FULL_OF_RESOURCES);
+			}
+			break;
+		case FOLLOWING_ROUTE:
+			if (!getRoutes().empty()) {
+				move(getRoutes().at(0));
+				getRoutes().erase(getRoutes().begin()); // FIXME: comprobar que elimina el primero!!
+			} else
+				setState(AVAILABLE);
+			break;
+		case PUTTING_RESOURCE:
+			if (getRecolectTime() > 0) {
+				setRecolectTime(getRecolectTime() - 1);
+			} else {
+				setState(AVAILABLE);
+			}
+			break;
+	}
+}
+
 vector<Direction>& WorkingAgent::getRoutes() {
 	return m_routes;
 }
 
 void WorkingAgent::setRoutes(vector<Direction>& routes) {
 	m_routes = routes;
+}
+
+unsigned int WorkingAgent::getRecolectTime() const {
+	return m_recolectTime;
+}
+
+void WorkingAgent::setRecolectTime(unsigned int recolectTime) {
+	m_recolectTime = recolectTime;
 }

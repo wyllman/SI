@@ -8,7 +8,7 @@
 #include <model/agents/WorkingAgent.h>
 
 WorkingAgent::WorkingAgent(MainAgent* mainAgent, Map* theMap): Agent (theMap), refMainAgent_ (mainAgent) {
-   setNameAgent(const_cast<char*>("WORK_AGENT"));
+	setNameAgent(const_cast<char*>("WORK_AGENT"));
 }
 
 WorkingAgent::~WorkingAgent() {
@@ -32,6 +32,7 @@ Package* WorkingAgent::readFIPAPackage (Package* p) {
 			case GO_RESOURCE_LOCATION:
 				//Realizar búsqueda dada esta dirección
 				followRoute(p -> getContent().at(0));
+				setState(FOLLOWING_ROUTE);
 				break;
 			default:
 				cout << "No se entiende el tipo del paquete recibido." << endl;
@@ -48,7 +49,7 @@ void WorkingAgent::followRoute(std::string route) {
 	int posCorchFin = route.find("]");
 	cout << "Pos ini:" << posIni << " posFin: " << posCorchFin << endl;
 	route = route.substr(1, route.length());
-	int posComa = 0; //, i = 0;
+	int posComa = 0;
 	bool stop = false;
 	string dirTemp;
 	while (!stop) {
@@ -60,12 +61,12 @@ void WorkingAgent::followRoute(std::string route) {
 			dirTemp = route.substr(0, posComa);
 			route = route.substr(posComa + 1, route.length());
 		}
-		m_routes.push_back(translateRoute(dirTemp));
-		//camino.push_back(translateRoute(dirTemp));
-		//cout << translateRoute(dirTemp) << endl;
-		//move(camino.at(i));
-		//cout << "POS AGeNTE: " << m_position.first << ", "<< m_position.second << endl;
-		//i++;
+
+		camino.push_back(translateRoute(dirTemp));
+
+	}
+	for (unsigned int i = 0; i < camino.size(); i++) {
+		m_routes.push_back(camino[camino.size() - 1]);
 	}
 }
 
@@ -91,36 +92,27 @@ Direction WorkingAgent::translateRoute (std::string dir) {
 
 void WorkingAgent::actDependingOfState () {
 	switch (getState()) {
-		case RECOLECTING:
-			if (getRecolectTime() < 10)
-				setRecolectTime(getRecolectTime() + 1);
-			else {
-				setState(FULL_OF_RESOURCES);
-			}
-			break;
-		case FOLLOWING_ROUTE:
-			if (!getRoutes().empty()) {
-				move(getRoutes().at(0));
-				getRoutes().erase(getRoutes().begin()); // FIXME: comprobar que elimina el primero!!
-			} else
-				setState(AVAILABLE);
-			break;
-		case PUTTING_RESOURCE:
-			if (getRecolectTime() > 0) {
-				setRecolectTime(getRecolectTime() - 1);
-			} else {
-				setState(AVAILABLE);
-			}
-			break;
+	case RECOLECTING:
+		if (getRecolectTime() < 10)
+			setRecolectTime(getRecolectTime() + 1);
+		else {
+			setState(FULL_OF_RESOURCES);
+		}
+		break;
+	case FOLLOWING_ROUTE:
+		if (!routedMove()) {
+			setState(AVAILABLE);
+			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
+		}
+		break;
+	case PUTTING_RESOURCE:
+		if (getRecolectTime() > 0) {
+			setRecolectTime(getRecolectTime() - 1);
+		} else {
+			setState(AVAILABLE);
+		}
+		break;
 	}
-}
-
-vector<Direction>& WorkingAgent::getRoutes() {
-	return m_routes;
-}
-
-void WorkingAgent::setRoutes(vector<Direction>& routes) {
-	m_routes = routes;
 }
 
 unsigned int WorkingAgent::getRecolectTime() const {
@@ -129,4 +121,8 @@ unsigned int WorkingAgent::getRecolectTime() const {
 
 void WorkingAgent::setRecolectTime(unsigned int recolectTime) {
 	m_recolectTime = recolectTime;
+}
+
+MainAgent* WorkingAgent::getRefMainAgent() {
+	return refMainAgent_;
 }

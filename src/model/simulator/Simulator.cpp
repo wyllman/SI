@@ -54,11 +54,7 @@ void Simulator::init() {
       }
       std::cout << std::endl;
    }
-
    reset ();
-   //m_MainAgent -> getVAgents().at(0) -> readFIPAPackage(m_MainAgent -> createFIPAPackage());
-   //m_MainAgent -> getWorVecAgents().at(0) -> readFIPAPackage(m_MainAgent -> createFIPAPackage());
-
 }
 
 bool Simulator::update() {
@@ -69,7 +65,6 @@ void Simulator::reset() {
       delete (m_MainAgent);
    }
    m_MainAgent = new MainAgent (this, map_);
-
 }
 void Simulator::stop() {
    logAction(LOG_F_STOP);

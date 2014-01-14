@@ -20,6 +20,7 @@ class SearchAgent: public Agent {
       SearchAgent(MainAgent*, Map*);
       ~SearchAgent();
 
+      MainAgent* getRefMainAgent();
       void setPosition (Point p) { m_position = p; }
       vector<Direction>& getRoutes();
       void setRoutes(const vector<Direction>& routes);
@@ -27,12 +28,13 @@ class SearchAgent: public Agent {
       Package* readFIPAPackage (Package*);
 
       void localDireccionalSearch (std::string);
+      void followRoute(std::string);
+      Direction translateRoute (std::string);
 
       void actDependingOfState ();
 
    private:
-      const MainAgent* refMainAgent_;
-      vector<Direction> m_routes;
+      MainAgent* refMainAgent_;
 };
 
 #endif /* SEARCHAGENT_H_ */

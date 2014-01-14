@@ -40,6 +40,7 @@ private:
 protected:
 	Point m_position;
 	Map* refMap_;
+    std::vector<Direction> m_routes;
 public:
 	Agent(Map*);
 	virtual ~Agent() = 0;
@@ -48,6 +49,9 @@ public:
     bool controledMove (Direction);
     bool checkTerrain (Direction);
 
+    bool routedMove ();
+    bool checkRouteMoves ();
+
 	Point getPosition ();
 	unsigned int getIdComm() const;
 	void setIdComm(unsigned int idComm);
@@ -55,7 +59,9 @@ public:
 	void setNameAgent(char* nameAgent);
 	State getState() const;
 	void setState(State state);
+	std::vector<Direction>& getRoutes();
 
+	void setRoutes(std::vector<Direction>& routes);
 	virtual Package* readFIPAPackage(Package*) { return NULL; };
 	virtual void actDependingOfState () { };
 };

@@ -43,13 +43,17 @@ class Director: public Controller {
    private:
       FileLog* regAccErr_;
       MainLoop* mainLoop_;
+      int simulatorVel_;
 
       void getAgentsPos ();
       void mainLoop ();
       void mainFunction ();
       void iddleFunction ();
       void keyEvents (SDL_Event& eventSDL);
+      double getSimulatorVel ();
+
       void logAction (int);
+
 };
 
 #endif /* DIRECTOR_H_ */

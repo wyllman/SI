@@ -35,6 +35,7 @@ Director::Director() {
    regAccErr_ = new FileLog;
    regAccErr_->init();
    mainLoop_ = NULL;
+   simulatorVel_ = 1;
 }
 
 Director::~Director() {
@@ -224,11 +225,12 @@ void Director::mainFunction() {
 
 }
 void Director::iddleFunction() {
+   double minTimeDiff = getSimulatorVel();
    if (!(mainLoop_->isPause()))  {
       // Cuando el programa se queda sin eventos.
       mainLoop_->end2Time();
 
-      if ((mainLoop_->diff2Tmie()) > (MIN_TIME2_DIFF)) { // Control del tiempo
+      if ((mainLoop_->diff2Tmie()) > (minTimeDiff)) { // Control del tiempo
            mainLoop_->init2Time();
          // Actualizar el simulador y comprobar si se ha movido algún agente para actualizar la inerfaz gráfica.
          if (dynamic_cast<Simulator*>(
@@ -289,9 +291,39 @@ void Director::keyEvents (SDL_Event& eventSDL){
              dynamic_cast<Interface*>(
              const_cast<View*>(refView_))->getScenographer())->camPosX(-MOV_DIFF);
           mainLoop_->render();
+      } else if (eventSDL.key.keysym.sym == SDLK_1) {
+         simulatorVel_ = 1;
+      } else if (eventSDL.key.keysym.sym == SDLK_2) {
+         simulatorVel_ = 2;
+      } else if (eventSDL.key.keysym.sym == SDLK_3) {
+         simulatorVel_ = 3;
+      } else if (eventSDL.key.keysym.sym == SDLK_4) {
+         simulatorVel_ = 4;
       }
    }
 }
+
+double Director::getSimulatorVel() {
+   double result;
+   switch (simulatorVel_) {
+      case 1:
+         result = MIN_TIME2_DIFF;
+         break;
+      case 2:
+         result = MIN_TIME3_DIFF;
+         break;
+      case 3:
+         result = MIN_TIME4_DIFF;
+         break;
+      case 4:
+         result = MIN_TIME5_DIFF;
+         break;
+      default:
+         break;
+   }
+   return result;
+}
+
 void Director::logAction(int index) {
    if (BASIC_LOG) {
       switch (index) {

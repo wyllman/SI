@@ -24,9 +24,6 @@ class WorkingAgent : public Agent {
       void followRoute(std::string);
       Direction translateRoute (std::string);
 
-      vector<Direction>& getRoutes();
-      void setRoutes(vector<Direction>& routes);
-
    private:
       const MainAgent* refMainAgent_;
 };

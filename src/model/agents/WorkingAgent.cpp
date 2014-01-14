@@ -92,10 +92,4 @@ Direction WorkingAgent::translateRoute (std::string dir) {
 	}
 }
 
-vector<Direction>& WorkingAgent::getRoutes() {
-	return m_routes;
-}
 
-void WorkingAgent::setRoutes(vector<Direction>& routes) {
-	m_routes = routes;
-}

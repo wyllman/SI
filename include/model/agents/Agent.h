@@ -49,6 +49,9 @@ class Agent {
       bool routedMove ();
       bool checkRouteMoves ();
 
+      std::vector<Direction>& getRoutes();
+      void setRoutes(std::vector<Direction>& routes);
+
       Point getPosition ();
       unsigned int getIdComm() const;
       void setIdComm(unsigned int idComm);

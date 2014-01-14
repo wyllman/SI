@@ -148,3 +148,10 @@ void Agent::setIdComm(unsigned int idComm) {
 Point Agent::getPosition () {
 	return m_position;
 }
+std::vector<Direction>& Agent::getRoutes() {
+	return m_routes;
+}
+
+void Agent::setRoutes(std::vector<Direction>& routes) {
+	m_routes = routes;
+}

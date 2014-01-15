@@ -7,13 +7,19 @@
 
 #include <model/agents/SearchAgent.h>
 
+// ___________________________________________________________________________________
+// Constructores y Destructor:
 SearchAgent::SearchAgent(MainAgent* mainAgent, Map* theMap): Agent (theMap), refMainAgent_ (mainAgent) {
-	setNameAgent(const_cast<char*>("SEARCH_AGENT"));
+   setNameAgent(const_cast<char*>("SEARCH_AGENT"));
+   initPointDistanceEXPL_ = -1;
 }
-
 SearchAgent::~SearchAgent() {
 }
-
+// FIN -------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+// |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+// ___________________________________________________________________________________
+// Métodos públicos:
 Package* SearchAgent::readFIPAPackage (Package* p) {
 	Package* answer = new Package (getNameAgent(), p -> getSender(), NOT_UNDERSTOOD);
 	// Comprobamos que el paquete es de la conversación actual
@@ -76,21 +82,21 @@ void SearchAgent::localDireccionalSearch (std::string  d) {
 
 
 void SearchAgent::actDependingOfState () {
-	switch (getState()) {
-	case SEARCHING:
+   switch (getState()) {
+      case SEARCHING:
 
-		break;
-
-	case FOLLOWING_ROUTE:
-		cout << "Tam: " << getRoutes().size() << endl;
-		if (!routedMove()) {
-			setState(AVAILABLE);
-			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
-		}
-		break;
-	}
+      break;
+      case FOLLOWING_ROUTE:
+         cout << "Tam: " << getRoutes().size() << endl;
+         if (!routedMove()) {
+            setState(AVAILABLE);
+            getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
+         }
+         break;
+      default:
+         break;
+   }
 }
-
 void SearchAgent::followRoute(std::string route) {
 	cout << "SEGUIR LA RUTA: " << route << endl;
 	vector<Direction> camino;
@@ -120,33 +126,168 @@ void SearchAgent::followRoute(std::string route) {
 }
 
 Direction SearchAgent::translateRoute (std::string dir) {
-	if (strcmp(dir.c_str(), "NORTH") == 0) {
-		return NORTH;
-	} else if (strcmp(dir.c_str(), "SOUTH") == 0) {
-		return SOUTH;
-	} else if (strcmp(dir.c_str(), "EAST") == 0) {
-		return EAST;
-	} else if (strcmp(dir.c_str(), "WEST") == 0) {
-		return WEST;
-	} else if (strcmp(dir.c_str(), "NEAST") == 0) {
-		return NEAST;
-	} else if (strcmp(dir.c_str(), "NWEST") == 0) {
-		return NWEST;
-	} else if (strcmp(dir.c_str(), "SEAST") == 0) {
-		return SEAST;
-	} else if (strcmp(dir.c_str(), "SWEST") == 0) {
-		return SWEST;
-	}
+   if (strcmp(dir.c_str(), "NORTH") == 0) {
+      return NORTH;
+   } else if (strcmp(dir.c_str(), "SOUTH") == 0) {
+      return SOUTH;
+   } else if (strcmp(dir.c_str(), "EAST") == 0) {
+      return EAST;
+   } else if (strcmp(dir.c_str(), "WEST") == 0) {
+      return WEST;
+   } else if (strcmp(dir.c_str(), "NEAST") == 0) {
+      return NEAST;
+   } else if (strcmp(dir.c_str(), "NWEST") == 0) {
+      return NWEST;
+   } else if (strcmp(dir.c_str(), "SEAST") == 0) {
+      return SEAST;
+   } else if (strcmp(dir.c_str(), "SWEST") == 0) {
+      return SWEST;
+   }
 }
-
+void SearchAgent::initExplorationMove(Point initPos, Direction guideDir) {
+   initPointEXPL_ = initPos;
+   guideDirectionEXPL_ = guideDir;
+   initPointDistanceEXPL_ = 1;
+}
+// FIN -------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+// |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+// ___________________________________________________________________________________
+// Manejadores públicos:
 vector<Direction>& SearchAgent::getRoutes() {
-	return m_routes;
+   return m_routes;
 }
-
 void SearchAgent::setRoutes(const vector<Direction>& routes) {
-	m_routes = routes;
+   m_routes = routes;
 }
-
 MainAgent* SearchAgent::getRefMainAgent() {
-	return refMainAgent_;
+   return refMainAgent_;
 }
+// FIN -------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+// |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+// ___________________________________________________________________________________
+// Métodos privados:
+void SearchAgent::explorationMove() {
+   int limitRightSup = 0, limitLeftInf = 0;
+   bool obstacleDetectec = false;
+   Direction directionAct;
+   // Realizar el primer paso.
+   if (initPointDistanceEXPL_ == 1) {
+      directionAct = ((Direction) (guideDirectionEXPL_ + 1));
+   } else {
+      calculateExplorationLimits(limitRightSup, limitLeftInf);
+      // TODO: Calcular la dirección preferente actual
+      // TODO: Mover en la dirección preferente
+   }
+
+   // TODO: Si (obstaclDetectec) calcular nueva direccion preferente
+}
+void SearchAgent::calculateExplorationLimits(int& limRS, int& limLI) {
+   if (guideDirectionEXPL_ == NORTH || guideDirectionEXPL_ == SOUTH) {
+      limRS = initPointEXPL_.first + (initPointDistanceEXPL_ - 1);
+      limLI = initPointEXPL_.first - (initPointDistanceEXPL_ - 1);
+   } else {
+      limRS = initPointEXPL_.second + (initPointDistanceEXPL_ - 1);
+      limLI = initPointEXPL_.second - (initPointDistanceEXPL_ - 1);
+   }
+}
+Direction SearchAgent::calculateDirection() {
+   Direction result = ERROR_DIR;
+   switch (guideDirectionEXPL_) {
+      case NORTH:
+
+         break;
+      case EAST:
+
+         break;
+      case SOUTH:
+
+         break;
+      case WEST:
+
+         break;
+      default:
+         break;
+}
+   return result;
+}
+Direction SearchAgent::calculateAngularDirection() {
+   Direction result = ERROR_DIR;
+   switch (guideDirectionEXPL_) {
+      case NORTH:
+         if (m_position.first < initPointEXPL_.first) {
+            result = NWEST;
+         } else {
+            result = NEAST;
+         }
+         break;
+      case EAST:
+         if (m_position.second < initPointEXPL_.second) {
+            result = SEAST;
+         } else {
+            result = NEAST;
+         }
+         break;
+      case SOUTH:
+         if (m_position.first < initPointEXPL_.first) {
+            result = SWEST;
+         } else {
+            result = SEAST;
+         }
+         break;
+      case WEST:
+         if (m_position.first < initPointEXPL_.first) {
+            result = SWEST;
+         } else {
+            result = NWEST;
+         }
+         break;
+      default:
+         break;
+   }
+   return result;
+}
+Direction SearchAgent::calculateRectilinearDirection() {
+   Direction result = ERROR_DIR;
+   if ((initPointDistanceEXPL_ % 3) == 0) {
+      switch (guideDirectionEXPL_) {
+         case NORTH:
+            if ((initPointDistanceEXPL_ % 2) == 0) {
+               result = WEST;
+            } else {
+               result = EAST;
+            }
+            break;
+         case EAST:
+             if ((initPointDistanceEXPL_ % 2) == 0) {
+                result = NORTH;
+             } else {
+                result = SOUTH;
+             }
+            break;
+         case SOUTH:
+             if ((initPointDistanceEXPL_ % 2) == 0) {
+                result = EAST;
+             } else {
+                result = WEST;
+             }
+            break;
+         case WEST:
+             if ((initPointDistanceEXPL_ % 2) == 0) {
+                result = SOUTH;
+             } else {
+                result = NORTH;
+             }
+            break;
+         default:
+            break;
+      }
+   }
+   return result;
+}
+// FIN -------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+// |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+

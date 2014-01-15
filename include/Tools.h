@@ -86,13 +86,14 @@ enum {
 
 enum Direction {
    NORTH = 0,
-   SOUTH,
-   EAST,
-   WEST,
    NEAST,
-   NWEST,
+   EAST,
    SEAST,
-   SWEST
+   SOUTH,
+   SWEST,
+   WEST,
+   NWEST,
+   ERROR_DIR
 };
 
 enum Type {

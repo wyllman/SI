@@ -32,9 +32,20 @@ class SearchAgent: public Agent {
       Direction translateRoute (std::string);
 
       void actDependingOfState ();
+      void initExplorationMove (Point initPos, Direction guideDir);
 
    private:
       MainAgent* refMainAgent_;
+       // Atributos para el movimiento exploratorio angular (90º)
+      Point initPointEXPL_;
+      Direction guideDirectionEXPL_;
+      int initPointDistanceEXPL_;
+
+      void explorationMove ();
+      void calculateExplorationLimits (int&, int&);
+      Direction calculateDirection ();
+      Direction calculateAngularDirection ();
+      Direction calculateRectilinearDirection ();
 };
 
 #endif /* SEARCHAGENT_H_ */

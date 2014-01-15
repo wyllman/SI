@@ -105,15 +105,18 @@ enum Type {
 	MAP_UPDATE_ERROR,
 	DIRECTION_SEARCH,
 	SECTOR_SEARCH,
+	ARRIVED_GOAL,
 	COME_BACK,
+	GO_LOCATION,
 	GO_RESOURCE_LOCATION,
 	PUT_RESOURCE_LOCATION
 };
 
-enum States {
+enum State {
 	AVAILABLE = 0, // esperando a una tarea ...
 	SEARCHING,	   // realizando una exploración
 	RECOLECTING,   // parado frente a fuente de recursos y recolectando
+	FULL_OF_RESOURCES, // Cuando ya recolectó el agente trabajador
 	FOLLOWING_ROUTE, // Siguiendo una ruta enviada por paquete
 	PUTTING_RESOURCE // parada en emplazamiento temporal descargando recursos
 };

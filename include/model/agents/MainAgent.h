@@ -30,6 +30,7 @@ class MainAgent: public Agent {
 
       void initAgents ();
       bool update ();
+      bool updateMiniAgents ();
 
       void logAction(int);
       void createRndInitialPos (Map*);

@@ -24,8 +24,16 @@ class WorkingAgent : public Agent {
       void followRoute(std::string);
       Direction translateRoute (std::string);
 
+      unsigned int getRecolectTime() const;
+      void setRecolectTime(unsigned int recolectTime);
+
+      MainAgent* getRefMainAgent();
+
+      void actDependingOfState ();
+
    private:
-      const MainAgent* refMainAgent_;
+      MainAgent* refMainAgent_;
+      unsigned int m_recolectTime;
 };
 
 #endif /* WORKINGAGENT_H_ */

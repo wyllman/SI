@@ -8,7 +8,7 @@
 #include <model/agents/WorkingAgent.h>
 
 WorkingAgent::WorkingAgent(MainAgent* mainAgent, Map* theMap): Agent (theMap), refMainAgent_ (mainAgent) {
-   setNameAgent(const_cast<char*>("WORK_AGENT"));
+	setNameAgent(const_cast<char*>("WORK_AGENT"));
 }
 
 WorkingAgent::~WorkingAgent() {
@@ -32,6 +32,7 @@ Package* WorkingAgent::readFIPAPackage (Package* p) {
 			case GO_RESOURCE_LOCATION:
 				//Realizar búsqueda dada esta dirección
 				followRoute(p -> getContent().at(0));
+				setState(FOLLOWING_ROUTE);
 				break;
 			default:
 				cout << "No se entiende el tipo del paquete recibido." << endl;
@@ -48,7 +49,7 @@ void WorkingAgent::followRoute(std::string route) {
 	int posCorchFin = route.find("]");
 	cout << "Pos ini:" << posIni << " posFin: " << posCorchFin << endl;
 	route = route.substr(1, route.length());
-	int posComa = 0, i = 0;
+	int posComa = 0;
 	bool stop = false;
 	string dirTemp;
 	while (!stop) {
@@ -60,10 +61,10 @@ void WorkingAgent::followRoute(std::string route) {
 			dirTemp = route.substr(0, posComa);
 			route = route.substr(posComa + 1, route.length());
 		}
-		camino.push_back(translateRoute(dirTemp));
 	}
-	for (int i = 0; i < camino.size(); i++) {
-	   m_routes.push_back(camino[camino.size() - 1]);
+	camino.push_back(translateRoute(dirTemp));
+	for (unsigned int i = 0; i < camino.size(); i++) {
+		m_routes.push_back(camino[camino.size() - 1]);
 	}
 }
 
@@ -87,4 +88,40 @@ Direction WorkingAgent::translateRoute (std::string dir) {
 	}
 }
 
+void WorkingAgent::actDependingOfState () {
+	switch (getState()) {
+	case RECOLECTING:
+		if (getRecolectTime() < 10)
+			setRecolectTime(getRecolectTime() + 1);
+		else {
+			setState(FULL_OF_RESOURCES);
+		}
+		break;
+	case FOLLOWING_ROUTE:
+		if (!routedMove()) {
+			setState(AVAILABLE);
+			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
+		}
+		break;
+	case PUTTING_RESOURCE:
+		if (getRecolectTime() > 0) {
+			setRecolectTime(getRecolectTime() - 1);
+		} else {
+			setState(AVAILABLE);
+		}
+		break;
+	}
+}
+
+unsigned int WorkingAgent::getRecolectTime() const {
+	return m_recolectTime;
+}
+
+void WorkingAgent::setRecolectTime(unsigned int recolectTime) {
+	m_recolectTime = recolectTime;
+}
+
+MainAgent* WorkingAgent::getRefMainAgent() {
+	return refMainAgent_;
+}
 

@@ -12,6 +12,7 @@
 
 Agent::Agent(Map* theMap): refMap_ (theMap) {
    setIdComm(0);
+   m_state = AVAILABLE;
 }
 
 Agent::~Agent() {
@@ -148,6 +149,16 @@ void Agent::setIdComm(unsigned int idComm) {
 Point Agent::getPosition () {
 	return m_position;
 }
+
+
+State Agent::getState() const {
+	return m_state;
+}
+
+void Agent::setState(State state) {
+	m_state = state;
+}
+
 std::vector<Direction>& Agent::getRoutes() {
 	return m_routes;
 }

@@ -31,6 +31,8 @@ class Agent {
       Goals* m_goals;
       Intentions* m_intentions;
 
+      State m_state;
+
       // FIXME: dejo aquí que un agente conoce en qué comunicación está embebido
       unsigned int m_idComm;
       char* m_nameAgent;
@@ -49,7 +51,6 @@ class Agent {
       bool routedMove ();
       bool checkRouteMoves ();
 
-      std::vector<Direction>& getRoutes();
       void setRoutes(std::vector<Direction>& routes);
 
       Point getPosition ();
@@ -57,8 +58,12 @@ class Agent {
       void setIdComm(unsigned int idComm);
       char* getNameAgent() const;
       void setNameAgent(char* nameAgent);
+      State getState() const;
+     void setState(State state);
+     std::vector<Direction>& getRoutes();
 
       virtual Package* readFIPAPackage (Package*) { return NULL; };
+      virtual void actDependingOfState () { };
 };
 
 #endif /* AGENT_H_ */

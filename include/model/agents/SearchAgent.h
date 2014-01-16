@@ -39,13 +39,16 @@ class SearchAgent: public Agent {
        // Atributos para el movimiento exploratorio angular (90º)
       Point initPointEXPL_;
       Direction guideDirectionEXPL_;
+      Direction lastDirectionEXPL_;
       int initPointDistanceEXPL_;
 
-      void explorationMove ();
+      bool explorationMove ();
       void calculateExplorationLimits (int&, int&);
-      Direction calculateDirection ();
+      Direction calculatePreferedDirection ();
       Direction calculateAngularDirection ();
       Direction calculateRectilinearDirection ();
+      Direction calculateFreeDirection ();
+      Direction calculateClockDirection (Direction, bool);
 };
 
 #endif /* SEARCHAGENT_H_ */

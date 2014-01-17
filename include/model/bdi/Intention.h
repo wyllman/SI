@@ -9,25 +9,19 @@
 #define INTENTION_H_
 
 #include <string>
+#include <vector>
 
-/**
- * \class Intention
- * \brief Clase para el modelado de intenciones
- * 
- * Sigue la estructura básica de la clase Belief, pero no se presupone
- * cierta.
- */
+class BeliefSet;
+class Desire;
+
+//TODO: Falta la función que realiza acciones dependiendo de la creencia y el objetivo
 class Intention {
 private:
-	std::string m_intention;
-	bool m_value;
+	BeliefSet* m_beliefSet;
+	std::vector<Desire>* m_desireVector;
 public:
-	Intention(std::string, bool);
+	Intention(BeliefSet&, std::vector<Desire>&);
 	~Intention();
-	std::string operator()() { return m_intention; }
-	bool isTrue() { return m_value; }
-	friend bool operator&&(const Intention&, const Intention&);
-	friend bool operator||(const Intention&, const Intention&);
 };
 
 #endif /* INTENTION_H_ */

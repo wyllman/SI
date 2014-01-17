@@ -6,20 +6,13 @@
  */
 
 #include <model/bdi/Intention.h>
+#include <model/bdi/BeliefSet.h>
+#include <model/bdi/Desire.h>
 
-Intention::Intention(std::string intention, bool value) :
-	m_intention(intention),
-	m_value(value)
-{
-
+Intention::Intention(BeliefSet& beliefSet, std::vector<Desire>& desireVector) {
+	m_beliefSet = &beliefSet;
+	m_desireVector = &desireVector;
 }
 
 Intention::~Intention() {
-}
-
-bool operator&&(const Intention& _A, const Intention& _B) {
-	return (_A.m_value && _B.m_value);
-}
-bool operator||(const Intention& _A, const Intention& _B) {
-	return (_A.m_value || _B.m_value);
 }

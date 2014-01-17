@@ -34,7 +34,9 @@ public:
 	~BeliefSet();
 	const Belief* operator()(std::string belief) { return m_beliefSet["belief"]; }
 	const Map* map() { return m_map; }
+	void setMap(Map* map);
 	Point position() { return m_position; }
+	void setPosition(Point);
 	void add(std::string, const Belief*);
 	void remove(std::string);
 };

@@ -25,3 +25,16 @@ void BeliefSet::remove(std::string str) {
         m_beliefSet.erase(str);
     }
 }
+
+void BeliefSet::setMap(Map* map) {
+	if (map != NULL) {
+		m_map = map;
+	}
+}
+
+void BeliefSet::setPosition(Point p) {
+	if (p.first >= 0 && p.first <= MAP_WIDTH
+		&& p.second >= 0 && p.second <= MAP_WIDTH) {
+		m_position = p;
+	}
+}

@@ -10,16 +10,33 @@
 
 #include <model/map/Map.h>
 
-#include <vector>
+#include <map>
+#include <string>
+
 class Belief;
+
+/**
+ * \class BeliefSet
+ * \brief Clase para almacenar el conjunto de creencias.
+ * 
+ * La clase BeliefSet almacena el conjunto de creencias en un hashmap.
+ * La excepción son el mapa y la localizacón, que por conveniencia
+ * son independientes y con sus propios operadores.
+ */
 
 class BeliefSet {
 private:
-	std::vector<Belief*> m_beliefSet; // ¿Hace falta?
-	Map* m_map; // Mapa del Sistema de Agentes
+	std::map<std::string, const Belief*> m_beliefSet;
+	Map* m_map;
+	Point m_position;
 public:
 	BeliefSet();
 	~BeliefSet();
+	const Belief* operator()(std::string belief) { return m_beliefSet["belief"]; }
+	const Map* map() { return m_map; }
+	Point position() { return m_position; }
+	void add(std::string, const Belief*);
+	void remove(std::string);
 };
 
 #endif /* BELIEFSET_H_ */

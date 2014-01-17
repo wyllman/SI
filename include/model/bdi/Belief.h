@@ -8,10 +8,24 @@
 #ifndef BELIEF_H_
 #define BELIEF_H_
 
+#include <string>
+
+/**
+ * \class Belief
+ * \brief Clase base de creencias.
+ * 
+ * La clase Belief almacena las creencias como un string.
+ * Se considera un mundo cerrado, así que toda creencia no definida se
+ * presupone falsa y las definidas verdaderas.
+ * 
+ */
 class Belief {
+private:
+	std::string m_belief;
 public:
-	Belief();
+	Belief(std::string);
 	~Belief();
+	std::string operator()() { return m_belief; }
 };
 
 #endif /* BELIEF_H_ */

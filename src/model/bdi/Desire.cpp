@@ -6,8 +6,10 @@
  */
 
 #include <model/bdi/Desire.h>
+#include <model/bdi/BeliefSet.h>
+#include <model/bdi/Intention.h>
 
-Desire::Desire() {
+Desire::Desire(const BeliefSet& beliefSet, const Intention& intention) {
 
 }
 

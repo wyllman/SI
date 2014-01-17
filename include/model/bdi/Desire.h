@@ -8,9 +8,12 @@
 #ifndef DESIRE_H_
 #define DESIRE_H_
 
+class BeliefSet;
+class Intention;
+
 class Desire {
 public:
-	Desire();
+	Desire(const BeliefSet&, const Intention&);
 	~Desire();
 };
 

@@ -28,12 +28,14 @@ class BeliefSet {
 private:
 	std::map<std::string, const Belief*> m_beliefSet;
 	Map* m_map;
+	bool** m_knownMap;
 	Point m_position;
 public:
 	BeliefSet();
 	~BeliefSet();
 	const Belief* operator()(std::string belief) { return m_beliefSet["belief"]; }
 	const Map* map() { return m_map; }
+    void setKnownMap(int, int, bool);
 	void setMap(Map* map);
 	Point position() { return m_position; }
 	void setPosition(Point);

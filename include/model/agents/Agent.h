@@ -45,6 +45,7 @@ class Agent {
       Agent(Map*);
       virtual ~Agent() = 0;
 
+      void sensor();
       void move(Direction);
       bool controledMove (Direction);
       bool checkTerrain (Direction);

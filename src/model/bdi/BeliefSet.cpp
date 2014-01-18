@@ -9,9 +9,25 @@
 #include <model/bdi/Belief.h>
 
 BeliefSet::BeliefSet() {
+    m_knownMap = new bool*[MAP_WIDTH];
+    for (uint32_t i = 0; i < MAP_WIDTH; ++i) {
+		m_knownMap[i] = new bool[MAP_WIDTH];
+	}
 }
 
 BeliefSet::~BeliefSet() {
+    if (m_knownMap != NULL) {
+        for (uint32_t i = 0; i < MAP_WIDTH; ++i) {
+            delete [] m_knownMap[i];
+            m_knownMap[i] = NULL;
+        }
+        delete [] m_knownMap;
+        m_knownMap = NULL;
+    }
+    for (std::map<std::string, const Belief*>::iterator i = m_beliefSet.begin();
+         i != m_beliefSet.end(); ++i) {
+        // TODO: Liberar la memoria
+    }
 }
 
 void BeliefSet::add(std::string str, const Belief* belief) {
@@ -37,4 +53,8 @@ void BeliefSet::setPosition(Point p) {
 		&& p.second >= 0 && p.second <= MAP_WIDTH) {
 		m_position = p;
 	}
+}
+
+void BeliefSet::setKnownMap(int i, int j, bool value) {
+    m_knownMap[i][j] = value;
 }

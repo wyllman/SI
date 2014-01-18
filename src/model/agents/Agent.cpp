@@ -10,6 +10,8 @@
 #include <model/bdi/Intention.h>
 #include <model/bdi/Desire.h>
 
+#include <cmath>
+
 Agent::Agent(Map* theMap): refMap_ (theMap) {
    setIdComm(0);
    m_state = AVAILABLE;
@@ -165,4 +167,16 @@ std::vector<Direction>& Agent::getRoutes() {
 
 void Agent::setRoutes(std::vector<Direction>& routes) {
 	m_routes = routes;
+}
+
+void Agent::sensor() {
+    for (uint32_t i = m_position.first - 4; i < m_position.first + 4; ++i) {
+        for (uint32_t j = m_position.second - 4; j < m_position.second + 4; ++j) {
+            if (std::abs(sqrt(pow(i, 2) + pow(j, 2))
+                - sqrt(pow(m_position.first, 2)
+                + pow(m_position.second, 2))) <= 4) {
+                m_beliefSet->setKnownMap(i, j, true);
+            }
+        }
+    }
 }

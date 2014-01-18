@@ -7,7 +7,9 @@
 
 #include <model/bdi/Belief.h>
 
-Belief::Belief() {
+Belief::Belief(std::string belief) :
+    m_belief(belief)
+{
 
 }
 

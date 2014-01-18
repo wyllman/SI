@@ -5,12 +5,12 @@
  *      Author: maikel
  */
 
+#ifndef PACKAGE_H_
+#define PACKAGE_H_
+
 #include <iostream>
 #include <vector>
 #include <Tools.h>
-
-#ifndef PACKAGE_H_
-#define PACKAGE_H_
 
 class Package {
 public:

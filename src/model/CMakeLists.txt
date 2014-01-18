@@ -1,3 +1,6 @@
+add_subdirectory (bdi)
+add_subdirectory (fipa)
+add_subdirectory (agents)
 add_subdirectory (abstracts)
 add_subdirectory (map)
 add_subdirectory (simulator)

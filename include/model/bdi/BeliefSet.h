@@ -29,6 +29,8 @@ private:
 	std::map<std::string, const Belief*> m_beliefSet;
 	Map* m_map;
 	bool** m_knownMap;
+    int m_exploredCells;
+    float m_exploredPercentage;
 	Point m_position;
 public:
 	BeliefSet();
@@ -42,6 +44,8 @@ public:
 	void setPosition(Point);
 	void add(std::string, const Belief*);
 	void remove(std::string);
+    void setExploredCells(int);
+    float exploredPercentage() { return m_exploredCells / (MAP_WIDTH * MAP_WIDTH); }
 };
 
 #endif /* BELIEFSET_H_ */

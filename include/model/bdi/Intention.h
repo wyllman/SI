@@ -17,11 +17,17 @@ class Desire;
 //TODO: Falta la función que realiza acciones dependiendo de la creencia y el objetivo
 class Intention {
 private:
-	BeliefSet* m_beliefSet;
-	std::vector<Desire>* m_desireVector;
+    BeliefSet* m_beliefSet;
+    Desire* m_desire;
+
+    void exploreMap();
+    void findOptimalLocation();
+    void gatherResources();
+    void buildSettlement();
 public:
-	Intention(BeliefSet&, std::vector<Desire>&);
+    Intention(BeliefSet&, Desire&);
 	~Intention();
+    void update();
 };
 
 #endif /* INTENTION_H_ */

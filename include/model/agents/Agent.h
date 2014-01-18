@@ -12,10 +12,6 @@
 #include <model/map/Map.h>
 #include <model/fipa/Package.h>
 
-class BeliefSet;
-class Goals;
-class Intentions;
-
 /**
  * \class Agent (abstract)
  * \brief Clase base para los agentes.
@@ -26,11 +22,6 @@ class Intentions;
  */
 class Agent {
    private:
-      // FIXME: la posicion deberia estar incluida en el conjunto de creencias
-      BeliefSet* m_beliefSet;
-      Goals* m_goals;
-      Intentions* m_intentions;
-
       State m_state;
 
       // FIXME: dejo aquí que un agente conoce en qué comunicación está embebido
@@ -45,7 +36,6 @@ class Agent {
       Agent(Map*);
       virtual ~Agent() = 0;
 
-      void sensor();
       void move(Direction);
       bool controledMove (Direction);
       bool checkTerrain (Direction);

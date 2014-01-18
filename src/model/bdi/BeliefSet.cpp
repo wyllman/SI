@@ -43,7 +43,7 @@ void BeliefSet::remove(std::string str) {
 }
 
 void BeliefSet::setMap(Map* map) {
-	if (map != NULL) {
+    if (map == NULL) {
 		m_map = map;
 	}
 }

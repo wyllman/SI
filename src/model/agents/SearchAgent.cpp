@@ -6,6 +6,10 @@
  */
 
 #include <model/agents/SearchAgent.h>
+#include <model/bdi/BeliefSet.h>
+
+#include <cstring>
+#include <cmath>
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
@@ -88,10 +92,12 @@ void SearchAgent::actDependingOfState () {
       case SEARCHING:
          if (!explorationMove()) {
             setState(AVAILABLE);
+         } else {
+             sensor();
          }
       break;
       case FOLLOWING_ROUTE:
-         cout << "Tam: " << getRoutes().size() << endl;
+         std::cout << "Tam: " << getRoutes().size() << std::endl;
          if (!routedMove()) {
             setState(AVAILABLE);
             getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
@@ -102,15 +108,15 @@ void SearchAgent::actDependingOfState () {
    }
 }
 void SearchAgent::followRoute(std::string route) {
-	cout << "SEGUIR LA RUTA: " << route << endl;
-	vector<Direction> camino;
+    std::cout << "SEGUIR LA RUTA: " << route << std::endl;
+    std::vector<Direction> camino;
 	int posIni = route.find("[");
 	int posCorchFin = route.find("]");
-	cout << "Pos ini:" << posIni << " posFin: " << posCorchFin << endl;
+    std::cout << "Pos ini:" << posIni << " posFin: " << posCorchFin << std::endl;
 	route = route.substr(1, route.length());
 	int posComa = 0;
 	bool stop = false;
-	string dirTemp;
+    std::string dirTemp;
 	while (!stop) {
 		posComa = route.find(",");
 		if (posComa == -1) {
@@ -159,10 +165,10 @@ void SearchAgent::initExplorationMove(int row, int col, Direction guideDir) {
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Manejadores públicos:
-vector<Direction>& SearchAgent::getRoutes() {
+std::vector<Direction>& SearchAgent::getRoutes() {
    return m_routes;
 }
-void SearchAgent::setRoutes(const vector<Direction>& routes) {
+void SearchAgent::setRoutes(const std::vector<Direction>& routes) {
    m_routes = routes;
 }
 MainAgent* SearchAgent::getRefMainAgent() {
@@ -678,4 +684,21 @@ Direction SearchAgent::calculateObstaclDir() {
    }
 
    return result;
+}
+
+int SearchAgent::sensor() {
+    int switchedCells = 0;
+    for (uint32_t i = m_position.first - 4; i < m_position.first + 4; ++i) {
+        for (uint32_t j = m_position.second - 4; j < m_position.second + 4; ++j) {
+            if (std::abs(sqrt(pow(i, 2) + pow(j, 2))
+                - sqrt(pow(m_position.first, 2)
+                + pow(m_position.second, 2))) <= 4) {
+                if(!refMainAgent_->knownMapPosition(i, j)) {
+                    refMainAgent_->setKnownMapPosition(i, j, true);
+                    ++switchedCells;
+                }
+            }
+        }
+    }
+    return switchedCells;
 }

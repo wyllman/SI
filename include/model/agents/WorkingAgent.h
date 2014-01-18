@@ -10,8 +10,6 @@
 
 #include <model/agents/Agent.h>
 #include <model/agents/MainAgent.h>
-#include <cstring>
-using namespace std;
 
 class WorkingAgent : public Agent {
    public:

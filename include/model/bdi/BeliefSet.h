@@ -36,6 +36,7 @@ public:
 	const Belief* operator()(std::string belief) { return m_beliefSet["belief"]; }
 	const Map* map() { return m_map; }
     void setKnownMap(int, int, bool);
+    bool knownMap(int i, int j) { return m_knownMap[i][j]; }
 	void setMap(Map* map);
 	Point position() { return m_position; }
 	void setPosition(Point);

@@ -12,8 +12,9 @@
 #include <cstdlib>
 
 #include <model/agents/MainAgent.h>
-#include <model/agents/WorkingAgent.h>
 #include <model/fipa/Package.h>
+
+#include <vector>
 
 class SearchAgent: public Agent {
    public:
@@ -22,8 +23,8 @@ class SearchAgent: public Agent {
 
       MainAgent* getRefMainAgent();
       void setPosition (Point p) { m_position = p; }
-      vector<Direction>& getRoutes();
-      void setRoutes(const vector<Direction>& routes);
+      std::vector<Direction>& getRoutes();
+      void setRoutes(const std::vector<Direction>& routes);
 
       Package* readFIPAPackage (Package*);
 
@@ -65,6 +66,7 @@ class SearchAgent: public Agent {
       Direction calculateClockDirection (Direction, bool);
       Direction calculateInverseDirection (Direction);
       void updateDistance (Direction);
+      int sensor();
 };
 
 #endif /* SEARCHAGENT_H_ */

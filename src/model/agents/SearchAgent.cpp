@@ -86,7 +86,9 @@ void SearchAgent::localDireccionalSearch (std::string  d) {
 void SearchAgent::actDependingOfState () {
    switch (getState()) {
       case SEARCHING:
-
+         if (!explorationMove()) {
+            setState(AVAILABLE);
+         }
       break;
       case FOLLOWING_ROUTE:
          cout << "Tam: " << getRoutes().size() << endl;
@@ -146,8 +148,9 @@ Direction SearchAgent::translateRoute (std::string dir) {
       return SWEST;
    }
 }
-void SearchAgent::initExplorationMove(Point initPos, Direction guideDir) {
-   initPointEXPL_ = initPos;
+void SearchAgent::initExplorationMove(int row, int col, Direction guideDir) {
+   initPointEXPL_ .first = row;
+   initPointEXPL_.second = col;
    guideDirectionEXPL_ = guideDir;
    initPointDistanceEXPL_ = 1;
 }
@@ -172,39 +175,59 @@ MainAgent* SearchAgent::getRefMainAgent() {
 // Métodos privados:
 bool SearchAgent::explorationMove() {
    bool result = false;
-   int limitRightSup = 0, limitLeftInf = 0;
+   bool outPreferedRoute = false;
    bool obstacleDetectec = false;
-   Direction directionAct;
+   Direction directionAct = ERROR_DIR;
+
    // Realizar el primer paso.
    if (initPointDistanceEXPL_ == 1) {
       directionAct = ((Direction) (guideDirectionEXPL_ + 1));
-   } else {
+      obstacleDetectec = !controledMove(directionAct);
+      if (!obstacleDetectec) {
+        lastDirectionEXPL_ = directionAct;
+        lastMoveDirEXPL_ = directionAct;
+        updateDistance(directionAct);
+        result = true;
+      }
+   } else if (initPointDistanceEXPL_ != -1) {
 //      calculateExplorationLimits(limitRightSup, limitLeftInf);
-      // TODO: Calcular la dirección preferente actual
-      // TODO: Mover en la dirección preferente
+      std::cout << "PASO DE LA EXPLORACION" << std::endl;
       directionAct = calculatePreferedDirection();
       if (directionAct == ERROR_DIR) {
-         directionAct = calculateFreeDirection();
+         directionAct = calculateFreeDirection(false);
+         outPreferedRoute = true;
       }
 
+      if (directionAct != ERROR_DIR) {
+         obstacleDetectec = !controledMove(directionAct);
+         if (obstacleDetectec) {
+            directionAct = calculateFreeDirection(true);
+            if (directionAct != ERROR_DIR) {
+               obstacleDetectec = !controledMove(directionAct);
+            }
+         }
+         if (!obstacleDetectec) {
+            if (!outPreferedRoute) {
+               lastDirectionEXPL_ = directionAct;
+            }
+            lastMoveDirEXPL_ = directionAct;
+            updateDistance(directionAct);
+            result = true;
+         }
+      }
    }
 
-   // TODO: Si (obstaclDetectec) calcular nueva direccion preferente
+
    return result;
 }
-void SearchAgent::calculateExplorationLimits(int& limRS, int& limLI) {
-   if (guideDirectionEXPL_ == NORTH || guideDirectionEXPL_ == SOUTH) {
-      limRS = initPointEXPL_.first + (initPointDistanceEXPL_ - 1);
-      limLI = initPointEXPL_.first - (initPointDistanceEXPL_ - 1);
-   } else {
-      limRS = initPointEXPL_.second + (initPointDistanceEXPL_ - 1);
-      limLI = initPointEXPL_.second - (initPointDistanceEXPL_ - 1);
-   }
-}
+
 Direction SearchAgent::calculatePreferedDirection() {
    Direction result = ERROR_DIR;
    Direction tmpDirR = calculateRectilinearDirection ();
    Direction tmpDirA = calculateAngularDirection ();
+
+   std::cout << "RECT DIR: " << tmpDirR << std::endl;
+   std::cout << "ANG DIR: " << tmpDirA << std::endl;
 
    if ((tmpDirR == ERROR_DIR) && (tmpDirA == ERROR_DIR)) {
       return result;
@@ -226,23 +249,23 @@ Direction SearchAgent::calculateAngularDirection() {
    Direction result = ERROR_DIR;
    switch (guideDirectionEXPL_) {
       case NORTH:
-         if (m_position.first == (initPointEXPL_.first - DISTANCE)) {
-            result = NWEST;
-         } else if (m_position.first == (initPointEXPL_.first + DISTANCE)){
-            result = NEAST;
-         }
-         break;
-      case EAST:
          if (m_position.second == (initPointEXPL_.second - DISTANCE)) {
-            result = SEAST;
+            result = NWEST;
          } else if (m_position.second == (initPointEXPL_.second + DISTANCE)){
             result = NEAST;
          }
          break;
+      case EAST:
+         if (m_position.first == (initPointEXPL_.first - DISTANCE)) {
+            result = SEAST;
+         } else if (m_position.first == (initPointEXPL_.first+ DISTANCE)){
+            result = NEAST;
+         }
+         break;
       case SOUTH:
-         if (m_position.first == (initPointEXPL_.first + DISTANCE)) {
+         if (m_position.second == (initPointEXPL_.second + DISTANCE)) {
             result = SWEST;
-         } else if (m_position.first == (initPointEXPL_.first - DISTANCE)){
+         } else if (m_position.second == (initPointEXPL_.second - DISTANCE)){
             result = SEAST;
          }
          break;
@@ -259,14 +282,23 @@ Direction SearchAgent::calculateAngularDirection() {
    return result;
 }
 Direction SearchAgent::calculateRectilinearDirection() {
+   const int DISTANCE = (initPointDistanceEXPL_ - 1);
    Direction result = ERROR_DIR;
-   if ((initPointDistanceEXPL_ % 3) == 0) {
+   if (((initPointDistanceEXPL_ - 1) % 3) == 0
+         && (initPointDistanceEXPL_ != 2)) {
       switch (guideDirectionEXPL_) {
          case NORTH:
-            if ((initPointDistanceEXPL_ % 2) == 0) {
-               result = WEST;
-            } else {
+            if ((m_position.second >= (initPointEXPL_.second - DISTANCE))
+                  && (m_position.second <= (initPointEXPL_.second + DISTANCE))) {
+               if ((initPointDistanceEXPL_ % 2) == 0) {
+                  result = WEST;
+               } else {
+                  result = EAST;
+               }
+            } else if (m_position.second < (initPointEXPL_.second - DISTANCE)) {
                result = EAST;
+            } else if ((m_position.second > (initPointEXPL_.second + DISTANCE))) {
+               result = WEST;
             }
             break;
          case EAST:
@@ -294,62 +326,138 @@ Direction SearchAgent::calculateRectilinearDirection() {
             break;
       }
    }
+   if (result == calculateInverseDirection(lastMoveDirEXPL_)) {
+      result = ERROR_DIR;
+   }
    return result;
 }
 
-Direction SearchAgent::calculateFreeDirection() {
+Direction SearchAgent::calculateFreeDirection(bool obstacle) {
+   const int DISTANCE = (initPointDistanceEXPL_ - 1);
    Direction result = ERROR_DIR;
    Direction tmpDir;
+   Direction tmpDir2;
    switch (guideDirectionEXPL_) {
       case NORTH:
-         if (lastDirectionEXPL_ == WEST || lastDirectionEXPL_ == NWEST) {
-            tmpDir = WEST;
-            while ((tmpDir != EAST) && !(checkTerrain(tmpDir))) {
-               tmpDir = calculateClockDirection (tmpDir, false);
+         if ((m_position.second >= (initPointEXPL_.second - DISTANCE))
+                           && (m_position.second <= (initPointEXPL_.second + DISTANCE))) {
+            if (lastDirectionEXPL_ == WEST || lastDirectionEXPL_ == NWEST) {
+               tmpDir = WEST;
+               tmpDir2 = EAST;
+               if (lastDirectionEXPL_ == NWEST) {
+                  tmpDir2 = SEAST;
+               }
+
+               do {
+                  //tmpDir = calculateClockDirection (tmpDir, false);
+                  if (!checkTerrain(tmpDir)) {
+                    tmpDir = calculateClockDirection (tmpDir, false);
+                  }
+                  if (!obstacle && tmpDir == calculateInverseDirection(lastMoveDirEXPL_)) {
+                     tmpDir = calculateClockDirection (tmpDir, false);
+                  }
+
+               } while ((tmpDir != tmpDir2) && !(checkTerrain(tmpDir)));
+            } else {
+               tmpDir = EAST;
+               tmpDir2 = WEST;
+               if (lastDirectionEXPL_ == NEAST) {
+                  tmpDir2 = SWEST;
+               }
+               do {
+                  //tmpDir = calculateClockDirection (tmpDir, true);
+                  if (!checkTerrain(tmpDir)) {
+                    tmpDir = calculateClockDirection (tmpDir, true);
+                  }
+                  if (!obstacle && tmpDir == calculateInverseDirection(lastMoveDirEXPL_)) {
+                     tmpDir = calculateClockDirection (tmpDir, true);
+                  }
+               } while ((tmpDir != tmpDir2) && !(checkTerrain(tmpDir)));
             }
-         } else {
-            tmpDir = EAST;
-            while ((tmpDir != WEST) && !(checkTerrain(tmpDir))) {
-               tmpDir = calculateClockDirection (tmpDir, true);
-            }
+         }else if (m_position.second < (initPointEXPL_.second - DISTANCE)) {
+             result = EAST;
+         } else if ((m_position.second > (initPointEXPL_.second + DISTANCE))) {
+            result = WEST;
          }
          break;
       case EAST:
          if (lastDirectionEXPL_ == NORTH || lastDirectionEXPL_ == NEAST) {
             tmpDir = NORTH;
-            while ((tmpDir != SOUTH) && !(checkTerrain(tmpDir))) {
-               tmpDir = calculateClockDirection (tmpDir, false);
+            tmpDir2 = SOUTH;
+            if (lastDirectionEXPL_ == NEAST) {
+               tmpDir2 = SWEST;
             }
+            do {
+               tmpDir = calculateClockDirection (tmpDir, false);
+               if (!obstacle && tmpDir == calculateInverseDirection(lastMoveDirEXPL_)) {
+                  tmpDir = calculateClockDirection (tmpDir, false);
+               }
+            } while ((tmpDir != tmpDir2) && !(checkTerrain(tmpDir)));
          } else {
             tmpDir = SOUTH;
-            while ((tmpDir != NORTH) && !(checkTerrain(tmpDir))) {
-               tmpDir = calculateClockDirection (tmpDir, true);
+            tmpDir2 = NORTH;
+            if (lastDirectionEXPL_ == SEAST) {
+               tmpDir2 = NWEST;
             }
+            do {
+               tmpDir = calculateClockDirection (tmpDir, true);
+               if (!obstacle && tmpDir == calculateInverseDirection(lastMoveDirEXPL_)) {
+                  tmpDir = calculateClockDirection (tmpDir, false);
+               }
+            } while ((tmpDir != tmpDir2) && !(checkTerrain(tmpDir)));
          }
          break;
       case SOUTH:
           if (lastDirectionEXPL_ == EAST || lastDirectionEXPL_ == SEAST) {
              tmpDir = EAST;
-             while ((tmpDir != WEST) && !(checkTerrain(tmpDir))) {
-                tmpDir = calculateClockDirection (tmpDir, false);
+             tmpDir2 = WEST;
+             if (lastDirectionEXPL_ == SEAST) {
+                tmpDir2 = NWEST;
              }
+             do {
+                tmpDir = calculateClockDirection (tmpDir, false);
+                if (!obstacle && tmpDir == calculateInverseDirection(lastMoveDirEXPL_)) {
+                   tmpDir = calculateClockDirection (tmpDir, false);
+                }
+             } while ((tmpDir != tmpDir2) && !(checkTerrain(tmpDir)));
           } else {
              tmpDir = WEST;
-             while ((tmpDir != EAST) && !(checkTerrain(tmpDir))) {
-                tmpDir = calculateClockDirection (tmpDir, true);
+             tmpDir2 = EAST;
+             if (lastDirectionEXPL_ == SWEST) {
+                tmpDir2 = NEAST;
              }
+             do {
+                tmpDir = calculateClockDirection (tmpDir, true);
+                if (!obstacle && tmpDir == calculateInverseDirection(lastMoveDirEXPL_)) {
+                   tmpDir = calculateClockDirection (tmpDir, false);
+                }
+             }while ((tmpDir != tmpDir2) && !(checkTerrain(tmpDir)));
           }
          break;
       case WEST:
           if (lastDirectionEXPL_ == SOUTH || lastDirectionEXPL_ == SWEST) {
              tmpDir = SOUTH;
-             while ((tmpDir != NORTH) && !(checkTerrain(tmpDir))) {
+             tmpDir2 = NORTH;
+             if (lastDirectionEXPL_ == SWEST) {
+                tmpDir2 = NEAST;
+             }
+             while ((tmpDir != tmpDir2) && !(checkTerrain(tmpDir))) {
                 tmpDir = calculateClockDirection (tmpDir, false);
+                if (!obstacle && tmpDir == calculateInverseDirection(lastMoveDirEXPL_)) {
+                   tmpDir = calculateClockDirection (tmpDir, false);
+                }
              }
           } else {
              tmpDir = NORTH;
-             while ((tmpDir != SOUTH) && !(checkTerrain(tmpDir))) {
+             tmpDir2 = SOUTH;
+             if (lastDirectionEXPL_ == NWEST) {
+                tmpDir2 = SEAST;
+             }
+             while ((tmpDir != tmpDir2) && !(checkTerrain(tmpDir))) {
                 tmpDir = calculateClockDirection (tmpDir, true);
+                if (!obstacle && tmpDir == calculateInverseDirection(lastMoveDirEXPL_)) {
+                   tmpDir = calculateClockDirection (tmpDir, false);
+                }
              }
           }
          break;
@@ -359,6 +467,7 @@ Direction SearchAgent::calculateFreeDirection() {
    if (checkTerrain(tmpDir)) {
       result = tmpDir;
    }
+   std::cout << "FREE DIR: " << result << std::endl;
    return result;
 }
 
@@ -380,8 +489,193 @@ Direction SearchAgent::calculateClockDirection(Direction theDirection,
    }
    return result;
 }
+Direction SearchAgent::calculateInverseDirection(Direction theDirection) {
+   Direction result = ERROR_DIR;
+   result = calculateClockDirection(theDirection, false);
+   result = calculateClockDirection(result, false);
+   result = calculateClockDirection(result, false);
+   result = calculateClockDirection(result, false);
+   return result;
+}
+void SearchAgent::updateDistance(Direction theDirection) {
+   switch (guideDirectionEXPL_) {
+      case NORTH:
+        if (theDirection == NORTH || theDirection == NEAST || theDirection == NWEST) {
+           initPointDistanceEXPL_++;
+        } else if (theDirection == SOUTH || theDirection == SEAST || theDirection == SWEST) {
+           initPointDistanceEXPL_--;
+        }
+         break;
+      case EAST:
+         if (theDirection == EAST || theDirection == NEAST || theDirection == SEAST) {
+            initPointDistanceEXPL_++;
+         } else if (theDirection == WEST || theDirection == SWEST || theDirection == NWEST) {
+             initPointDistanceEXPL_--;
+          }
+         break;
+      case SOUTH:
+          if (theDirection == SOUTH || theDirection == SEAST || theDirection == SWEST) {
+             initPointDistanceEXPL_++;
+          } else if (theDirection == NORTH || theDirection == NEAST || theDirection == NWEST) {
+              initPointDistanceEXPL_--;
+           }
+         break;
+      case WEST:
+          if (theDirection == WEST || theDirection == NWEST || theDirection == SWEST) {
+             initPointDistanceEXPL_++;
+          } else if (theDirection == EAST || theDirection == SEAST || theDirection == NEAST) {
+              initPointDistanceEXPL_--;
+           }
+         break;
+      default:
+         break;
+   }
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+bool SearchAgent::onLimits() {
+   const int DISTANCE = (initPointDistanceEXPL_ - 1);
+   bool result = false;
 
+   switch (guideDirectionEXPL_) {
+      case NORTH: case SOUTH:
+         if ((m_position.second >= (initPointEXPL_.second - DISTANCE))
+            && (m_position.second <= (initPointEXPL_.second + DISTANCE))) {
+            result = true;
+         }
+         break;
+      case EAST: case WEST:
+         if ((m_position.first >= (initPointEXPL_.first - DISTANCE))
+            && (m_position.first <= (initPointEXPL_.first+ DISTANCE))) {
+            result = true;
+         }
+         break;
+   }
+   return result;
+}
+bool SearchAgent::onLineLimits() {
+   const int DISTANCE = (initPointDistanceEXPL_ - 1);
+   bool result = false;
+
+   switch (guideDirectionEXPL_) {
+      case NORTH: case SOUTH:
+         if ((m_position.second == (initPointEXPL_.second - DISTANCE))
+            || (m_position.second == (initPointEXPL_.second + DISTANCE))) {
+            result = true;
+         }
+         break;
+      case EAST: case WEST:
+         if ((m_position.first == (initPointEXPL_.first - DISTANCE))
+            || (m_position.first == (initPointEXPL_.first+ DISTANCE))) {
+            result = true;
+         }
+         break;
+   }
+
+   return result;
+}
+bool SearchAgent::onRoute() {
+const int DISTANCE = (initPointDistanceEXPL_ - 1);
+const int DIAMET_VIEW = 3;
+const int MOD_DISTANCE = DISTANCE / DIAMET_VIEW;
+bool result = false;
+
+
+   if ((DISTANCE % DIAMET_VIEW) == 0) {
+      result = true;
+   } else if (onLineLimits()){
+      switch (guideDirectionEXPL_) {
+         case NORTH:
+            if ((MOD_DISTANCE % 2) == 0 ) {
+               if (m_position.second > initPointEXPL_.second) {
+                  result = true;
+               }
+            } else if (m_position.second < initPointEXPL_.second) {
+               result = true;
+            }
+            break;
+         case EAST:
+
+            break;
+         case SOUTH:
+
+            break;
+         case WEST:
+
+            break;
+         default:
+            break;
+      }
+   }
+
+   return result;
+}
+
+Direction SearchAgent::calculateRouteDir() {
+   Direction result = ERROR_DIR;
+
+   switch (guideDirectionEXPL_) {
+      case NORTH:
+
+         break;
+      case EAST:
+
+         break;
+      case SOUTH:
+
+         break;
+      case WEST:
+
+         break;
+      default:
+         break;
+   }
+
+   return result;
+}
+Direction SearchAgent::calculateReturnDir() {
+   Direction result = ERROR_DIR;
+
+   switch (guideDirectionEXPL_) {
+      case NORTH:
+
+         break;
+      case EAST:
+
+         break;
+      case SOUTH:
+
+         break;
+      case WEST:
+
+         break;
+      default:
+         break;
+   }
+
+   return result;
+}
+Direction SearchAgent::calculateObstaclDir() {
+   Direction result = ERROR_DIR;
+
+   switch (guideDirectionEXPL_) {
+      case NORTH:
+
+         break;
+      case EAST:
+
+         break;
+      case SOUTH:
+
+         break;
+      case WEST:
+
+         break;
+      default:
+         break;
+   }
+
+   return result;
+}

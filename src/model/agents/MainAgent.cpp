@@ -64,6 +64,14 @@ void MainAgent::initAgents() {
 	WorkingAgent* working4 = new WorkingAgent (this, refMap_);
 	working4 -> setPosition (Point (getPosition().first + 1, getPosition().second - 1));
 	m_WorVecAgents.push_back(working4);
+
+
+
+
+	dynamic_cast<SearchAgent*>(m_Vagents[0]) -> initExplorationMove(m_Vagents[0]->getPosition().first
+			                                                       ,m_Vagents[0]->getPosition().second
+	                                                               , NORTH);
+	m_Vagents[0] -> setState(SEARCHING);
 }
 bool MainAgent::update () {
 	bool result = false;
@@ -100,13 +108,13 @@ bool MainAgent::update () {
    }*/
 
 		//Prueba de seguimiento de rutas !!
-	  if (m_Vagents[0] -> getState() == AVAILABLE) {
-		Package* p = new Package (getNameAgent(), m_Vagents[0] -> getNameAgent(), GO_LOCATION);
-		vector<string> dirTemp;
-		dirTemp.push_back("[NORTH,NORTH,NORTH,NORTH,NORTH,NORTH,NORTH,NORTH]");
-		p -> setContent(dirTemp);
-		m_Vagents[0] -> readFIPAPackage(p);
-	}
+//	  if (m_Vagents[0] -> getState() == AVAILABLE) {
+//		Package* p = new Package (getNameAgent(), m_Vagents[0] -> getNameAgent(), GO_LOCATION);
+//		vector<string> dirTemp;
+//		dirTemp.push_back("[NORTH,NORTH,NORTH,NORTH,NORTH,NORTH,NORTH,NORTH]");
+//		p -> setContent(dirTemp);
+//		m_Vagents[0] -> readFIPAPackage(p);
+//	}
 
 	if (m_WorVecAgents[0] -> getState() == AVAILABLE) {
 		Package* q = new Package (getNameAgent(), m_WorVecAgents[0] -> getNameAgent(), GO_RESOURCE_LOCATION);

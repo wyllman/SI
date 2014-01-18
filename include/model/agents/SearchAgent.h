@@ -32,7 +32,7 @@ class SearchAgent: public Agent {
       Direction translateRoute (std::string);
 
       void actDependingOfState ();
-      void initExplorationMove (Point initPos, Direction guideDir);
+      void initExplorationMove (int row, int col, Direction guideDir);
 
    private:
       MainAgent* refMainAgent_;
@@ -40,15 +40,31 @@ class SearchAgent: public Agent {
       Point initPointEXPL_;
       Direction guideDirectionEXPL_;
       Direction lastDirectionEXPL_;
+      Direction lastMoveDirEXPL_;
       int initPointDistanceEXPL_;
 
       bool explorationMove ();
-      void calculateExplorationLimits (int&, int&);
+
+      // Comprobaciones para el movimiento exploratorio
+      // ---Posicionesvde terreno
+      bool onLimits ();
+      bool onLineLimits ();
+      bool onRoute ();
+
+      Direction calculateRouteDir ();
+      Direction calculateReturnDir ();
+      Direction calculateObstaclDir ();
+
+
+
+
       Direction calculatePreferedDirection ();
       Direction calculateAngularDirection ();
       Direction calculateRectilinearDirection ();
-      Direction calculateFreeDirection ();
+      Direction calculateFreeDirection (bool);
       Direction calculateClockDirection (Direction, bool);
+      Direction calculateInverseDirection (Direction);
+      void updateDistance (Direction);
 };
 
 #endif /* SEARCHAGENT_H_ */

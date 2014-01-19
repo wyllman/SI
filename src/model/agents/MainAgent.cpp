@@ -81,10 +81,10 @@ void MainAgent::initAgents() {
 	working4 -> setPosition (Point (getPosition().first + 1, getPosition().second - 1));
 	m_WorVecAgents.push_back(working4);
 
-	dynamic_cast<SearchAgent*>(m_Vagents[0]) -> initExplorationMove(m_Vagents[0]->getPosition().first
-			                                                       ,m_Vagents[0]->getPosition().second
-	                                                               , NORTH);
-	m_Vagents[0] -> setState(SEARCHING);
+//	dynamic_cast<SearchAgent*>(m_Vagents[0]) -> initExplorationMove(m_Vagents[0]->getPosition().first
+//			                                                       ,m_Vagents[0]->getPosition().second
+//	                                                               , NORTH);
+//	m_Vagents[0] -> setState(SEARCHING);
 }
 bool temp = false;
 bool MainAgent::update () {
@@ -132,6 +132,8 @@ bool MainAgent::update () {
 //		m_WorVecAgents[0] -> readFIPAPackage(q);
 //	}
 
+	m_intentions->update();
+
 	return updateMiniAgents();
 }
 
@@ -162,7 +164,7 @@ void MainAgent::createRndInitialPos (Map* mainMap) {
 	boost::random::mt11213b positionRNG;
 	boost::random::mt11213b typeRNG;
 	boost::random::negative_binomial_distribution<> probabilityDistrib(3, 0.5);
-	boost::random::uniform_int_distribution<> positionDistrib(1, MAP_WIDTH - 1); // Porque WIDTH = HEIGHT
+	boost::random::uniform_int_distribution<> positionDistrib(2, MAP_WIDTH - 2); // Porque WIDTH = HEIGHT
 	boost::random::uniform_int_distribution<> typeDistrib(3, 5);
 
 	bool condition = false; // Indica si está en una posición CORRECTA

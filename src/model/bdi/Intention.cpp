@@ -52,9 +52,14 @@ void Intention::update() {
 
 void Intention::exploreMap() {
     //TODO: Comprobar el mapa y enviar a los agentes
-    for (int i = 0; i < m_agent->getVAgents().size(); ++i) {
+	Package* pack;
+    for (uint32_t i = 0; i < m_agent->getVAgents().size(); ++i) {
         if (m_agent->getVAgents()[i]->getState() == AVAILABLE) {
-        	//TODO
+        	pack = new Package(m_agent->getNameAgent(), m_agent->getVAgents()[i]->getNameAgent(), DIRECTION_SEARCH);
+        	std::vector<std::string> caca;
+        	caca.push_back("NORTH");
+        	pack->setContent(caca);
+        	m_agent->getVAgents()[i]->readFIPAPackage(pack);
         }
     }
     if (m_beliefSet->exploredPercentage() >= 0.5) {

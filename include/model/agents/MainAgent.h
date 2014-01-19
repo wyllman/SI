@@ -43,6 +43,8 @@ class MainAgent: public Agent {
       const Map* getMap() const;
       void setKnownMapPosition(int, int, bool);
       bool knownMapPosition(int, int);
+      void checkedCells(int);
+
 
       Package* readFIPAPackage (Package*);
       Package* createFIPAPackage ();

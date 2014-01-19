@@ -66,7 +66,7 @@ class SearchAgent: public Agent {
       Direction calculateClockDirection (Direction, bool);
       Direction calculateInverseDirection (Direction);
       void updateDistance (Direction);
-      int sensor();
+      void sensor();
 };
 
 #endif /* SEARCHAGENT_H_ */

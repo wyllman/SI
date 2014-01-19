@@ -686,7 +686,7 @@ Direction SearchAgent::calculateObstaclDir() {
    return result;
 }
 
-int SearchAgent::sensor() {
+void SearchAgent::sensor() {
     int switchedCells = 0;
     for (uint32_t i = m_position.first - 4; i < m_position.first + 4; ++i) {
         for (uint32_t j = m_position.second - 4; j < m_position.second + 4; ++j) {
@@ -700,5 +700,5 @@ int SearchAgent::sensor() {
             }
         }
     }
-    return switchedCells;
+    refMainAgent_->checkedCells(switchedCells);
 }

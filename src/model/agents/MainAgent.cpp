@@ -24,6 +24,10 @@
 MainAgent::MainAgent(Simulator* refModel, Map* theMap): Agent(theMap), refSimulator_(refModel) {
 	logAction(LOG_INIT);
 	m_beliefSet = new BeliefSet();
+    m_desires = new Desire();
+    createInitialBelieves();
+    createDesires();
+    m_intentions = new Intention(*m_beliefSet, *m_desires);
 	setNameAgent(const_cast<char*>("MAIN_AGENT"));
 	createRndInitialPos (const_cast<Map*>(refSimulator_->getMap()));
 	initAgents ();
@@ -34,6 +38,10 @@ MainAgent::~MainAgent() {
     if (m_beliefSet != NULL) {
         delete m_beliefSet;
         m_beliefSet = NULL;
+    }
+    if(m_desires != NULL) {
+        delete m_desires;
+        m_desires = NULL;
     }
 }
 void MainAgent::initAgents() {
@@ -123,6 +131,8 @@ bool MainAgent::update () {
 //		p -> setContent(dirTemp);
 //		m_Vagents[0] -> readFIPAPackage(p);
 //	}
+
+    m_intentions->update();
 
 	if (m_WorVecAgents[0] -> getState() == AVAILABLE) {
 		Package* q = new Package (getNameAgent(), m_WorVecAgents[0] -> getNameAgent(), GO_RESOURCE_LOCATION);
@@ -290,11 +300,15 @@ const Map* MainAgent::getMap() const {
 }
 
 void MainAgent::setKnownMapPosition(int i, int j, bool value) {
-    m_beliefSet->setKnownMap(i, j, value);
+    m_beliefSet->setKnownMapCell(i, j, value);
 }
 
 bool MainAgent::knownMapPosition(int i, int j) {
-    return m_beliefSet->knownMap(i, j);
+    return m_beliefSet->knownMapCell(i, j);
+}
+
+void MainAgent::checkedCells(int i) {
+    m_beliefSet->setExploredCells(i);
 }
 
 /********************************************************************

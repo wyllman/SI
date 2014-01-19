@@ -55,6 +55,10 @@ void BeliefSet::setPosition(Point p) {
 	}
 }
 
-void BeliefSet::setKnownMap(int i, int j, bool value) {
+void BeliefSet::setKnownMapCell(int i, int j, bool value) {
     m_knownMap[i][j] = value;
+}
+
+void BeliefSet::setExploredCells(int i) {
+    m_exploredCells += i;
 }

@@ -25,6 +25,7 @@ public:
     Desire();
     ~Desire();
     void add(std::string, bool);
+    void set(std::string, bool);
     bool operator[](std::string str) { return m_desire[str]; }
 };
 

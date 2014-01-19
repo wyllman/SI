@@ -19,7 +19,7 @@
 #include <ctime>
 #include <map>
 
-#include <map3.c>
+#include <map2.c>
 
 MapBuilder::MapBuilder() {
 	m_mapSize = gimp.width;

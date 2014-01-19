@@ -27,7 +27,7 @@ MainAgent::MainAgent(Simulator* refModel, Map* theMap): Agent(theMap), refSimula
     m_desires = new Desire();
     createInitialBelieves();
     createDesires();
-    m_intentions = new Intention(*m_beliefSet, *m_desires);
+    m_intentions = new Intention(*dynamic_cast<Agent*>(this), *m_beliefSet, *m_desires);
 	setNameAgent(const_cast<char*>("MAIN_AGENT"));
 	createRndInitialPos (const_cast<Map*>(refSimulator_->getMap()));
 	initAgents ();

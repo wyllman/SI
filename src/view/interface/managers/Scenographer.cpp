@@ -521,9 +521,9 @@ float* Scenographer::getcolor(BYTE value) {
          color[2] = 0;
          break;
       case RESOURCE_MINERAL:
-         color[0] = 0;
-         color[1] = 0;
-         color[2] = 0;
+         color[0] = 0.75;
+         color[1] = 0.5;
+         color[2] = 0.5;
          break;
       default:
          switch (value & MASK_TERRAIN) {
@@ -543,9 +543,9 @@ float* Scenographer::getcolor(BYTE value) {
                      color[2] = 0;
                      break;
                   case RESOURCE_MINERAL:
-                     color[0] = 0;
-                     color[1] = 0;
-                     color[2] = 0;
+                     color[0] = 0.75;
+                     color[1] = 0.5;
+                     color[2] = 0.5;
                      break;
                   default:
                      break;

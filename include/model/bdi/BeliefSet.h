@@ -12,6 +12,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 
 class Belief;
 
@@ -32,6 +33,9 @@ private:
     int m_exploredCells;
     float m_exploredPercentage;
 	Point m_position;
+    std::vector<float> m_sectorExploredRatio;
+    std::vector<float> m_sectorSettlementFactor;
+
 public:
 	BeliefSet();
 	~BeliefSet();

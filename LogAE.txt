@@ -25,18 +25,555 @@
 25. ---Destruyendo el Agente principal 
 26. ---Generando el Agente principal 
 27. ---Llamando a la función createRndInitialPos () del agente principal.
-28. ---Llamando a la función stop de la clase Simulator.
-29. ---Destruyendo el Agente principal 
-30. ---Destruyendo el modelo Simulator 
-31. ---Llamando a la función stop de la clase Simulator.
-32. ---Llamano a la función stop de la clase Interface.
-33. ------Destruyendo el gestor Bureaucrat para la vista Interfaz 
-34. ------Destruyendo el gestor Scenographer para la vista Interfaz 
-35. ------Destruyendo la herramienta Window para la vista Interfaz 
-36. ------Destruyendo la herramienta Context para la vista Interfaz 
-37. ------Destruyendo la herramienta Scene para la vista Interfaz 
-38. ---Destruyendo la vista Interfaz 
-39. ---Llamano a la función stop de la clase Interface.
-40. ------Destruyendo la herramienta MainLoop para el Director 
-41. ---Llamando a la funcion stop del Director
-42. ******************************************
+28. ---Destruyendo el Agente principal 
+29. ---Generando el Agente principal 
+30. ---Llamando a la función createRndInitialPos () del agente principal.
+31. ---Destruyendo el Agente principal 
+32. ---Generando el Agente principal 
+33. ---Llamando a la función createRndInitialPos () del agente principal.
+34. ---Destruyendo el Agente principal 
+35. ---Generando el Agente principal 
+36. ---Llamando a la función createRndInitialPos () del agente principal.
+37. ---Destruyendo el Agente principal 
+38. ---Generando el Agente principal 
+39. ---Llamando a la función createRndInitialPos () del agente principal.
+40. ---Destruyendo el Agente principal 
+41. ---Generando el Agente principal 
+42. ---Llamando a la función createRndInitialPos () del agente principal.
+43. ---Destruyendo el Agente principal 
+44. ---Generando el Agente principal 
+45. ---Llamando a la función createRndInitialPos () del agente principal.
+46. ---Destruyendo el Agente principal 
+47. ---Generando el Agente principal 
+48. ---Llamando a la función createRndInitialPos () del agente principal.
+49. ---Destruyendo el Agente principal 
+50. ---Generando el Agente principal 
+51. ---Llamando a la función createRndInitialPos () del agente principal.
+52. ---Destruyendo el Agente principal 
+53. ---Generando el Agente principal 
+54. ---Llamando a la función createRndInitialPos () del agente principal.
+55. ---Destruyendo el Agente principal 
+56. ---Generando el Agente principal 
+57. ---Llamando a la función createRndInitialPos () del agente principal.
+58. ---Destruyendo el Agente principal 
+59. ---Generando el Agente principal 
+60. ---Llamando a la función createRndInitialPos () del agente principal.
+61. ---Destruyendo el Agente principal 
+62. ---Generando el Agente principal 
+63. ---Llamando a la función createRndInitialPos () del agente principal.
+64. ---Destruyendo el Agente principal 
+65. ---Generando el Agente principal 
+66. ---Llamando a la función createRndInitialPos () del agente principal.
+67. ---Destruyendo el Agente principal 
+68. ---Generando el Agente principal 
+69. ---Llamando a la función createRndInitialPos () del agente principal.
+70. ---Destruyendo el Agente principal 
+71. ---Generando el Agente principal 
+72. ---Llamando a la función createRndInitialPos () del agente principal.
+73. ---Destruyendo el Agente principal 
+74. ---Generando el Agente principal 
+75. ---Llamando a la función createRndInitialPos () del agente principal.
+76. ---Destruyendo el Agente principal 
+77. ---Generando el Agente principal 
+78. ---Llamando a la función createRndInitialPos () del agente principal.
+79. ---Destruyendo el Agente principal 
+80. ---Generando el Agente principal 
+81. ---Llamando a la función createRndInitialPos () del agente principal.
+82. ---Destruyendo el Agente principal 
+83. ---Generando el Agente principal 
+84. ---Llamando a la función createRndInitialPos () del agente principal.
+85. ---Destruyendo el Agente principal 
+86. ---Generando el Agente principal 
+87. ---Llamando a la función createRndInitialPos () del agente principal.
+88. ---Destruyendo el Agente principal 
+89. ---Generando el Agente principal 
+90. ---Llamando a la función createRndInitialPos () del agente principal.
+91. ---Destruyendo el Agente principal 
+92. ---Generando el Agente principal 
+93. ---Llamando a la función createRndInitialPos () del agente principal.
+94. ---Destruyendo el Agente principal 
+95. ---Generando el Agente principal 
+96. ---Llamando a la función createRndInitialPos () del agente principal.
+97. ---Destruyendo el Agente principal 
+98. ---Generando el Agente principal 
+99. ---Llamando a la función createRndInitialPos () del agente principal.
+100. ---Destruyendo el Agente principal 
+101. ---Generando el Agente principal 
+102. ---Llamando a la función createRndInitialPos () del agente principal.
+103. ---Destruyendo el Agente principal 
+104. ---Generando el Agente principal 
+105. ---Llamando a la función createRndInitialPos () del agente principal.
+106. ---Destruyendo el Agente principal 
+107. ---Generando el Agente principal 
+108. ---Llamando a la función createRndInitialPos () del agente principal.
+109. ---Destruyendo el Agente principal 
+110. ---Generando el Agente principal 
+111. ---Llamando a la función createRndInitialPos () del agente principal.
+112. ---Destruyendo el Agente principal 
+113. ---Generando el Agente principal 
+114. ---Llamando a la función createRndInitialPos () del agente principal.
+115. ---Destruyendo el Agente principal 
+116. ---Generando el Agente principal 
+117. ---Llamando a la función createRndInitialPos () del agente principal.
+118. ---Destruyendo el Agente principal 
+119. ---Generando el Agente principal 
+120. ---Llamando a la función createRndInitialPos () del agente principal.
+121. ---Destruyendo el Agente principal 
+122. ---Generando el Agente principal 
+123. ---Llamando a la función createRndInitialPos () del agente principal.
+124. ---Destruyendo el Agente principal 
+125. ---Generando el Agente principal 
+126. ---Llamando a la función createRndInitialPos () del agente principal.
+127. ---Destruyendo el Agente principal 
+128. ---Generando el Agente principal 
+129. ---Llamando a la función createRndInitialPos () del agente principal.
+130. ---Destruyendo el Agente principal 
+131. ---Generando el Agente principal 
+132. ---Llamando a la función createRndInitialPos () del agente principal.
+133. ---Destruyendo el Agente principal 
+134. ---Generando el Agente principal 
+135. ---Llamando a la función createRndInitialPos () del agente principal.
+136. ---Destruyendo el Agente principal 
+137. ---Generando el Agente principal 
+138. ---Llamando a la función createRndInitialPos () del agente principal.
+139. ---Destruyendo el Agente principal 
+140. ---Generando el Agente principal 
+141. ---Llamando a la función createRndInitialPos () del agente principal.
+142. ---Destruyendo el Agente principal 
+143. ---Generando el Agente principal 
+144. ---Llamando a la función createRndInitialPos () del agente principal.
+145. ---Destruyendo el Agente principal 
+146. ---Generando el Agente principal 
+147. ---Llamando a la función createRndInitialPos () del agente principal.
+148. ---Destruyendo el Agente principal 
+149. ---Generando el Agente principal 
+150. ---Llamando a la función createRndInitialPos () del agente principal.
+151. ---Destruyendo el Agente principal 
+152. ---Generando el Agente principal 
+153. ---Llamando a la función createRndInitialPos () del agente principal.
+154. ---Destruyendo el Agente principal 
+155. ---Generando el Agente principal 
+156. ---Llamando a la función createRndInitialPos () del agente principal.
+157. ---Destruyendo el Agente principal 
+158. ---Generando el Agente principal 
+159. ---Llamando a la función createRndInitialPos () del agente principal.
+160. ---Destruyendo el Agente principal 
+161. ---Generando el Agente principal 
+162. ---Llamando a la función createRndInitialPos () del agente principal.
+163. ---Destruyendo el Agente principal 
+164. ---Generando el Agente principal 
+165. ---Llamando a la función createRndInitialPos () del agente principal.
+166. ---Destruyendo el Agente principal 
+167. ---Generando el Agente principal 
+168. ---Llamando a la función createRndInitialPos () del agente principal.
+169. ---Destruyendo el Agente principal 
+170. ---Generando el Agente principal 
+171. ---Llamando a la función createRndInitialPos () del agente principal.
+172. ---Destruyendo el Agente principal 
+173. ---Generando el Agente principal 
+174. ---Llamando a la función createRndInitialPos () del agente principal.
+175. ---Destruyendo el Agente principal 
+176. ---Generando el Agente principal 
+177. ---Llamando a la función createRndInitialPos () del agente principal.
+178. ---Destruyendo el Agente principal 
+179. ---Generando el Agente principal 
+180. ---Llamando a la función createRndInitialPos () del agente principal.
+181. ---Destruyendo el Agente principal 
+182. ---Generando el Agente principal 
+183. ---Llamando a la función createRndInitialPos () del agente principal.
+184. ---Destruyendo el Agente principal 
+185. ---Generando el Agente principal 
+186. ---Llamando a la función createRndInitialPos () del agente principal.
+187. ---Destruyendo el Agente principal 
+188. ---Generando el Agente principal 
+189. ---Llamando a la función createRndInitialPos () del agente principal.
+190. ---Destruyendo el Agente principal 
+191. ---Generando el Agente principal 
+192. ---Llamando a la función createRndInitialPos () del agente principal.
+193. ---Destruyendo el Agente principal 
+194. ---Generando el Agente principal 
+195. ---Llamando a la función createRndInitialPos () del agente principal.
+196. ---Destruyendo el Agente principal 
+197. ---Generando el Agente principal 
+198. ---Llamando a la función createRndInitialPos () del agente principal.
+199. ---Destruyendo el Agente principal 
+200. ---Generando el Agente principal 
+201. ---Llamando a la función createRndInitialPos () del agente principal.
+202. ---Destruyendo el Agente principal 
+203. ---Generando el Agente principal 
+204. ---Llamando a la función createRndInitialPos () del agente principal.
+205. ---Destruyendo el Agente principal 
+206. ---Generando el Agente principal 
+207. ---Llamando a la función createRndInitialPos () del agente principal.
+208. ---Destruyendo el Agente principal 
+209. ---Generando el Agente principal 
+210. ---Llamando a la función createRndInitialPos () del agente principal.
+211. ---Destruyendo el Agente principal 
+212. ---Generando el Agente principal 
+213. ---Llamando a la función createRndInitialPos () del agente principal.
+214. ---Destruyendo el Agente principal 
+215. ---Generando el Agente principal 
+216. ---Llamando a la función createRndInitialPos () del agente principal.
+217. ---Destruyendo el Agente principal 
+218. ---Generando el Agente principal 
+219. ---Llamando a la función createRndInitialPos () del agente principal.
+220. ---Destruyendo el Agente principal 
+221. ---Generando el Agente principal 
+222. ---Llamando a la función createRndInitialPos () del agente principal.
+223. ---Destruyendo el Agente principal 
+224. ---Generando el Agente principal 
+225. ---Llamando a la función createRndInitialPos () del agente principal.
+226. ---Destruyendo el Agente principal 
+227. ---Generando el Agente principal 
+228. ---Llamando a la función createRndInitialPos () del agente principal.
+229. ---Destruyendo el Agente principal 
+230. ---Generando el Agente principal 
+231. ---Llamando a la función createRndInitialPos () del agente principal.
+232. ---Destruyendo el Agente principal 
+233. ---Generando el Agente principal 
+234. ---Llamando a la función createRndInitialPos () del agente principal.
+235. ---Destruyendo el Agente principal 
+236. ---Generando el Agente principal 
+237. ---Llamando a la función createRndInitialPos () del agente principal.
+238. ---Destruyendo el Agente principal 
+239. ---Generando el Agente principal 
+240. ---Llamando a la función createRndInitialPos () del agente principal.
+241. ---Destruyendo el Agente principal 
+242. ---Generando el Agente principal 
+243. ---Llamando a la función createRndInitialPos () del agente principal.
+244. ---Destruyendo el Agente principal 
+245. ---Generando el Agente principal 
+246. ---Llamando a la función createRndInitialPos () del agente principal.
+247. ---Destruyendo el Agente principal 
+248. ---Generando el Agente principal 
+249. ---Llamando a la función createRndInitialPos () del agente principal.
+250. ---Destruyendo el Agente principal 
+251. ---Generando el Agente principal 
+252. ---Llamando a la función createRndInitialPos () del agente principal.
+253. ---Destruyendo el Agente principal 
+254. ---Generando el Agente principal 
+255. ---Llamando a la función createRndInitialPos () del agente principal.
+256. ---Destruyendo el Agente principal 
+257. ---Generando el Agente principal 
+258. ---Llamando a la función createRndInitialPos () del agente principal.
+259. ---Destruyendo el Agente principal 
+260. ---Generando el Agente principal 
+261. ---Llamando a la función createRndInitialPos () del agente principal.
+262. ---Destruyendo el Agente principal 
+263. ---Generando el Agente principal 
+264. ---Llamando a la función createRndInitialPos () del agente principal.
+265. ---Destruyendo el Agente principal 
+266. ---Generando el Agente principal 
+267. ---Llamando a la función createRndInitialPos () del agente principal.
+268. ---Destruyendo el Agente principal 
+269. ---Generando el Agente principal 
+270. ---Llamando a la función createRndInitialPos () del agente principal.
+271. ---Destruyendo el Agente principal 
+272. ---Generando el Agente principal 
+273. ---Llamando a la función createRndInitialPos () del agente principal.
+274. ---Destruyendo el Agente principal 
+275. ---Generando el Agente principal 
+276. ---Llamando a la función createRndInitialPos () del agente principal.
+277. ---Destruyendo el Agente principal 
+278. ---Generando el Agente principal 
+279. ---Llamando a la función createRndInitialPos () del agente principal.
+280. ---Destruyendo el Agente principal 
+281. ---Generando el Agente principal 
+282. ---Llamando a la función createRndInitialPos () del agente principal.
+283. ---Destruyendo el Agente principal 
+284. ---Generando el Agente principal 
+285. ---Llamando a la función createRndInitialPos () del agente principal.
+286. ---Destruyendo el Agente principal 
+287. ---Generando el Agente principal 
+288. ---Llamando a la función createRndInitialPos () del agente principal.
+289. ---Destruyendo el Agente principal 
+290. ---Generando el Agente principal 
+291. ---Llamando a la función createRndInitialPos () del agente principal.
+292. ---Destruyendo el Agente principal 
+293. ---Generando el Agente principal 
+294. ---Llamando a la función createRndInitialPos () del agente principal.
+295. ---Destruyendo el Agente principal 
+296. ---Generando el Agente principal 
+297. ---Llamando a la función createRndInitialPos () del agente principal.
+298. ---Destruyendo el Agente principal 
+299. ---Generando el Agente principal 
+300. ---Llamando a la función createRndInitialPos () del agente principal.
+301. ---Destruyendo el Agente principal 
+302. ---Generando el Agente principal 
+303. ---Llamando a la función createRndInitialPos () del agente principal.
+304. ---Destruyendo el Agente principal 
+305. ---Generando el Agente principal 
+306. ---Llamando a la función createRndInitialPos () del agente principal.
+307. ---Destruyendo el Agente principal 
+308. ---Generando el Agente principal 
+309. ---Llamando a la función createRndInitialPos () del agente principal.
+310. ---Destruyendo el Agente principal 
+311. ---Generando el Agente principal 
+312. ---Llamando a la función createRndInitialPos () del agente principal.
+313. ---Destruyendo el Agente principal 
+314. ---Generando el Agente principal 
+315. ---Llamando a la función createRndInitialPos () del agente principal.
+316. ---Destruyendo el Agente principal 
+317. ---Generando el Agente principal 
+318. ---Llamando a la función createRndInitialPos () del agente principal.
+319. ---Destruyendo el Agente principal 
+320. ---Generando el Agente principal 
+321. ---Llamando a la función createRndInitialPos () del agente principal.
+322. ---Destruyendo el Agente principal 
+323. ---Generando el Agente principal 
+324. ---Llamando a la función createRndInitialPos () del agente principal.
+325. ---Destruyendo el Agente principal 
+326. ---Generando el Agente principal 
+327. ---Llamando a la función createRndInitialPos () del agente principal.
+328. ---Destruyendo el Agente principal 
+329. ---Generando el Agente principal 
+330. ---Llamando a la función createRndInitialPos () del agente principal.
+331. ---Destruyendo el Agente principal 
+332. ---Generando el Agente principal 
+333. ---Llamando a la función createRndInitialPos () del agente principal.
+334. ---Destruyendo el Agente principal 
+335. ---Generando el Agente principal 
+336. ---Llamando a la función createRndInitialPos () del agente principal.
+337. ---Destruyendo el Agente principal 
+338. ---Generando el Agente principal 
+339. ---Llamando a la función createRndInitialPos () del agente principal.
+340. ---Destruyendo el Agente principal 
+341. ---Generando el Agente principal 
+342. ---Llamando a la función createRndInitialPos () del agente principal.
+343. ---Destruyendo el Agente principal 
+344. ---Generando el Agente principal 
+345. ---Llamando a la función createRndInitialPos () del agente principal.
+346. ---Destruyendo el Agente principal 
+347. ---Generando el Agente principal 
+348. ---Llamando a la función createRndInitialPos () del agente principal.
+349. ---Destruyendo el Agente principal 
+350. ---Generando el Agente principal 
+351. ---Llamando a la función createRndInitialPos () del agente principal.
+352. ---Destruyendo el Agente principal 
+353. ---Generando el Agente principal 
+354. ---Llamando a la función createRndInitialPos () del agente principal.
+355. ---Destruyendo el Agente principal 
+356. ---Generando el Agente principal 
+357. ---Llamando a la función createRndInitialPos () del agente principal.
+358. ---Destruyendo el Agente principal 
+359. ---Generando el Agente principal 
+360. ---Llamando a la función createRndInitialPos () del agente principal.
+361. ---Destruyendo el Agente principal 
+362. ---Generando el Agente principal 
+363. ---Llamando a la función createRndInitialPos () del agente principal.
+364. ---Destruyendo el Agente principal 
+365. ---Generando el Agente principal 
+366. ---Llamando a la función createRndInitialPos () del agente principal.
+367. ---Destruyendo el Agente principal 
+368. ---Generando el Agente principal 
+369. ---Llamando a la función createRndInitialPos () del agente principal.
+370. ---Destruyendo el Agente principal 
+371. ---Generando el Agente principal 
+372. ---Llamando a la función createRndInitialPos () del agente principal.
+373. ---Destruyendo el Agente principal 
+374. ---Generando el Agente principal 
+375. ---Llamando a la función createRndInitialPos () del agente principal.
+376. ---Destruyendo el Agente principal 
+377. ---Generando el Agente principal 
+378. ---Llamando a la función createRndInitialPos () del agente principal.
+379. ---Destruyendo el Agente principal 
+380. ---Generando el Agente principal 
+381. ---Llamando a la función createRndInitialPos () del agente principal.
+382. ---Destruyendo el Agente principal 
+383. ---Generando el Agente principal 
+384. ---Llamando a la función createRndInitialPos () del agente principal.
+385. ---Destruyendo el Agente principal 
+386. ---Generando el Agente principal 
+387. ---Llamando a la función createRndInitialPos () del agente principal.
+388. ---Destruyendo el Agente principal 
+389. ---Generando el Agente principal 
+390. ---Llamando a la función createRndInitialPos () del agente principal.
+391. ---Destruyendo el Agente principal 
+392. ---Generando el Agente principal 
+393. ---Llamando a la función createRndInitialPos () del agente principal.
+394. ---Destruyendo el Agente principal 
+395. ---Generando el Agente principal 
+396. ---Llamando a la función createRndInitialPos () del agente principal.
+397. ---Destruyendo el Agente principal 
+398. ---Generando el Agente principal 
+399. ---Llamando a la función createRndInitialPos () del agente principal.
+400. ---Destruyendo el Agente principal 
+401. ---Generando el Agente principal 
+402. ---Llamando a la función createRndInitialPos () del agente principal.
+403. ---Destruyendo el Agente principal 
+404. ---Generando el Agente principal 
+405. ---Llamando a la función createRndInitialPos () del agente principal.
+406. ---Destruyendo el Agente principal 
+407. ---Generando el Agente principal 
+408. ---Llamando a la función createRndInitialPos () del agente principal.
+409. ---Destruyendo el Agente principal 
+410. ---Generando el Agente principal 
+411. ---Llamando a la función createRndInitialPos () del agente principal.
+412. ---Destruyendo el Agente principal 
+413. ---Generando el Agente principal 
+414. ---Llamando a la función createRndInitialPos () del agente principal.
+415. ---Destruyendo el Agente principal 
+416. ---Generando el Agente principal 
+417. ---Llamando a la función createRndInitialPos () del agente principal.
+418. ---Destruyendo el Agente principal 
+419. ---Generando el Agente principal 
+420. ---Llamando a la función createRndInitialPos () del agente principal.
+421. ---Destruyendo el Agente principal 
+422. ---Generando el Agente principal 
+423. ---Llamando a la función createRndInitialPos () del agente principal.
+424. ---Destruyendo el Agente principal 
+425. ---Generando el Agente principal 
+426. ---Llamando a la función createRndInitialPos () del agente principal.
+427. ---Destruyendo el Agente principal 
+428. ---Generando el Agente principal 
+429. ---Llamando a la función createRndInitialPos () del agente principal.
+430. ---Destruyendo el Agente principal 
+431. ---Generando el Agente principal 
+432. ---Llamando a la función createRndInitialPos () del agente principal.
+433. ---Destruyendo el Agente principal 
+434. ---Generando el Agente principal 
+435. ---Llamando a la función createRndInitialPos () del agente principal.
+436. ---Destruyendo el Agente principal 
+437. ---Generando el Agente principal 
+438. ---Llamando a la función createRndInitialPos () del agente principal.
+439. ---Destruyendo el Agente principal 
+440. ---Generando el Agente principal 
+441. ---Llamando a la función createRndInitialPos () del agente principal.
+442. ---Destruyendo el Agente principal 
+443. ---Generando el Agente principal 
+444. ---Llamando a la función createRndInitialPos () del agente principal.
+445. ---Destruyendo el Agente principal 
+446. ---Generando el Agente principal 
+447. ---Llamando a la función createRndInitialPos () del agente principal.
+448. ---Destruyendo el Agente principal 
+449. ---Generando el Agente principal 
+450. ---Llamando a la función createRndInitialPos () del agente principal.
+451. ---Destruyendo el Agente principal 
+452. ---Generando el Agente principal 
+453. ---Llamando a la función createRndInitialPos () del agente principal.
+454. ---Destruyendo el Agente principal 
+455. ---Generando el Agente principal 
+456. ---Llamando a la función createRndInitialPos () del agente principal.
+457. ---Destruyendo el Agente principal 
+458. ---Generando el Agente principal 
+459. ---Llamando a la función createRndInitialPos () del agente principal.
+460. ---Destruyendo el Agente principal 
+461. ---Generando el Agente principal 
+462. ---Llamando a la función createRndInitialPos () del agente principal.
+463. ---Destruyendo el Agente principal 
+464. ---Generando el Agente principal 
+465. ---Llamando a la función createRndInitialPos () del agente principal.
+466. ---Destruyendo el Agente principal 
+467. ---Generando el Agente principal 
+468. ---Llamando a la función createRndInitialPos () del agente principal.
+469. ---Destruyendo el Agente principal 
+470. ---Generando el Agente principal 
+471. ---Llamando a la función createRndInitialPos () del agente principal.
+472. ---Destruyendo el Agente principal 
+473. ---Generando el Agente principal 
+474. ---Llamando a la función createRndInitialPos () del agente principal.
+475. ---Destruyendo el Agente principal 
+476. ---Generando el Agente principal 
+477. ---Llamando a la función createRndInitialPos () del agente principal.
+478. ---Destruyendo el Agente principal 
+479. ---Generando el Agente principal 
+480. ---Llamando a la función createRndInitialPos () del agente principal.
+481. ---Destruyendo el Agente principal 
+482. ---Generando el Agente principal 
+483. ---Llamando a la función createRndInitialPos () del agente principal.
+484. ---Destruyendo el Agente principal 
+485. ---Generando el Agente principal 
+486. ---Llamando a la función createRndInitialPos () del agente principal.
+487. ---Destruyendo el Agente principal 
+488. ---Generando el Agente principal 
+489. ---Llamando a la función createRndInitialPos () del agente principal.
+490. ---Destruyendo el Agente principal 
+491. ---Generando el Agente principal 
+492. ---Llamando a la función createRndInitialPos () del agente principal.
+493. ---Destruyendo el Agente principal 
+494. ---Generando el Agente principal 
+495. ---Llamando a la función createRndInitialPos () del agente principal.
+496. ---Destruyendo el Agente principal 
+497. ---Generando el Agente principal 
+498. ---Llamando a la función createRndInitialPos () del agente principal.
+499. ---Destruyendo el Agente principal 
+500. ---Generando el Agente principal 
+501. ---Llamando a la función createRndInitialPos () del agente principal.
+502. ---Destruyendo el Agente principal 
+503. ---Generando el Agente principal 
+504. ---Llamando a la función createRndInitialPos () del agente principal.
+505. ---Destruyendo el Agente principal 
+506. ---Generando el Agente principal 
+507. ---Llamando a la función createRndInitialPos () del agente principal.
+508. ---Destruyendo el Agente principal 
+509. ---Generando el Agente principal 
+510. ---Llamando a la función createRndInitialPos () del agente principal.
+511. ---Destruyendo el Agente principal 
+512. ---Generando el Agente principal 
+513. ---Llamando a la función createRndInitialPos () del agente principal.
+514. ---Destruyendo el Agente principal 
+515. ---Generando el Agente principal 
+516. ---Llamando a la función createRndInitialPos () del agente principal.
+517. ---Destruyendo el Agente principal 
+518. ---Generando el Agente principal 
+519. ---Llamando a la función createRndInitialPos () del agente principal.
+520. ---Destruyendo el Agente principal 
+521. ---Generando el Agente principal 
+522. ---Llamando a la función createRndInitialPos () del agente principal.
+523. ---Destruyendo el Agente principal 
+524. ---Generando el Agente principal 
+525. ---Llamando a la función createRndInitialPos () del agente principal.
+526. ---Destruyendo el Agente principal 
+527. ---Generando el Agente principal 
+528. ---Llamando a la función createRndInitialPos () del agente principal.
+529. ---Destruyendo el Agente principal 
+530. ---Generando el Agente principal 
+531. ---Llamando a la función createRndInitialPos () del agente principal.
+532. ---Destruyendo el Agente principal 
+533. ---Generando el Agente principal 
+534. ---Llamando a la función createRndInitialPos () del agente principal.
+535. ---Destruyendo el Agente principal 
+536. ---Generando el Agente principal 
+537. ---Llamando a la función createRndInitialPos () del agente principal.
+538. ---Destruyendo el Agente principal 
+539. ---Generando el Agente principal 
+540. ---Llamando a la función createRndInitialPos () del agente principal.
+541. ---Destruyendo el Agente principal 
+542. ---Generando el Agente principal 
+543. ---Llamando a la función createRndInitialPos () del agente principal.
+544. ---Destruyendo el Agente principal 
+545. ---Generando el Agente principal 
+546. ---Llamando a la función createRndInitialPos () del agente principal.
+547. ---Destruyendo el Agente principal 
+548. ---Generando el Agente principal 
+549. ---Llamando a la función createRndInitialPos () del agente principal.
+550. ---Destruyendo el Agente principal 
+551. ---Generando el Agente principal 
+552. ---Llamando a la función createRndInitialPos () del agente principal.
+553. ---Destruyendo el Agente principal 
+554. ---Generando el Agente principal 
+555. ---Llamando a la función createRndInitialPos () del agente principal.
+556. ---Destruyendo el Agente principal 
+557. ---Generando el Agente principal 
+558. ---Llamando a la función createRndInitialPos () del agente principal.
+559. ---Destruyendo el Agente principal 
+560. ---Generando el Agente principal 
+561. ---Llamando a la función createRndInitialPos () del agente principal.
+562. ---Destruyendo el Agente principal 
+563. ---Generando el Agente principal 
+564. ---Llamando a la función createRndInitialPos () del agente principal.
+565. ---Llamando a la función stop de la clase Simulator.
+566. ---Destruyendo el Agente principal 
+567. ---Destruyendo el modelo Simulator 
+568. ---Llamando a la función stop de la clase Simulator.
+569. ---Llamano a la función stop de la clase Interface.
+570. ------Destruyendo el gestor Bureaucrat para la vista Interfaz 
+571. ------Destruyendo el gestor Scenographer para la vista Interfaz 
+572. ------Destruyendo la herramienta Window para la vista Interfaz 
+573. ------Destruyendo la herramienta Context para la vista Interfaz 
+574. ------Destruyendo la herramienta Scene para la vista Interfaz 
+575. ---Destruyendo la vista Interfaz 
+576. ---Llamano a la función stop de la clase Interface.
+577. ------Destruyendo la herramienta MainLoop para el Director 
+578. ---Llamando a la funcion stop del Director
+579. ******************************************

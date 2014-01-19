@@ -162,7 +162,7 @@ void MainAgent::createRndInitialPos (Map* mainMap) {
 	boost::random::mt11213b positionRNG;
 	boost::random::mt11213b typeRNG;
 	boost::random::negative_binomial_distribution<> probabilityDistrib(3, 0.5);
-	boost::random::uniform_int_distribution<> positionDistrib(1, MAP_WIDTH - 1); // Porque WIDTH = HEIGHT
+	boost::random::uniform_int_distribution<> positionDistrib(2, MAP_WIDTH - 2); // Porque WIDTH = HEIGHT
 	boost::random::uniform_int_distribution<> typeDistrib(3, 5);
 
 	bool condition = false; // Indica si está en una posición CORRECTA

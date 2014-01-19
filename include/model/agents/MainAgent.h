@@ -11,9 +11,11 @@
 #include <model/agents/Agent.h>
 #include <model/map/Map.h>
 
-
+#include <cmath>
 #include <vector>
 #include <model/simulator/Simulator.h>
+#include <model/agents/tools/Node.h>
+#include <model/agents/tools/PathFindingTree.h>
 
 class Simulator;
 /**
@@ -41,6 +43,8 @@ class MainAgent: public Agent {
 
       Package* readFIPAPackage (Package*);
       Package* createFIPAPackage ();
+
+      void sendToRoute (Point, Point);
 
    private:
       Simulator* refSimulator_;

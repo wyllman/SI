@@ -65,75 +65,34 @@ void MainAgent::initAgents() {
 	working4 -> setPosition (Point (getPosition().first + 1, getPosition().second - 1));
 	m_WorVecAgents.push_back(working4);
 }
+bool temp = false;
 bool MainAgent::update () {
 	bool result = false;
-	// Pruebas de movimiento
-	/*if (m_Vagents[0]->controledMove(NORTH)) {
-      result = true;
-   }
-   if (m_Vagents[1]->controledMove(SOUTH)) {
-      result = true;
-   }
-   if (m_Vagents[2]->controledMove(EAST)) {
-      result = true;
-   }
-   if (m_Vagents[3]->controledMove(WEST)) {
-      result = true;
-   }
 
-   if (m_WorVecAgents[0]->checkRouteMoves()) {
-      if (m_WorVecAgents[0]->routedMove()) {
-//         cout << "MOVIENDO AGENTE TRABAJADOR EN RUTA"  << endl;
-         result = true;
-      }
-   } else if (m_WorVecAgents[0]->controledMove(NWEST)) {
-      result = true;
-   }
-   if (m_WorVecAgents[1]->controledMove(NEAST)) {
-      result = true;
-   }
-   if (m_WorVecAgents[2]->controledMove(SEAST)) {
-      result = true;
-   }
-   if (m_WorVecAgents[3]->controledMove(SWEST)) {
-      result = true;
-   }*/
-
-		//Prueba de seguimiento de rutas !!
-	  if (m_Vagents[0] -> getState() == AVAILABLE) {
-		Package* p = new Package (getNameAgent(), m_Vagents[0] -> getNameAgent(), GO_LOCATION);
-		vector<string> dirTemp;
-		dirTemp.push_back("[NORTH,NORTH,NORTH,NORTH,NORTH,NORTH,NORTH,NORTH]");
-		p -> setContent(dirTemp);
-		m_Vagents[0] -> readFIPAPackage(p);
+	// TODO: crear una ruta y enviar un agente a ella!!
+	if (!temp) {
+		sendToRoute(getWorVecAgents().at(0) -> getPosition(), Point (getWorVecAgents().at(0) -> getPosition().first, getWorVecAgents().at(0) -> getPosition().second - 5));
+		temp = true;
 	}
-
-	if (m_WorVecAgents[0] -> getState() == AVAILABLE) {
-		Package* q = new Package (getNameAgent(), m_WorVecAgents[0] -> getNameAgent(), GO_RESOURCE_LOCATION);
-		vector<string> dirTemp2;
-		dirTemp2.push_back("[EAST,EAST,EAST,EAST,EAST,EAST,EAST]");
-		q -> setContent(dirTemp2);
-		m_WorVecAgents[0] -> readFIPAPackage(q);
-	}
-
 	return updateMiniAgents();
 }
 
 bool MainAgent::updateMiniAgents () {
 	bool result = false;
-	for (unsigned int i = 0; i < getVAgents().size(); i++) {
+	/*for (unsigned int i = 0; i < getVAgents().size(); i++) {
 		if (getVAgents().at(i) -> getState() != AVAILABLE) {
 			getVAgents().at(i) -> actDependingOfState();
 			result = true;
 		}
 	}
-
+	*/
 	for (unsigned int i = 0; i < getWorVecAgents().size(); i++) {
 		if (getWorVecAgents().at(i) -> getState() != AVAILABLE) {
 			getWorVecAgents().at(i) -> actDependingOfState();
 			result = true;
 		}
 	}
+
 	return result;
 }
 
@@ -253,13 +212,38 @@ Package* MainAgent::createFIPAPackage() {
 	/*Package* p = new Package (getNameAgent(), getVAgents().at(0) -> getNameAgent(), CONFIRM);
 	std::cout << "Creado paquete CONFIRM por la nave principal: " << p -> getSender() << p -> getReceiver() << p -> getType() << std::endl;*/
 
-	Package* p = new Package (getNameAgent(), getWorVecAgents().at(0) -> getNameAgent(), GO_RESOURCE_LOCATION);
+	/*Package* p = new Package (getNameAgent(), getWorVecAgents().at(0) -> getNameAgent(), GO_RESOURCE_LOCATION);
 	std::vector<std::string> temp;
-	temp.push_back("[EAST,EAST,EAST,EAST,EAST,EAST]");
+	temp.push_back();
 	p -> setContent(temp);
 	std::cout << "Creado paquete GO_RESOURCE_LOCATION por la nave principal: " << p -> getSender() << p -> getReceiver() << p -> getType() << std::endl;
-	return p;
+	return p;*/
 }
+
+void MainAgent::sendToRoute(Point s, Point e) {
+	PathFindingTree* tree = new PathFindingTree (this, s, e);
+	std::string route = "";
+
+	tree -> calculateHeuristicRoute();
+	route += tree -> getRoute();
+	std::cout << "Ruta mínima = " << route << std::endl;
+	std::vector<std::string> vect;
+	//bool doIt = false;
+	//for (unsigned int i = 0; i < getWorVecAgents().size(); ++i) {
+		//if (!doIt) {
+			//if (getWorVecAgents().at(0)->getState() == AVAILABLE) {
+				Package* p = new Package (this->getNameAgent(), getWorVecAgents().at(0)->getNameAgent(), GO_RESOURCE_LOCATION);
+				vect.push_back(route);
+				p ->setContent(vect);
+				getWorVecAgents().at(0) -> readFIPAPackage(p);
+				//doIt = true;
+			//}
+		//}
+	//}
+	//delete tree;
+}
+
+// Manejadores de atributos
 std::vector<Agent*>& MainAgent::getVAgents () {
 	return m_Vagents;
 }

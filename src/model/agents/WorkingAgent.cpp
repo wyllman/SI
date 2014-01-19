@@ -47,8 +47,8 @@ void WorkingAgent::followRoute(std::string route) {
 	vector<Direction> camino;
 	int posIni = route.find("[");
 	int posCorchFin = route.find("]");
-	cout << "Pos ini:" << posIni << " posFin: " << posCorchFin << endl;
 	route = route.substr(1, route.length());
+
 	int posComa = 0;
 	bool stop = false;
 	string dirTemp;
@@ -62,6 +62,7 @@ void WorkingAgent::followRoute(std::string route) {
 			route = route.substr(posComa + 1, route.length());
 		}
 	}
+	cout << "... " << dirTemp << endl;
 	camino.push_back(translateRoute(dirTemp));
 	for (unsigned int i = 0; i < camino.size(); i++) {
 		m_routes.push_back(camino[camino.size() - 1]);

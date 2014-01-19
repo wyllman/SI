@@ -47,6 +47,7 @@ Package* SearchAgent::readFIPAPackage (Package* p) {
 			case DIRECTION_SEARCH:
 				//Realizar búsqueda dada esta dirección
 				localDireccionalSearch(p -> getContent().at(0));
+
 				break;
 			case GO_LOCATION:
 				followRoute(p -> getContent().at(0));
@@ -61,32 +62,9 @@ Package* SearchAgent::readFIPAPackage (Package* p) {
 }
 
 void SearchAgent::localDireccionalSearch (std::string  d) {
-	switch (atoi(d.c_str())) {
-	case NORTH:
-		std::cout << "Emprender búsqueda hacial el norte" << std::endl;
-		break;
-	case SOUTH:
-		std::cout << "Emprender búsqueda hacial el sur" << std::endl;
-		break;
-	case EAST:
-		std::cout << "Emprender búsqueda hacial el este" << std::endl;
-		break;
-	case WEST:
-		std::cout << "Emprender búsqueda hacial el oeste" << std::endl;
-		break;
-	case NEAST:
-		std::cout << "Emprender búsqueda hacial el noreste" << std::endl;
-		break;
-	case NWEST:
-		std::cout << "Emprender búsqueda hacial el noroeste" << std::endl;
-		break;
-	case SEAST:
-		std::cout << "Emprender búsqueda hacial el sureste" << std::endl;
-		break;
-	case SWEST:
-		std::cout << "Emprender búsqueda hacial el suroeste" << std::endl;
-		break;
-	}
+	initExplorationMove(m_position.first, m_position.second,
+			static_cast<Direction>(atoi(d.c_str())));
+	setState(SEARCHING);
 }
 
 

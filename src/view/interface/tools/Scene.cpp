@@ -14,6 +14,7 @@
 
 #include <view/interface/tools/Scene.h>
 #include <view/interface/Interface.h>
+#include <view/interface/managers/Scenographer.h>
 #include <Tools.h>
 
 #include <string.h>
@@ -30,6 +31,7 @@ Scene::Scene(const Interface& interface) {
    numberQuadsFloor_ = 0;
    vertexFloor_ = new float[NUM_VER];
    vertexFloorColor_ = new float[NUM_VER];
+   resetFloor();
 }
 
 Scene::~Scene() {
@@ -48,7 +50,79 @@ Scene::~Scene() {
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Métodos públicos:
+void Scene::updateColor(bool mask, bool** knownMask) {
+   // TODO:
+   int vecSize = indicesFloorSlots_.size();
+   int firstInd;
+   int lastInd;
+   float color1[3] = {0, 0, 0};
+   float* origColor;
+   int row;
+   int col;
+   int vecPos;
+   float alpha = 1;
 
+   for (int i = 0; i < MAP_WIDTH; i++) {
+      for (int j = 0; j < MAP_WIDTH; j++) {
+         vecPos = (i * MAP_WIDTH) + j;
+         firstInd = indicesFloorSlots_[vecPos];
+         if (vecPos < (vecSize - 1)) {
+            lastInd = (indicesFloorSlots_[vecPos + 1]);
+         } else {
+            lastInd = ((numberQuadsFloor_ * 4) * 3) - (3 * 36);
+         }
+         origColor = const_cast<Scenographer*>
+                     (const_cast<Interface*>(refInterface_)
+                     ->getScenographer())->getcolor(i, j);
+         for (int k = firstInd; k < lastInd; k += 3) {
+            if (mask && !knownMask[i][j]) {
+               vertexFloorColor_[k] = color1[0];
+               vertexFloorColor_[k + 1] = color1[1];
+               vertexFloorColor_[k + 2] = color1[2];
+            } else {
+               if ((k - firstInd) < (4 * 3)) {
+                  alpha = 1;
+               } else {
+                  alpha = 0.5;
+               }
+               vertexFloorColor_[k] = origColor[0] * alpha;
+               vertexFloorColor_[k + 1] = origColor[1] * alpha;
+               vertexFloorColor_[k + 2] = origColor[2] * alpha;
+
+            }
+         }
+      }
+   }
+
+   /*
+   for (int i = 0; i < vecSize; i++) {
+      firstInd = indicesFloorSlots_[i];
+      if (i < (vecSize - 1)) {
+         lastInd = (indicesFloorSlots_[i + 1]);
+      } else {
+         lastInd = numberQuadsFloor_ * 4 * 3;
+      }
+      row = i / MAP_WIDTH;
+      col = i % MAP_WIDTH;
+      origColor = const_cast<Scenographer*>
+         (const_cast<Interface*>(refInterface_)->getScenographer())->getcolor(row, col);
+      for (int j = firstInd; j < lastInd; j += 3) {
+         if (mask) {
+            vertexFloorColor_[j] = color1[0];
+            vertexFloorColor_[j] = color1[1];
+            vertexFloorColor_[j] = color1[2];
+         } else {
+            vertexFloorColor_[j] = origColor[0];
+            vertexFloorColor_[j] = origColor[1];
+            vertexFloorColor_[j] = origColor[2];
+
+         }
+      }
+   }*/
+}
+void Scene::resetFloor() {
+   indicesFloorSlots_.clear();
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -118,6 +192,8 @@ void Scene::createUpQuads(float* position, float* color1, float scale,
    float centralPosX = ((position[0] - (MAP_HEIGHT / 2.0)) * MAP_SCALE) + (MAP_SCALE / 2.0);
    float centralPosY = position[1] * MAP_UP_SCALE;
    float centralPosZ = ((position[2] - (MAP_WIDTH / 2.0)) * MAP_SCALE) + (MAP_SCALE / 2.0);
+
+   indicesFloorSlots_.push_back(memPos);
 
    // Posiciones de los vértices
    // ---Eje X

@@ -81,9 +81,6 @@ void MainAgent::initAgents() {
 	working4 -> setPosition (Point (getPosition().first + 1, getPosition().second - 1));
 	m_WorVecAgents.push_back(working4);
 
-
-
-
 	dynamic_cast<SearchAgent*>(m_Vagents[0]) -> initExplorationMove(m_Vagents[0]->getPosition().first
 			                                                       ,m_Vagents[0]->getPosition().second
 	                                                               , NORTH);
@@ -309,12 +306,20 @@ void MainAgent::checkedCells(int i) {
     m_beliefSet->setExploredCells(i);
 }
 
+bool** MainAgent::getKnownMap() {
+   return (m_beliefSet->getKnownMap());
+}
+
 /********************************************************************
  *                  FUNCIONES BDI                                   *
  ********************************************************************/
 
 void MainAgent::createInitialBelieves() {
     m_beliefSet->setPosition(m_position);
+}
+
+void MainAgent::updatedKnownMap() {
+   refSimulator_->updatedKnownMap();
 }
 
 void MainAgent::createDesires() {
@@ -324,3 +329,4 @@ void MainAgent::createDesires() {
     m_desires->add("50_Percent_Explored", false);
     m_desires->add("100_Percent_Explored", false);
 }
+

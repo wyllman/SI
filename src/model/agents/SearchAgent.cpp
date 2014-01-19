@@ -20,6 +20,7 @@ SearchAgent::SearchAgent(MainAgent* mainAgent, Map* theMap): Agent (theMap), ref
    lastDirectionEXPL_ = ERROR_DIR;
    finalMovemnts_ = false;
    finalDirecton_ = ERROR_DIR;
+   countLoopSteps_ = 0;
 }
 SearchAgent::~SearchAgent() {
 }
@@ -188,6 +189,11 @@ bool SearchAgent::explorationMove() {
    bool outOfLimits = false;
    Direction directionAct = ERROR_DIR;
    Direction tempDir = ERROR_DIR;
+
+
+   if (countLoopSteps_ >= 200) {
+      return result;
+   }
 
    // Realizar el primer paso.
    if (initPointDistanceEXPL_ == 1) {
@@ -665,14 +671,18 @@ Direction SearchAgent::calculateFinalDir(Direction theDirection) {
 
 void SearchAgent::sensor() {
     int switchedCells = 0;
+    ++countLoopSteps_;
     for (uint32_t i = m_position.first - 4; i < m_position.first + 4; ++i) {
         for (uint32_t j = m_position.second - 4; j < m_position.second + 4; ++j) {
+
             if (std::abs(sqrt(pow(i, 2) + pow(j, 2))
                 - sqrt(pow(m_position.first, 2)
                 + pow(m_position.second, 2))) <= 4) {
                 if(!refMainAgent_->knownMapPosition(i, j)) {
+                    countLoopSteps_ = 0;
                     refMainAgent_->setKnownMapPosition(i, j, true);
                     ++switchedCells;
+                    refMainAgent_->updatedKnownMap();
                 }
             }
         }

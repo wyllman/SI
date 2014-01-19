@@ -45,6 +45,7 @@ class SearchAgent: public Agent {
       int initPointDistanceEXPL_;
       bool finalMovemnts_;
       Direction finalDirecton_;
+      int countLoopSteps_;
 
       bool explorationMove ();
 

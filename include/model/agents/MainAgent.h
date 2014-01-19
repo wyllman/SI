@@ -42,8 +42,10 @@ class MainAgent: public Agent {
       std::vector<Package*>& getPackagesFipa();
       const Map* getMap() const;
       void setKnownMapPosition(int, int, bool);
+      bool** getKnownMap ();
       bool knownMapPosition(int, int);
       void checkedCells(int);
+      void updatedKnownMap ();
 
 
       Package* readFIPAPackage (Package*);

@@ -35,11 +35,13 @@ private:
 public:
 	BeliefSet();
 	~BeliefSet();
+
 	const Belief* operator()(std::string belief) { return m_beliefSet["belief"]; }
 	const Map* map() { return m_map; }
     void setKnownMapCell(int, int, bool);
     bool knownMapCell(int i, int j) { return m_knownMap[i][j]; }
 	void setMap(Map* map);
+	bool** getKnownMap ();
 	Point position() { return m_position; }
 	void setPosition(Point);
 	void add(std::string, const Belief*);

@@ -36,17 +36,23 @@ class Scenographer {
       void camPosZ (float);
       void camRotationPos (float);
 
+      void showHideMask ();
+      void updatedColor ();
+      void setMask (bool**);
+
       void setMainAgentPos (float*);
 
       void clearAgents ();
       void addSearchAgent (float*);
       void addWorkingAgent (float*);
       void requireUpdateFloor ();
+      float* getcolor(int, int);
 
    private:
       const Interface* refInterface_;
       const Scene* refScene_;
       const Map* refMap_;
+      bool** refKnownMap_;
 
       float projAng_;
       float projRatio_;
@@ -61,6 +67,9 @@ class Scenographer {
       bool needUpdateObjects_;
       bool needUpdateFloor_;
 
+      bool showVisibleMask_;
+      bool updateColor_;
+
       float mainAgentPos_[3];
       std::vector<float*> searchAgentVector_;
       std::vector<float*> workingAgentVector_;
@@ -73,6 +82,7 @@ class Scenographer {
       void updateProy ();
       void updateCam ();
       void updateFloor ();
+      void updateColorFloor ();
       void updateObjects ();
 
       // Funciones para la creación de cada uno de las casillas del terreno.
@@ -95,6 +105,7 @@ class Scenographer {
       // Funciones auxiliares para la creación del terreno.
       float getHeight(int, int);
       float getHeight(BYTE);
+
       float* getcolor(BYTE);
 
       void logAction(int);

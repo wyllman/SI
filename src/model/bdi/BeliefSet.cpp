@@ -13,6 +13,11 @@ BeliefSet::BeliefSet() {
     for (uint32_t i = 0; i < MAP_WIDTH; ++i) {
 		m_knownMap[i] = new bool[MAP_WIDTH];
 	}
+    for (uint32_t i = 0; i < MAP_WIDTH; ++i) {
+       for (uint32_t j = 0; j < MAP_WIDTH; ++j) {
+          m_knownMap[i][j] = false;
+       }
+    }
 }
 
 BeliefSet::~BeliefSet() {
@@ -57,6 +62,10 @@ void BeliefSet::setPosition(Point p) {
 
 void BeliefSet::setKnownMapCell(int i, int j, bool value) {
     m_knownMap[i][j] = value;
+}
+
+bool** BeliefSet::getKnownMap() {
+   return m_knownMap;
 }
 
 void BeliefSet::setExploredCells(int i) {

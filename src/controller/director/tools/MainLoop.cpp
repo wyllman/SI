@@ -92,7 +92,7 @@ void MainLoop::init2Time() {
 void MainLoop::end2Time() {
 	gettimeofday(&time2Final_, NULL);
 }
-double MainLoop::diff2Tmie() {
+double MainLoop::diff2Time() {
    double timeInitSeg = time2Init_.tv_sec + (time2Init_.tv_usec / 1000000.0);
    double timeFinalSeg = time2Final_.tv_sec + (time2Final_.tv_usec / 1000000.0);
    return (timeFinalSeg - timeInitSeg);

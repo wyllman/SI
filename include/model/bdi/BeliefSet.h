@@ -28,17 +28,24 @@ class BeliefSet {
 private:
 	std::map<std::string, const Belief*> m_beliefSet;
 	Map* m_map;
+	bool** m_knownMap;
+    int m_exploredCells;
+    float m_exploredPercentage;
 	Point m_position;
 public:
 	BeliefSet();
 	~BeliefSet();
 	const Belief* operator()(std::string belief) { return m_beliefSet["belief"]; }
 	const Map* map() { return m_map; }
+    void setKnownMapCell(int, int, bool);
+    bool knownMapCell(int i, int j) { return m_knownMap[i][j]; }
 	void setMap(Map* map);
 	Point position() { return m_position; }
 	void setPosition(Point);
 	void add(std::string, const Belief*);
 	void remove(std::string);
+    void setExploredCells(int);
+    float exploredPercentage() { return m_exploredCells / (MAP_WIDTH * MAP_WIDTH); }
 };
 
 #endif /* BELIEFSET_H_ */

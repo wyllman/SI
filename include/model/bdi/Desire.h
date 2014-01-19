@@ -9,6 +9,7 @@
 #define DESIRE_H_
 
 #include <string>
+#include <map>
 
 /**
  * \class Desire
@@ -19,16 +20,13 @@
  */
 class Desire {
 private:
-	std::string m_desire;
-	bool m_value;
+    std::map<std::string, bool> m_desire;
 public:
-	Desire(std::string, bool);
-	~Desire();
-	std::string operator()() { return m_desire; }
-	bool isTrue() { return m_value; }
-	void setValue(bool value) { m_value = value; }
-	friend bool operator&&(const Desire&, const Desire&);
-	friend bool operator||(const Desire&, const Desire&);
+    Desire();
+    ~Desire();
+    void add(std::string, bool);
+    void set(std::string, bool);
+    bool operator[](std::string str) { return m_desire[str]; }
 };
 
 #endif /* DESIRE_H_ */

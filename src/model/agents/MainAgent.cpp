@@ -8,7 +8,11 @@
 #include <model/agents/MainAgent.h>
 #include <model/agents/SearchAgent.h>
 #include <model/agents/WorkingAgent.h>
+
 #include <model/bdi/BeliefSet.h>
+#include <model/bdi/Desire.h>
+#include <model/bdi/Intention.h>
+
 #include <controller/director/tools/FileLog.h>
 
 #include <boost/random/mersenne_twister.hpp>
@@ -20,6 +24,10 @@
 MainAgent::MainAgent(Simulator* refModel, Map* theMap): Agent(theMap), refSimulator_(refModel) {
 	logAction(LOG_INIT);
 	m_beliefSet = new BeliefSet();
+    m_desires = new Desire();
+    createInitialBelieves();
+    createDesires();
+    m_intentions = new Intention(*m_beliefSet, *m_desires);
 	setNameAgent(const_cast<char*>("MAIN_AGENT"));
 	createRndInitialPos (const_cast<Map*>(refSimulator_->getMap()));
 	initAgents ();
@@ -27,6 +35,14 @@ MainAgent::MainAgent(Simulator* refModel, Map* theMap): Agent(theMap), refSimula
 
 MainAgent::~MainAgent() {
 	logAction(LOG_END);
+    if (m_beliefSet != NULL) {
+        delete m_beliefSet;
+        m_beliefSet = NULL;
+    }
+    if(m_desires != NULL) {
+        delete m_desires;
+        m_desires = NULL;
+    }
 }
 void MainAgent::initAgents() {
 	// Creación inicial de los agentes exploradores
@@ -278,5 +294,33 @@ std::vector<Package*>& MainAgent::getPackagesFipa() {
 	return m_packagesFIPA;
 }
 const Map* MainAgent::getMap() const {
-	return (refSimulator_->getMap());
+    return (refSimulator_->getMap());
+}
+
+void MainAgent::setKnownMapPosition(int i, int j, bool value) {
+    m_beliefSet->setKnownMapCell(i, j, value);
+}
+
+bool MainAgent::knownMapPosition(int i, int j) {
+    return m_beliefSet->knownMapCell(i, j);
+}
+
+void MainAgent::checkedCells(int i) {
+    m_beliefSet->setExploredCells(i);
+}
+
+/********************************************************************
+ *                  FUNCIONES BDI                                   *
+ ********************************************************************/
+
+void MainAgent::createInitialBelieves() {
+    m_beliefSet->setPosition(m_position);
+}
+
+void MainAgent::createDesires() {
+    m_desires->add("Settlement_Built", false);
+    m_desires->add("Settlement_Placement_Found", false);
+    m_desires->add("Resources_Gathered", false);
+    m_desires->add("50_Percent_Explored", false);
+    m_desires->add("100_Percent_Explored", false);
 }

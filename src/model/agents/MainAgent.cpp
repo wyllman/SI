@@ -116,13 +116,13 @@ bool MainAgent::update () {
 //		m_Vagents[0] -> readFIPAPackage(p);
 //	}
 
-	if (m_WorVecAgents[0] -> getState() == AVAILABLE) {
-		Package* q = new Package (getNameAgent(), m_WorVecAgents[0] -> getNameAgent(), GO_RESOURCE_LOCATION);
-		vector<string> dirTemp2;
-		dirTemp2.push_back("[EAST,EAST,EAST,EAST,EAST,EAST,EAST]");
-		q -> setContent(dirTemp2);
-		m_WorVecAgents[0] -> readFIPAPackage(q);
-	}
+//	if (m_WorVecAgents[0] -> getState() == AVAILABLE) {
+//		Package* q = new Package (getNameAgent(), m_WorVecAgents[0] -> getNameAgent(), GO_RESOURCE_LOCATION);
+//		vector<string> dirTemp2;
+//		dirTemp2.push_back("[EAST,EAST,EAST,EAST,EAST,EAST,EAST]");
+//		q -> setContent(dirTemp2);
+//		m_WorVecAgents[0] -> readFIPAPackage(q);
+//	}
 
 	return updateMiniAgents();
 }

@@ -42,6 +42,8 @@ class SearchAgent: public Agent {
       Direction lastDirectionEXPL_;
       Direction lastMoveDirEXPL_;
       int initPointDistanceEXPL_;
+      bool finalMovemnts_;
+      Direction finalDirecton_;
 
       bool explorationMove ();
 
@@ -53,7 +55,9 @@ class SearchAgent: public Agent {
 
       Direction calculateRouteDir ();
       Direction calculateReturnDir ();
-      Direction calculateObstaclDir ();
+      Direction calculateOutRouteDir ();
+      Direction calculateObstaclDir (Direction);
+      Direction calculateFinalDir (Direction);
 
 
 

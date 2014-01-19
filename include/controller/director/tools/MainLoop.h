@@ -39,7 +39,7 @@ class MainLoop {
       double diffTmie ();
       void init2Time ();
       void end2Time ();
-      double diff2Tmie ();
+      double diff2Time ();
 
       bool isContinue() const;
       bool isPause() const;

@@ -230,7 +230,7 @@ void Director::iddleFunction() {
       // Cuando el programa se queda sin eventos.
       mainLoop_->end2Time();
 
-      if ((mainLoop_->diff2Tmie()) > (minTimeDiff)) { // Control del tiempo
+      if ((mainLoop_->diff2Time()) > (minTimeDiff)) { // Control del tiempo
            mainLoop_->init2Time();
          // Actualizar el simulador y comprobar si se ha movido algún agente para actualizar la inerfaz gráfica.
          if (dynamic_cast<Simulator*>(

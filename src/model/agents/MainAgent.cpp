@@ -8,7 +8,11 @@
 #include <model/agents/MainAgent.h>
 #include <model/agents/SearchAgent.h>
 #include <model/agents/WorkingAgent.h>
+
 #include <model/bdi/BeliefSet.h>
+#include <model/bdi/Desire.h>
+#include <model/bdi/Intention.h>
+
 #include <controller/director/tools/FileLog.h>
 
 #include <boost/random/mersenne_twister.hpp>
@@ -20,6 +24,10 @@
 MainAgent::MainAgent(Simulator* refModel, Map* theMap): Agent(theMap), refSimulator_(refModel) {
 	logAction(LOG_INIT);
 	m_beliefSet = new BeliefSet();
+    m_desires = new Desire();
+    createInitialBelieves();
+    createDesires();
+    m_intentions = new Intention(*dynamic_cast<Agent*>(this), *m_beliefSet, *m_desires);
 	setNameAgent(const_cast<char*>("MAIN_AGENT"));
 	createRndInitialPos (const_cast<Map*>(refSimulator_->getMap()));
 	initAgents ();
@@ -27,6 +35,14 @@ MainAgent::MainAgent(Simulator* refModel, Map* theMap): Agent(theMap), refSimula
 
 MainAgent::~MainAgent() {
 	logAction(LOG_END);
+    if (m_beliefSet != NULL) {
+        delete m_beliefSet;
+        m_beliefSet = NULL;
+    }
+    if(m_desires != NULL) {
+        delete m_desires;
+        m_desires = NULL;
+    }
 }
 void MainAgent::initAgents() {
 	// Creación inicial de los agentes exploradores
@@ -64,28 +80,70 @@ void MainAgent::initAgents() {
 	WorkingAgent* working4 = new WorkingAgent (this, refMap_);
 	working4 -> setPosition (Point (getPosition().first + 1, getPosition().second - 1));
 	m_WorVecAgents.push_back(working4);
+
+	dynamic_cast<SearchAgent*>(m_Vagents[0]) -> initExplorationMove(m_Vagents[0]->getPosition().first
+			                                                       ,m_Vagents[0]->getPosition().second
+	                                                               , NORTH);
+	m_Vagents[0] -> setState(SEARCHING);
 }
 bool temp = false;
 bool MainAgent::update () {
 	bool result = false;
 
 	// TODO: crear una ruta y enviar un agente a ella!!
-	if (!temp) {
+	/*if (!temp) {
 		sendToRoute(getWorVecAgents().at(0) -> getPosition(), Point (getWorVecAgents().at(0) -> getPosition().first, getWorVecAgents().at(0) -> getPosition().second - 5));
 		temp = true;
-	}
+	}*/
+
+	/*
+   if (m_WorVecAgents[0]->checkRouteMoves()) {
+      if (m_WorVecAgents[0]->routedMove()) {
+//         cout << "MOVIENDO AGENTE TRABAJADOR EN RUTA"  << endl;
+         result = true;
+      }
+   } else if (m_WorVecAgents[0]->controledMove(NWEST)) {
+      result = true;
+   }
+   if (m_WorVecAgents[1]->controledMove(NEAST)) {
+      result = true;
+   }
+   if (m_WorVecAgents[2]->controledMove(SEAST)) {
+      result = true;
+   }
+   if (m_WorVecAgents[3]->controledMove(SWEST)) {
+      result = true;
+   }*/
+
+		//Prueba de seguimiento de rutas !!
+//	  if (m_Vagents[0] -> getState() == AVAILABLE) {
+//		Package* p = new Package (getNameAgent(), m_Vagents[0] -> getNameAgent(), GO_LOCATION);
+//		vector<string> dirTemp;
+//		dirTemp.push_back("[NORTH,NORTH,NORTH,NORTH,NORTH,NORTH,NORTH,NORTH]");
+//		p -> setContent(dirTemp);
+//		m_Vagents[0] -> readFIPAPackage(p);
+//	}
+
+//	if (m_WorVecAgents[0] -> getState() == AVAILABLE) {
+//		Package* q = new Package (getNameAgent(), m_WorVecAgents[0] -> getNameAgent(), GO_RESOURCE_LOCATION);
+//		vector<string> dirTemp2;
+//		dirTemp2.push_back("[EAST,EAST,EAST,EAST,EAST,EAST,EAST]");
+//		q -> setContent(dirTemp2);
+//		m_WorVecAgents[0] -> readFIPAPackage(q);
+//	}
+
 	return updateMiniAgents();
 }
 
 bool MainAgent::updateMiniAgents () {
 	bool result = false;
-	/*for (unsigned int i = 0; i < getVAgents().size(); i++) {
+	for (unsigned int i = 0; i < getVAgents().size(); i++) {
 		if (getVAgents().at(i) -> getState() != AVAILABLE) {
 			getVAgents().at(i) -> actDependingOfState();
 			result = true;
 		}
 	}
-	*/
+
 	for (unsigned int i = 0; i < getWorVecAgents().size(); i++) {
 		if (getWorVecAgents().at(i) -> getState() != AVAILABLE) {
 			getWorVecAgents().at(i) -> actDependingOfState();
@@ -254,5 +312,42 @@ std::vector<Package*>& MainAgent::getPackagesFipa() {
 	return m_packagesFIPA;
 }
 const Map* MainAgent::getMap() const {
-	return (refSimulator_->getMap());
+    return (refSimulator_->getMap());
 }
+
+void MainAgent::setKnownMapPosition(int i, int j, bool value) {
+    m_beliefSet->setKnownMapCell(i, j, value);
+}
+
+bool MainAgent::knownMapPosition(int i, int j) {
+    return m_beliefSet->knownMapCell(i, j);
+}
+
+void MainAgent::checkedCells(int i) {
+    m_beliefSet->setExploredCells(i);
+}
+
+bool** MainAgent::getKnownMap() {
+   return (m_beliefSet->getKnownMap());
+}
+
+/********************************************************************
+ *                  FUNCIONES BDI                                   *
+ ********************************************************************/
+
+void MainAgent::createInitialBelieves() {
+    m_beliefSet->setPosition(m_position);
+}
+
+void MainAgent::updatedKnownMap() {
+   refSimulator_->updatedKnownMap();
+}
+
+void MainAgent::createDesires() {
+    m_desires->add("Settlement_Built", false);
+    m_desires->add("Settlement_Placement_Found", false);
+    m_desires->add("Resources_Gathered", false);
+    m_desires->add("50_Percent_Explored", false);
+    m_desires->add("100_Percent_Explored", false);
+}
+

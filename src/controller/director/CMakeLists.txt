@@ -11,4 +11,5 @@ target_link_libraries (
 	Controller
 	FileLog
 	MainLoop
+	Agents
 )

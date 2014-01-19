@@ -35,6 +35,9 @@ Scenographer::Scenographer(const Interface& interface, const Scene& scene, const
    refInterface_ = &interface;
    refScene_ = &scene;
    refMap_ = &map;
+   refKnownMap_ = NULL;
+   showVisibleMask_ = false;
+   updateColor_ = false;
    logAction(LOG_INIT);
 }
 Scenographer::~Scenographer() {
@@ -62,10 +65,17 @@ void Scenographer::init() {
 void Scenographer::update() {
    if (needUpdateFloor_) {
       updateFloor();
+      if (updateColor_) {
+         updateColorFloor();
+      }
       updateObjects();
    } else if (needUpdateObjects_) {
+      if (updateColor_) {
+         updateColorFloor();
+      }
       updateObjects();
    }
+
 }
 // --- Métedos específicos para el control de la cámara desde el controlador
 void Scenographer::projZoom(float value) {
@@ -86,6 +96,18 @@ void Scenographer::camRotationPos(float value) {
    camRotAngle_ += value;
    updateCam();
 }
+
+void Scenographer::showHideMask() {
+   if (showVisibleMask_) {
+      showVisibleMask_ = false;
+   } else {
+      showVisibleMask_ = true;
+   }
+}
+void Scenographer::updatedColor() {
+   updateColor_ = true;
+}
+
 // --- Métodos específicos para el control de la representación de
 //     los agentes y el terreno desde el controlador.
 void Scenographer::setMainAgentPos(float* pos) {
@@ -139,7 +161,10 @@ void Scenographer::requireUpdateFloor() {
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Manejadores públicos:
-
+float* Scenographer::getcolor(int row, int col) {
+   // TODO:
+   return getcolor((*refMap_)(row, col));
+}
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -261,6 +286,13 @@ void Scenographer::updateFloor() {
    }
    delete [] (color);
    needUpdateFloor_ = false;
+}
+void Scenographer::updateColorFloor() {
+   const_cast<Scene*> (refScene_)->updateColor(showVisibleMask_, refKnownMap_);
+   updateColor_ = false;
+}
+void Scenographer::setMask(bool** mask) {
+   refKnownMap_ = mask;
 }
 void Scenographer::updateObjects() {
    const int NUM_QUADS = const_cast<Scene*> (refScene_)->getNumberQuadsFloor();
@@ -476,6 +508,7 @@ float Scenographer::getHeight(BYTE value) {
 }
 float* Scenographer::getcolor(BYTE value) {
    float* color = new float[3];
+
    switch (value) {
       case RESOURCE_METAL:
          color[0] = 0.75;
@@ -488,14 +521,55 @@ float* Scenographer::getcolor(BYTE value) {
          color[2] = 0;
          break;
       case RESOURCE_MINERAL:
-         color[0] = 0;
-         color[1] = 0;
-         color[2] = 0;
+         color[0] = 0.75;
+         color[1] = 0.5;
+         color[2] = 0.5;
          break;
       default:
-         color[0] = 1;
-         color[1] = 0;
-         color[2] = 1;
+         switch (value & MASK_TERRAIN) {
+            case TERRAIN_GROUND:
+               color[0] = 0.0;
+               color[1] = 1.0;
+               color[2] = 0.0;
+               switch (value & MASK_RESOURCE) {
+                  case RESOURCE_METAL:
+                     color[0] = 0.75;
+                     color[1] = 0.75;
+                     color[2] = 0.75;
+                     break;
+                  case RESOURCE_FOOD:
+                     color[0] = 1;
+                     color[1] = 0;
+                     color[2] = 0;
+                     break;
+                  case RESOURCE_MINERAL:
+                     color[0] = 0.75;
+                     color[1] = 0.5;
+                     color[2] = 0.5;
+                     break;
+                  default:
+                     break;
+               }
+               break;
+            case TERRAIN_ELEVATION:
+               color[0] = 0.0;
+               color[1] = 0.5;
+               color[2] = 0.0;
+               break;
+            case TERRAIN_WATER:
+               color[0] = 0.0;
+               color[1] = 0.0;
+               color[2] = 1.0;
+               break;
+            default:
+               color[0] = 1;
+               color[1] = 0;
+               color[2] = 1;
+               break;
+         }
+         //color[0] = 1;
+         //color[1] = 0;
+         //color[2] = 1;
          break;
    }
    return color;
@@ -537,4 +611,5 @@ void Scenographer::logAction(int index) {
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
 

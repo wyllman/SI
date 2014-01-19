@@ -31,7 +31,7 @@
 Simulator::Simulator(const Controller& controller) :
       Model (controller), map_ (NULL), m_MainAgent (NULL) {
    logAction (LOG_INIT);
-
+   updatedKnonwMap_ = false;
 }
 Simulator::~Simulator() {
    logAction(LOG_END);
@@ -58,6 +58,7 @@ void Simulator::init() {
 }
 
 bool Simulator::update() {
+   updatedKnonwMap_ = false;
    return m_MainAgent -> update();
 }
 void Simulator::reset() {
@@ -83,6 +84,12 @@ void Simulator::log(const char* line) {
                                const_cast<Controller*>(refController_))->getRegAccErr();
       fileLogTmp->insertLine(line);
    }
+}
+bool Simulator::isUpdatedKnownMap() {
+   return updatedKnonwMap_;
+}
+void Simulator::updatedKnownMap() {
+   updatedKnonwMap_ = true;
 }
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
@@ -146,4 +153,5 @@ void Simulator::logAction(int index) {
 // FIN -------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
 

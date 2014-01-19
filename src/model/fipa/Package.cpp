@@ -5,7 +5,7 @@
  *      Author: maikel
  */
 
-#include "model/fipa/Package.h"
+#include <model/fipa/Package.h>
 
 Package::Package(char* send, char* receiv, Type type) {
 	setSender(send);

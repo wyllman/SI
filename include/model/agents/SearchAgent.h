@@ -12,8 +12,9 @@
 #include <cstdlib>
 
 #include <model/agents/MainAgent.h>
-#include <model/agents/WorkingAgent.h>
 #include <model/fipa/Package.h>
+
+#include <vector>
 
 class SearchAgent: public Agent {
    public:
@@ -22,8 +23,8 @@ class SearchAgent: public Agent {
 
       MainAgent* getRefMainAgent();
       void setPosition (Point p) { m_position = p; }
-      vector<Direction>& getRoutes();
-      void setRoutes(const vector<Direction>& routes);
+      std::vector<Direction>& getRoutes();
+      void setRoutes(const std::vector<Direction>& routes);
 
       Package* readFIPAPackage (Package*);
 
@@ -32,20 +33,45 @@ class SearchAgent: public Agent {
       Direction translateRoute (std::string);
 
       void actDependingOfState ();
-      void initExplorationMove (Point initPos, Direction guideDir);
+      void initExplorationMove (int row, int col, Direction guideDir);
 
    private:
       MainAgent* refMainAgent_;
        // Atributos para el movimiento exploratorio angular (90º)
       Point initPointEXPL_;
       Direction guideDirectionEXPL_;
+      Direction lastDirectionEXPL_;
+      Direction lastMoveDirEXPL_;
       int initPointDistanceEXPL_;
+      bool finalMovemnts_;
+      Direction finalDirecton_;
+      int countLoopSteps_;
 
-      void explorationMove ();
-      void calculateExplorationLimits (int&, int&);
-      Direction calculateDirection ();
+      bool explorationMove ();
+
+      // Comprobaciones para el movimiento exploratorio
+      // ---Posicionesvde terreno
+      bool onLimits ();
+      bool onLineLimits ();
+      bool onRoute ();
+
+      Direction calculateRouteDir ();
+      Direction calculateReturnDir ();
+      Direction calculateOutRouteDir ();
+      Direction calculateObstaclDir (Direction);
+      Direction calculateFinalDir (Direction);
+
+
+
+
+      Direction calculatePreferedDirection ();
       Direction calculateAngularDirection ();
       Direction calculateRectilinearDirection ();
+      Direction calculateFreeDirection (bool);
+      Direction calculateClockDirection (Direction, bool);
+      Direction calculateInverseDirection (Direction);
+      void updateDistance (Direction);
+      void sensor();
 };
 
 #endif /* SEARCHAGENT_H_ */

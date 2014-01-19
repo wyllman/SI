@@ -6,9 +6,8 @@
  */
 
 #include <model/agents/Agent.h>
-#include <model/bdi/BeliefSet.h>
-#include <model/bdi/Goals.h>
-#include <model/bdi/Intentions.h>
+
+#include <cmath>
 
 Agent::Agent(Map* theMap): refMap_ (theMap) {
    setIdComm(0);

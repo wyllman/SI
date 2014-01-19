@@ -5,15 +5,26 @@
  *      Author: maikel
  */
 
+#ifndef PACKAGE_H_
+#define PACKAGE_H_
+
 #include <iostream>
 #include <vector>
 #include <Tools.h>
 
-#ifndef PACKAGE_H_
-#define PACKAGE_H_
-
+/**
+ * \class Package
+ * \brief Paquetes de protocolo de FIPA.
+ */
 class Package {
 public:
+	/**
+	 * \fn Package(char*, char* Type)
+	 * \brief CTOR
+	 * \param sender
+	 * \param receiver
+	 * \param type
+	 */
 	Package(char*, char*, Type);
 	virtual ~Package();
 

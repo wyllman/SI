@@ -18,6 +18,10 @@
 #include <model/agents/tools/PathFindingTree.h>
 
 class Simulator;
+class BeliefSet;
+class Desire;
+class Intention;
+
 /**
  * \class MainAgent
  * \brief Agente principal de la simulación.
@@ -40,6 +44,12 @@ class MainAgent: public Agent {
       std::vector<Agent*>& getWorVecAgents();
       std::vector<Package*>& getPackagesFipa();
       const Map* getMap() const;
+      void setKnownMapPosition(int, int, bool);
+      bool** getKnownMap ();
+      bool knownMapPosition(int, int);
+      void checkedCells(int);
+      void updatedKnownMap ();
+
 
       Package* readFIPAPackage (Package*);
       Package* createFIPAPackage ();
@@ -50,11 +60,16 @@ class MainAgent: public Agent {
       Simulator* refSimulator_;
 
       BeliefSet* m_beliefSet;
+      Desire* m_desires;
+      Intention* m_intentions;
+
       std::vector<Agent*> m_Vagents;
       std::vector<Agent*> m_WorVecAgents;
 
       std::vector<Package*> m_packagesFIPA;
 
+      void createInitialBelieves();
+      void createDesires();
 };
 
 #endif /* MAINAGENT_H_ */

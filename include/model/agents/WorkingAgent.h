@@ -10,6 +10,7 @@
 
 #include <model/agents/Agent.h>
 #include <model/agents/MainAgent.h>
+
 #include <model/agents/tools/Node.h>
 #include <cstring>
 using namespace std;

@@ -37,10 +37,13 @@ class Simulator: public Model {
       const Map* getMap() const;
       const MainAgent* getMainAgent () const;
       Point getPosMainAgent ();
+      bool isUpdatedKnownMap();
+      void updatedKnownMap ();
 
    private:
       Map* map_;
       MainAgent* m_MainAgent;
+      bool updatedKnonwMap_;
       void logAction(int);
 };
 

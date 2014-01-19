@@ -6,12 +6,21 @@
  */
 
 #include <model/agents/SearchAgent.h>
+#include <model/bdi/BeliefSet.h>
+
+#include <cstring>
+#include <cmath>
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 SearchAgent::SearchAgent(MainAgent* mainAgent, Map* theMap): Agent (theMap), refMainAgent_ (mainAgent) {
    setNameAgent(const_cast<char*>("SEARCH_AGENT"));
    initPointDistanceEXPL_ = -1;
+   guideDirectionEXPL_ = ERROR_DIR;
+   lastDirectionEXPL_ = ERROR_DIR;
+   finalMovemnts_ = false;
+   finalDirecton_ = ERROR_DIR;
+   countLoopSteps_ = 0;
 }
 SearchAgent::~SearchAgent() {
 }
@@ -84,10 +93,14 @@ void SearchAgent::localDireccionalSearch (std::string  d) {
 void SearchAgent::actDependingOfState () {
    switch (getState()) {
       case SEARCHING:
-
+         if (!explorationMove()) {
+            setState(AVAILABLE);
+         } else {
+             sensor();
+         }
       break;
       case FOLLOWING_ROUTE:
-         cout << "Tam: " << getRoutes().size() << endl;
+         std::cout << "Tam: " << getRoutes().size() << std::endl;
          if (!routedMove()) {
             setState(AVAILABLE);
             getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
@@ -98,15 +111,15 @@ void SearchAgent::actDependingOfState () {
    }
 }
 void SearchAgent::followRoute(std::string route) {
-	cout << "SEGUIR LA RUTA: " << route << endl;
-	vector<Direction> camino;
+    std::cout << "SEGUIR LA RUTA: " << route << std::endl;
+    std::vector<Direction> camino;
 	int posIni = route.find("[");
 	int posCorchFin = route.find("]");
-	cout << "Pos ini:" << posIni << " posFin: " << posCorchFin << endl;
+    std::cout << "Pos ini:" << posIni << " posFin: " << posCorchFin << std::endl;
 	route = route.substr(1, route.length());
 	int posComa = 0;
 	bool stop = false;
-	string dirTemp;
+    std::string dirTemp;
 	while (!stop) {
 		posComa = route.find(",");
 		if (posComa == -1) {
@@ -144,8 +157,9 @@ Direction SearchAgent::translateRoute (std::string dir) {
       return SWEST;
    }
 }
-void SearchAgent::initExplorationMove(Point initPos, Direction guideDir) {
-   initPointEXPL_ = initPos;
+void SearchAgent::initExplorationMove(int row, int col, Direction guideDir) {
+   initPointEXPL_ .first = row;
+   initPointEXPL_.second = col;
    guideDirectionEXPL_ = guideDir;
    initPointDistanceEXPL_ = 1;
 }
@@ -154,10 +168,10 @@ void SearchAgent::initExplorationMove(Point initPos, Direction guideDir) {
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Manejadores públicos:
-vector<Direction>& SearchAgent::getRoutes() {
+std::vector<Direction>& SearchAgent::getRoutes() {
    return m_routes;
 }
-void SearchAgent::setRoutes(const vector<Direction>& routes) {
+void SearchAgent::setRoutes(const std::vector<Direction>& routes) {
    m_routes = routes;
 }
 MainAgent* SearchAgent::getRefMainAgent() {
@@ -168,126 +182,511 @@ MainAgent* SearchAgent::getRefMainAgent() {
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Métodos privados:
-void SearchAgent::explorationMove() {
-   int limitRightSup = 0, limitLeftInf = 0;
+bool SearchAgent::explorationMove() {
+   bool result = false;
+   bool outPreferedRoute = false;
    bool obstacleDetectec = false;
-   Direction directionAct;
+   bool outOfLimits = false;
+   Direction directionAct = ERROR_DIR;
+   Direction tempDir = ERROR_DIR;
+
+
+   if (countLoopSteps_ >= 200) {
+      return result;
+   }
+
    // Realizar el primer paso.
    if (initPointDistanceEXPL_ == 1) {
       directionAct = ((Direction) (guideDirectionEXPL_ + 1));
-   } else {
-      calculateExplorationLimits(limitRightSup, limitLeftInf);
-      // TODO: Calcular la dirección preferente actual
-      // TODO: Mover en la dirección preferente
-   }
+      obstacleDetectec = !controledMove(directionAct);
+      if (!obstacleDetectec) {
+        lastDirectionEXPL_ = directionAct;
+        lastMoveDirEXPL_ = directionAct;
+        updateDistance(directionAct);
+        result = true;
+      }
+   } else if (initPointDistanceEXPL_ != -1) {
+      if (finalMovemnts_) {
+         directionAct = calculateFinalDir(finalDirecton_);
+         if (directionAct != ERROR_DIR) {
+            if (controledMove(directionAct)) {
+               updateDistance(directionAct);
+               lastMoveDirEXPL_ = directionAct;
+               result = true;
+            }
+         } else {
+            std::cout << "FIN CAMINO CORRECTO" << std::endl;
+         }
+      } else {
+         if (onLimits()) {
+            if (onRoute()) {
+               directionAct = calculateRouteDir();
+            } else {
+               directionAct = calculateOutRouteDir();
+               outPreferedRoute = true;
+            }
+         } else {
+            std::cout << "ERROR AGENTE FUERA DE LIMITES" << std::endl;
+            directionAct = calculateReturnDir();
+            outOfLimits = true;
+         }
 
-   // TODO: Si (obstaclDetectec) calcular nueva direccion preferente
-}
-void SearchAgent::calculateExplorationLimits(int& limRS, int& limLI) {
-   if (guideDirectionEXPL_ == NORTH || guideDirectionEXPL_ == SOUTH) {
-      limRS = initPointEXPL_.first + (initPointDistanceEXPL_ - 1);
-      limLI = initPointEXPL_.first - (initPointDistanceEXPL_ - 1);
-   } else {
-      limRS = initPointEXPL_.second + (initPointDistanceEXPL_ - 1);
-      limLI = initPointEXPL_.second - (initPointDistanceEXPL_ - 1);
+         if (directionAct != ERROR_DIR) {
+            obstacleDetectec = !controledMove(directionAct);
+            if (obstacleDetectec) {
+               tempDir = calculateObstaclDir(directionAct);
+               if (tempDir != ERROR_DIR) {
+                  directionAct = tempDir;
+                  if (controledMove(directionAct)) { // FIXME: ELIMINAR ESTA CONDICION Y SU ELSE
+                      updateDistance(directionAct);
+                      lastMoveDirEXPL_ = directionAct;
+                      result = true;
+                  } else {
+                     finalDirecton_ = directionAct;
+                     finalMovemnts_ = true;
+                     directionAct = calculateFinalDir(finalDirecton_);
+                     if (directionAct != ERROR_DIR) {
+                        if (controledMove(directionAct)) {
+                           updateDistance(directionAct);
+                           lastMoveDirEXPL_ = directionAct;
+                           result = true;
+                        }
+                     } else {
+                        //finalDirecton_ = ERROR_DIR;
+                        std::cout << "ERROR FIN CAMINO INCORRECTO" << std::endl;
+                     }
+                  }
+               } else {
+                  finalDirecton_ = directionAct;
+                  finalMovemnts_ = true;
+                  directionAct = calculateFinalDir(finalDirecton_);
+                  if (directionAct != ERROR_DIR) {
+                     if (controledMove(directionAct)) {
+                        updateDistance(directionAct);
+                        lastMoveDirEXPL_ = directionAct;
+                        result = true;
+                     }
+                  } else {
+                     //finalDirecton_ = ERROR_DIR;
+                     std::cout << "ERROR FIN CAMINO" << std::endl;
+                  }
+               }
+            } else {
+               updateDistance(directionAct);
+               lastMoveDirEXPL_ = directionAct;
+               result = true;
+            }
+         }else {
+            std::cout << "ERROR, NO SE DEBE ACCEDER A ESTE PUNTO" << std::endl;
+         }
+      }
    }
+   return result;
 }
-Direction SearchAgent::calculateDirection() {
+
+
+Direction SearchAgent::calculateClockDirection(Direction theDirection,
+		bool inverse) {
    Direction result = ERROR_DIR;
+   if (inverse) {
+      if (theDirection == NORTH) {
+         result = NWEST;
+      } else {
+         result = ((Direction)(theDirection - 1));
+      }
+   } else {
+      if (theDirection == NWEST) {
+         result = NORTH;
+      } else {
+         result = ((Direction)(theDirection + 1));
+      }
+   }
+   return result;
+}
+Direction SearchAgent::calculateInverseDirection(Direction theDirection) {
+   Direction result = ERROR_DIR;
+   result = calculateClockDirection(theDirection, false);
+   result = calculateClockDirection(result, false);
+   result = calculateClockDirection(result, false);
+   result = calculateClockDirection(result, false);
+   return result;
+}
+void SearchAgent::updateDistance(Direction theDirection) {
    switch (guideDirectionEXPL_) {
       case NORTH:
-
+        if (theDirection == NORTH || theDirection == NEAST || theDirection == NWEST) {
+           ++initPointDistanceEXPL_;
+        } else if (theDirection == SOUTH || theDirection == SEAST || theDirection == SWEST) {
+           --initPointDistanceEXPL_;
+        }
          break;
       case EAST:
-
+         if (theDirection == EAST || theDirection == NEAST || theDirection == SEAST) {
+            ++initPointDistanceEXPL_;
+         } else if (theDirection == WEST || theDirection == SWEST || theDirection == NWEST) {
+             --initPointDistanceEXPL_;
+          }
          break;
       case SOUTH:
-
+          if (theDirection == SOUTH || theDirection == SEAST || theDirection == SWEST) {
+             ++initPointDistanceEXPL_;
+          } else if (theDirection == NORTH || theDirection == NEAST || theDirection == NWEST) {
+             --initPointDistanceEXPL_;
+           }
          break;
       case WEST:
-
+          if (theDirection == WEST || theDirection == NWEST || theDirection == SWEST) {
+             ++initPointDistanceEXPL_;
+          } else if (theDirection == EAST || theDirection == SEAST || theDirection == NEAST) {
+             --initPointDistanceEXPL_;
+           }
          break;
       default:
          break;
+   }
 }
-   return result;
-}
-Direction SearchAgent::calculateAngularDirection() {
-   Direction result = ERROR_DIR;
+// FIN -------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------
+// |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+bool SearchAgent::onLimits() {
+   const int DISTANCE = (initPointDistanceEXPL_ - 1);
+   bool result = false;
+
    switch (guideDirectionEXPL_) {
-      case NORTH:
-         if (m_position.first < initPointEXPL_.first) {
-            result = NWEST;
-         } else {
-            result = NEAST;
+      case NORTH: case SOUTH:
+         if ((m_position.second >= (initPointEXPL_.second - DISTANCE))
+            && (m_position.second <= (initPointEXPL_.second + DISTANCE))) {
+            result = true;
          }
          break;
-      case EAST:
-         if (m_position.second < initPointEXPL_.second) {
-            result = SEAST;
-         } else {
-            result = NEAST;
+      case EAST: case WEST:
+         if ((m_position.first >= (initPointEXPL_.first - DISTANCE))
+            && (m_position.first <= (initPointEXPL_.first+ DISTANCE))) {
+            result = true;
          }
-         break;
-      case SOUTH:
-         if (m_position.first < initPointEXPL_.first) {
-            result = SWEST;
-         } else {
-            result = SEAST;
-         }
-         break;
-      case WEST:
-         if (m_position.first < initPointEXPL_.first) {
-            result = SWEST;
-         } else {
-            result = NWEST;
-         }
-         break;
-      default:
          break;
    }
    return result;
 }
-Direction SearchAgent::calculateRectilinearDirection() {
-   Direction result = ERROR_DIR;
-   if ((initPointDistanceEXPL_ % 3) == 0) {
+bool SearchAgent::onLineLimits() {
+   const int DISTANCE = (initPointDistanceEXPL_ - 1);
+   bool result = false;
+
+   switch (guideDirectionEXPL_) {
+      case NORTH: case SOUTH:
+         if ((m_position.second == (initPointEXPL_.second - DISTANCE))
+            || (m_position.second == (initPointEXPL_.second + DISTANCE))) {
+            result = true;
+         }
+         break;
+      case EAST: case WEST:
+         if ((m_position.first == (initPointEXPL_.first - DISTANCE))
+            || (m_position.first == (initPointEXPL_.first+ DISTANCE))) {
+            result = true;
+         }
+         break;
+   }
+
+   return result;
+}
+bool SearchAgent::onRoute() {
+const int DISTANCE = (initPointDistanceEXPL_ - 1);
+const int DIAMET_VIEW = 3;
+const int MOD_DISTANCE = DISTANCE / DIAMET_VIEW;
+bool result = false;
+
+
+   if ((DISTANCE % DIAMET_VIEW) == 0) {
+      result = true;
+   } else if (onLineLimits()){
       switch (guideDirectionEXPL_) {
          case NORTH:
-            if ((initPointDistanceEXPL_ % 2) == 0) {
-               result = WEST;
-            } else {
-               result = EAST;
+            if ((MOD_DISTANCE % 2) == 0 ) {
+               if (m_position.second > initPointEXPL_.second) {
+                  result = true;
+               }
+            } else if (m_position.second < initPointEXPL_.second) {
+               result = true;
             }
             break;
          case EAST:
-             if ((initPointDistanceEXPL_ % 2) == 0) {
-                result = NORTH;
-             } else {
-                result = SOUTH;
+             if ((MOD_DISTANCE % 2) == 0 ) {
+                if (m_position.first < initPointEXPL_.first) {
+                   result = true;
+                }
+             } else if (m_position.first > initPointEXPL_.first) {
+                result = true;
              }
             break;
          case SOUTH:
-             if ((initPointDistanceEXPL_ % 2) == 0) {
-                result = EAST;
-             } else {
-                result = WEST;
+             if ((MOD_DISTANCE % 2) == 0 ) {
+                if (m_position.second < initPointEXPL_.second) {
+                   result = true;
+                }
+             } else if (m_position.second > initPointEXPL_.second) {
+                result = true;
              }
             break;
          case WEST:
-             if ((initPointDistanceEXPL_ % 2) == 0) {
-                result = SOUTH;
-             } else {
-                result = NORTH;
+             if ((MOD_DISTANCE % 2) == 0 ) {
+                if (m_position.first > initPointEXPL_.first) {
+                   result = true;
+                }
+             } else if (m_position.first < initPointEXPL_.first) {
+                result = true;
              }
             break;
          default:
             break;
       }
    }
+
    return result;
 }
-// FIN -------------------------------------------------------------------------------
-// -----------------------------------------------------------------------------------
-// |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+Direction SearchAgent::calculateRouteDir() {
+   const int DISTANCE = (initPointDistanceEXPL_ - 1);
+   const int DIAMET_VIEW = 3;
+   const bool ON_RECT = ((DISTANCE % DIAMET_VIEW) == 0);
+   Direction result = ERROR_DIR;
+
+   // if (onRoute()) {...codigo siguiente...};
+
+   switch (guideDirectionEXPL_) {
+      case NORTH:
+         if (ON_RECT) {
+            if (m_position.second == initPointEXPL_.second + DISTANCE) {
+               if ((initPointDistanceEXPL_ % 2) == 0){
+                  result = WEST;
+               } else {
+                  result = NEAST;
+               }
+            } else if (m_position.second == initPointEXPL_.second - DISTANCE) {
+                if ((initPointDistanceEXPL_ % 2) == 0){
+                   result = NWEST;
+                } else {
+                   result = EAST;
+                }
+            } else {
+               if ((initPointDistanceEXPL_ % 2) == 0){
+                  result = WEST;
+               } else {
+                  result = EAST;
+               }
+            }
+         } else {
+            if (m_position.second > initPointEXPL_.second) {
+               result = NEAST;
+            } else {
+               result = NWEST;
+            }
+         }
+         break;
+      case EAST:
+
+         break;
+      case SOUTH:
+
+         break;
+      case WEST:
+
+         break;
+      default:
+         break;
+   }
+
+   return result;
+}
+Direction SearchAgent::calculateReturnDir() {
+   Direction result = ERROR_DIR;
+
+   if (!onLimits()) {
+      result = calculateInverseDirection(lastMoveDirEXPL_);
+   }
+
+   return result;
+}
+Direction SearchAgent::calculateOutRouteDir() {
+   const int DISTANCE = (initPointDistanceEXPL_ - 1);
+   const int DIAMET_VIEW = 3;
+   // Espacio Par
+   const bool ON_EVEN = (((DISTANCE / DIAMET_VIEW) % 2) == 0);
+   Direction result = ERROR_DIR;
+
+   // if (!onRoute()) {...codigo siguiente...}
+
+   switch (guideDirectionEXPL_) {
+      case NORTH:
+         if (ON_EVEN) {
+            result = EAST;
+         } else {
+            result = WEST;
+         }
+         break;
+      case EAST:
+
+         break;
+      case SOUTH:
+
+         break;
+      case WEST:
+
+         break;
+      default:
+         break;
+   }
+
+   return result;
+}
+Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
+   const Direction LAST_MOVE = lastMoveDirEXPL_;
+   const bool ON_ROUTE = onRoute();
+   Direction result = ERROR_DIR;
+   Direction tmpDir;
+
+   switch (guideDirectionEXPL_) {
+      case NORTH:
+         if (ON_ROUTE) {
+           // Si estamos en ruta, realizar la busqueda de dos movimientos
+           // posibles calculándolos usando el sentido de las agujas de un
+           // reloj y su inverso segun la dirección de choque(theDirection).
+           switch (theDirection) {
+              case NWEST: case WEST:
+                 tmpDir = calculateClockDirection(theDirection, false);
+                 if (checkTerrain(tmpDir)) {
+                    result = tmpDir;
+                 } else {
+                    tmpDir = calculateClockDirection(tmpDir, false);
+                    if (checkTerrain(tmpDir)) {
+                       result = tmpDir;
+                    }
+                 }
+                 break;
+              case NEAST: case EAST:
+                  tmpDir = calculateClockDirection(theDirection, true);
+                  if (checkTerrain(tmpDir)) {
+                     result = tmpDir;
+                  } else {
+                     tmpDir = calculateClockDirection(tmpDir, true);
+                     if (checkTerrain(tmpDir)) {
+                        result = tmpDir;
+                     }
+                  }
+                 break;
+           }
+         } else { // Si no estamos en ruta, realizar movimiento recto par/impar
+            if (theDirection == EAST) {
+               if (checkTerrain(NEAST)) {
+                  result = NEAST;
+               } else if (checkTerrain(NORTH)){
+                  result = NORTH;
+               } else if (checkTerrain(NWEST)) {
+                  result = NWEST;
+               }
+            } else if (theDirection == WEST) {
+               if (checkTerrain(NWEST)) {
+                  result = NWEST;
+               } else if (checkTerrain(NORTH)) {
+                  result = NORTH;
+               } else if (checkTerrain(NEAST)) {
+                  result = NEAST;
+               }
+            }
+         }
+         break;
+      case EAST:
+
+         break;
+      case SOUTH:
+
+         break;
+      case WEST:
+
+         break;
+      default:
+         break;
+   }
+
+   return result;
+}
+
+Direction SearchAgent::calculateFinalDir(Direction theDirection) {
+   const int DISTANCE = (initPointDistanceEXPL_ - 1);
+   Direction result = ERROR_DIR;
+
+   switch (guideDirectionEXPL_) {
+       case NORTH:
+          if ((theDirection == WEST )
+              || theDirection == NWEST) {
+             if (checkTerrain(NEAST)) {
+                result = NEAST;
+                finalMovemnts_ = false;
+             } else if (m_position.second <= initPointEXPL_.second + DISTANCE) {
+                if (checkTerrain(EAST)) {
+                   result = EAST;
+                } else if (checkTerrain(SEAST)) {
+                   result = SEAST;
+                } else if (checkTerrain(SOUTH)) {
+                   result = SOUTH;
+                }
+             }
+          } else if ((theDirection == EAST)
+                     || theDirection == NEAST) {
+             if (checkTerrain(NWEST)) {
+                result = NWEST;
+                finalMovemnts_ = false;
+             } else if (m_position.second >= initPointEXPL_.second - DISTANCE) {
+                if (checkTerrain(WEST)) {
+                   result = WEST;
+                } else if (checkTerrain(SWEST)) {
+                   result = SWEST;
+                } else if (checkTerrain(SOUTH)) {
+                    result = SOUTH;
+                 }
+             }
+          } else if (theDirection == NORTH){
+             std::cout << "ERROR CALCULO DIR FINAL (NORTH)" << std::endl;
+          } else if (theDirection == ERROR_DIR) {
+             std::cout << "ERROR CALCULO DIR FINAL (ERROR_DIR)" << std::endl;
+          } else {
+             std::cout << "ERROR CALCULO DIR FINAL (OTROS)" << std::endl;
+          }
+          break;
+       case EAST:
+
+          break;
+       case SOUTH:
+
+          break;
+       case WEST:
+
+          break;
+       default:
+          break;
+    }
+
+   return result;
+}
+
+void SearchAgent::sensor() {
+    const int width = 2;
+    int switchedCells = 0;
+    ++countLoopSteps_;
+    for (uint32_t i = m_position.first - width; i < m_position.first + width + 1; ++i) {
+        for (uint32_t j = m_position.second - width; j < m_position.second + width + 1; ++j) {
+            if (std::abs(sqrt(pow(i, 2) + pow(j, 2))
+                - sqrt(pow(m_position.first, 2)
+                + pow(m_position.second, 2))) <= width) {
+                if(!refMainAgent_->knownMapPosition(i, j)) {
+                    countLoopSteps_ = 0;
+                    refMainAgent_->setKnownMapPosition(i, j, true);
+                    ++switchedCells;
+                    refMainAgent_->updatedKnownMap();
+                }
+            }
+        }
+    }
+    refMainAgent_->checkedCells(switchedCells);
+}
 

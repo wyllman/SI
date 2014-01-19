@@ -52,6 +52,7 @@ void Director::init() {
    logAction(LOG_F_INIT);
 }
 void Director::start() {
+   bool** tmpKnonwMap;
    // Incializando el modelo (clase Simulator)
    const_cast<Model*>(refModel_)->init();
    // Inicializando la vista (clase Interface)
@@ -60,6 +61,14 @@ void Director::start() {
    // Enviando a la vista la información necesaria de los
    // agentes.
    getAgentsPos();
+
+   tmpKnonwMap =  const_cast<MainAgent*>
+                    (dynamic_cast<Simulator*>
+                    (const_cast<Model*>(refModel_))->getMainAgent())->getKnownMap();
+   const_cast<Scenographer*>
+      (dynamic_cast<Interface*>
+      (const_cast<View*>(refView_))->getScenographer())->setMask(tmpKnonwMap);
+
 
    // Iniciando el bucle principal de ejecución del programa
    mainLoop();
@@ -203,9 +212,16 @@ void Director::mainLoop() {
 }
 
 void Director::mainFunction() {
+   bool** tmpKnonwMap;
    // En caso de requerirse, resetear todos los datos internos del simulador.
    if (mainLoop_->isRequireReset()) {
       dynamic_cast<Simulator*>(const_cast<Model*>(refModel_))->reset();
+      tmpKnonwMap =  const_cast<MainAgent*>
+                      (dynamic_cast<Simulator*>
+                       (const_cast<Model*>(refModel_))->getMainAgent())->getKnownMap();
+      const_cast<Scenographer*>(
+                                 dynamic_cast<Interface*>(
+                                 const_cast<View*>(refView_))->getScenographer())->setMask(tmpKnonwMap);
       mainLoop_->stopReset();
       mainLoop_->update();
    }
@@ -230,12 +246,18 @@ void Director::iddleFunction() {
       // Cuando el programa se queda sin eventos.
       mainLoop_->end2Time();
 
-      if ((mainLoop_->diff2Tmie()) > (minTimeDiff)) { // Control del tiempo
+      if ((mainLoop_->diff2Time()) > (minTimeDiff)) { // Control del tiempo
            mainLoop_->init2Time();
          // Actualizar el simulador y comprobar si se ha movido algún agente para actualizar la inerfaz gráfica.
          if (dynamic_cast<Simulator*>(
                  const_cast<Model*>(refModel_))->update()) {
             mainLoop_->update();
+            if (dynamic_cast<Simulator*>(
+                 const_cast<Model*>(refModel_))->isUpdatedKnownMap()) {
+               const_cast<Scenographer*>(
+                           dynamic_cast<Interface*>(
+                           const_cast<View*>(refView_))->getScenographer())->updatedColor();
+            }
          }
          mainFunction();
       }
@@ -300,7 +322,16 @@ void Director::keyEvents (SDL_Event& eventSDL){
          simulatorVel_ = 3;
       } else if (eventSDL.key.keysym.sym == SDLK_4) {
          simulatorVel_ = 4;
+      // Mostra u ocultar la máscara de terreno visitado
+      } else if (eventSDL.key.keysym.sym == SDLK_v) {
+         const_cast<Scenographer*>(
+                      dynamic_cast<Interface*>(
+                      const_cast<View*>(refView_))->getScenographer())->showHideMask();
+         const_cast<Scenographer*>(
+                      dynamic_cast<Interface*>(
+                      const_cast<View*>(refView_))->getScenographer())->updatedColor();
       }
+
    }
 }
 

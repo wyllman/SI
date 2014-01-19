@@ -6,6 +6,9 @@
  */
 
 #include <model/agents/WorkingAgent.h>
+#include <cstring>
+
+using namespace std;
 
 WorkingAgent::WorkingAgent(MainAgent* mainAgent, Map* theMap): Agent (theMap), refMainAgent_ (mainAgent) {
 	setNameAgent(const_cast<char*>("WORK_AGENT"));
@@ -22,11 +25,11 @@ Package* WorkingAgent::readFIPAPackage (Package* p) {
 		if (p -> getReceiver() == getNameAgent()) {
 			switch (p -> getType()) {
 			case NOT_UNDERSTOOD:
-				cout << "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible" << endl;
+                std::cout << "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible" << std::endl;
 				return NULL;
 				break;
 			case CONFIRM:
-				cout << "CONFIRM: Confirmada la operación." << endl;
+                std::cout << "CONFIRM: Confirmada la operación." << std::endl;
 				return NULL;
 				break;
 			case GO_RESOURCE_LOCATION:
@@ -35,7 +38,7 @@ Package* WorkingAgent::readFIPAPackage (Package* p) {
 				setState(FOLLOWING_ROUTE);
 				break;
 			default:
-				cout << "No se entiende el tipo del paquete recibido." << endl;
+                std::cout << "No se entiende el tipo del paquete recibido." << std::endl;
 			}
 		}
 	}

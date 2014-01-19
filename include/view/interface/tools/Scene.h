@@ -21,6 +21,7 @@
    #include <GL.h>
    #include <GLU.h>
 #endif
+#include <vector>
 
 class Interface;
 
@@ -59,6 +60,9 @@ class Scene {
             , float scale, int memPos, int side);
 
 
+      void updateColor (bool, bool**);
+      void resetFloor ();
+
    private:
       const Interface* refInterface_;
       GLfloat modelviewMatrix_[16];
@@ -70,6 +74,8 @@ class Scene {
       int numberTriangMainA_;
       int numberTriangSearchA_;
       int numberQuadsWorkingA_;
+
+      std::vector<int> indicesFloorSlots_;
 
       float* vertexFloor_;
       float* vertexFloorColor_;

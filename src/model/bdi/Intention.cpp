@@ -8,12 +8,19 @@
 #include <model/bdi/Intention.h>
 #include <model/bdi/BeliefSet.h>
 #include <model/bdi/Desire.h>
+#include <model/agents/MainAgent.h>
+#include <model/agents/Agent.h>
+#include <model/agents/SearchAgent.h>
+#include <model/agents/WorkingAgent.h>
+#include <model/fipa/Package.h>
 
 #include <iostream>
 
-Intention::Intention(BeliefSet& beliefSet, Desire& desire) {
-    m_beliefSet = &beliefSet;
-    m_desire = &desire;
+Intention::Intention(const Agent& agent, BeliefSet& beliefSet, Desire& desire) :
+    m_beliefSet(&beliefSet),
+    m_desire(&desire),
+    m_agent(&dynamic_cast<MainAgent&>(const_cast<Agent&>(agent)))
+{
 }
 
 Intention::~Intention() {
@@ -45,16 +52,24 @@ void Intention::update() {
 
 void Intention::exploreMap() {
     //TODO: Comprobar el mapa y enviar a los agentes
+    for (int i = 0; i < m_agent->getVAgents().size(); ++i) {
+        if (m_agent->getVAgents()[i]->getState() == AVAILABLE) {
+        	//TODO
+        }
+    }
     if (m_beliefSet->exploredPercentage() >= 0.5) {
         m_desire->set("50_Percent_Explored", true);
     }
-    if (m_beliefSet->exploredPercentage() >= 0.8) {
+    if (m_beliefSet->exploredPercentage() >= 0.9) {
         m_desire->set("100_Percent_Explored", true);
     }
 }
 
 void Intention::findOptimalLocation() {
     //TODO: Calcular la localizacion optima
+    /*Valor agua 4, comida 2, otros 1
+     * div d^2
+     */
 }
 
 void Intention::gatherResources() {

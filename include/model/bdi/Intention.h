@@ -8,24 +8,24 @@
 #ifndef INTENTION_H_
 #define INTENTION_H_
 
-#include <string>
-#include <vector>
-
 class BeliefSet;
 class Desire;
+class Agent;
+class MainAgent;
 
-//TODO: Falta la función que realiza acciones dependiendo de la creencia y el objetivo
 class Intention {
 private:
     BeliefSet* m_beliefSet;
     Desire* m_desire;
+    MainAgent* m_agent;
+    bool m_newDesireSelected;
 
     void exploreMap();
     void findOptimalLocation();
     void gatherResources();
     void buildSettlement();
 public:
-    Intention(BeliefSet&, Desire&);
+    Intention(const Agent&, BeliefSet&, Desire&);
 	~Intention();
     void update();
 };

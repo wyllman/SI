@@ -664,12 +664,13 @@ Direction SearchAgent::calculateFinalDir(Direction theDirection) {
 }
 
 void SearchAgent::sensor() {
+    const int width = 1;
     int switchedCells = 0;
-    for (uint32_t i = m_position.first - 4; i < m_position.first + 4; ++i) {
-        for (uint32_t j = m_position.second - 4; j < m_position.second + 4; ++j) {
+    for (uint32_t i = m_position.first - width; i < m_position.first + width; ++i) {
+        for (uint32_t j = m_position.second - width; j < m_position.second + width; ++j) {
             if (std::abs(sqrt(pow(i, 2) + pow(j, 2))
                 - sqrt(pow(m_position.first, 2)
-                + pow(m_position.second, 2))) <= 4) {
+                + pow(m_position.second, 2))) <= width) {
                 if(!refMainAgent_->knownMapPosition(i, j)) {
                     refMainAgent_->setKnownMapPosition(i, j, true);
                     ++switchedCells;

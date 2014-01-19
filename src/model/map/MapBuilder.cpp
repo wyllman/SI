@@ -180,7 +180,6 @@ void MapBuilder::generateResourceType(BYTE type, Point loc) {
 		widthDistrib.reset();
 		width = widthDistrib(widthRNG);
 		
-		// FIXME Evitar el solapamiento de recursos
 		for(uint32_t j = loc.first - width; j < loc.first + width; ++j) {
 			for (uint32_t k = loc.second - width; k < loc.second + width; ++k) {
 				if (j >= 0 && j < m_mapSize && k >= 0 && k < m_mapSize) {

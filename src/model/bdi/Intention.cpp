@@ -15,6 +15,7 @@
 #include <model/fipa/Package.h>
 
 #include <iostream>
+#include <sstream>
 
 Intention::Intention(const Agent& agent, BeliefSet& beliefSet, Desire& desire) :
     m_beliefSet(&beliefSet),
@@ -53,12 +54,14 @@ void Intention::update() {
 void Intention::exploreMap() {
     //TODO: Comprobar el mapa y enviar a los agentes
 	Package* pack;
-    for (uint32_t i = 0; i < m_agent->getVAgents().size(); ++i) {
+    for (uint8_t i = 0; i < m_agent->getVAgents().size(); ++i) {
         if (m_agent->getVAgents()[i]->getState() == AVAILABLE) {
         	pack = new Package(m_agent->getNameAgent(), m_agent->getVAgents()[i]->getNameAgent(), DIRECTION_SEARCH);
-        	std::vector<std::string> caca;
-        	caca.push_back("NORTH");
-        	pack->setContent(caca);
+        	std::vector<std::string> packContent;
+        	std::stringstream ss;
+        	ss << i * 2;
+        	packContent.push_back(ss.str());
+        	pack->setContent(packContent);
         	m_agent->getVAgents()[i]->readFIPAPackage(pack);
         }
     }

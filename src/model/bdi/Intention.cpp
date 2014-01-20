@@ -81,6 +81,7 @@ void Intention::exploreMap() {
 	if (m_currentDesire == "Awaiting_Exploration_End") {
 		if (m_beliefSet->exists("NORTH") && m_beliefSet->exists("SOUTH")
 				&& m_beliefSet->exists("EAST") && m_beliefSet->exists("WEST")) {
+			std::cout << "chachi" << std::endl;
 			m_currentDesire = "Start_Sector_Exploration";
 		}
 	}

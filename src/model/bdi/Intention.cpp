@@ -17,6 +17,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <cmath>
 
 Intention::Intention(const Agent& agent, BeliefSet& beliefSet, Desire& desire) :
 		m_beliefSet(&beliefSet), m_desire(&desire), m_agent(
@@ -115,7 +116,7 @@ void Intention::buildSettlement() {
 
 void Intention::checkSectors() {
 	const int32_t SECTOR_SIZE = 10;
-	const float CELL_VALUE = 1 / pow(SECTOR_SIZE, 2);
+	const float CELL_VALUE = 1 / pow((float)SECTOR_SIZE, 2);
 	int32_t cell;
 	cell = 0;
 
@@ -130,13 +131,26 @@ void Intention::checkSectors() {
 }
 
 void Intention::sectorExploration() {
+	std::cout << "MANDANDO A EXPLORAR ANTERIOR " << std::endl;
 	const int32_t SECTORS = 100;
 	const float EXPLORED_RATIO = 0.9;
+	int row;
+	int col;
 	for(int32_t i = 0; i < m_agent->getVAgents().size(); ++i) {
 		if (m_agent->getVAgents()[i]->getState() == AVAILABLE) {
 			for (int32_t j = 0; j < SECTORS; ++j) {
 				if (m_beliefSet->getSectorExploredRatio(j) >= EXPLORED_RATIO) {
 					// TODO Enviar al puto cabrón y que haga el movimiento
+					std::cout << "MANDANDO A EXPLORAR " << std::endl;
+					row = j / 10;
+					col = j % 10;
+					row *= 10;
+					col *= 10;
+
+					m_agent->sendToRoute(m_agent->getVAgents()[i]->getPosition()
+							            , Point(row, col), const_cast<Agent*>(m_agent->getVAgents()[i])
+							            , GO_SEARCHING_LOCATION);
+
 				}
 			}
 		}

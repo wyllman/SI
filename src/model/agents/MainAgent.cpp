@@ -217,6 +217,9 @@ Package* MainAgent::readFIPAPackage (Package* p) {
 			case COME_BACK:
 				sendToRoute(p -> getRefSenderAgent() -> getPosition(), getPosition(), p -> getRefSenderAgent(), COME_BACK);
 				break;
+			case DIRECTION_SEARCH:
+
+				break;
 			default:
 				std::cout << "No se entiende el tipo del paquete recibido." << std::endl;
 			}

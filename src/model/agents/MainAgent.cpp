@@ -81,18 +81,9 @@ void MainAgent::initAgents() {
 	WorkingAgent* working4 = new WorkingAgent (this, refMap_);
 	working4 -> setPosition (Point (getPosition().first + 1, getPosition().second - 1));
 	m_WorVecAgents.push_back(working4);
-
-	sendToRoute(m_WorVecAgents[0] -> getPosition(), *(new Point (50, 50)), m_WorVecAgents[0], GO_RESOURCE_LOCATION);
 }
-bool temp = true;
+
 bool MainAgent::update () {
-
-//	if (temp) {
-//		sendToRoute(m_WorVecAgents[0] -> getPosition(), *(new Point (50, 50)));
-//		temp = false;
-//	}
-
-
 	m_intentions->update();
 
 	return updateMiniAgents();
@@ -215,7 +206,7 @@ Package* MainAgent::readFIPAPackage (Package* p) {
 				std::cout << "Se ha confirmado la finalización de la ruta." << std::endl;
 				Belief* belief;
 				belief = new Belief("AGENT_ARRIVED");
-				m_beliefSet->add(std::string(p->getSender()), belief);
+				m_beliefSet->add(p->getSender(), belief);
 				break;
 			case MAP_UPDATE:
 				break;

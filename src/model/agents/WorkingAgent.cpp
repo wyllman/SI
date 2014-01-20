@@ -5,6 +5,7 @@
  *      Author: manwe
  */
 
+#include <Tools.h>
 #include <model/agents/WorkingAgent.h>
 #include <cstring>
 
@@ -76,7 +77,7 @@ void WorkingAgent::followRoute(std::string route) {
 			dirTemp = route.substr(0, posComa);
 			route = route.substr(posComa + 1, route.length());
 		}
-		camino.push_back(translateRoute(dirTemp));
+		camino.push_back(strToDirectionEnum(dirTemp));
 	}
 
 
@@ -87,26 +88,6 @@ void WorkingAgent::followRoute(std::string route) {
 	for (unsigned int i = 0; i < m_routes.size(); ++i)
 		cout << m_routes.at(i) <<  " ";
 	cout << endl;
-}
-
-Direction WorkingAgent::translateRoute (std::string dir) {
-	if (strcmp(dir.c_str(), "NORTH") == 0) {
-		return NORTH;
-	} else if (strcmp(dir.c_str(), "SOUTH") == 0) {
-		return SOUTH;
-	} else if (strcmp(dir.c_str(), "EAST") == 0) {
-		return EAST;
-	} else if (strcmp(dir.c_str(), "WEST") == 0) {
-		return WEST;
-	} else if (strcmp(dir.c_str(), "NEAST") == 0) {
-		return NEAST;
-	} else if (strcmp(dir.c_str(), "NWEST") == 0) {
-		return NWEST;
-	} else if (strcmp(dir.c_str(), "SEAST") == 0) {
-		return SEAST;
-	} else if (strcmp(dir.c_str(), "SWEST") == 0) {
-		return SWEST;
-	}
 }
 
 void WorkingAgent::actDependingOfState () {

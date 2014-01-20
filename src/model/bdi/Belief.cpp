@@ -13,5 +13,15 @@ Belief::Belief(std::string belief) :
 
 }
 
+Belief::Belief(const char* cstr) :
+		m_belief(std::string(cstr))
+	{
+
+	}
+
 Belief::~Belief() {
+}
+
+bool Belief::operator==(const Belief& belief) {
+	return (this->m_belief == belief.m_belief);
 }

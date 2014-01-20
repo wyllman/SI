@@ -13,6 +13,7 @@
 
 #include <model/agents/tools/Node.h>
 #include <cstring>
+
 using namespace std;
 
 class WorkingAgent : public Agent {
@@ -24,7 +25,6 @@ class WorkingAgent : public Agent {
       Package* readFIPAPackage (Package*);
 
       void followRoute(std::string);
-      Direction translateRoute (std::string);
 
       unsigned int getRecolectTime() const;
       void setRecolectTime(unsigned int recolectTime);

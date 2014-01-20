@@ -81,14 +81,16 @@ void MainAgent::initAgents() {
 	WorkingAgent* working4 = new WorkingAgent (this, refMap_);
 	working4 -> setPosition (Point (getPosition().first + 1, getPosition().second - 1));
 	m_WorVecAgents.push_back(working4);
+
+	sendToRoute(m_WorVecAgents[0] -> getPosition(), *(new Point (50, 50)), m_WorVecAgents[0], GO_RESOURCE_LOCATION);
 }
 bool temp = true;
 bool MainAgent::update () {
 
-	//if (temp) {
-	//	sendToRoute(m_WorVecAgents[0] -> getPosition(), *(new Point (50, 50)));
-	//	temp = false;
-	//}
+//	if (temp) {
+//		sendToRoute(m_WorVecAgents[0] -> getPosition(), *(new Point (50, 50)));
+//		temp = false;
+//	}
 
 
 	m_intentions->update();
@@ -221,6 +223,9 @@ Package* MainAgent::readFIPAPackage (Package* p) {
 				break;
 			case END_LIMITS:
 				break;
+			case COME_BACK:
+				sendToRoute(m_WorVecAgents[0] -> getPosition(), getPosition(), m_WorVecAgents[0], COME_BACK);
+				break;
 			default:
 				std::cout << "No se entiende el tipo del paquete recibido." << std::endl;
 			}
@@ -234,7 +239,7 @@ Package* MainAgent::createFIPAPackage() {
    // FIXME: ¿ELIMINAR?
 }
 
-void MainAgent::sendToRoute(Point s, Point e) {
+void MainAgent::sendToRoute(Point s, Point e, Agent* theAgent, Type theType) {
 	PathFindingTree* tree = new PathFindingTree (this, s, e);
 	std::string route = "";
 
@@ -246,10 +251,10 @@ void MainAgent::sendToRoute(Point s, Point e) {
 	//for (unsigned int i = 0; i < getWorVecAgents().size(); ++i) {
 		//if (!doIt) {
 			//if (getWorVecAgents().at(0)->getState() == AVAILABLE) {
-				Package* p = new Package (this->getNameAgent(), getWorVecAgents()[0]->getNameAgent(), GO_RESOURCE_LOCATION);
+				Package* p = new Package (this->getNameAgent(), theAgent->getNameAgent(), theType);
 				vect.push_back(route);
 				p ->setContent(vect);
-				readFIPAPackage(getWorVecAgents()[0] -> readFIPAPackage(p));
+				readFIPAPackage(theAgent -> readFIPAPackage(p));
 
 				//doIt = true;
 			//}

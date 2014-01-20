@@ -123,6 +123,8 @@ enum State {
 	RECOLECTING,   // parado frente a fuente de recursos y recolectando
 	FULL_OF_RESOURCES, // Cuando ya recolectó el agente trabajador
 	FOLLOWING_ROUTE, // Siguiendo una ruta enviada por paquete
+	FOLLOWING_RES_ROUTE, // Siguiendo una ruta para recolectar
+	FOLLOWING_RET_ROUTE, // Siguiendo una ruta de regreso a la nave.
 	PUTTING_RESOURCE // parada en emplazamiento temporal descargando recursos
 };
 

@@ -38,7 +38,12 @@ Package* WorkingAgent::readFIPAPackage (Package* p) {
 				//Realizar búsqueda dada esta dirección
 				followRoute(p -> getContent().at(0));
 				answer = new Package (getNameAgent(), p -> getSender(), CONFIRM);
-				setState(FOLLOWING_ROUTE);
+				setState(FOLLOWING_RES_ROUTE);
+				break;
+			case COME_BACK:
+				followRoute(p -> getContent().at(0));
+				answer = new Package (getNameAgent(), p -> getSender(), CONFIRM);
+				setState(FOLLOWING_RET_ROUTE);
 				break;
 			default:
                 std::cout << "No se entiende el tipo del paquete recibido." << std::endl;
@@ -87,22 +92,37 @@ void WorkingAgent::actDependingOfState () {
 			setRecolectTime(getRecolectTime() + 1);
 		else {
 			setState(FULL_OF_RESOURCES);
+			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), COME_BACK));
 		}
 		break;
 	case FOLLOWING_ROUTE:
 		if (!routedMove()) {
-			//setState(AVAILABLE);
-			//getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
+			setState(AVAILABLE);
+			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
 		}
 		break;
 	case PUTTING_RESOURCE:
 		if (getRecolectTime() > 0) {
 			setRecolectTime(getRecolectTime() - 1);
 		} else {
-			//setState(AVAILABLE);
+			setState(AVAILABLE);
+			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), CONFIRM));
+		}
+		break;
+	case FOLLOWING_RES_ROUTE:
+		if (!routedMove()) {
+			setState(RECOLECTING);
+			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
+		}
+		break;
+	case FOLLOWING_RET_ROUTE:
+		if (!routedMove()) {
+			setState(PUTTING_RESOURCE);
+			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
 		}
 		break;
 	}
+
 }
 
 unsigned int WorkingAgent::getRecolectTime() const {

@@ -271,6 +271,11 @@ bool SearchAgent::explorationMove() {
 	return result;
 }
 
+void SearchAgent::swipeMove() {
+	const uint32_t SECTOR_SIZE = 10;
+
+}
+
 Direction SearchAgent::calculateClockDirection(Direction theDirection,
 		bool inverse) {
 	Direction result = ERROR_DIR;

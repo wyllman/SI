@@ -113,18 +113,21 @@ enum Type {
 	COME_BACK,
 	GO_LOCATION,
 	GO_RESOURCE_LOCATION,
+	GO_SEARCHING_LOCATION,
 	PUT_RESOURCE_LOCATION
 };
 
 enum State {
 	AVAILABLE = 0, // esperando a una tarea ...
 	SEARCHING,	   // realizando una exploración
+	SECOND_SEARCHING,
 	AWAITING_NEW_ORDER,
 	RECOLECTING,   // parado frente a fuente de recursos y recolectando
 	FULL_OF_RESOURCES, // Cuando ya recolectó el agente trabajador
 	FOLLOWING_ROUTE, // Siguiendo una ruta enviada por paquete
 	FOLLOWING_RES_ROUTE, // Siguiendo una ruta para recolectar
 	FOLLOWING_RET_ROUTE, // Siguiendo una ruta de regreso a la nave.
+	FOLLOWING_SEARCH_ROUTE, // Siguiendo una ruta para empezar una exploración
 	PUTTING_RESOURCE // parada en emplazamiento temporal descargando recursos
 };
 

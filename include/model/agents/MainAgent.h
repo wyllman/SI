@@ -52,7 +52,6 @@ class MainAgent: public Agent {
 
 
       Package* readFIPAPackage (Package*);
-      Package* createFIPAPackage ();
 
       void sendToRoute (Point, Point, Agent*, Type);
 

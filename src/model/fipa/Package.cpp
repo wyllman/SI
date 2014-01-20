@@ -12,6 +12,14 @@ Package::Package(char* send, char* receiv, Type type) {
 	setReceiver(receiv);
 	setType(type);
 	setIdComm(0);
+	setRefSenderAgent(NULL);
+}
+Package::Package(char* send, char* receiv, Type type, Agent* senderAgent) {
+	setSender(send);
+	setReceiver(receiv);
+	setType(type);
+	setIdComm(0);
+	setRefSenderAgent(senderAgent);
 }
 
 Package::~Package() {
@@ -57,4 +65,12 @@ std::vector<std::string>& Package::getContent() {
 
 void Package::setContent(std::vector<std::string>& content) {
 	m_content = content;
+}
+
+Agent* Package::getRefSenderAgent() {
+	return refSenderAgent_;
+}
+
+void Package::setRefSenderAgent(Agent* refSenderAgent) {
+	refSenderAgent_ = refSenderAgent;
 }

@@ -216,7 +216,10 @@ Package* MainAgent::readFIPAPackage (Package* p) {
 			case END_LIMITS:
 				break;
 			case COME_BACK:
-				sendToRoute(m_WorVecAgents[0] -> getPosition(), getPosition(), m_WorVecAgents[0], COME_BACK);
+				sendToRoute(p -> getRefSenderAgent() -> getPosition(), getPosition(), p -> getRefSenderAgent(), COME_BACK);
+				break;
+			case DIRECTION_SEARCH:
+
 				break;
 			default:
 				std::cout << "No se entiende el tipo del paquete recibido." << std::endl;
@@ -227,9 +230,6 @@ Package* MainAgent::readFIPAPackage (Package* p) {
 	return answer;
 }
 
-Package* MainAgent::createFIPAPackage() {
-   // FIXME: ¿ELIMINAR?
-}
 
 void MainAgent::sendToRoute(Point s, Point e, Agent* theAgent, Type theType) {
 	PathFindingTree* tree = new PathFindingTree (this, s, e);
@@ -239,20 +239,11 @@ void MainAgent::sendToRoute(Point s, Point e, Agent* theAgent, Type theType) {
 	route += tree -> getRoute();
 	std::cout << "Ruta mínima = " << route << std::endl;
 	std::vector<std::string> vect;
-	//bool doIt = false;
-	//for (unsigned int i = 0; i < getWorVecAgents().size(); ++i) {
-		//if (!doIt) {
-			//if (getWorVecAgents().at(0)->getState() == AVAILABLE) {
-				Package* p = new Package (this->getNameAgent(), theAgent->getNameAgent(), theType);
-				vect.push_back(route);
-				p ->setContent(vect);
-				readFIPAPackage(theAgent -> readFIPAPackage(p));
 
-				//doIt = true;
-			//}
-		//}
-	//}
-	//delete tree;
+	Package* p = new Package (this->getNameAgent(), theAgent->getNameAgent(), theType);
+	vect.push_back(route);
+	p ->setContent(vect);
+	readFIPAPackage(theAgent -> readFIPAPackage(p));
 }
 
 // Manejadores de atributos

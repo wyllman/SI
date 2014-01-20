@@ -55,6 +55,11 @@ Package* SearchAgent::readFIPAPackage(Package* p) {
 				setState(FOLLOWING_ROUTE);
 				answer = new Package(getNameAgent(), p->getSender(), CONFIRM);
 				break;
+			case GO_SEARCHING_LOCATION:
+				followRoute(p->getContent().at(0));
+				setState(FOLLOWING_SEARCH_ROUTE);
+				answer = new Package(getNameAgent(), p->getSender(), CONFIRM);
+				break;
 			default:
 				std::cout << "No se entiende el tipo del paquete recibido."
 						<< std::endl;
@@ -82,6 +87,9 @@ void SearchAgent::actDependingOfState() {
 			sensor();
 		}
 		break;
+	case SECOND_SEARCHING:
+		std::cout << "COMENZANDO EXPLORACION SECUNDARIA" << std::endl;
+		break;
 	case FOLLOWING_ROUTE:
 		std::cout << "Tam: " << getRoutes().size() << std::endl;
 		if (!routedMove()) {
@@ -89,6 +97,15 @@ void SearchAgent::actDependingOfState() {
 			getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),
 							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+		}
+		break;
+	case FOLLOWING_SEARCH_ROUTE:
+		std::cout << "CAMINANDO AL PUNTO DE BUSQUEDA" << std::endl;
+		if (!routedMove()) {
+			setState(SECOND_SEARCHING);
+			getRefMainAgent()->readFIPAPackage(
+				new Package(getNameAgent(),
+						getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
 		}
 		break;
 	default:

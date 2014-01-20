@@ -11,7 +11,9 @@
 #include <iostream>
 #include <vector>
 #include <Tools.h>
+#include <model/agents/Agent.h>
 
+class Agent;
 /**
  * \class Package
  * \brief Paquetes de protocolo de FIPA.
@@ -26,6 +28,7 @@ public:
 	 * \param type
 	 */
 	Package(char*, char*, Type);
+	Package(char*, char*, Type, Agent*);
 	virtual ~Package();
 
 	char* getSender() const;
@@ -38,9 +41,12 @@ public:
 	void setIdComm(unsigned int idComm);
 	std::vector<std::string>& getContent();
 	void setContent(std::vector<std::string>& content);
+	Agent* getRefSenderAgent();
+	void setRefSenderAgent(Agent* refSenderAgent);
 
 private:
 	char* m_sender;
+	Agent* refSenderAgent_;
 	char* m_receiver;
 	Type m_type;
 	std::vector<std::string> m_content;

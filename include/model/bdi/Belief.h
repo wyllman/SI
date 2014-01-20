@@ -24,8 +24,10 @@ private:
 	std::string m_belief;
 public:
 	Belief(std::string);
+	Belief(const char*);
 	~Belief();
-	std::string operator()() { return m_belief; }
+	std::string operator()() const { return m_belief; }
+	bool operator==(const Belief&);
 };
 
 #endif /* BELIEF_H_ */

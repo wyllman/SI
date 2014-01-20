@@ -18,6 +18,7 @@
 #define TOOLS_H_
 
 #include <map>
+#include <string>
 #include <bits/stl_pair.h>
 
 // Definiciones de tipos propios para el proyecto.
@@ -122,7 +123,13 @@ enum State {
 	RECOLECTING,   // parado frente a fuente de recursos y recolectando
 	FULL_OF_RESOURCES, // Cuando ya recolectó el agente trabajador
 	FOLLOWING_ROUTE, // Siguiendo una ruta enviada por paquete
+	FOLLOWING_RES_ROUTE, // Siguiendo una ruta para recolectar
+	FOLLOWING_RET_ROUTE, // Siguiendo una ruta de regreso a la nave.
 	PUTTING_RESOURCE // parada en emplazamiento temporal descargando recursos
 };
+
+Direction strToDirectionEnum (std::string);
+std::string directionEnumToString(Direction);
+float euclideanDistance (Point, Point);
 
 #endif /* TOOLS_H_ */

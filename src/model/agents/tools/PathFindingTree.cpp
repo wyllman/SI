@@ -47,9 +47,9 @@ void PathFindingTree::calculateHeuristicRoute () {
 void PathFindingTree::expandir () {
 	// 1º Creamos nodos auxiliares para cada movimiento posible.
 	Node* nodeNorth = new Node (Point (getActual() -> getP().first - 1, getActual() -> getP().second), "NORTH", getActual());
-	Node* nodeEast = new Node (Point (getActual() -> getP().first, getActual() -> getP().second + 1), "EAST", getActual());
+	Node* nodeEast = new Node (Point (getActual() -> getP().first, getActual() -> getP().second +1), "EAST", getActual());
 	Node* nodeSouth = new Node (Point (getActual() -> getP().first + 1, getActual() -> getP().second), "SOUTH", getActual());
-	Node* nodeWest = new Node (Point (getActual() -> getP().first, getActual() -> getP().second - 1), "WEST", getActual());
+	Node* nodeWest = new Node (Point (getActual() -> getP().first, getActual() -> getP().second -1), "WEST", getActual());
 
 	// 2º Comprobamos qué hijo se sale de los límites del tablero
 	// 3º Comprobamos que no son obtáculos.
@@ -81,13 +81,14 @@ void PathFindingTree::expandir () {
 		nodeWest->setDistFromStart(nodeWest->getDistFromStart() + 1);
 		getActual() -> getNodosHijos().push_back(nodeWest);
 	}
-
+    getActual()->setVisitado(true);
 }
 
 void PathFindingTree::calculateBetterNode () {
 	//INFO: Cola de Nodos -> push_back (), pop_front ()
 	std::queue<Node*> colaNodos;
 	Node* start = new Node ((*getRoot()));
+	Node* auxiliar = getActual();
 	int distance = 99999;
 
 	colaNodos.push(start);

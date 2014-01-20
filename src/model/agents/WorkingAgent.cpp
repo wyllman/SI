@@ -5,6 +5,7 @@
  *      Author: manwe
  */
 
+#include <Tools.h>
 #include <model/agents/WorkingAgent.h>
 #include <cstring>
 
@@ -37,7 +38,12 @@ Package* WorkingAgent::readFIPAPackage (Package* p) {
 				//Realizar búsqueda dada esta dirección
 				followRoute(p -> getContent().at(0));
 				answer = new Package (getNameAgent(), p -> getSender(), CONFIRM);
-				setState(FOLLOWING_ROUTE);
+				setState(FOLLOWING_RES_ROUTE);
+				break;
+			case COME_BACK:
+				followRoute(p -> getContent().at(0));
+				answer = new Package (getNameAgent(), p -> getSender(), CONFIRM);
+				setState(FOLLOWING_RET_ROUTE);
 				break;
 			default:
                 std::cout << "No se entiende el tipo del paquete recibido." << std::endl;
@@ -66,35 +72,17 @@ void WorkingAgent::followRoute(std::string route) {
 			dirTemp = route.substr(0, posComa);
 			route = route.substr(posComa + 1, route.length());
 		}
-		camino.push_back(translateRoute(dirTemp));
+		camino.push_back(strToDirectionEnum(dirTemp));
 	}
-	for (unsigned int i = 0; i < camino.size(); i++) {
+
+
+	for (unsigned int i = 0; i < camino.size(); ++i) {
 		m_routes.push_back(camino[camino.size() - i]);
 	}
 	cout << "RUTA que SEGUIRA el AGENTE!! " << endl;
 	for (unsigned int i = 0; i < m_routes.size(); ++i)
 		cout << m_routes.at(i) <<  " ";
 	cout << endl;
-}
-
-Direction WorkingAgent::translateRoute (std::string dir) {
-	if (strcmp(dir.c_str(), "NORTH") == 0) {
-		return NORTH;
-	} else if (strcmp(dir.c_str(), "SOUTH") == 0) {
-		return SOUTH;
-	} else if (strcmp(dir.c_str(), "EAST") == 0) {
-		return EAST;
-	} else if (strcmp(dir.c_str(), "WEST") == 0) {
-		return WEST;
-	} else if (strcmp(dir.c_str(), "NEAST") == 0) {
-		return NEAST;
-	} else if (strcmp(dir.c_str(), "NWEST") == 0) {
-		return NWEST;
-	} else if (strcmp(dir.c_str(), "SEAST") == 0) {
-		return SEAST;
-	} else if (strcmp(dir.c_str(), "SWEST") == 0) {
-		return SWEST;
-	}
 }
 
 void WorkingAgent::actDependingOfState () {
@@ -104,6 +92,7 @@ void WorkingAgent::actDependingOfState () {
 			setRecolectTime(getRecolectTime() + 1);
 		else {
 			setState(FULL_OF_RESOURCES);
+			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), COME_BACK));
 		}
 		break;
 	case FOLLOWING_ROUTE:
@@ -117,9 +106,23 @@ void WorkingAgent::actDependingOfState () {
 			setRecolectTime(getRecolectTime() - 1);
 		} else {
 			setState(AVAILABLE);
+			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), CONFIRM));
+		}
+		break;
+	case FOLLOWING_RES_ROUTE:
+		if (!routedMove()) {
+			setState(RECOLECTING);
+			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
+		}
+		break;
+	case FOLLOWING_RET_ROUTE:
+		if (!routedMove()) {
+			setState(PUTTING_RESOURCE);
+			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
 		}
 		break;
 	}
+
 }
 
 unsigned int WorkingAgent::getRecolectTime() const {

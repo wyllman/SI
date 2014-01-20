@@ -51,14 +51,14 @@ void MainAgent::initAgents() {
 	SearchAgent* searchg1 = new SearchAgent (this, refMap_);
 	searchg1 -> setPosition (Point (getPosition().first - 1, getPosition().second));
 	m_Vagents.push_back(searchg1);
-	// --- Segundo agente (Sur)
-	SearchAgent* searchg2 = new SearchAgent (this, refMap_);
-	searchg2 -> setPosition (Point (getPosition().first + 1, getPosition().second));
-	m_Vagents.push_back(searchg2);
 	// --- Tercer agente (Este)
 	SearchAgent* searchg3 = new SearchAgent (this, refMap_);
 	searchg3 -> setPosition (Point (getPosition().first, getPosition().second + 1));
 	m_Vagents.push_back(searchg3);
+	// --- Segundo agente (Sur)
+	SearchAgent* searchg2 = new SearchAgent (this, refMap_);
+	searchg2 -> setPosition (Point (getPosition().first + 1, getPosition().second));
+	m_Vagents.push_back(searchg2);
 	// --- Cuarto agente (Oeste)
 	SearchAgent* searchg4 = new SearchAgent (this, refMap_);
 	searchg4 -> setPosition (Point (getPosition().first, getPosition().second - 1));
@@ -85,23 +85,9 @@ void MainAgent::initAgents() {
 }
 
 bool MainAgent::update () {
-	bool result = false;
-
-	// TODO: crear una ruta y enviar un agente a ella!!
-	/*if (!temp) {
-		sendToRoute(getVAgents().at(0) -> getPosition(), Point (getVAgents().at(0) -> getPosition().first, getVAgents().at(0) -> getPosition().second - 10));
-		temp = true;
-		result = true;
-	}
-*/
-
-	// TODO: JUAN DESCOMENTA ESTO!!
 	m_intentions->update();
 
-
-	// TODO: JUAN DECOMENTA ESTO!1
 	return updateMiniAgents();
-	//return result;
 }
 
 bool MainAgent::updateMiniAgents () {
@@ -221,13 +207,16 @@ Package* MainAgent::readFIPAPackage (Package* p) {
 				std::cout << "Se ha confirmado la finalización de la ruta." << std::endl;
 				Belief* belief;
 				belief = new Belief("AGENT_ARRIVED");
-				m_beliefSet->add(std::string(p->getSender()), belief);
+				m_beliefSet->add(p->getSender(), belief);
 				break;
 			case MAP_UPDATE:
 				break;
 			case LOCATED_OBSTACLE:
 				break;
 			case END_LIMITS:
+				break;
+			case COME_BACK:
+				sendToRoute(m_WorVecAgents[0] -> getPosition(), getPosition(), m_WorVecAgents[0], COME_BACK);
 				break;
 			default:
 				std::cout << "No se entiende el tipo del paquete recibido." << std::endl;
@@ -239,18 +228,10 @@ Package* MainAgent::readFIPAPackage (Package* p) {
 }
 
 Package* MainAgent::createFIPAPackage() {
-	/*Package* p = new Package (getNameAgent(), getVAgents().at(0) -> getNameAgent(), CONFIRM);
-	std::cout << "Creado paquete CONFIRM por la nave principal: " << p -> getSender() << p -> getReceiver() << p -> getType() << std::endl;*/
-
-	/*Package* p = new Package (getNameAgent(), getWorVecAgents().at(0) -> getNameAgent(), GO_RESOURCE_LOCATION);
-	std::vector<std::string> temp;
-	temp.push_back();
-	p -> setContent(temp);
-	std::cout << "Creado paquete GO_RESOURCE_LOCATION por la nave principal: " << p -> getSender() << p -> getReceiver() << p -> getType() << std::endl;
-	return p;*/
+   // FIXME: ¿ELIMINAR?
 }
 
-void MainAgent::sendToRoute(Point s, Point e) {
+void MainAgent::sendToRoute(Point s, Point e, Agent* theAgent, Type theType) {
 	PathFindingTree* tree = new PathFindingTree (this, s, e);
 	std::string route = "";
 
@@ -262,10 +243,11 @@ void MainAgent::sendToRoute(Point s, Point e) {
 	//for (unsigned int i = 0; i < getWorVecAgents().size(); ++i) {
 		//if (!doIt) {
 			//if (getWorVecAgents().at(0)->getState() == AVAILABLE) {
-				Package* p = new Package (this->getNameAgent(), getWorVecAgents()[0]->getNameAgent(), GO_RESOURCE_LOCATION);
+				Package* p = new Package (this->getNameAgent(), theAgent->getNameAgent(), theType);
 				vect.push_back(route);
 				p ->setContent(vect);
-				readFIPAPackage(getWorVecAgents()[0] -> readFIPAPackage(p));
+				readFIPAPackage(theAgent -> readFIPAPackage(p));
+
 				//doIt = true;
 			//}
 		//}

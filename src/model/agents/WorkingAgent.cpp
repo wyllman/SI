@@ -12,13 +12,14 @@ using namespace std;
 
 WorkingAgent::WorkingAgent(MainAgent* mainAgent, Map* theMap): Agent (theMap), refMainAgent_ (mainAgent) {
 	setNameAgent(const_cast<char*>("WORK_AGENT"));
+	setRecolectTime(0);
 }
 
 WorkingAgent::~WorkingAgent() {
 }
 
 Package* WorkingAgent::readFIPAPackage (Package* p) {
-	Package* answer = new Package (getNameAgent(), p -> getSender(), NOT_UNDERSTOOD);
+	Package* answer;
 	// Comprobamos que el paquete es de la conversación actual
 	if (p -> getIdComm() == getIdComm()) {
 		// Comprobamos que el paquete va destinado al agente correcto
@@ -35,6 +36,7 @@ Package* WorkingAgent::readFIPAPackage (Package* p) {
 			case GO_RESOURCE_LOCATION:
 				//Realizar búsqueda dada esta dirección
 				followRoute(p -> getContent().at(0));
+				answer = new Package (getNameAgent(), p -> getSender(), CONFIRM);
 				setState(FOLLOWING_ROUTE);
 				break;
 			default:

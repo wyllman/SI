@@ -81,23 +81,19 @@ void MainAgent::initAgents() {
 	working4 -> setPosition (Point (getPosition().first + 1, getPosition().second - 1));
 	m_WorVecAgents.push_back(working4);
 
-	sendToRoute(m_WorVecAgents[0] -> getPosition(), *(new Point (50, 50)));
-//	dynamic_cast<SearchAgent*>(m_Vagents[0]) -> initExplorationMove(m_Vagents[0]->getPosition().first
-//			                                                       ,m_Vagents[0]->getPosition().second
-//	                                                               , NORTH);
-//	m_Vagents[0] -> setState(SEARCHING);
+	//sendToRoute(m_WorVecAgents[0] -> getPosition(), *(new Point (50, 50)));
 }
-bool temp = false;
+bool temp = true;
 bool MainAgent::update () {
-	bool result = false;
 
-	// TODO: JUAN DESCOMENTA ESTO!!
-	//m_intentions->update();
+	if (temp) {
+		sendToRoute(m_WorVecAgents[0] -> getPosition(), *(new Point (50, 50)));
+		temp = false;
+	}
 
+	m_intentions->update();
 
-	// TODO: JUAN DECOMENTA ESTO!1
 	return updateMiniAgents();
-	//return result;
 }
 
 bool MainAgent::updateMiniAgents () {
@@ -232,15 +228,7 @@ Package* MainAgent::readFIPAPackage (Package* p) {
 }
 
 Package* MainAgent::createFIPAPackage() {
-	/*Package* p = new Package (getNameAgent(), getVAgents().at(0) -> getNameAgent(), CONFIRM);
-	std::cout << "Creado paquete CONFIRM por la nave principal: " << p -> getSender() << p -> getReceiver() << p -> getType() << std::endl;*/
-
-	/*Package* p = new Package (getNameAgent(), getWorVecAgents().at(0) -> getNameAgent(), GO_RESOURCE_LOCATION);
-	std::vector<std::string> temp;
-	temp.push_back();
-	p -> setContent(temp);
-	std::cout << "Creado paquete GO_RESOURCE_LOCATION por la nave principal: " << p -> getSender() << p -> getReceiver() << p -> getType() << std::endl;
-	return p;*/
+   // FIXME: ¿ELIMINAR?
 }
 
 void MainAgent::sendToRoute(Point s, Point e) {

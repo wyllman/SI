@@ -133,7 +133,8 @@ void Interface::render() {
    const int NUM_QUADS_WA = scene_->getNumberQuadsWorkingA() * 4;
 
    // Eliminar los datos referentes a anteriores renderizados.
-   glClearColor(1.0, 1.0, 0.9, 1.0);
+   //glClearColor(1.0, 1.0, 0.9, 1.0);
+   glClearColor(0.0, 0.0, 0.0, 1.0);
    glClearDepth( 1.0f );
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

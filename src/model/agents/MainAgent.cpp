@@ -81,6 +81,7 @@ void MainAgent::initAgents() {
 	WorkingAgent* working4 = new WorkingAgent (this, refMap_);
 	working4 -> setPosition (Point (getPosition().first + 1, getPosition().second - 1));
 	m_WorVecAgents.push_back(working4);
+
 }
 
 bool MainAgent::update () {
@@ -115,7 +116,7 @@ void MainAgent::createRndInitialPos (Map* mainMap) {
 	boost::random::mt11213b layoutRNG;
 	boost::random::mt11213b positionRNG;
 	boost::random::mt11213b typeRNG;
-	boost::random::negative_binomial_distribution<> probabilityDistrib(3, 0.5);
+	boost::random::binomial_distribution<> probabilityDistrib(3, 0.5);
 	boost::random::uniform_int_distribution<> positionDistrib(2, MAP_WIDTH - 2); // Porque WIDTH = HEIGHT
 	boost::random::uniform_int_distribution<> typeDistrib(3, 5);
 

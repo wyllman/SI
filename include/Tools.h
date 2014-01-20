@@ -133,5 +133,6 @@ enum State {
 
 Direction strToDirectionEnum (std::string);
 std::string directionEnumToString(Direction);
+float euclideanDistance (Point, Point);
 
 #endif /* TOOLS_H_ */

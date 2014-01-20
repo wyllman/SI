@@ -8,6 +8,7 @@
 #include <Tools.h>
 
 #include <cstring>
+#include <cmath>
 
 Direction strToDirectionEnum (std::string dir) {
 	if (strcmp(dir.c_str(), "NORTH") == 0) {
@@ -61,4 +62,8 @@ std::string directionEnumToString(Direction dir) {
 			break;
 	}
 	return str;
+}
+
+float euclideanDistance (Point p, Point q) {
+	return sqrt (pow ((q.first - p.first), 2) + pow ((q.second - q.second), 2));
 }

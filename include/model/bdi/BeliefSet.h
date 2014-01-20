@@ -63,6 +63,7 @@ public:
 		return m_exploredPercentage;
 	}
 	void sumSectorExploredRatio(uint32_t, float);
+	void setSectorSettlementFactor (uint32_t, float);
 	bool exists(std::string);
 	float getSectorExploredRatio(int cell) {
 		return m_sectorExploredRatio[cell];

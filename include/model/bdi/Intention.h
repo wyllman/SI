@@ -30,6 +30,7 @@ private:
     void checkSectors();
     void checkSectorsFactor();
     void sectorExploration();
+    void gotoOptimalLocation ();
 public:
     Intention(const Agent&, BeliefSet&, Desire&);
 	~Intention();

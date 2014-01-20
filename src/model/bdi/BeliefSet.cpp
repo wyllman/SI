@@ -79,6 +79,10 @@ void BeliefSet::sumSectorExploredRatio(uint32_t cell, float value) {
 	m_sectorExploredRatio[cell] += value;
 }
 
+void BeliefSet::setSectorSettlementFactor (uint32_t cell, float value) {
+	m_sectorSettlementFactor[cell] = value;
+}
+
 bool BeliefSet::exists(std::string str) {
 	if (m_beliefSet.count(str) == 1) {
 		return true;

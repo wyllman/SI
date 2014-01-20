@@ -339,7 +339,7 @@ bool SearchAgent::onLimits() {
          break;
       case EAST: case WEST:
          if ((m_position.first >= (initPointEXPL_.first - DISTANCE))
-            && (m_position.first <= (initPointEXPL_.first+ DISTANCE))) {
+            && (m_position.first <= (initPointEXPL_.first + DISTANCE))) {
             result = true;
          }
          break;
@@ -359,7 +359,7 @@ bool SearchAgent::onLineLimits() {
          break;
       case EAST: case WEST:
          if ((m_position.first == (initPointEXPL_.first - DISTANCE))
-            || (m_position.first == (initPointEXPL_.first+ DISTANCE))) {
+            || (m_position.first == (initPointEXPL_.first + DISTANCE))) {
             result = true;
          }
          break;
@@ -371,6 +371,7 @@ bool SearchAgent::onRoute() {
 const int DISTANCE = (initPointDistanceEXPL_ - 1);
 const int DIAMET_VIEW = 3;
 const int MOD_DISTANCE = DISTANCE / DIAMET_VIEW;
+const bool EVEN = ((MOD_DISTANCE % 2) == 0);
 bool result = false;
 
 
@@ -379,7 +380,7 @@ bool result = false;
    } else if (onLineLimits()){
       switch (guideDirectionEXPL_) {
          case NORTH:
-            if ((MOD_DISTANCE % 2) == 0 ) {
+            if (EVEN) {
                if (m_position.second > initPointEXPL_.second) {
                   result = true;
                }
@@ -388,16 +389,16 @@ bool result = false;
             }
             break;
          case EAST:
-             if ((MOD_DISTANCE % 2) == 0 ) {
-                if (m_position.first < initPointEXPL_.first) {
+             if (EVEN) {
+                if (m_position.first > initPointEXPL_.first) {
                    result = true;
                 }
-             } else if (m_position.first > initPointEXPL_.first) {
+             } else if (m_position.first < initPointEXPL_.first) {
                 result = true;
              }
             break;
          case SOUTH:
-             if ((MOD_DISTANCE % 2) == 0 ) {
+             if (EVEN) {
                 if (m_position.second < initPointEXPL_.second) {
                    result = true;
                 }
@@ -406,11 +407,11 @@ bool result = false;
              }
             break;
          case WEST:
-             if ((MOD_DISTANCE % 2) == 0 ) {
-                if (m_position.first > initPointEXPL_.first) {
+             if (EVEN) {
+                if (m_position.first < initPointEXPL_.first) {
                    result = true;
                 }
-             } else if (m_position.first < initPointEXPL_.first) {
+             } else if (m_position.first > initPointEXPL_.first) {
                 result = true;
              }
             break;
@@ -426,6 +427,7 @@ Direction SearchAgent::calculateRouteDir() {
    const int DISTANCE = (initPointDistanceEXPL_ - 1);
    const int DIAMET_VIEW = 3;
    const bool ON_RECT = ((DISTANCE % DIAMET_VIEW) == 0);
+   const bool EVEN = ((initPointDistanceEXPL_ % 2) == 0);
    Direction result = ERROR_DIR;
 
    // if (onRoute()) {...codigo siguiente...};
@@ -434,19 +436,19 @@ Direction SearchAgent::calculateRouteDir() {
       case NORTH:
          if (ON_RECT) {
             if (m_position.second == initPointEXPL_.second + DISTANCE) {
-               if ((initPointDistanceEXPL_ % 2) == 0){
+               if (EVEN){
                   result = WEST;
                } else {
                   result = NEAST;
                }
             } else if (m_position.second == initPointEXPL_.second - DISTANCE) {
-                if ((initPointDistanceEXPL_ % 2) == 0){
+                if (EVEN){
                    result = NWEST;
                 } else {
                    result = EAST;
                 }
             } else {
-               if ((initPointDistanceEXPL_ % 2) == 0){
+               if (EVEN){
                   result = WEST;
                } else {
                   result = EAST;
@@ -461,13 +463,91 @@ Direction SearchAgent::calculateRouteDir() {
          }
          break;
       case EAST:
-
+         if (ON_RECT) {
+            if (m_position.first == initPointEXPL_.first + DISTANCE) {
+               if (EVEN){
+                  result = NORTH;
+               } else {
+                  result = SEAST;
+               }
+            } else if (m_position.first == initPointEXPL_.first - DISTANCE) {
+               if (EVEN){
+                  result = NEAST;
+               } else {
+                  result = SOUTH;
+               }
+            } else {
+               if (EVEN){
+                  result = NORTH;
+               } else {
+                  result = SOUTH;
+               }
+            }
+         } else {
+            if (m_position.first > initPointEXPL_.first) {
+               result = SEAST;
+            } else {
+               result = NEAST;
+            }
+         }
          break;
       case SOUTH:
-
+          if (ON_RECT) {
+             if (m_position.second == initPointEXPL_.second + DISTANCE) {
+                if (EVEN){
+                   result = SEAST;
+                } else {
+                   result = WEST;
+                }
+             } else if (m_position.second == initPointEXPL_.second - DISTANCE) {
+                 if (EVEN){
+                    result = EAST;
+                 } else {
+                    result = SWEST;
+                 }
+             } else {
+                if (EVEN){
+                   result = EAST;
+                } else {
+                   result = WEST;
+                }
+             }
+          } else {
+             if (m_position.second > initPointEXPL_.second) {
+                result = SEAST;
+             } else {
+                result = SWEST;
+             }
+          }
          break;
       case WEST:
-
+         if (ON_RECT) {
+            if (m_position.first == initPointEXPL_.first + DISTANCE) {
+               if (EVEN){
+                  result = SWEST;
+               } else {
+                  result = NORTH;
+               }
+            } else if (m_position.first == initPointEXPL_.first - DISTANCE) {
+               if (EVEN){
+                  result = SOUTH;
+               } else {
+                  result = NWEST;
+               }
+            } else {
+               if (EVEN){
+                  result = SOUTH;
+               } else {
+                  result = NORTH;
+               }
+            }
+         } else {
+            if (m_position.first > initPointEXPL_.first) {
+               result = SWEST;
+            } else {
+               result = NWEST;
+            }
+         }
          break;
       default:
          break;
@@ -502,13 +582,25 @@ Direction SearchAgent::calculateOutRouteDir() {
          }
          break;
       case EAST:
-
+          if (ON_EVEN) {
+             result = SOUTH;
+          } else {
+             result = NORTH;
+          }
          break;
       case SOUTH:
-
+         if (ON_EVEN) {
+            result = WEST;
+         } else {
+            result = EAST;
+         }
          break;
       case WEST:
-
+         if (ON_EVEN) {
+            result = NORTH;
+         } else {
+            result = SOUTH;
+         }
          break;
       default:
          break;
@@ -573,13 +665,151 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
          }
          break;
       case EAST:
-
+         if (ON_ROUTE) {
+            // Si estamos en ruta, realizar la busqueda de dos movimientos
+            // posibles calculándolos usando el sentido de las agujas de un
+            // reloj y su inverso segun la dirección de choque(theDirection).
+            switch (theDirection) {
+               case NEAST: case NORTH:
+                  tmpDir = calculateClockDirection(theDirection, false);
+                  if (checkTerrain(tmpDir)) {
+                     result = tmpDir;
+                  } else {
+                     tmpDir = calculateClockDirection(tmpDir, false);
+                     if (checkTerrain(tmpDir)) {
+                        result = tmpDir;
+                     }
+                  }
+                  break;
+               case SEAST: case SOUTH:
+                  tmpDir = calculateClockDirection(theDirection, true);
+                  if (checkTerrain(tmpDir)) {
+                     result = tmpDir;
+                  } else {
+                     tmpDir = calculateClockDirection(tmpDir, true);
+                     if (checkTerrain(tmpDir)) {
+                        result = tmpDir;
+                     }
+                  }
+                  break;
+             }
+         } else { // Si no estamos en ruta, realzar mov. rect. par/impar
+            if (theDirection == SOUTH) {
+               if (checkTerrain(SEAST)) {
+                  result = SEAST;
+               } else if (checkTerrain(EAST)){
+                 result = EAST;
+               } else if (checkTerrain(NEAST)) {
+                 result = NEAST;
+               }
+            } else if (theDirection == NORTH) {
+               if (checkTerrain(NEAST)) {
+                  result = NEAST;
+               } else if (checkTerrain(EAST)){
+                  result = EAST;
+               } else if (checkTerrain(SEAST)) {
+                  result = SEAST;
+               }
+            }
+         }
          break;
       case SOUTH:
-
+         if (ON_ROUTE) {
+           // Si estamos en ruta, realizar la busqueda de dos movimientos
+           // posibles calculándolos usando el sentido de las agujas de un
+           // reloj y su inverso segun la dirección de choque(theDirection).
+           switch (theDirection) {
+              case SEAST: case EAST:
+                 tmpDir = calculateClockDirection(theDirection, false);
+                 if (checkTerrain(tmpDir)) {
+                    result = tmpDir;
+                 } else {
+                    tmpDir = calculateClockDirection(tmpDir, false);
+                    if (checkTerrain(tmpDir)) {
+                       result = tmpDir;
+                    }
+                 }
+                 break;
+              case SWEST: case WEST:
+                 tmpDir = calculateClockDirection(theDirection, true);
+                 if (checkTerrain(tmpDir)) {
+                    result = tmpDir;
+                 } else {
+                    tmpDir = calculateClockDirection(tmpDir, true);
+                    if (checkTerrain(tmpDir)) {
+                       result = tmpDir;
+                    }
+                 }
+                 break;
+           }
+        } else { // Si no estamos en ruta, realizar movimiento recto par/impar
+            if (theDirection == EAST) {
+               if (checkTerrain(SEAST)) {
+                  result = SEAST;
+               } else if (checkTerrain(SOUTH)){
+                  result = SOUTH;
+               } else if (checkTerrain(SWEST)) {
+                  result = SWEST;
+               }
+            } else if (theDirection == WEST) {
+               if (checkTerrain(SWEST)) {
+                  result = SWEST;
+               } else if (checkTerrain(SOUTH)) {
+                  result = SOUTH;
+               } else if (checkTerrain(SEAST)) {
+                  result = SEAST;
+               }
+            }
+         }
          break;
       case WEST:
-
+         if (ON_ROUTE) {
+            // Si estamos en ruta, realizar la busqueda de dos movimientos
+            // posibles calculándolos usando el sentido de las agujas de un
+            // reloj y su inverso segun la dirección de choque(theDirection).
+            switch (theDirection) {
+               case NWEST: case NORTH:
+                  tmpDir = calculateClockDirection(theDirection, true);
+                  if (checkTerrain(tmpDir)) {
+                     result = tmpDir;
+                  } else {
+                     tmpDir = calculateClockDirection(tmpDir, true);
+                     if (checkTerrain(tmpDir)) {
+                        result = tmpDir;
+                     }
+                  }
+                  break;
+               case SWEST: case SOUTH:
+                  tmpDir = calculateClockDirection(theDirection, false);
+                  if (checkTerrain(tmpDir)) {
+                     result = tmpDir;
+                  } else {
+                     tmpDir = calculateClockDirection(tmpDir, false);
+                     if (checkTerrain(tmpDir)) {
+                        result = tmpDir;
+                     }
+                  }
+                  break;
+             }
+         } else { // Si no estamos en ruta, realzar mov. rect. par/impar
+            if (theDirection == SOUTH) {
+               if (checkTerrain(SWEST)) {
+                  result = SWEST;
+               } else if (checkTerrain(WEST)){
+                  result = WEST;
+               } else if (checkTerrain(NWEST)) {
+                  result = NWEST;
+               }
+            } else if (theDirection == NORTH) {
+               if (checkTerrain(NWEST)) {
+                  result = NWEST;
+               } else if (checkTerrain(WEST)){
+                  result = WEST;
+               } else if (checkTerrain(SWEST)) {
+                  result = SWEST;
+               }
+            }
+         }
          break;
       default:
          break;
@@ -631,13 +861,115 @@ Direction SearchAgent::calculateFinalDir(Direction theDirection) {
           }
           break;
        case EAST:
-
+           if ((theDirection == NORTH )
+               || theDirection == NEAST) {
+              if (checkTerrain(SEAST)) {
+                 result = SEAST;
+                 finalMovemnts_ = false;
+              } else if (m_position.first <= initPointEXPL_.first + DISTANCE) {
+                 if (checkTerrain(SOUTH)) {
+                    result = SOUTH;
+                 } else if (checkTerrain(SWEST)) {
+                    result = SWEST;
+                 } else if (checkTerrain(WEST)) {
+                    result = WEST;
+                 }
+              }
+           } else if ((theDirection == SOUTH)
+                      || theDirection == SEAST) {
+              if (checkTerrain(NEAST)) {
+                 result = NEAST;
+                 finalMovemnts_ = false;
+              } else if (m_position.first >= initPointEXPL_.first - DISTANCE) {
+                 if (checkTerrain(NORTH)) {
+                    result = NORTH;
+                 } else if (checkTerrain(NWEST)) {
+                    result = NWEST;
+                 } else if (checkTerrain(WEST)) {
+                     result = WEST;
+                  }
+              }
+           } else if (theDirection == EAST){
+              std::cout << "ERROR CALCULO DIR FINAL (EAST)" << std::endl;
+           } else if (theDirection == ERROR_DIR) {
+              std::cout << "ERROR CALCULO DIR FINAL (ERROR_DIR)" << std::endl;
+           } else {
+              std::cout << "ERROR CALCULO DIR FINAL (OTROS)" << std::endl;
+           }
           break;
        case SOUTH:
-
+           if ((theDirection == WEST )
+               || theDirection == SWEST) {
+              if (checkTerrain(SEAST)) {
+                 result = SEAST;
+                 finalMovemnts_ = false;
+              } else if (m_position.second <= initPointEXPL_.second + DISTANCE) {
+                 if (checkTerrain(EAST)) {
+                    result = EAST;
+                 } else if (checkTerrain(NEAST)) {
+                    result = NEAST;
+                 } else if (checkTerrain(NORTH)) {
+                    result = NORTH;
+                 }
+              }
+           } else if ((theDirection == EAST)
+                      || theDirection == SEAST) {
+              if (checkTerrain(SWEST)) {
+                 result = SWEST;
+                 finalMovemnts_ = false;
+              } else if (m_position.second >= initPointEXPL_.second - DISTANCE) {
+                 if (checkTerrain(WEST)) {
+                    result = WEST;
+                 } else if (checkTerrain(NWEST)) {
+                    result = NWEST;
+                 } else if (checkTerrain(NORTH)) {
+                     result = NORTH;
+                  }
+              }
+           } else if (theDirection == SOUTH){
+              std::cout << "ERROR CALCULO DIR FINAL (SOUTH)" << std::endl;
+           } else if (theDirection == ERROR_DIR) {
+              std::cout << "ERROR CALCULO DIR FINAL (ERROR_DIR)" << std::endl;
+           } else {
+              std::cout << "ERROR CALCULO DIR FINAL (OTROS)" << std::endl;
+           }
           break;
        case WEST:
-
+          if ((theDirection == NORTH )
+              || theDirection == NWEST) {
+             if (checkTerrain(SWEST)) {
+                result = SWEST;
+                finalMovemnts_ = false;
+             } else if (m_position.first <= initPointEXPL_.first + DISTANCE) {
+                if (checkTerrain(SOUTH)) {
+                   result = SOUTH;
+                } else if (checkTerrain(SEAST)) {
+                   result = SEAST;
+                } else if (checkTerrain(EAST)) {
+                   result = EAST;
+                }
+             }
+          } else if ((theDirection == SOUTH)
+                     || theDirection == SWEST) {
+             if (checkTerrain(NWEST)) {
+                result = NWEST;
+                finalMovemnts_ = false;
+             } else if (m_position.first >= initPointEXPL_.first - DISTANCE) {
+                if (checkTerrain(NORTH)) {
+                   result = NORTH;
+                } else if (checkTerrain(NEAST)) {
+                   result = NEAST;
+                } else if (checkTerrain(EAST)) {
+                    result = EAST;
+                 }
+             }
+          } else if (theDirection == WEST){
+             std::cout << "ERROR CALCULO DIR FINAL (WEST)" << std::endl;
+          } else if (theDirection == ERROR_DIR) {
+             std::cout << "ERROR CALCULO DIR FINAL (ERROR_DIR)" << std::endl;
+          } else {
+             std::cout << "ERROR CALCULO DIR FINAL (OTROS)" << std::endl;
+          }
           break;
        default:
           break;
@@ -649,18 +981,21 @@ Direction SearchAgent::calculateFinalDir(Direction theDirection) {
 void SearchAgent::sensor() {
     const int width = 2;
     int switchedCells = 0;
+
     ++countLoopSteps_;
     for (uint32_t i = m_position.first - width; i < m_position.first + width + 1; ++i) {
         for (uint32_t j = m_position.second - width; j < m_position.second + width + 1; ++j) {
-            if (std::abs(sqrt(pow(i, 2) + pow(j, 2))
-                - sqrt(pow(m_position.first, 2)
-                + pow(m_position.second, 2))) <= width) {
-                if(!refMainAgent_->knownMapPosition(i, j)) {
-                    countLoopSteps_ = 0;
-                    refMainAgent_->setKnownMapPosition(i, j, true);
-                    ++switchedCells;
-                    refMainAgent_->updatedKnownMap();
-                }
+            if (i < MAP_WIDTH && j < MAP_WIDTH) {
+               if (std::abs(sqrt(pow(i, 2) + pow(j, 2))
+                   - sqrt(pow(m_position.first, 2)
+                   + pow(m_position.second, 2))) <= width) {
+                   if(!refMainAgent_->knownMapPosition(i, j)) {
+                       countLoopSteps_ = 0;
+                       refMainAgent_->setKnownMapPosition(i, j, true);
+                       ++switchedCells;
+                       refMainAgent_->updatedKnownMap();
+                   }
+               }
             }
         }
     }

@@ -162,7 +162,6 @@ void Scenographer::requireUpdateFloor() {
 // ___________________________________________________________________________________
 // Manejadores públicos:
 float* Scenographer::getcolor(int row, int col) {
-   // TODO:
    return getcolor((*refMap_)(row, col));
 }
 // FIN -------------------------------------------------------------------------------

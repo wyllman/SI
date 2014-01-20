@@ -97,9 +97,9 @@ bool MainAgent::update () {
 		sendToRoute(getVAgents().at(0) -> getPosition(), Point (getVAgents().at(0) -> getPosition().first, getVAgents().at(0) -> getPosition().second - 10));
 		temp = true;
 		result = true;
-	}*/
+	}
 
-	/*
+
    if (m_WorVecAgents[0]->checkRouteMoves()) {
       if (m_WorVecAgents[0]->routedMove()) {
 //         cout << "MOVIENDO AGENTE TRABAJADOR EN RUTA"  << endl;
@@ -116,7 +116,7 @@ bool MainAgent::update () {
    }
    if (m_WorVecAgents[3]->controledMove(SWEST)) {
       result = true;
-   }*/
+   }
 
 		//Prueba de seguimiento de rutas !!
 //	  if (m_Vagents[0] -> getState() == AVAILABLE) {
@@ -133,14 +133,17 @@ bool MainAgent::update () {
 //		dirTemp2.push_back("[EAST,EAST,EAST,EAST,EAST,EAST,EAST]");
 //		q -> setContent(dirTemp2);
 //		m_WorVecAgents[0] -> readFIPAPackage(q);
-//	}
+//	}*/
+
+	// TODO: JUAN DESCOMENTA ESTO!!
+	m_intentions->update();
+
 
 	// TODO: JUAN DECOMENTA ESTO!1
 	return updateMiniAgents();
 	//return result;
 
-	// TODO: JUAN DESCOMENTA ESTO!!
-	//m_intentions->update();
+
 
 }
 

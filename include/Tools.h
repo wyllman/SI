@@ -118,6 +118,7 @@ enum Type {
 enum State {
 	AVAILABLE = 0, // esperando a una tarea ...
 	SEARCHING,	   // realizando una exploración
+	AWAITING_NEW_ORDER,
 	RECOLECTING,   // parado frente a fuente de recursos y recolectando
 	FULL_OF_RESOURCES, // Cuando ya recolectó el agente trabajador
 	FOLLOWING_ROUTE, // Siguiendo una ruta enviada por paquete

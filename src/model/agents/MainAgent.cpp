@@ -9,6 +9,7 @@
 #include <model/agents/SearchAgent.h>
 #include <model/agents/WorkingAgent.h>
 
+#include <model/bdi/Belief.h>
 #include <model/bdi/BeliefSet.h>
 #include <model/bdi/Desire.h>
 #include <model/bdi/Intention.h>
@@ -50,14 +51,14 @@ void MainAgent::initAgents() {
 	SearchAgent* searchg1 = new SearchAgent (this, refMap_);
 	searchg1 -> setPosition (Point (getPosition().first - 1, getPosition().second));
 	m_Vagents.push_back(searchg1);
-	// --- Segundo agente (Sur)
-	SearchAgent* searchg2 = new SearchAgent (this, refMap_);
-	searchg2 -> setPosition (Point (getPosition().first + 1, getPosition().second));
-	m_Vagents.push_back(searchg2);
 	// --- Tercer agente (Este)
 	SearchAgent* searchg3 = new SearchAgent (this, refMap_);
 	searchg3 -> setPosition (Point (getPosition().first, getPosition().second + 1));
 	m_Vagents.push_back(searchg3);
+	// --- Segundo agente (Sur)
+	SearchAgent* searchg2 = new SearchAgent (this, refMap_);
+	searchg2 -> setPosition (Point (getPosition().first + 1, getPosition().second));
+	m_Vagents.push_back(searchg2);
 	// --- Cuarto agente (Oeste)
 	SearchAgent* searchg4 = new SearchAgent (this, refMap_);
 	searchg4 -> setPosition (Point (getPosition().first, getPosition().second - 1));
@@ -80,16 +81,15 @@ void MainAgent::initAgents() {
 	WorkingAgent* working4 = new WorkingAgent (this, refMap_);
 	working4 -> setPosition (Point (getPosition().first + 1, getPosition().second - 1));
 	m_WorVecAgents.push_back(working4);
-
-	//sendToRoute(m_WorVecAgents[0] -> getPosition(), *(new Point (50, 50)));
 }
 bool temp = true;
 bool MainAgent::update () {
 
-	if (temp) {
-		sendToRoute(m_WorVecAgents[0] -> getPosition(), *(new Point (50, 50)));
-		temp = false;
-	}
+	//if (temp) {
+	//	sendToRoute(m_WorVecAgents[0] -> getPosition(), *(new Point (50, 50)));
+	//	temp = false;
+	//}
+
 
 	m_intentions->update();
 
@@ -211,6 +211,9 @@ Package* MainAgent::readFIPAPackage (Package* p) {
 				break;
 			case ARRIVED_GOAL:
 				std::cout << "Se ha confirmado la finalización de la ruta." << std::endl;
+				Belief* belief;
+				belief = new Belief("AGENT_ARRIVED");
+				m_beliefSet->add(std::string(p->getSender()), belief);
 				break;
 			case MAP_UPDATE:
 				break;
@@ -278,7 +281,7 @@ bool MainAgent::knownMapPosition(int i, int j) {
 }
 
 void MainAgent::checkedCells(int i) {
-    m_beliefSet->setExploredCells(i);
+    m_beliefSet->sumExploredCells(i);
 }
 
 bool** MainAgent::getKnownMap() {

@@ -27,6 +27,7 @@ private:
     void findOptimalLocation();
     void gatherResources();
     void buildSettlement();
+    void checkSectors();
 public:
     Intention(const Agent&, BeliefSet&, Desire&);
 	~Intention();

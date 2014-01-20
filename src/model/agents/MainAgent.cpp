@@ -143,9 +143,6 @@ bool MainAgent::update () {
 	// TODO: JUAN DECOMENTA ESTO!1
 	return updateMiniAgents();
 	//return result;
-
-
-
 }
 
 bool MainAgent::updateMiniAgents () {

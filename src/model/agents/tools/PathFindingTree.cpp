@@ -13,9 +13,6 @@ PathFindingTree::PathFindingTree(MainAgent* refMAg, Point s, Point e) {
 	setGoal(new Node (e, " ", getRoot()));
 	setRefMainAgent(refMAg);
 
-	std::cout << "Origen = " << getRoot()->getP().first << ", " << getRoot()->getP().second << std::endl;
-	std::cout << "Destino = " << getGoal()->getP().first << ", " << getGoal()->getP().second << std::endl;
-
 	setActual(getRoot());
 }
 
@@ -35,7 +32,7 @@ void PathFindingTree::calculateHeuristicRoute () {
 			expandir();
 			calculateBetterNode();
 		}
-		std::cout << "Acabo de calcular !! " << std::endl;
+
 		while (getActual() -> getPadre() -> getPadre() != NULL) {
 			routeMin = "," + getActual() -> getMov() + routeMin;
 			setActual(getActual() -> getPadre());
@@ -49,10 +46,6 @@ void PathFindingTree::calculateHeuristicRoute () {
 
 void PathFindingTree::expandir () {
 	// 1º Creamos nodos auxiliares para cada movimiento posible.
-	std::cout << "Expandir el nodo -> ACT = " << getActual() -> getP().first << ", " << getActual() -> getP().second << std::endl;
-	/*if (getActual()->getPadre() != NULL)
-		std::cout << "Con Padre = " << getActual() -> getPadre() << std::endl;
-*/
 	Node* nodeNorth = new Node (Point (getActual() -> getP().first - 1, getActual() -> getP().second), "NORTH", getActual());
 	Node* nodeEast = new Node (Point (getActual() -> getP().first, getActual() -> getP().second + 1), "EAST", getActual());
 	Node* nodeSouth = new Node (Point (getActual() -> getP().first + 1, getActual() -> getP().second), "SOUTH", getActual());
@@ -64,33 +57,29 @@ void PathFindingTree::expandir () {
 	if (nodeNorth -> isPointIntoLimitsMap(MAP_WIDTH, MAP_HEIGHT) &&
 		(((*getMap())(nodeNorth -> getP().first, nodeNorth -> getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) &&
 		!isInRoute(nodeNorth)) {
+		nodeNorth->setDistFromStart(nodeNorth->getDistFromStart() + 1);
 		getActual() -> getNodosHijos().push_back(nodeNorth);
-	} else {
-		//delete nodeNorth;
 	}
 
 	if (nodeEast -> isPointIntoLimitsMap(MAP_WIDTH, MAP_HEIGHT) &&
 		(((*getMap())(nodeEast -> getP().first, nodeEast -> getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) &&
 		!isInRoute(nodeEast)) {
+		nodeEast->setDistFromStart(nodeEast->getDistFromStart() + 1);
 		getActual() -> getNodosHijos().push_back(nodeEast);
-	} else {
-		//delete nodeEast;
 	}
 
 	if (nodeSouth -> isPointIntoLimitsMap(MAP_WIDTH, MAP_HEIGHT) &&
 		(((*getMap())(nodeSouth -> getP().first, nodeSouth -> getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) &&
 		!isInRoute(nodeSouth)) {
+		nodeSouth->setDistFromStart(nodeSouth->getDistFromStart() + 1);
 		getActual() -> getNodosHijos().push_back(nodeSouth);
-	} else {
-		//delete nodeSouth;
 	}
 
 	if (nodeWest -> isPointIntoLimitsMap(MAP_WIDTH, MAP_HEIGHT) &&
 		(((*getMap())(nodeWest -> getP().first, nodeWest -> getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) &&
 		!isInRoute(nodeWest)) {
+		nodeWest->setDistFromStart(nodeWest->getDistFromStart() + 1);
 		getActual() -> getNodosHijos().push_back(nodeWest);
-	} else {
-		//delete nodeWest;
 	}
 
 }
@@ -118,7 +107,6 @@ void PathFindingTree::calculateBetterNode () {
 	}
 }
 
-// TODO: NOTHING
 bool PathFindingTree::isInRoute (Node* nodeCheck) {
 	Node* temp = new Node (*(getActual()));
 	bool result = false;
@@ -129,16 +117,13 @@ bool PathFindingTree::isInRoute (Node* nodeCheck) {
 			result = true;
 		temp = temp -> getPadre();
 	}
-	//delete temp;
 	return result;
 }
 
-// TODO: NOTHING
 int PathFindingTree::heuristicValue (Node* start) {
 	return ( 	std::abs (start->getP().first - getGoal()->getP().first) +
 			std::abs (start->getP().second - getGoal()->getP().second) +
-			std::abs (getGoal()->getP().first - getRoot()->getP().first) +
-			std::abs (getGoal()->getP().second - getRoot()->getP().second) );
+			start -> getDistFromStart() );
 }
 
 Map* PathFindingTree::getMap () {

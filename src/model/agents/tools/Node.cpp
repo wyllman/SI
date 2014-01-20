@@ -13,6 +13,7 @@ Node::Node(Point p, std::string mov, Node* padre) {
 	m_padre = padre;
 
 	m_visitado = false;
+	distFromStart = 0;
 }
 
 Node::Node (const Node& p) {
@@ -21,6 +22,11 @@ Node::Node (const Node& p) {
 	m_padre = p.m_padre;
 	m_visitado = p.m_visitado;
 	m_nodosHijos = p.m_nodosHijos;
+}
+
+
+Node::~Node() {
+	delete m_padre;
 }
 
 bool Node::areEquals (Node* q) {
@@ -73,7 +79,11 @@ void Node::setNodosHijos(std::vector<Node*>& nodosHijos) {
 	m_nodosHijos = nodosHijos;
 }
 
-Node::~Node() {
-	delete m_padre;
+int Node::getDistFromStart() {
+	return distFromStart;
+}
+
+void Node::setDistFromStart(int distFromStart) {
+	this->distFromStart = distFromStart;
 }
 

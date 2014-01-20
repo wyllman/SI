@@ -75,13 +75,12 @@ void Intention::exploreMap() {
 	}
 
 	if (m_currentDesire == "Start_Sector_Exploration") {
-
+		sectorExploration();
 	}
 
 	if (m_currentDesire == "Awaiting_Exploration_End") {
 		if (m_beliefSet->exists("NORTH") && m_beliefSet->exists("SOUTH")
 				&& m_beliefSet->exists("EAST") && m_beliefSet->exists("WEST")) {
-			std::cout << "chachi" << std::endl;
 			m_currentDesire = "Start_Sector_Exploration";
 		}
 	}
@@ -115,16 +114,30 @@ void Intention::buildSettlement() {
 }
 
 void Intention::checkSectors() {
-	const int32_t sectorSize = 10;
-	const float cellValue = 1 / pow(sectorSize, 2);
+	const int32_t SECTOR_SIZE = 10;
+	const float CELL_VALUE = 1 / pow(SECTOR_SIZE, 2);
 	int32_t cell;
 	cell = 0;
 
 	for (int32_t i = 0; i < MAP_WIDTH; ++i) {
 		for (int32_t j = 0; j < MAP_WIDTH; ++j) {
 			if (m_beliefSet->getKnownMap()[i][j]) {
-				cell = (((i / sectorSize) * sectorSize) + (j / sectorSize));
-				m_beliefSet->sumSectorExploredRatio(cell, cellValue);
+				cell = (((i / SECTOR_SIZE) * SECTOR_SIZE) + (j / SECTOR_SIZE));
+				m_beliefSet->sumSectorExploredRatio(cell, CELL_VALUE);
+			}
+		}
+	}
+}
+
+void Intention::sectorExploration() {
+	const int32_t SECTORS = 100;
+	const float EXPLORED_RATIO = 0.9;
+	for(int32_t i = 0; i < m_agent->getVAgents().size(); ++i) {
+		if (m_agent->getVAgents()[i]->getState() == AVAILABLE) {
+			for (int32_t j = 0; j < SECTORS; ++j) {
+				if (m_beliefSet->getSectorExploredRatio(j) >= EXPLORED_RATIO) {
+					// TODO Enviar al puto cabrón y que haga el movimiento
+				}
 			}
 		}
 	}

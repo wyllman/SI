@@ -28,6 +28,7 @@ private:
     void gatherResources();
     void buildSettlement();
     void checkSectors();
+    void sectorExploration();
 public:
     Intention(const Agent&, BeliefSet&, Desire&);
 	~Intention();

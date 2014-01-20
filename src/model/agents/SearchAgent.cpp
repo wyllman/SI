@@ -995,7 +995,6 @@ void SearchAgent::sensor() {
                        refMainAgent_->setKnownMapPosition(i, j, true);
                        ++switchedCells;
                        refMainAgent_->updatedKnownMap();
-                       std::cout << switchedCells << std::endl;
                    }
                }
             }

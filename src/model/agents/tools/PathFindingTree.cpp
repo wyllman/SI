@@ -88,6 +88,7 @@ void PathFindingTree::calculateBetterNode () {
 	//INFO: Cola de Nodos -> push_back (), pop_front ()
 	std::queue<Node*> colaNodos;
 	Node* start = new Node ((*getRoot()));
+	Node* auxiliar = getActual();
 	int distance = 99999;
 
 	colaNodos.push(start);

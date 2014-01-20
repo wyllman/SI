@@ -54,7 +54,7 @@ class MainAgent: public Agent {
       Package* readFIPAPackage (Package*);
       Package* createFIPAPackage ();
 
-      void sendToRoute (Point, Point);
+      void sendToRoute (Point, Point, Agent*, Type);
 
    private:
       Simulator* refSimulator_;

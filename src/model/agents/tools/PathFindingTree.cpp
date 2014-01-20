@@ -48,15 +48,16 @@ void PathFindingTree::calculateHeuristicRoute () {
 }
 
 void PathFindingTree::expandir () {
+	bool check = false;
 	// 1º Creamos nodos auxiliares para cada movimiento posible.
 	std::cout << "Expandir el nodo -> ACT = " << getActual() -> getP().first << ", " << getActual() -> getP().second << std::endl;
 	/*if (getActual()->getPadre() != NULL)
 		std::cout << "Con Padre = " << getActual() -> getPadre() << std::endl;
 */
 	Node* nodeNorth = new Node (Point (getActual() -> getP().first - 1, getActual() -> getP().second), "NORTH", getActual());
-	Node* nodeEast = new Node (Point (getActual() -> getP().first, getActual() -> getP().second + 1), "EAST", getActual());
+	Node* nodeEast = new Node (Point (getActual() -> getP().first, getActual() -> getP().second +1), "EAST", getActual());
 	Node* nodeSouth = new Node (Point (getActual() -> getP().first + 1, getActual() -> getP().second), "SOUTH", getActual());
-	Node* nodeWest = new Node (Point (getActual() -> getP().first, getActual() -> getP().second - 1), "WEST", getActual());
+	Node* nodeWest = new Node (Point (getActual() -> getP().first, getActual() -> getP().second -1), "WEST", getActual());
 
 	// 2º Comprobamos qué hijo se sale de los límites del tablero
 	// 3º Comprobamos que no son obtáculos.
@@ -65,6 +66,7 @@ void PathFindingTree::expandir () {
 		(((*getMap())(nodeNorth -> getP().first, nodeNorth -> getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) &&
 		!isInRoute(nodeNorth)) {
 		getActual() -> getNodosHijos().push_back(nodeNorth);
+		check = true;
 	} else {
 		//delete nodeNorth;
 	}
@@ -73,6 +75,7 @@ void PathFindingTree::expandir () {
 		(((*getMap())(nodeEast -> getP().first, nodeEast -> getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) &&
 		!isInRoute(nodeEast)) {
 		getActual() -> getNodosHijos().push_back(nodeEast);
+		check = true;
 	} else {
 		//delete nodeEast;
 	}
@@ -81,6 +84,7 @@ void PathFindingTree::expandir () {
 		(((*getMap())(nodeSouth -> getP().first, nodeSouth -> getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) &&
 		!isInRoute(nodeSouth)) {
 		getActual() -> getNodosHijos().push_back(nodeSouth);
+		check = true;
 	} else {
 		//delete nodeSouth;
 	}
@@ -89,10 +93,13 @@ void PathFindingTree::expandir () {
 		(((*getMap())(nodeWest -> getP().first, nodeWest -> getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) &&
 		!isInRoute(nodeWest)) {
 		getActual() -> getNodosHijos().push_back(nodeWest);
+		check = true;
 	} else {
 		//delete nodeWest;
 	}
-
+	//if (check) {
+       getActual()->setVisitado(true);
+	//}
 }
 
 void PathFindingTree::calculateBetterNode () {
@@ -137,8 +144,8 @@ bool PathFindingTree::isInRoute (Node* nodeCheck) {
 int PathFindingTree::heuristicValue (Node* start) {
 	return ( 	std::abs (start->getP().first - getGoal()->getP().first) +
 			std::abs (start->getP().second - getGoal()->getP().second) +
-			std::abs (start->getP().first - getRoot()->getP().first) +
-			std::abs (start->getP().second - getRoot()->getP().second) );
+			std::abs (getGoal()->getP().first - getRoot()->getP().first) +
+			std::abs (getGoal()->getP().second - getRoot()->getP().second) );
 }
 
 Map* PathFindingTree::getMap () {

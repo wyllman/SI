@@ -979,16 +979,15 @@ Direction SearchAgent::calculateFinalDir(Direction theDirection) {
 }
 
 void SearchAgent::sensor() {
-    const int width = 2;
+    const int width = 3;
     int switchedCells = 0;
 
     ++countLoopSteps_;
-    for (uint32_t i = m_position.first - width; i < m_position.first + width + 1; ++i) {
-        for (uint32_t j = m_position.second - width; j < m_position.second + width + 1; ++j) {
-            if (i < MAP_WIDTH && j < MAP_WIDTH) {
-               if (std::abs(sqrt(pow(i, 2) + pow(j, 2))
-                   - sqrt(pow(m_position.first, 2)
-                   + pow(m_position.second, 2))) <= width) {
+    for (int32_t i = m_position.first - width; i <= m_position.first + width; ++i) {
+        for (int32_t j = m_position.second - width; j <= m_position.second + width; ++j) {
+            if ((i >= 0 && i < MAP_WIDTH) && (j >= 0 && j < MAP_WIDTH)) {
+               if (sqrt(pow((i - m_position.first), 2)
+                            + pow((j - m_position.second), 2)) <= (width * 1.0)) {
                    if(!refMainAgent_->knownMapPosition(i, j)) {
                        countLoopSteps_ = 0;
                        refMainAgent_->setKnownMapPosition(i, j, true);

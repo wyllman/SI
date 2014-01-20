@@ -81,7 +81,7 @@ void MainAgent::initAgents() {
 	working4 -> setPosition (Point (getPosition().first + 1, getPosition().second - 1));
 	m_WorVecAgents.push_back(working4);
 
-
+	sendToRoute(m_WorVecAgents[0] -> getPosition(), *(new Point (50, 50)));
 //	dynamic_cast<SearchAgent*>(m_Vagents[0]) -> initExplorationMove(m_Vagents[0]->getPosition().first
 //			                                                       ,m_Vagents[0]->getPosition().second
 //	                                                               , NORTH);
@@ -92,12 +92,12 @@ bool temp = false;
 bool MainAgent::update () {
 	bool result = false;
 
-	/*// TODO: crear una ruta y enviar un agente a ella!!
-	if (!temp) {
-		sendToRoute(getVAgents().at(0) -> getPosition(), Point (getVAgents().at(0) -> getPosition().first, getVAgents().at(0) -> getPosition().second - 10));
-		temp = true;
-		result = true;
-	}*/
+	// TODO: crear una ruta y enviar un agente a ella!!
+	//if (!temp) {
+	//	sendToRoute(m_WorVecAgents[0] -> getPosition(), *(new Point (50, 50)));
+		//temp = true;
+		//result = true;
+	//}
 
 	/*
    if (m_WorVecAgents[0]->checkRouteMoves()) {
@@ -304,10 +304,10 @@ void MainAgent::sendToRoute(Point s, Point e) {
 	//for (unsigned int i = 0; i < getWorVecAgents().size(); ++i) {
 		//if (!doIt) {
 			//if (getWorVecAgents().at(0)->getState() == AVAILABLE) {
-				Package* p = new Package (this->getNameAgent(), getVAgents().at(0)->getNameAgent(), GO_LOCATION);
+				Package* p = new Package (this->getNameAgent(), m_WorVecAgents[0]->getNameAgent(), GO_RESOURCE_LOCATION);
 				vect.push_back(route);
 				p ->setContent(vect);
-				readFIPAPackage(getVAgents().at(0) -> readFIPAPackage(p));
+				readFIPAPackage(m_WorVecAgents[0] -> readFIPAPackage(p));
 				//doIt = true;
 			//}
 		//}

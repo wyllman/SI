@@ -66,11 +66,12 @@ void WorkingAgent::followRoute(std::string route) {
 			dirTemp = route.substr(0, posComa);
 			route = route.substr(posComa + 1, route.length());
 		}
+		camino.push_back(translateRoute(dirTemp));
 	}
-	cout << "... " << dirTemp << endl;
-	camino.push_back(translateRoute(dirTemp));
-	for (unsigned int i = 0; i < camino.size(); i++) {
-		m_routes.push_back(camino[camino.size() - 1]);
+	//cout << "... " << dirTemp << endl;
+
+	for (unsigned int i = 0; i < camino.size(); ++i) {
+		m_routes.push_back(camino[camino.size() - i]);
 	}
 }
 
@@ -105,15 +106,15 @@ void WorkingAgent::actDependingOfState () {
 		break;
 	case FOLLOWING_ROUTE:
 		if (!routedMove()) {
-			setState(AVAILABLE);
-			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
+			//setState(AVAILABLE);
+			//getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
 		}
 		break;
 	case PUTTING_RESOURCE:
 		if (getRecolectTime() > 0) {
 			setRecolectTime(getRecolectTime() - 1);
 		} else {
-			setState(AVAILABLE);
+			//setState(AVAILABLE);
 		}
 		break;
 	}

@@ -81,10 +81,12 @@ void MainAgent::initAgents() {
 	working4 -> setPosition (Point (getPosition().first + 1, getPosition().second - 1));
 	m_WorVecAgents.push_back(working4);
 
-	/*dynamic_cast<SearchAgent*>(m_Vagents[0]) -> initExplorationMove(m_Vagents[0]->getPosition().first
-			                                                       ,m_Vagents[0]->getPosition().second
-	                                                               , NORTH);
-	m_Vagents[0] -> setState(SEARCHING);*/
+
+//	dynamic_cast<SearchAgent*>(m_Vagents[0]) -> initExplorationMove(m_Vagents[0]->getPosition().first
+//			                                                       ,m_Vagents[0]->getPosition().second
+//	                                                               , NORTH);
+//	m_Vagents[0] -> setState(SEARCHING);
+
 }
 bool temp = false;
 bool MainAgent::update () {
@@ -133,8 +135,13 @@ bool MainAgent::update () {
 //		m_WorVecAgents[0] -> readFIPAPackage(q);
 //	}
 
+	// TODO: JUAN DECOMENTA ESTO!1
 	//return updateMiniAgents();
 	return result;
+
+	// TODO: JUAN DESCOMENTA ESTO!!
+	//m_intentions->update();
+
 }
 
 bool MainAgent::updateMiniAgents () {

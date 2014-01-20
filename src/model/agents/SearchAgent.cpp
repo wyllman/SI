@@ -44,8 +44,8 @@ Package* SearchAgent::readFIPAPackage (Package* p) {
 				break;
 			case DIRECTION_SEARCH:
 				//Realizar búsqueda dada esta dirección
+				setNameAgent(const_cast<char*>(p->getContent()[0].c_str()));
 				localDireccionalSearch(p -> getContent().at(0));
-
 				break;
 			case GO_LOCATION:
 				followRoute(p -> getContent().at(0));
@@ -72,6 +72,7 @@ void SearchAgent::actDependingOfState () {
       case SEARCHING:
          if (!explorationMove()) {
             setState(AVAILABLE);
+            getRefMainAgent()->readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
          } else {
              sensor();
          }
@@ -80,7 +81,7 @@ void SearchAgent::actDependingOfState () {
          std::cout << "Tam: " << getRoutes().size() << std::endl;
          if (!routedMove()) {
             setState(AVAILABLE);
-            getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
+            getRefMainAgent()->readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
          }
          break;
       default:
@@ -994,6 +995,7 @@ void SearchAgent::sensor() {
                        refMainAgent_->setKnownMapPosition(i, j, true);
                        ++switchedCells;
                        refMainAgent_->updatedKnownMap();
+                       std::cout << switchedCells << std::endl;
                    }
                }
             }

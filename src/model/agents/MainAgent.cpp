@@ -9,6 +9,7 @@
 #include <model/agents/SearchAgent.h>
 #include <model/agents/WorkingAgent.h>
 
+#include <model/bdi/Belief.h>
 #include <model/bdi/BeliefSet.h>
 #include <model/bdi/Desire.h>
 #include <model/bdi/Intention.h>
@@ -86,8 +87,6 @@ void MainAgent::initAgents() {
 			                                                       ,m_Vagents[0]->getPosition().second
 	                                                               , NORTH);
 	m_Vagents[0] -> setState(SEARCHING);*/
-	sendToRoute(getWorVecAgents()[0] -> getPosition(), Point (50, 50));
-
 }
 bool temp = false;
 bool MainAgent::update () {
@@ -137,7 +136,7 @@ bool MainAgent::update () {
 //	}*/
 
 	// TODO: JUAN DESCOMENTA ESTO!!
-	//m_intentions->update();
+	m_intentions->update();
 
 
 	// TODO: JUAN DECOMENTA ESTO!1
@@ -260,6 +259,9 @@ Package* MainAgent::readFIPAPackage (Package* p) {
 				break;
 			case ARRIVED_GOAL:
 				std::cout << "Se ha confirmado la finalización de la ruta." << std::endl;
+				Belief* belief;
+				belief = new Belief("AGENT_ARRIVED");
+				m_beliefSet->add(std::string(p->getSender()), belief);
 				break;
 			case MAP_UPDATE:
 				break;
@@ -334,7 +336,7 @@ bool MainAgent::knownMapPosition(int i, int j) {
 }
 
 void MainAgent::checkedCells(int i) {
-    m_beliefSet->setExploredCells(i);
+    m_beliefSet->sumExploredCells(i);
 }
 
 bool** MainAgent::getKnownMap() {

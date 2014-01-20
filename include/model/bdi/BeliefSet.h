@@ -50,8 +50,8 @@ public:
 	void setPosition(Point);
 	void add(std::string, const Belief*);
 	void remove(std::string);
-	void setExploredCells(int);
-	float exploredPercentage() { return m_exploredCells / (MAP_WIDTH * MAP_WIDTH); }
+	void sumExploredCells(int);
+	float exploredPercentage() { return m_exploredPercentage; }
 };
 
 #endif /* BELIEFSET_H_ */

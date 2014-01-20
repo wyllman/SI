@@ -40,23 +40,37 @@ public:
 	BeliefSet();
 	~BeliefSet();
 
-	const Belief* operator()(std::string belief) { return m_beliefSet["belief"]; }
-	const Map* map() { return m_map; }
+	const Belief* operator()(std::string belief) {
+		return m_beliefSet["belief"];
+	}
+	const Map* map() {
+		return m_map;
+	}
 	void setKnownMapCell(int, int, bool);
-	bool knownMapCell(int i, int j) { return m_knownMap[i][j]; }
+	bool knownMapCell(int i, int j) {
+		return m_knownMap[i][j];
+	}
 	void setMap(Map* map);
-	bool** getKnownMap ();
-	Point position() { return m_position; }
+	bool** getKnownMap();
+	Point position() {
+		return m_position;
+	}
 	void setPosition(Point);
 	void add(std::string, const Belief*);
 	void remove(std::string);
 	void sumExploredCells(int);
-	float exploredPercentage() { return m_exploredPercentage; }
+	float exploredPercentage() {
+		return m_exploredPercentage;
+	}
 	void sumSectorExploredRatio(uint32_t, float);
 	void setSectorSettlementFactor (uint32_t, float);
 	bool exists(std::string);
-	float getSectorExploredRatio(int cell) { return m_sectorExploredRatio[cell]; }
-	float getSectorSettlementFactor(int cell) { return m_sectorSettlementFactor[cell]; }
+	float getSectorExploredRatio(int cell) {
+		return m_sectorExploredRatio[cell];
+	}
+	float getSectorSettlementFactor(int cell) {
+		return m_sectorSettlementFactor[cell];
+	}
 };
 
 #endif /* BELIEFSET_H_ */

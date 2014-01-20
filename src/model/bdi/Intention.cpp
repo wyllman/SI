@@ -67,8 +67,8 @@ void Intention::exploreMap() {
 				pack->setContent(packContent);
 				m_agent->getVAgents()[i]->readFIPAPackage(pack);
 			}
-			if (m_agent->getVAgents()[i].getState() == AVAILABLE) {
-			}
+			//if (m_agent->getVAgents()[i].getState() == AVAILABLE) {
+			//}
 		}
 	}
 	if (m_beliefSet->exploredPercentage() >= 0.5) {

@@ -137,8 +137,8 @@ bool PathFindingTree::isInRoute (Node* nodeCheck) {
 int PathFindingTree::heuristicValue (Node* start) {
 	return ( 	std::abs (start->getP().first - getGoal()->getP().first) +
 			std::abs (start->getP().second - getGoal()->getP().second) +
-			std::abs (start->getP().first - getRoot()->getP().first) +
-			std::abs (start->getP().second - getRoot()->getP().second) );
+			std::abs (getGoal()->getP().first - getRoot()->getP().first) +
+			std::abs (getGoal()->getP().second - getRoot()->getP().second) );
 }
 
 Map* PathFindingTree::getMap () {

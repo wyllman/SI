@@ -82,10 +82,11 @@ void MainAgent::initAgents() {
 	m_WorVecAgents.push_back(working4);
 
 
-	dynamic_cast<SearchAgent*>(m_Vagents[0]) -> initExplorationMove(m_Vagents[0]->getPosition().first
+	/*dynamic_cast<SearchAgent*>(m_Vagents[0]) -> initExplorationMove(m_Vagents[0]->getPosition().first
 			                                                       ,m_Vagents[0]->getPosition().second
 	                                                               , NORTH);
-	m_Vagents[0] -> setState(SEARCHING);
+	m_Vagents[0] -> setState(SEARCHING);*/
+	sendToRoute(getWorVecAgents()[0] -> getPosition(), Point (50, 50));
 
 }
 bool temp = false;
@@ -136,7 +137,7 @@ bool MainAgent::update () {
 //	}*/
 
 	// TODO: JUAN DESCOMENTA ESTO!!
-	m_intentions->update();
+	//m_intentions->update();
 
 
 	// TODO: JUAN DECOMENTA ESTO!1
@@ -302,10 +303,10 @@ void MainAgent::sendToRoute(Point s, Point e) {
 	//for (unsigned int i = 0; i < getWorVecAgents().size(); ++i) {
 		//if (!doIt) {
 			//if (getWorVecAgents().at(0)->getState() == AVAILABLE) {
-				Package* p = new Package (this->getNameAgent(), getVAgents().at(0)->getNameAgent(), GO_LOCATION);
+				Package* p = new Package (this->getNameAgent(), getWorVecAgents()[0]->getNameAgent(), GO_RESOURCE_LOCATION);
 				vect.push_back(route);
 				p ->setContent(vect);
-				readFIPAPackage(getVAgents().at(0) -> readFIPAPackage(p));
+				readFIPAPackage(getWorVecAgents()[0] -> readFIPAPackage(p));
 				//doIt = true;
 			//}
 		//}

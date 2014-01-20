@@ -130,6 +130,10 @@ void Intention::checkSectors() {
 	}
 }
 
+void Intention::checkSectorsFactor() {
+
+}
+
 void Intention::sectorExploration() {
 	std::cout << "MANDANDO A EXPLORAR ANTERIOR " << std::endl;
 	const int32_t SECTORS = 100;

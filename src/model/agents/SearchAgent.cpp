@@ -100,6 +100,7 @@ void SearchAgent::actDependingOfState() {
 		}
 		break;
 	case FOLLOWING_SEARCH_ROUTE:
+		std::cout << "CAMINANDO AL PUNTO DE BUSQUEDA" << std::endl;
 		if (!routedMove()) {
 			setState(SECOND_SEARCHING);
 			getRefMainAgent()->readFIPAPackage(

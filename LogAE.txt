@@ -8,7 +8,7 @@
 8. ---Llamando a la función init de la clase Simulator.
 9. ---Generando el Agente principal 
 10. ---Llamando a la función createRndInitialPos () del agente principal.
-11. ---Llamano a la función init de la clase Interface.
+11. ---Llamando a la función init de la clase Interface.
 12. ------Inicializando SDL en la clase Bureaucrat. 
 13. ------Generado la herramienta Window para la vista Interfaz 
 14. ------Generado la herramienta Context para la vista Interfaz 
@@ -29,14 +29,14 @@
 29. ---Destruyendo el Agente principal 
 30. ---Destruyendo el modelo Simulator 
 31. ---Llamando a la función stop de la clase Simulator.
-32. ---Llamano a la función stop de la clase Interface.
+32. ---Llamando a la función stop de la clase Interface.
 33. ------Destruyendo el gestor Bureaucrat para la vista Interfaz 
 34. ------Destruyendo el gestor Scenographer para la vista Interfaz 
 35. ------Destruyendo la herramienta Window para la vista Interfaz 
 36. ------Destruyendo la herramienta Context para la vista Interfaz 
 37. ------Destruyendo la herramienta Scene para la vista Interfaz 
 38. ---Destruyendo la vista Interfaz 
-39. ---Llamano a la función stop de la clase Interface.
+39. ---Llamando a la función stop de la clase Interface.
 40. ------Destruyendo la herramienta MainLoop para el Director 
 41. ---Llamando a la funcion stop del Director
 42. ******************************************

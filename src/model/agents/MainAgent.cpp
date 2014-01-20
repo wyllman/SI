@@ -86,67 +86,18 @@ void MainAgent::initAgents() {
 //			                                                       ,m_Vagents[0]->getPosition().second
 //	                                                               , NORTH);
 //	m_Vagents[0] -> setState(SEARCHING);
-
 }
 bool temp = false;
 bool MainAgent::update () {
 	bool result = false;
 
-	// TODO: crear una ruta y enviar un agente a ella!!
-	//if (!temp) {
-	//	sendToRoute(m_WorVecAgents[0] -> getPosition(), *(new Point (50, 50)));
-		//temp = true;
-		//result = true;
-	//}
-
-	/*
-   if (m_WorVecAgents[0]->checkRouteMoves()) {
-      if (m_WorVecAgents[0]->routedMove()) {
-//         cout << "MOVIENDO AGENTE TRABAJADOR EN RUTA"  << endl;
-         result = true;
-      }
-   } else if (m_WorVecAgents[0]->controledMove(NWEST)) {
-      result = true;
-   }
-   if (m_WorVecAgents[1]->controledMove(NEAST)) {
-      result = true;
-   }
-   if (m_WorVecAgents[2]->controledMove(SEAST)) {
-      result = true;
-   }
-   if (m_WorVecAgents[3]->controledMove(SWEST)) {
-      result = true;
-   }*/
-
-		//Prueba de seguimiento de rutas !!
-//	  if (m_Vagents[0] -> getState() == AVAILABLE) {
-//		Package* p = new Package (getNameAgent(), m_Vagents[0] -> getNameAgent(), GO_LOCATION);
-//		vector<string> dirTemp;
-//		dirTemp.push_back("[NORTH,NORTH,NORTH,NORTH,NORTH,NORTH,NORTH,NORTH]");
-//		p -> setContent(dirTemp);
-//		m_Vagents[0] -> readFIPAPackage(p);
-//	}
-
-//	if (m_WorVecAgents[0] -> getState() == AVAILABLE) {
-//		Package* q = new Package (getNameAgent(), m_WorVecAgents[0] -> getNameAgent(), GO_RESOURCE_LOCATION);
-//		vector<string> dirTemp2;
-//		dirTemp2.push_back("[EAST,EAST,EAST,EAST,EAST,EAST,EAST]");
-//		q -> setContent(dirTemp2);
-//		m_WorVecAgents[0] -> readFIPAPackage(q);
-//	}
-
-
-
 	// TODO: JUAN DESCOMENTA ESTO!!
-	m_intentions->update();
+	//m_intentions->update();
 
 
 	// TODO: JUAN DECOMENTA ESTO!1
 	return updateMiniAgents();
 	//return result;
-
-
-
 }
 
 bool MainAgent::updateMiniAgents () {
@@ -304,10 +255,11 @@ void MainAgent::sendToRoute(Point s, Point e) {
 	//for (unsigned int i = 0; i < getWorVecAgents().size(); ++i) {
 		//if (!doIt) {
 			//if (getWorVecAgents().at(0)->getState() == AVAILABLE) {
-				Package* p = new Package (this->getNameAgent(), m_WorVecAgents[0]->getNameAgent(), GO_RESOURCE_LOCATION);
+				Package* p = new Package (this->getNameAgent(), getWorVecAgents()[0]->getNameAgent(), GO_RESOURCE_LOCATION);
 				vect.push_back(route);
 				p ->setContent(vect);
-				readFIPAPackage(m_WorVecAgents[0] -> readFIPAPackage(p));
+				readFIPAPackage(getWorVecAgents()[0] -> readFIPAPackage(p));
+
 				//doIt = true;
 			//}
 		//}

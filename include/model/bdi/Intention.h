@@ -8,6 +8,8 @@
 #ifndef INTENTION_H_
 #define INTENTION_H_
 
+#include <string>
+
 class BeliefSet;
 class Desire;
 class Agent;
@@ -19,6 +21,7 @@ private:
     Desire* m_desire;
     MainAgent* m_agent;
     bool m_newDesireSelected;
+    std::string m_currentDesire;
 
     void exploreMap();
     void findOptimalLocation();

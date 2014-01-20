@@ -183,16 +183,16 @@ void Interface::logAction(int index) {
    if (BASIC_LOG) {
       switch (index) {
          case LOG_INIT:
-            std::cout << "---Generado la vista Interfaz " << std::endl;
+            std::cout << "---Generada la vista Interfaz " << std::endl;
             break;
          case LOG_END:
             std::cout << "---Destruyendo la vista Interfaz " << std::endl;
             break;
          case LOG_F_INIT:
-            std::cout << "---Llamano a la función init de la clase Interface." << std::endl;
+            std::cout << "---Llamando a la función init de la clase Interface." << std::endl;
             break;
          case LOG_F_STOP:
-            std::cout << "---Llamano a la función stop de la clase Interface." << std::endl;
+            std::cout << "---Llamando a la función stop de la clase Interface." << std::endl;
             break;
          default:
             break;
@@ -209,10 +209,10 @@ void Interface::logAction(int index) {
             fileLogTmp->insertLine("---Destruyendo la vista Interfaz ");
             break;
          case LOG_F_INIT:
-            fileLogTmp->insertLine("---Llamano a la función init de la clase Interface.");
+            fileLogTmp->insertLine("---Llamando a la función init de la clase Interface.");
             break;
          case LOG_F_STOP:
-            fileLogTmp->insertLine("---Llamano a la función stop de la clase Interface.");
+            fileLogTmp->insertLine("---Llamando a la función stop de la clase Interface.");
             break;
          default:
             break;

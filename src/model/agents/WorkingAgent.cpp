@@ -68,11 +68,15 @@ void WorkingAgent::followRoute(std::string route) {
 		}
 		camino.push_back(translateRoute(dirTemp));
 	}
-	//cout << "... " << dirTemp << endl;
 
 	for (unsigned int i = 0; i < camino.size(); ++i) {
+
 		m_routes.push_back(camino[camino.size() - i]);
 	}
+	cout << "RUTA que SEGUIRA el AGENTE!! " << endl;
+	for (unsigned int i = 0; i < m_routes.size(); ++i)
+		cout << m_routes.at(i) <<  " ";
+	cout << endl;
 }
 
 Direction WorkingAgent::translateRoute (std::string dir) {

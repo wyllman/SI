@@ -15,4 +15,3 @@ Belief::Belief(std::string belief) :
 
 Belief::~Belief() {
 }
-

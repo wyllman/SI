@@ -129,10 +129,14 @@ void Intention::checkSectors() {
 	}
 }
 
+void Intention::checkSectorsFactor() {
+
+}
+
 void Intention::sectorExploration() {
 	const int32_t SECTORS = 100;
 	const float EXPLORED_RATIO = 0.9;
-	for(int32_t i = 0; i < m_agent->getVAgents().size(); ++i) {
+	for (int32_t i = 0; i < m_agent->getVAgents().size(); ++i) {
 		if (m_agent->getVAgents()[i]->getState() == AVAILABLE) {
 			for (int32_t j = 0; j < SECTORS; ++j) {
 				if (m_beliefSet->getSectorExploredRatio(j) >= EXPLORED_RATIO) {

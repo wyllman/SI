@@ -82,10 +82,10 @@ void MainAgent::initAgents() {
 	m_WorVecAgents.push_back(working4);
 
 
-//	dynamic_cast<SearchAgent*>(m_Vagents[0]) -> initExplorationMove(m_Vagents[0]->getPosition().first
-//			                                                       ,m_Vagents[0]->getPosition().second
-//	                                                               , NORTH);
-//	m_Vagents[0] -> setState(SEARCHING);
+	dynamic_cast<SearchAgent*>(m_Vagents[0]) -> initExplorationMove(m_Vagents[0]->getPosition().first
+			                                                       ,m_Vagents[0]->getPosition().second
+	                                                               , NORTH);
+	m_Vagents[0] -> setState(SEARCHING);
 
 }
 bool temp = false;
@@ -93,11 +93,11 @@ bool MainAgent::update () {
 	bool result = false;
 
 	// TODO: crear una ruta y enviar un agente a ella!!
-	if (!temp) {
+	/*if (!temp) {
 		sendToRoute(getVAgents().at(0) -> getPosition(), Point (getVAgents().at(0) -> getPosition().first, getVAgents().at(0) -> getPosition().second - 10));
 		temp = true;
 		result = true;
-	}
+	}*/
 
 	/*
    if (m_WorVecAgents[0]->checkRouteMoves()) {
@@ -136,8 +136,8 @@ bool MainAgent::update () {
 //	}
 
 	// TODO: JUAN DECOMENTA ESTO!1
-	//return updateMiniAgents();
-	return result;
+	return updateMiniAgents();
+	//return result;
 
 	// TODO: JUAN DESCOMENTA ESTO!!
 	//m_intentions->update();

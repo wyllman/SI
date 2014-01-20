@@ -44,6 +44,11 @@ Package* WorkingAgent::readFIPAPackage (Package* p) {
 				answer = new Package (getNameAgent(), p -> getSender(), CONFIRM);
 				setState(FOLLOWING_RET_ROUTE);
 				break;
+			case GO_LOCATION:
+				followRoute(p -> getContent().at(0));
+				answer = new Package (getNameAgent(), p -> getSender(), CONFIRM);
+				setState(FOLLOWING_ROUTE);
+				break;
 			default:
                 std::cout << "No se entiende el tipo del paquete recibido." << std::endl;
 			}
@@ -111,7 +116,7 @@ void WorkingAgent::actDependingOfState () {
 			setRecolectTime(getRecolectTime() + 1);
 		else {
 			setState(FULL_OF_RESOURCES);
-			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), COME_BACK));
+			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), COME_BACK, this));
 		}
 		break;
 	case FOLLOWING_ROUTE:

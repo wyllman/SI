@@ -20,6 +20,9 @@
  * protocolo de comunicación.
  *
  */
+
+class Package;
+
 class Agent {
    private:
       State m_state;

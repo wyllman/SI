@@ -30,7 +30,7 @@ SearchAgent::~SearchAgent() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 Package* SearchAgent::readFIPAPackage (Package* p) {
-	Package* answer = new Package (getNameAgent(), p -> getSender(), NOT_UNDERSTOOD);
+	Package* answer;
 	// Comprobamos que el paquete es de la conversación actual
 	if (p -> getIdComm() == getIdComm()) {
 		// Comprobamos que el paquete va destinado al agente correcto
@@ -38,11 +38,9 @@ Package* SearchAgent::readFIPAPackage (Package* p) {
 			switch (p -> getType()) {
 			case NOT_UNDERSTOOD:
 				std::cout << "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible" << std::endl;
-				return NULL;
 				break;
 			case CONFIRM:
 				std::cout << "CONFIRM: Confirmada la operación." << std::endl;
-				return NULL;
 				break;
 			case DIRECTION_SEARCH:
 				//Realizar búsqueda dada esta dirección
@@ -51,6 +49,7 @@ Package* SearchAgent::readFIPAPackage (Package* p) {
 			case GO_LOCATION:
 				followRoute(p -> getContent().at(0));
 				setState(FOLLOWING_ROUTE);
+				answer = new Package (getNameAgent(), p -> getSender(), CONFIRM);
 				break;
 			default:
 				std::cout << "No se entiende el tipo del paquete recibido." << std::endl;

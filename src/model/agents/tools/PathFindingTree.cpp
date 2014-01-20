@@ -6,6 +6,7 @@
  */
 
 #include <model/agents/tools/PathFindingTree.h>
+#include <Tools.h>
 
 PathFindingTree::PathFindingTree(MainAgent* refMAg, Point s, Point e) {
 	setRoot(new Node (s, "RAIZ", NULL)); // Raíz no tiene padre!
@@ -27,18 +28,23 @@ PathFindingTree::~PathFindingTree() {
 // A*
 void PathFindingTree::calculateHeuristicRoute () {
 	std::string routeMin = "]";
-
-	while (!getActual() -> areEquals(getGoal())) {
-		expandir();
-		calculateBetterNode();
+	if (getActual()->getP().first > 0 && getActual()->getP().first < MAP_WIDTH &&
+			getActual()->getP().second > 0 && getActual()->getP().second < MAP_HEIGHT &&
+			((*getMap())(getActual()->getP().first, getActual()->getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
+		while (!getActual() -> areEquals(getGoal())) {
+			expandir();
+			calculateBetterNode();
+		}
+		std::cout << "Acabo de calcular !! " << std::endl;
+		while (getActual() -> getPadre() -> getPadre() != NULL) {
+			routeMin = "," + getActual() -> getMov() + routeMin;
+			setActual(getActual() -> getPadre());
+		}
+		routeMin = "[" + getActual() -> getMov() + routeMin;
+		setRoute(routeMin); // Asignamos como ruta mínima definitiva la calculada por el algoritmo
+	} else {
+		throw "AVISOOO!! No se puede calcular la ruta hacia el destino indicado!!";
 	}
-	std::cout << "Acabo de calcular !! " << std::endl;
-	while (getActual() -> getPadre() -> getPadre() != NULL) {
-		routeMin = "," + getActual() -> getMov() + routeMin;
-		setActual(getActual() -> getPadre());
-	}
-	routeMin = "[" + getActual() -> getMov() + routeMin;
-	setRoute(routeMin); // Asignamos como ruta mínima definitiva la calculada por el algoritmo
 }
 
 void PathFindingTree::expandir () {

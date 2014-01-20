@@ -86,7 +86,7 @@ void MainAgent::initAgents() {
 			                                                       ,m_Vagents[0]->getPosition().second
 	                                                               , NORTH);
 	m_Vagents[0] -> setState(SEARCHING);*/
-	sendToRoute(getWorVecAgents()[0] -> getPosition(), Point (50, 50));
+	//sendToRoute(getWorVecAgents()[0] -> getPosition(), Point (50, 50));
 
 }
 bool temp = false;
@@ -137,7 +137,7 @@ bool MainAgent::update () {
 //	}*/
 
 	// TODO: JUAN DESCOMENTA ESTO!!
-	//m_intentions->update();
+	m_intentions->update();
 
 
 	// TODO: JUAN DECOMENTA ESTO!1
@@ -171,7 +171,7 @@ void MainAgent::createRndInitialPos (Map* mainMap) {
 	boost::random::mt11213b layoutRNG;
 	boost::random::mt11213b positionRNG;
 	boost::random::mt11213b typeRNG;
-	boost::random::negative_binomial_distribution<> probabilityDistrib(3, 0.5);
+	boost::random::binomial_distribution<> probabilityDistrib(3, 0.5);
 	boost::random::uniform_int_distribution<> positionDistrib(2, MAP_WIDTH - 2); // Porque WIDTH = HEIGHT
 	boost::random::uniform_int_distribution<> typeDistrib(3, 5);
 

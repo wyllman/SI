@@ -9,6 +9,7 @@
 #include <model/agents/SearchAgent.h>
 #include <model/agents/WorkingAgent.h>
 
+#include <model/bdi/Belief.h>
 #include <model/bdi/BeliefSet.h>
 #include <model/bdi/Desire.h>
 #include <model/bdi/Intention.h>
@@ -81,15 +82,8 @@ void MainAgent::initAgents() {
 	working4 -> setPosition (Point (getPosition().first + 1, getPosition().second - 1));
 	m_WorVecAgents.push_back(working4);
 
-
-	/*dynamic_cast<SearchAgent*>(m_Vagents[0]) -> initExplorationMove(m_Vagents[0]->getPosition().first
-			                                                       ,m_Vagents[0]->getPosition().second
-	                                                               , NORTH);
-	m_Vagents[0] -> setState(SEARCHING);*/
-	//sendToRoute(getWorVecAgents()[0] -> getPosition(), Point (50, 50));
-
 }
-bool temp = false;
+
 bool MainAgent::update () {
 	bool result = false;
 
@@ -99,42 +93,7 @@ bool MainAgent::update () {
 		temp = true;
 		result = true;
 	}
-
-
-   if (m_WorVecAgents[0]->checkRouteMoves()) {
-      if (m_WorVecAgents[0]->routedMove()) {
-//         cout << "MOVIENDO AGENTE TRABAJADOR EN RUTA"  << endl;
-         result = true;
-      }
-   } else if (m_WorVecAgents[0]->controledMove(NWEST)) {
-      result = true;
-   }
-   if (m_WorVecAgents[1]->controledMove(NEAST)) {
-      result = true;
-   }
-   if (m_WorVecAgents[2]->controledMove(SEAST)) {
-      result = true;
-   }
-   if (m_WorVecAgents[3]->controledMove(SWEST)) {
-      result = true;
-   }
-
-		//Prueba de seguimiento de rutas !!
-//	  if (m_Vagents[0] -> getState() == AVAILABLE) {
-//		Package* p = new Package (getNameAgent(), m_Vagents[0] -> getNameAgent(), GO_LOCATION);
-//		vector<string> dirTemp;
-//		dirTemp.push_back("[NORTH,NORTH,NORTH,NORTH,NORTH,NORTH,NORTH,NORTH]");
-//		p -> setContent(dirTemp);
-//		m_Vagents[0] -> readFIPAPackage(p);
-//	}
-
-//	if (m_WorVecAgents[0] -> getState() == AVAILABLE) {
-//		Package* q = new Package (getNameAgent(), m_WorVecAgents[0] -> getNameAgent(), GO_RESOURCE_LOCATION);
-//		vector<string> dirTemp2;
-//		dirTemp2.push_back("[EAST,EAST,EAST,EAST,EAST,EAST,EAST]");
-//		q -> setContent(dirTemp2);
-//		m_WorVecAgents[0] -> readFIPAPackage(q);
-//	}*/
+*/
 
 	// TODO: JUAN DESCOMENTA ESTO!!
 	m_intentions->update();
@@ -260,6 +219,9 @@ Package* MainAgent::readFIPAPackage (Package* p) {
 				break;
 			case ARRIVED_GOAL:
 				std::cout << "Se ha confirmado la finalización de la ruta." << std::endl;
+				Belief* belief;
+				belief = new Belief("AGENT_ARRIVED");
+				m_beliefSet->add(std::string(p->getSender()), belief);
 				break;
 			case MAP_UPDATE:
 				break;
@@ -334,7 +296,7 @@ bool MainAgent::knownMapPosition(int i, int j) {
 }
 
 void MainAgent::checkedCells(int i) {
-    m_beliefSet->setExploredCells(i);
+    m_beliefSet->sumExploredCells(i);
 }
 
 bool** MainAgent::getKnownMap() {

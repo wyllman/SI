@@ -8,16 +8,16 @@
 #include <model/bdi/BeliefSet.h>
 #include <model/bdi/Belief.h>
 
+#include <iostream>
+
 BeliefSet::BeliefSet() {
     m_knownMap = new bool*[MAP_WIDTH];
     for (uint32_t i = 0; i < MAP_WIDTH; ++i) {
 		m_knownMap[i] = new bool[MAP_WIDTH];
+		for (uint32_t j = 0; j < MAP_WIDTH; ++j) {
+			m_knownMap[i][j] = false;
+		}
 	}
-    for (uint32_t i = 0; i < MAP_WIDTH; ++i) {
-       for (uint32_t j = 0; j < MAP_WIDTH; ++j) {
-          m_knownMap[i][j] = false;
-       }
-    }
 }
 
 BeliefSet::~BeliefSet() {
@@ -68,6 +68,7 @@ bool** BeliefSet::getKnownMap() {
    return m_knownMap;
 }
 
-void BeliefSet::setExploredCells(int i) {
+void BeliefSet::sumExploredCells(int i) {
     m_exploredCells += i;
+    m_exploredPercentage = static_cast<float>(m_exploredCells) / (MAP_WIDTH * MAP_WIDTH);
 }

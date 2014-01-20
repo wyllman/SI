@@ -1,3 +1,3 @@
 #!/bin/bash
 
-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=./SI.supp ./build/SI-Debug
+valgrind --leak-check=full --track-origins=yes --suppressions=./SI.supp ./Debug/SI

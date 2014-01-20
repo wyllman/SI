@@ -6,6 +6,7 @@
  */
 
 #include <model/bdi/Intention.h>
+#include <model/bdi/Belief.h>
 #include <model/bdi/BeliefSet.h>
 #include <model/bdi/Desire.h>
 #include <model/agents/MainAgent.h>
@@ -22,6 +23,7 @@ Intention::Intention(const Agent& agent, BeliefSet& beliefSet, Desire& desire) :
     m_desire(&desire),
     m_agent(&dynamic_cast<MainAgent&>(const_cast<Agent&>(agent)))
 {
+	m_currentDesire = "initialExploration";
 }
 
 Intention::~Intention() {
@@ -53,24 +55,28 @@ void Intention::update() {
 
 void Intention::exploreMap() {
     //TODO: Comprobar el mapa y enviar a los agentes
-	Package* pack;
-    for (uint8_t i = 0; i < m_agent->getVAgents().size(); ++i) {
-        if (m_agent->getVAgents()[i]->getState() == AVAILABLE) {
-        	pack = new Package(m_agent->getNameAgent(), m_agent->getVAgents()[i]->getNameAgent(), DIRECTION_SEARCH);
-        	std::vector<std::string> packContent;
-        	std::stringstream ss;
-        	ss << i * 2;
-        	packContent.push_back(ss.str());
-        	pack->setContent(packContent);
-        	m_agent->getVAgents()[i]->readFIPAPackage(pack);
-        }
-    }
-    if (m_beliefSet->exploredPercentage() >= 0.5) {
-        m_desire->set("50_Percent_Explored", true);
-    }
-    if (m_beliefSet->exploredPercentage() >= 0.9) {
-        m_desire->set("100_Percent_Explored", true);
-    }
+	if (m_currentDesire == "initialExploration") {
+		Package* pack;
+		for (uint32_t i = 0; i < m_agent->getVAgents().size(); ++i) {
+			if (m_agent->getVAgents()[i]->getState() == AVAILABLE) {
+				pack = new Package(m_agent->getNameAgent(), m_agent->getVAgents()[i]->getNameAgent(), DIRECTION_SEARCH);
+				std::vector<std::string> packContent;
+				std::stringstream ss;
+				ss << i * 2;
+				packContent.push_back(ss.str());
+				pack->setContent(packContent);
+				m_agent->getVAgents()[i]->readFIPAPackage(pack);
+			}
+			if (m_agent->getVAgents()[i].getState() == AVAILABLE) {
+			}
+		}
+	}
+	if (m_beliefSet->exploredPercentage() >= 0.5) {
+		m_desire->set("50_Percent_Explored", true);
+	}
+	if (m_beliefSet->exploredPercentage() >= 0.9) {
+		m_desire->set("100_Percent_Explored", true);
+	}
 }
 
 void Intention::findOptimalLocation() {

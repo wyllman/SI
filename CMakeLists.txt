@@ -94,7 +94,7 @@ find_file (
 find_package (Boost REQUIRED)
 if (Boost_FOUND)
 	include_directories (${Boost_INCLUDE_DIRS})
-	set (BOOST_RANDOM_LIB ${Boost_LIBRARY_DIRS}/libboost_random.so)
+	set (BOOST_RANDOM_LIB ${Boost_LIBRARY_DIRS}/x86_64-linux-gnu/libboost_random.so)
 endif (Boost_FOUND)
 
 if (${PROJECT_OS} MATCHES "Linux")

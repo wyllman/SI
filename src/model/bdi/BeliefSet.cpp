@@ -18,6 +18,8 @@ BeliefSet::BeliefSet() {
 			m_knownMap[i][j] = false;
 		}
 	}
+    m_sectorExploredRatio.resize(100, 0.0);
+    m_sectorSettlementFactor.resize(100, 0.0);
 }
 
 BeliefSet::~BeliefSet() {
@@ -71,4 +73,15 @@ bool** BeliefSet::getKnownMap() {
 void BeliefSet::sumExploredCells(int i) {
     m_exploredCells += i;
     m_exploredPercentage = static_cast<float>(m_exploredCells) / (MAP_WIDTH * MAP_WIDTH);
+}
+
+void BeliefSet::sumSectorExploredRatio(uint32_t cell, float value) {
+	m_sectorExploredRatio[cell] += value;
+}
+
+bool BeliefSet::exists(std::string str) {
+	if (m_beliefSet.count(str) == 1) {
+		return true;
+	}
+	return false;
 }

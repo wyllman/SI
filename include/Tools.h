@@ -18,6 +18,7 @@
 #define TOOLS_H_
 
 #include <map>
+#include <string>
 #include <bits/stl_pair.h>
 
 // Definiciones de tipos propios para el proyecto.
@@ -124,5 +125,8 @@ enum State {
 	FOLLOWING_ROUTE, // Siguiendo una ruta enviada por paquete
 	PUTTING_RESOURCE // parada en emplazamiento temporal descargando recursos
 };
+
+Direction strToDirectionEnum (std::string);
+std::string directionEnumToString(Direction);
 
 #endif /* TOOLS_H_ */

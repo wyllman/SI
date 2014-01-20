@@ -52,6 +52,8 @@ public:
 	void remove(std::string);
 	void sumExploredCells(int);
 	float exploredPercentage() { return m_exploredPercentage; }
+	void sumSectorExploredRatio(uint32_t, float);
+	bool exists(std::string);
 };
 
 #endif /* BELIEFSET_H_ */

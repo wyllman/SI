@@ -126,11 +126,13 @@ if (SDL2_FOUND)
 endif (SDL2_FOUND)
 
 # ### Compilation ###
-set (DIRS /controller /view /model)
+set (DIRS /controller /view /model) 
 
 foreach (DIR ${DIRS})
 	add_subdirectory (${PROJECT_SOURCE_DIR}${DIR})
 endforeach ()
+
+add_subdirectory (src/)
 
 # ### Linking ###
 link_directories (

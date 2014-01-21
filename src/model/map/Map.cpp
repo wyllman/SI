@@ -27,10 +27,6 @@ Map::Map() {
 	}
 }
 
-BYTE Map::operator()(int x, int y) const {
-	return m_mapArray[x][y];
-}
-
 Map::Map(const Map& map) :
 		m_size(map.size()), m_builder(NULL) {
 	this->m_mapArray = new BYTE*[m_size];
@@ -54,4 +50,3 @@ Map::~Map() {
 		m_mapArray = NULL;
 	}
 }
-

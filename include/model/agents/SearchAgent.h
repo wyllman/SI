@@ -30,7 +30,6 @@ class SearchAgent: public Agent {
 
       void localDireccionalSearch (std::string);
       void followRoute(std::string);
-      Direction translateRoute (std::string);
 
       void actDependingOfState ();
       void initExplorationMove (int row, int col, Direction guideDir);
@@ -46,9 +45,12 @@ class SearchAgent: public Agent {
       bool finalMovemnts_;
       Direction finalDirecton_;
       int countLoopSteps_;
-
+      
+      // Atributos para el movimiento exploratorio local
+      Direction m_lastLocalDirection;
+      
       bool explorationMove ();
-      void swipeMove();
+      bool swipeMove(const Point&, const Point&);
 
       // Comprobaciones para el movimiento exploratorio
       // ---Posicionesvde terreno

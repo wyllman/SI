@@ -193,8 +193,8 @@ bool SearchAgent::explorationMove() {
 	Direction directionAct = ERROR_DIR;
 	Direction tempDir = ERROR_DIR;
 
-	if (countLoopSteps_ >= 200) {
-		return result;
+	if (countLoopSteps_ >= 50) {
+		return false;
 	}
 
 	// Realizar el primer paso.
@@ -239,26 +239,12 @@ bool SearchAgent::explorationMove() {
 					tempDir = calculateObstaclDir(directionAct);
 					if (tempDir != ERROR_DIR) {
 						directionAct = tempDir;
-						if (controledMove(directionAct)) { // FIXME: ELIMINAR ESTA CONDICION Y SU ELSE
-							updateDistance(directionAct);
-							lastMoveDirEXPL_ = directionAct;
-							result = true;
-						} else {
-							finalDirecton_ = directionAct;
-							finalMovemnts_ = true;
-							directionAct = calculateFinalDir(finalDirecton_);
-							if (directionAct != ERROR_DIR) {
-								if (controledMove(directionAct)) {
-									updateDistance(directionAct);
-									lastMoveDirEXPL_ = directionAct;
-									result = true;
-								}
-							} else {
-								//finalDirecton_ = ERROR_DIR;
-								std::cout << "ERROR FIN CAMINO INCORRECTO"
-										<< std::endl;
-							}
-						}
+						controledMove(directionAct); // FIXME: ELIMINAR ESTA CONDICION Y SU ELSE
+						updateDistance(directionAct);
+						lastMoveDirEXPL_ = directionAct;
+						result = true;
+
+
 					} else {
 						finalDirecton_ = directionAct;
 						finalMovemnts_ = true;

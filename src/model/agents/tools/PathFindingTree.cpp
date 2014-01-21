@@ -54,7 +54,7 @@ void PathFindingTree::calculateHeuristicRoute() {
 }
 
 void PathFindingTree::expandir() {
-	int firstTmp = getActual()->getP().first + 1;
+	int firstTmp = getActual()->getP().first - 1;
 	int secondTmp = getActual()->getP().second;
 
 	if ((firstTmp >= 0)
@@ -97,7 +97,7 @@ void PathFindingTree::expandir() {
 		}
 	}
 
-	firstTmp = getActual()->getP().first - 1;
+	firstTmp = getActual()->getP().first + 1;
 	secondTmp = getActual()->getP().second;
 
 	if ((firstTmp >= 0)

@@ -87,7 +87,7 @@ void SearchAgent::actDependingOfState() {
 			setState(FOLLOWING_RET_ROUTE);
 			getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),
-							getRefMainAgent()->getNameAgent(), COME_BACK, this));
+							getRefMainAgent()->getNameAgent(), CONFIRM));
 		} else {
 			sensor();
 		}

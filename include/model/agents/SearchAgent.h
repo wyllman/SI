@@ -48,6 +48,7 @@ class SearchAgent: public Agent {
       int countLoopSteps_;
 
       bool explorationMove ();
+      void swipeMove();
 
       // Comprobaciones para el movimiento exploratorio
       // ---Posicionesvde terreno

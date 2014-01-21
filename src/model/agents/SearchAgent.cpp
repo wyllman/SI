@@ -104,8 +104,8 @@ void SearchAgent::actDependingOfState() {
 		if (!routedMove()) {
 			setState(SECOND_SEARCHING);
 			getRefMainAgent()->readFIPAPackage(
-				new Package(getNameAgent(),
-						getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+					new Package(getNameAgent(),
+							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
 		}
 		break;
 	default:
@@ -272,6 +272,15 @@ bool SearchAgent::explorationMove() {
 		}
 	}
 	return result;
+}
+
+void SearchAgent::swipeMove() {
+	const uint32_t SECTOR_SIZE = 10;
+	Point position = m_position;
+	Direction lastMovement;
+	Direction nextMovement;
+
+
 }
 
 Direction SearchAgent::calculateClockDirection(Direction theDirection,

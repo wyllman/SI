@@ -51,7 +51,6 @@ Scene::~Scene() {
 // ___________________________________________________________________________________
 // Métodos públicos:
 void Scene::updateColor(bool mask, bool** knownMask) {
-   // TODO:
    int vecSize = indicesFloorSlots_.size();
    int firstInd;
    int lastInd;

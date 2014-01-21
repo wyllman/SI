@@ -27,7 +27,6 @@ class Agent {
    private:
       State m_state;
 
-      // FIXME: dejo aquí que un agente conoce en qué comunicación está embebido
       unsigned int m_idComm;
       char* m_nameAgent;
 

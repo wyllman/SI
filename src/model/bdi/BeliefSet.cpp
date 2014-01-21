@@ -33,7 +33,7 @@ BeliefSet::~BeliefSet() {
     }
     for (std::map<std::string, const Belief*>::iterator i = m_beliefSet.begin();
          i != m_beliefSet.end(); ++i) {
-        // TODO: Liberar la memoria
+        // FIXME: Liberar la memoria
     }
 }
 

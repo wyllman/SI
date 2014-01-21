@@ -17,24 +17,24 @@ class MainAgent;
 
 class Intention {
 private:
-    BeliefSet* m_beliefSet;
-    Desire* m_desire;
-    MainAgent* m_agent;
-    bool m_newDesireSelected;
-    std::string m_currentDesire;
+	BeliefSet* m_beliefSet;
+	Desire* m_desire;
+	MainAgent* m_agent;
+	bool m_newDesireSelected;
+	std::string m_currentDesire;
 
-    void exploreMap();
-    void findOptimalLocation();
-    void gatherResources();
-    void buildSettlement();
-    void checkSectors();
-    void checkSectorsFactor();
-    void sectorExploration();
-    void gotoOptimalLocation ();
+	void exploreMap();
+	void findOptimalLocation();
+	void gatherResources();
+	void buildSettlement();
+	void checkSectors();
+	void checkSectorsFactor();
+	void sectorExploration();
+	void gotoOptimalLocation();
 public:
-    Intention(const Agent&, BeliefSet&, Desire&);
+	Intention(const Agent&, BeliefSet&, Desire&);
 	~Intention();
-    void update();
+	void update();
 };
 
 #endif /* INTENTION_H_ */

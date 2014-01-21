@@ -89,3 +89,16 @@ bool BeliefSet::exists(std::string str) {
 	}
 	return false;
 }
+
+void BeliefSet::resetSectorExploredRatio() {
+	m_sectorExploredRatio.clear();
+	m_sectorExploredRatio.resize(100, 0);
+}
+
+float BeliefSet::getSectorExploredRatio(int cell) {
+	if (cell < 0)
+		cell = 0;
+	if (cell > MAP_WIDTH)
+		cell = MAP_WIDTH - 1;
+	return m_sectorExploredRatio[cell];
+}

@@ -111,6 +111,8 @@ void SearchAgent::actDependingOfState() {
 			getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),
 							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+		} else {
+			sensor();
 		}
 		break;
 	default:

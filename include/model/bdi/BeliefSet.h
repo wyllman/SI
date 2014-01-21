@@ -64,10 +64,9 @@ public:
 	}
 	void sumSectorExploredRatio(uint32_t, float);
 	void setSectorSettlementFactor(uint32_t, float);
+	void resetSectorExploredRatio();
 	bool exists(std::string);
-	float getSectorExploredRatio(int cell) {
-		return m_sectorExploredRatio[cell];
-	}
+	float getSectorExploredRatio(int cell);
 	float getSectorSettlementFactor(int cell) {
 		return m_sectorSettlementFactor[cell];
 	}

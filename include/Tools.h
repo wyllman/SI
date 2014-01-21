@@ -33,7 +33,7 @@ const double MIN_TIME_DIFF = 1 / 45; // Tiempo de actualización para los evento
 const double MIN_TIME2_DIFF = 1 / 1.0; // Tiempos de actualización para el simulador.
 const double MIN_TIME3_DIFF = 1 / 2.0;
 const double MIN_TIME4_DIFF = 1 / 5.0;
-const double MIN_TIME5_DIFF = 1 / 10.0;
+const double MIN_TIME5_DIFF = 1 / 40.0;
 
 // Conjunto de constantes de configuración de la interfaz gráfica
 //   Ventana:

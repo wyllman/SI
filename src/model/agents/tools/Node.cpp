@@ -8,7 +8,8 @@
 #include <model/agents/tools/Node.h>
 
 Node::Node(Point p, std::string mov, Node* padre) {
-	m_p = p;
+	m_p.first = p.first;
+	m_p.second = p.second;
 	m_mov = mov;
 	m_padre = padre;
 
@@ -17,11 +18,12 @@ Node::Node(Point p, std::string mov, Node* padre) {
 }
 
 Node::Node (const Node& p) {
-	m_p = p.m_p;
-	m_mov = p.m_mov;
+	m_p.first = p.m_p.first;
+	m_p.second = p.m_p.second;
 	m_padre = p.m_padre;
 	m_visitado = p.m_visitado;
 	m_nodosHijos = p.m_nodosHijos;
+	distFromStart = p.distFromStart;
 }
 
 
@@ -37,7 +39,7 @@ bool Node::areEquals (Node* q) {
 	return result;
 }
 
-bool Node::isPointIntoLimitsMap (int widthMap, int heightMap) {
+bool Node::isPointIntoMapLimits (int widthMap, int heightMap) {
 	bool intoMap = false;
 	if (this -> getP().first >= 0 && this -> getP().first < widthMap &&
 			this -> getP().second >= 0 && this -> getP().second < heightMap)
@@ -67,7 +69,7 @@ void Node::setVisitado(bool visitado) {
 	m_visitado = visitado;
 }
 
-Node* Node::getPadre() {
+const Node* Node::getPadre() {
 	return m_padre;
 }
 
@@ -81,6 +83,14 @@ void Node::setNodosHijos(std::vector<Node*>& nodosHijos) {
 
 int Node::getDistFromStart() {
 	return distFromStart;
+}
+
+int Node::getHeurVal() const {
+	return heurVal_;
+}
+
+void Node::setHeurVal(int heurVal) {
+	heurVal_ = heurVal;
 }
 
 void Node::setDistFromStart(int distFromStart) {

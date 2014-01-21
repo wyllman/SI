@@ -9,8 +9,8 @@
 #include <Tools.h>
 
 PathFindingTree::PathFindingTree(MainAgent* refMAg, Point s, Point e) {
-	setRoot(new Node (s, "RAIZ", NULL)); // Raíz no tiene padre!
-	setGoal(new Node (e, " ", getRoot()));
+	setRoot(new Node(s, "RAIZ", NULL)); // Raíz no tiene padre!
+	setGoal(new Node(e, " ", getRoot()));
 	setRefMainAgent(refMAg);
 
 	setActual(getRoot());
@@ -23,101 +23,172 @@ PathFindingTree::~PathFindingTree() {
 }
 
 // A*
-void PathFindingTree::calculateHeuristicRoute () {
+
+void PathFindingTree::calculateHeuristicRoute() {
+	elPutoVector.clear();
 	std::string routeMin = "]";
-	if ((getActual()->getP().first > 0 && getActual()->getP().first < MAP_WIDTH) &&
-			(getActual()->getP().second > 0 && getActual()->getP().second < MAP_HEIGHT) &&
-			(((*getMap())(getActual()->getP().first, getActual()->getP().second) & MASK_TERRAIN) == TERRAIN_GROUND)) {
-		while (!getActual() -> areEquals(getGoal())) {
+	if (getActual()->getP().first > 0 && getActual()->getP().first < MAP_WIDTH
+			&& getActual()->getP().second > 0
+			&& getActual()->getP().second < MAP_HEIGHT
+			&& ((*getMap())(getGoal()->getP().first,
+					getGoal()->getP().second) & MASK_TERRAIN)
+					== TERRAIN_GROUND) {
+		while (!getActual()->areEquals(getGoal())) {
 			expandir();
+			//std::cout<< "Expandiendo Nodo actual"<<std::endl;
 			calculateBetterNode();
+			//std::cout<< "Calculando Mejor Nodo"<<std::endl;
+			//std::cin.get();
 		}
 
-		while (getActual() -> getPadre() != NULL) {
-			routeMin = "," + getActual() -> getMov() + routeMin;
-			setActual(getActual() -> getPadre());
+
+		while (const_cast<Node*>(getActual()->getPadre()) != NULL) {
+			routeMin = "," + getActual()->getMov() + routeMin;
+			setActual(const_cast<Node*> (getActual()->getPadre()));
 		}
-		routeMin = "[" + getActual() -> getMov() + routeMin;
+		routeMin = "[" + getActual()->getMov() + routeMin;
 		setRoute(routeMin); // Asignamos como ruta mínima definitiva la calculada por el algoritmo
 	} else {
 		throw "AVISOOO!! No se puede calcular la ruta hacia el destino indicado!!";
 	}
 }
 
-void PathFindingTree::expandir () {
-	// 1º Creamos nodos auxiliares para cada movimiento posible.
-	Node* nodeNorth = new Node (Point (getActual() -> getP().first - 1, getActual() -> getP().second), "NORTH", getActual());
-	Node* nodeEast = new Node (Point (getActual() -> getP().first, getActual() -> getP().second + 1), "EAST", getActual());
-	Node* nodeSouth = new Node (Point (getActual() -> getP().first + 1, getActual() -> getP().second), "SOUTH", getActual());
-	Node* nodeWest = new Node (Point (getActual() -> getP().first, getActual() -> getP().second - 1), "WEST", getActual());
+void PathFindingTree::expandir() {
+	int firstTmp = getActual()->getP().first + 1;
+	int secondTmp = getActual()->getP().second;
 
-	// 2º Comprobamos qué hijo se sale de los límites del tablero
-	// 3º Comprobamos que no son obtáculos.
-	// 4º Comprobamos que no están en la ruta mínima.
-	if (nodeNorth -> isPointIntoLimitsMap(MAP_WIDTH, MAP_HEIGHT) &&
-		(((*getMap())(nodeNorth -> getP().first, nodeNorth -> getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) &&
-		!isInRoute(nodeNorth)) {
-		nodeNorth->setDistFromStart(getActual()->getDistFromStart() + 1);
-		getActual() -> getNodosHijos().push_back(nodeNorth);
+	if ((firstTmp >= 0)
+		&& (firstTmp < MAP_WIDTH)
+		&& (secondTmp >= 0)
+		&& (secondTmp < MAP_WIDTH)
+		&& m_refMainAgent->getKnownMap()[firstTmp][secondTmp]
+		&& (((*getMap())(firstTmp, secondTmp)) & MASK_TERRAIN) == TERRAIN_GROUND) {
+
+		Node* nodeNorth = new Node( Point(firstTmp, secondTmp),
+			"NORTH", getActual());
+		if (!isInRoute(nodeNorth)) {
+			nodeNorth->setDistFromStart(getActual()->getDistFromStart() + 1);
+			getActual()->getNodosHijos().push_back(nodeNorth);
+
+			//nodeNorth->setHeurVal(heuristicValue(nodeNorth));
+			elPutoVector.push_back(nodeNorth);
+		}
 	}
 
-	if (nodeEast -> isPointIntoLimitsMap(MAP_WIDTH, MAP_HEIGHT) &&
-		(((*getMap())(nodeEast -> getP().first, nodeEast -> getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) &&
-		!isInRoute(nodeEast)) {
-		nodeEast->setDistFromStart(getActual()->getDistFromStart() + 1);
-		getActual() -> getNodosHijos().push_back(nodeEast);
+	firstTmp = getActual()->getP().first;
+	secondTmp = getActual()->getP().second + 1;
+
+	if ((firstTmp >= 0)
+		&& (firstTmp < MAP_WIDTH)
+		&& (secondTmp >= 0)
+		&& (secondTmp < MAP_WIDTH)
+		&& m_refMainAgent->getKnownMap()[firstTmp][secondTmp]
+		&& (((*getMap())(firstTmp, secondTmp)) & MASK_TERRAIN) == TERRAIN_GROUND) {
+
+		Node* nodeEast = new Node( Point(firstTmp, secondTmp),
+			"EAST", getActual());
+		if (!isInRoute(nodeEast)) {
+			nodeEast->setDistFromStart(getActual()->getDistFromStart() + 1);
+			getActual()->getNodosHijos().push_back(nodeEast);
+
+			//nodeEast->setHeurVal(heuristicValue(nodeEast));
+			elPutoVector.push_back(nodeEast);
+
+		}
 	}
 
-	if (nodeSouth -> isPointIntoLimitsMap(MAP_WIDTH, MAP_HEIGHT) &&
-		(((*getMap())(nodeSouth -> getP().first, nodeSouth -> getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) &&
-		!isInRoute(nodeSouth)) {
-		nodeSouth->setDistFromStart(getActual()->getDistFromStart() + 1);
-		getActual() -> getNodosHijos().push_back(nodeSouth);
+	firstTmp = getActual()->getP().first - 1;
+	secondTmp = getActual()->getP().second;
+
+	if ((firstTmp >= 0)
+		&& (firstTmp < MAP_WIDTH)
+		&& (secondTmp >= 0)
+		&& (secondTmp < MAP_WIDTH)
+		&& m_refMainAgent->getKnownMap()[firstTmp][secondTmp]
+		&& (((*getMap())(firstTmp, secondTmp)) & MASK_TERRAIN) == TERRAIN_GROUND) {
+
+		Node* nodeSouth = new Node( Point(firstTmp, secondTmp),
+			"SOUTH", getActual());
+		if (!isInRoute(nodeSouth)) {
+			nodeSouth->setDistFromStart(getActual()->getDistFromStart() + 1);
+			getActual()->getNodosHijos().push_back(nodeSouth);
+
+			//nodeSouth->setHeurVal(heuristicValue(nodeSouth));
+			elPutoVector.push_back(nodeSouth);
+
+		}
 	}
 
-	if (nodeWest -> isPointIntoLimitsMap(MAP_WIDTH, MAP_HEIGHT) &&
-		(((*getMap())(nodeWest -> getP().first, nodeWest -> getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) &&
-		!isInRoute(nodeWest)) {
-		nodeWest->setDistFromStart(getActual()->getDistFromStart() + 1);
-		getActual() -> getNodosHijos().push_back(nodeWest);
+	firstTmp = getActual()->getP().first;
+	secondTmp = getActual()->getP().second - 1;
+
+	if ((firstTmp >= 0)
+		&& (firstTmp < MAP_WIDTH)
+		&& (secondTmp >= 0)
+		&& (secondTmp < MAP_WIDTH)
+		&& m_refMainAgent->getKnownMap()[firstTmp][secondTmp]
+		&& (((*getMap())(firstTmp, secondTmp)) & MASK_TERRAIN) == TERRAIN_GROUND) {
+
+		Node* nodeWest = new Node( Point(firstTmp, secondTmp),
+			"WEST", getActual());
+		if (!isInRoute(nodeWest)) {
+			nodeWest->setDistFromStart(getActual()->getDistFromStart() + 1);
+			getActual()->getNodosHijos().push_back(nodeWest);
+
+			//nodeWest->setHeurVal(heuristicValue(nodeWest));
+			elPutoVector.push_back(nodeWest);
+
+		}
 	}
-    getActual()->setVisitado(true);
+	getActual()->setVisitado(true);
 }
 
-void PathFindingTree::calculateBetterNode () {
+void PathFindingTree::calculateBetterNode() {
 	//INFO: Cola de Nodos -> push_back (), pop_front ()
 	std::queue<Node*> colaNodos;
-	Node* start = new Node ((*getRoot()));
-	Node* auxiliar = getActual();
-	int distance = 99999;
+	Node* start = new Node(*getRoot());
+	int distance = 99999999;
+
 
 	colaNodos.push(start);
 	while (!colaNodos.empty()) {
-		for (unsigned int i = 0; i < colaNodos.front() -> getNodosHijos().size(); ++i) {
-			if (colaNodos.front() -> getNodosHijos().at(i) -> getNodosHijos().size() > 0) { // No son nodos HOJA!!
-				colaNodos.push(colaNodos.front() -> getNodosHijos().at(i));
-			} else if (!colaNodos.front() -> getNodosHijos().at(i) -> isVisitado()){ // Son nodos HOJA
-				int val = heuristicValue(colaNodos.front() -> getNodosHijos().at(i));
-				if (val < distance) {
+		for (unsigned int i = 0; i < colaNodos.front()->getNodosHijos().size();
+				++i) {
+			if (colaNodos.front()->getNodosHijos().at(i)->getNodosHijos().size()
+					> 0) { // No son nodos HOJA!!
+				//std::cout << "No hoja" << std::endl;
+
+				colaNodos.push(colaNodos.front()->getNodosHijos().at(i));
+			} else if (!colaNodos.front()->getNodosHijos().at(i)->isVisitado()) { // Son nodos HOJA
+				float val = heuristicValue(
+						colaNodos.front()->getNodosHijos().at(i));
+				//int val = colaNodos.front()->getHeurVal();
+				if (val <= distance) {
 					distance = val;
-					setActual(colaNodos.front() -> getNodosHijos().at(i));
+					setActual(colaNodos.front()->getNodosHijos().at(i));
 				}
+				//std::cout << "Si hoja" << std::endl;
 			}
+			//std::cout << "TAMPILA = " << colaNodos.size() << std::endl;
 		}
 		colaNodos.pop();
 	}
 }
 
-bool PathFindingTree::isInRoute (Node* nodeCheck) {
-	Node* temp = new Node (*(getActual()));
+bool PathFindingTree::isInRoute(Node* nodeCheck) {
+	Node* temp;
+	temp = new Node(*getActual());
 	bool result = false;
-	std::cout << "Antes del While de isInRoute ()" << nodeCheck <<std::endl;
-	while (temp -> getPadre() != NULL && !result) {
-		//std::cout << "Buscando en ruta.... Padre = "<< temp->getPadre()<<std::endl;
-		if (temp -> areEquals(nodeCheck)) {
+
+	//std::cout << "Antes del While de isInRoute ()" << std::endl;
+	while (temp->getPadre() != NULL) {
+		//std::cout << "Buscando en ruta.... Padre = " << temp->getPadre()
+				//<< std::endl;
+		if (temp->areEquals(nodeCheck)) {
 			result = true;
+			break;
 		}
-		temp = temp -> getPadre();
+		temp = const_cast<Node*> (temp->getPadre());
 	}
 	if (!result) {
 		if (temp -> areEquals(nodeCheck)) {
@@ -127,14 +198,14 @@ bool PathFindingTree::isInRoute (Node* nodeCheck) {
 	return result;
 }
 
-int PathFindingTree::heuristicValue (Node* start) {
+float PathFindingTree::heuristicValue(Node* start) {
 	return ( 	std::abs (start->getP().first - getGoal()->getP().first) +
 			std::abs (start->getP().second - getGoal()->getP().second) +
 			start -> getDistFromStart() );
 }
 
-Map* PathFindingTree::getMap () {
-	return const_cast<Map*> (m_refMainAgent -> getMap());
+Map* PathFindingTree::getMap() {
+	return const_cast<Map*>(m_refMainAgent->getMap());
 }
 
 Node* PathFindingTree::getActual() {

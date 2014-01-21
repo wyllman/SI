@@ -23,12 +23,13 @@ public:
 	void expandir (); 					// Expande el nodo actual --> añadiendo sus hijos al vector de hijos del Nodo
 	void calculateBetterNode (); 		// Pone como nodo actual el mejor de sus hijos
 	bool isInRoute (Node*); 			// Indica si el nodo a buscar está en la ruta heurística
-	int heuristicValue (Node*);		// Devuelve la distancia de manhattan del nodo parámetro al GOAL
+	float heuristicValue (Node*);		// Devuelve la distancia de manhattan del nodo parámetro al GOAL
 
 	// Manejadores de atributos públicos
 	std::string& getRoute();
 
 private:
+	std::vector<Node*> elPutoVector;
 	Node* m_Root;
 	Node* m_Goal;
 	Node* m_actual;

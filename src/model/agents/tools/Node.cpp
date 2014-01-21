@@ -7,10 +7,10 @@
 
 #include <model/agents/tools/Node.h>
 
-Node::Node(Point p, std::string mov, Node* padre) {
+Node::Node(Point p, std::string mov, const Node& padre) {
 	m_p = p;
 	m_mov = mov;
-	m_padre = padre;
+	m_padre = &padre;
 
 	m_visitado = false;
 	distFromStart = 0;
@@ -22,6 +22,7 @@ Node::Node (const Node& p) {
 	m_padre = p.m_padre;
 	m_visitado = p.m_visitado;
 	m_nodosHijos = p.m_nodosHijos;
+	distFromStart = p.distFromStart;
 }
 
 
@@ -37,7 +38,7 @@ bool Node::areEquals (Node* q) {
 	return result;
 }
 
-bool Node::isPointIntoLimitsMap (int widthMap, int heightMap) {
+bool Node::isPointIntoMapLimits (int widthMap, int heightMap) {
 	bool intoMap = false;
 	if (this -> getP().first >= 0 && this -> getP().first < widthMap &&
 			this -> getP().second >= 0 && this -> getP().second < heightMap)
@@ -67,7 +68,7 @@ void Node::setVisitado(bool visitado) {
 	m_visitado = visitado;
 }
 
-Node* Node::getPadre() {
+const Node* Node::getPadre() {
 	return m_padre;
 }
 

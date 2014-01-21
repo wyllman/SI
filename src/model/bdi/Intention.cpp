@@ -94,11 +94,11 @@ void Intention::exploreMap() {
 		if (!(*m_desire)["50_Percent_Explored"]) {
 			m_desire->set("50_Percent_Explored", true);
 		}
-		checkSectors();
 	}
 	if (m_beliefSet->exploredPercentage() >= 0.9) {
 		m_desire->set("100_Percent_Explored", true);
 	}
+	checkSectors();
 	std::cout << "Porcentaje explorado: " << m_beliefSet->exploredPercentage()
 			<< std::endl;
 }
@@ -168,9 +168,10 @@ void Intention::buildSettlement() {
 
 void Intention::checkSectors() {
 	const int32_t SECTOR_SIZE = 10;
-	const float CELL_VALUE = 1 / pow((float) SECTOR_SIZE, 2);
+	const float CELL_VALUE = 0.01;
 	int32_t cell;
 	cell = 0;
+	m_beliefSet->resetSectorExploredRatio();
 
 	for (int32_t i = 0; i < MAP_WIDTH; ++i) {
 		for (int32_t j = 0; j < MAP_WIDTH; ++j) {
@@ -190,28 +191,75 @@ void Intention::sectorExploration() {
 	std::cout << "MANDANDO A EXPLORAR ANTERIOR " << std::endl;
 	const uint32_t SECTORS = 100;
 	const float EXPLORED_RATIO = 0.9;
+	bool sectorFound = false;
 	int row;
 	int col;
-	for (uint32_t i = 0; i < m_agent->getVAgents().size(); ++i) {
+	Point p;
+	Point bestPoint;
+	uint32_t bestDistance;
+	uint32_t distance;
+	stringstream ss;
+	bestDistance = 99999;
 
+	for (uint32_t i = 0; i < m_agent->getVAgents().size() && !sectorFound;
+			++i) {
+		std::cout << m_agent->getVAgents()[i]->getNameAgent() << std::endl;
+		// std::cin.get();
 		if (m_agent->getVAgents()[i]->getState() == AVAILABLE) {
-			for (uint32_t j = 0; j < SECTORS; ++j) {
-				if (m_beliefSet->getSectorExploredRatio(j) >= EXPLORED_RATIO) {
+			for (uint32_t j = 0; j < SECTORS && !sectorFound; ++j) {
+				ss << j;
+				std::cout << "Comprobando sector " << j << std::endl;
+				if (m_beliefSet->getSectorExploredRatio(j) <= EXPLORED_RATIO
+						&& (m_beliefSet->getSectorExploredRatio(j - 1)
+								>= EXPLORED_RATIO
+								|| m_beliefSet->getSectorExploredRatio(j + 1)
+										>= EXPLORED_RATIO
+								|| m_beliefSet->getSectorExploredRatio(j - 10)
+										>= EXPLORED_RATIO
+								|| m_beliefSet->getSectorExploredRatio(j + 10)
+										>= EXPLORED_RATIO)
+						&& !m_beliefSet->exists(ss.str())) {
 					std::cout << "MANDANDO A EXPLORAR " << std::endl;
 					row = j / 10;
 					col = j % 10;
 					row *= 10;
 					col *= 10;
 
-					if (((*(m_agent->getMap()))(row, col) & MASK_TERRAIN)
-							== TERRAIN_GROUND
-							&& (m_agent->getKnownMap())[row][col]) {
+					p.first = row;
+					p.second = col;
+					bestPoint = p;
 
+					for (int k = 0; k < 2; ++k) {
+						for (int l = 0; l < 2; ++l) {
+							p.first += k * 10;
+							p.second += l * 10;
+							distance = euclideanDistance(
+									m_agent->getVAgents()[i]->getPosition(), p);
+							if (distance <= bestDistance) {
+								if (((*(m_agent->getMap()))(bestPoint.first,
+										bestPoint.second) & MASK_TERRAIN)
+										== TERRAIN_GROUND
+										&& m_agent->getKnownMap()[bestPoint.first][bestPoint.second]) {
+									bestDistance = distance;
+									bestPoint = p;
+								}
+							}
+						}
+					}
+
+					if (((*(m_agent->getMap()))(bestPoint.first,
+							bestPoint.second) & MASK_TERRAIN) == TERRAIN_GROUND
+							&& (m_agent->getKnownMap())[bestPoint.first][bestPoint.second]) {
+						std::cin.get();
 						m_agent->sendToRoute(
 								m_agent->getVAgents()[i]->getPosition(),
-								Point(row, col),
+								Point(bestPoint.first, bestPoint.second),
 								const_cast<Agent*>(m_agent->getVAgents()[i]),
 								GO_SEARCHING_LOCATION);
+						sectorFound = true;
+						Belief* belief;
+						belief = new Belief("EXPLORED");
+						m_beliefSet->add(ss.str(), belief);
 					}
 				}
 			}

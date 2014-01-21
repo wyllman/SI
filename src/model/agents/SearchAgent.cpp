@@ -106,6 +106,8 @@ void SearchAgent::actDependingOfState() {
 			getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),
 							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+		} else {
+			sensor();
 		}
 		break;
 	default:
@@ -137,7 +139,7 @@ void SearchAgent::followRoute(std::string route) {
 
 	}
 	for (unsigned int i = 0; i < camino.size(); i++) {
-		m_routes.push_back(camino[camino.size() - 1]);
+		m_routes.push_back(camino[camino.size() - i]);
 	}
 }
 

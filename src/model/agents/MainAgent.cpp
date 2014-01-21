@@ -222,7 +222,7 @@ Package* MainAgent::readFIPAPackage (Package* p) {
 
 				break;
 			default:
-				std::cout << "No se entiende el tipo del paquete recibido." << std::endl;
+				std::cout << "MA No se entiende el tipo del paquete recibido." << std::endl;
 			}
 		}
 

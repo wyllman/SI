@@ -26,7 +26,7 @@ Node::Node (const Node& p) {
 
 
 Node::~Node() {
-	delete m_padre;
+	//delete m_padre;
 }
 
 bool Node::areEquals (Node* q) {

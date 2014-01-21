@@ -60,8 +60,13 @@ Package* SearchAgent::readFIPAPackage(Package* p) {
 				setState(FOLLOWING_SEARCH_ROUTE);
 				answer = new Package(getNameAgent(), p->getSender(), CONFIRM);
 				break;
+			case COME_BACK:
+				followRoute(p -> getContent().at(0));
+				answer = new Package (getNameAgent(), p -> getSender(), CONFIRM);
+				setState(FOLLOWING_ROUTE);
+				break;
 			default:
-				std::cout << "No se entiende el tipo del paquete recibido."
+				std::cout << "SA No se entiende el tipo del paquete recibido."
 						<< std::endl;
 			}
 		}
@@ -79,10 +84,10 @@ void SearchAgent::actDependingOfState() {
 	switch (getState()) {
 	case SEARCHING:
 		if (!explorationMove()) {
-			setState(AVAILABLE);
+			setState(FOLLOWING_RET_ROUTE);
 			getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),
-							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+							getRefMainAgent()->getNameAgent(), COME_BACK, this));
 		} else {
 			sensor();
 		}
@@ -93,7 +98,7 @@ void SearchAgent::actDependingOfState() {
 	case FOLLOWING_ROUTE:
 		std::cout << "Tam: " << getRoutes().size() << std::endl;
 		if (!routedMove()) {
-			setState(AVAILABLE);
+			setState(FOLLOWING_RET_ROUTE);
 			getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),
 							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
@@ -137,7 +142,7 @@ void SearchAgent::followRoute(std::string route) {
 
 	}
 	for (unsigned int i = 0; i < camino.size(); i++) {
-		m_routes.push_back(camino[camino.size() - 1]);
+		m_routes.push_back(camino[camino.size() - i]);
 	}
 }
 

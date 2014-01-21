@@ -25,15 +25,15 @@ PathFindingTree::~PathFindingTree() {
 // A*
 void PathFindingTree::calculateHeuristicRoute () {
 	std::string routeMin = "]";
-	if (getActual()->getP().first > 0 && getActual()->getP().first < MAP_WIDTH &&
-			getActual()->getP().second > 0 && getActual()->getP().second < MAP_HEIGHT &&
-			((*getMap())(getActual()->getP().first, getActual()->getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
+	if ((getActual()->getP().first > 0 && getActual()->getP().first < MAP_WIDTH) &&
+			(getActual()->getP().second > 0 && getActual()->getP().second < MAP_HEIGHT) &&
+			(((*getMap())(getActual()->getP().first, getActual()->getP().second) & MASK_TERRAIN) == TERRAIN_GROUND)) {
 		while (!getActual() -> areEquals(getGoal())) {
 			expandir();
 			calculateBetterNode();
 		}
 
-		while (getActual() -> getPadre() -> getPadre() != NULL) {
+		while (getActual() -> getPadre() != NULL) {
 			routeMin = "," + getActual() -> getMov() + routeMin;
 			setActual(getActual() -> getPadre());
 		}
@@ -47,9 +47,9 @@ void PathFindingTree::calculateHeuristicRoute () {
 void PathFindingTree::expandir () {
 	// 1º Creamos nodos auxiliares para cada movimiento posible.
 	Node* nodeNorth = new Node (Point (getActual() -> getP().first - 1, getActual() -> getP().second), "NORTH", getActual());
-	Node* nodeEast = new Node (Point (getActual() -> getP().first, getActual() -> getP().second +1), "EAST", getActual());
+	Node* nodeEast = new Node (Point (getActual() -> getP().first, getActual() -> getP().second + 1), "EAST", getActual());
 	Node* nodeSouth = new Node (Point (getActual() -> getP().first + 1, getActual() -> getP().second), "SOUTH", getActual());
-	Node* nodeWest = new Node (Point (getActual() -> getP().first, getActual() -> getP().second -1), "WEST", getActual());
+	Node* nodeWest = new Node (Point (getActual() -> getP().first, getActual() -> getP().second - 1), "WEST", getActual());
 
 	// 2º Comprobamos qué hijo se sale de los límites del tablero
 	// 3º Comprobamos que no son obtáculos.
@@ -57,28 +57,28 @@ void PathFindingTree::expandir () {
 	if (nodeNorth -> isPointIntoLimitsMap(MAP_WIDTH, MAP_HEIGHT) &&
 		(((*getMap())(nodeNorth -> getP().first, nodeNorth -> getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) &&
 		!isInRoute(nodeNorth)) {
-		nodeNorth->setDistFromStart(nodeNorth->getDistFromStart() + 1);
+		nodeNorth->setDistFromStart(getActual()->getDistFromStart() + 1);
 		getActual() -> getNodosHijos().push_back(nodeNorth);
 	}
 
 	if (nodeEast -> isPointIntoLimitsMap(MAP_WIDTH, MAP_HEIGHT) &&
 		(((*getMap())(nodeEast -> getP().first, nodeEast -> getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) &&
 		!isInRoute(nodeEast)) {
-		nodeEast->setDistFromStart(nodeEast->getDistFromStart() + 1);
+		nodeEast->setDistFromStart(getActual()->getDistFromStart() + 1);
 		getActual() -> getNodosHijos().push_back(nodeEast);
 	}
 
 	if (nodeSouth -> isPointIntoLimitsMap(MAP_WIDTH, MAP_HEIGHT) &&
 		(((*getMap())(nodeSouth -> getP().first, nodeSouth -> getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) &&
 		!isInRoute(nodeSouth)) {
-		nodeSouth->setDistFromStart(nodeSouth->getDistFromStart() + 1);
+		nodeSouth->setDistFromStart(getActual()->getDistFromStart() + 1);
 		getActual() -> getNodosHijos().push_back(nodeSouth);
 	}
 
 	if (nodeWest -> isPointIntoLimitsMap(MAP_WIDTH, MAP_HEIGHT) &&
 		(((*getMap())(nodeWest -> getP().first, nodeWest -> getP().second) & MASK_TERRAIN) == TERRAIN_GROUND) &&
 		!isInRoute(nodeWest)) {
-		nodeWest->setDistFromStart(nodeWest->getDistFromStart() + 1);
+		nodeWest->setDistFromStart(getActual()->getDistFromStart() + 1);
 		getActual() -> getNodosHijos().push_back(nodeWest);
 	}
     getActual()->setVisitado(true);
@@ -111,12 +111,18 @@ void PathFindingTree::calculateBetterNode () {
 bool PathFindingTree::isInRoute (Node* nodeCheck) {
 	Node* temp = new Node (*(getActual()));
 	bool result = false;
-	std::cout << "Antes del While de isInRoute ()" <<std::endl;
-	while (temp -> getPadre() != NULL) {
-		std::cout << "Buscando en ruta.... Padre = "<< temp->getPadre()<<std::endl;
-		if (temp -> areEquals(nodeCheck))
+	std::cout << "Antes del While de isInRoute ()" << nodeCheck <<std::endl;
+	while (temp -> getPadre() != NULL && !result) {
+		//std::cout << "Buscando en ruta.... Padre = "<< temp->getPadre()<<std::endl;
+		if (temp -> areEquals(nodeCheck)) {
 			result = true;
+		}
 		temp = temp -> getPadre();
+	}
+	if (!result) {
+		if (temp -> areEquals(nodeCheck)) {
+			result = true;
+		}
 	}
 	return result;
 }

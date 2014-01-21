@@ -160,7 +160,7 @@ void Intention::gatherResources() {
 }
 
 void Intention::buildSettlement() {
-    m_desire->set("Settlement_Built", false);
+	m_desire->set("Settlement_Built", false);
 }
 
 void Intention::checkSectors() {
@@ -205,7 +205,6 @@ void Intention::sectorExploration() {
 							Point(row, col),
 							const_cast<Agent*>(m_agent->getVAgents()[i]),
 							GO_SEARCHING_LOCATION);
-
 				}
 			}
 		}

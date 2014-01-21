@@ -193,8 +193,8 @@ bool SearchAgent::explorationMove() {
 	Direction directionAct = ERROR_DIR;
 	Direction tempDir = ERROR_DIR;
 
-	if (countLoopSteps_ >= 200) {
-		return result;
+	if (countLoopSteps_ >= 50) {
+		return false;
 	}
 
 	// Realizar el primer paso.

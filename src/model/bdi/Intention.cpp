@@ -33,7 +33,7 @@ void Intention::update() {
 	if (!(*m_desire)["50_Percent_Explored"]) {
 		exploreMap();
 	} else {
-		if ((*m_desire)["100_Percent_Explored"]) {
+		if (!(*m_desire)["100_Percent_Explored"]) {
 			std::cout << "Mapa explorado" << std::endl;
 			exploreMap();
 		}
@@ -200,9 +200,14 @@ void Intention::sectorExploration() {
 					row *= 10;
 					col *= 10;
 
-					m_agent->sendToRoute(m_agent->getVAgents()[i]->getPosition()
+					if (((*(m_agent->getMap()))(row, col) & MASK_TERRAIN) == TERRAIN_GROUND
+							&& (m_agent->getKnownMap())[row][col]) {
+
+						m_agent->sendToRoute(m_agent->getVAgents()[i]->getPosition()
 							            , Point(row, col), const_cast<Agent*>(m_agent->getVAgents()[i])
 							            , GO_SEARCHING_LOCATION);
+
+					}
 
 				}
 			}

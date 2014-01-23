@@ -25,6 +25,7 @@ PathFindingTree::~PathFindingTree() {
 // A*
 
 void PathFindingTree::calculateHeuristicRoute() {
+	int counter = 0;
 	elPutoVector.clear();
 	std::string routeMin = "]";
 	if (getActual()->getP().first > 0 && getActual()->getP().first < MAP_WIDTH
@@ -33,12 +34,13 @@ void PathFindingTree::calculateHeuristicRoute() {
 			&& ((*getMap())(getGoal()->getP().first,
 					getGoal()->getP().second) & MASK_TERRAIN)
 					== TERRAIN_GROUND) {
-		while (!getActual()->areEquals(getGoal())) {
+		while (!(getActual()->areEquals(getGoal())) && (counter < 100)) {
 			expandir();
-			//std::cout<< "Expandiendo Nodo actual"<<std::endl;
+			std::cout<< "Expandiendo Nodo actual"<<std::endl;
 			calculateBetterNode();
 			//std::cout<< "Calculando Mejor Nodo"<<std::endl;
 			//std::cin.get();
+			++counter;
 		}
 
 

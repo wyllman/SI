@@ -93,9 +93,6 @@ bool PathFindingTree::calculateHeuristicRoute() {
 			if ((*successorIterator)->position() == m_goalNode->position()) {
 				success = true;
 				break;
-			} else {
-				//(*successorIterator)->setDistanceFromStart(bestNode->distanceFromStart() + 1);
-				//(*successorIterator)->setHeuristicDistance(heuristicValue(*(*successorIterator)));
 			}
 
 			existsInClosedSet = false;
@@ -216,17 +213,32 @@ float PathFindingTree::heuristicValue(const Node& start) {
 }
 
 void PathFindingTree::reversePath(const Node& node) {
-	Node* tmp;
+	/*Node* tmp;
 	tmp = &const_cast<Node&>(node);
 	std::string routeMin = "]";
-	std::string tmpText;
 
-	while (tmp->parent() != NULL) {
+	while (((Node*)tmp->parent())->parent() != NULL) {
 		routeMin = "," + (tmp->getMov()) + routeMin;
 		tmp = const_cast<Node*>(tmp->parent());
 	}
+	// FIXME: eliminar RAIZ del string de ruta
 	routeMin = "[" + tmp->getMov() + routeMin;
-	//routeMin = "[" + routeMin;
-	m_route = routeMin;
+
+	m_route = routeMin;*/
+
+	Node* tmp;
+	uint32_t i;
+
+	tmp = &const_cast<Node&>(node);
+	m_route = "]";
+	i = 0;
+
+	while (tmp != NULL) {
+		m_route = "," + std::string(tmp->direction()) + m_route;
+		tmp = const_cast<Node*>(tmp->parent());
+	}
+
+	m_route = m_route.substr(1, m_route.size() - 1);
+	m_route = "[" + m_route;
 
 }

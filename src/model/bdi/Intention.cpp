@@ -80,7 +80,7 @@ void Intention::exploreMap() {
 	}
 
 	if (m_currentDesire == "Start_Sector_Exploration") {
-		//sectorExploration();
+		sectorExploration();
 	}
 
 	if (m_currentDesire == "Awaiting_Exploration_End") {
@@ -216,6 +216,7 @@ void Intention::sectorExploration() {
 					|| m_beliefSet->getSectorExploredRatio(j + 10) >= EXPLORED_RATIO)
 						&& !m_beliefSet->exists(ss.str())) {
 					std::cout << "MANDANDO A EXPLORAR " << std::endl;
+
 					row = j / 10;
 					col = j % 10;
 					row *= 10;
@@ -246,7 +247,7 @@ void Intention::sectorExploration() {
 					if (((*(m_agent->getMap()))(bestPoint.first,
 							bestPoint.second) & MASK_TERRAIN) == TERRAIN_GROUND
 							&& (m_agent->getKnownMap())[bestPoint.first][bestPoint.second]) {
-						std::cin.get();
+						//std::cin.get();
 						m_agent->sendToRoute(
 								m_agent->getVAgents()[i]->getPosition(),
 								Point(bestPoint.first, bestPoint.second),

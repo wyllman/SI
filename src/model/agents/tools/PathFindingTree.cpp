@@ -213,19 +213,6 @@ float PathFindingTree::heuristicValue(const Node& start) {
 }
 
 void PathFindingTree::reversePath(const Node& node) {
-	/*Node* tmp;
-	tmp = &const_cast<Node&>(node);
-	std::string routeMin = "]";
-
-	while (((Node*)tmp->parent())->parent() != NULL) {
-		routeMin = "," + (tmp->getMov()) + routeMin;
-		tmp = const_cast<Node*>(tmp->parent());
-	}
-	// FIXME: eliminar RAIZ del string de ruta
-	routeMin = "[" + tmp->getMov() + routeMin;
-
-	m_route = routeMin;*/
-
 	Node* tmp;
 	uint32_t i;
 

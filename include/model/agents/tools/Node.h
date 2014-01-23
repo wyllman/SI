@@ -51,6 +51,10 @@ public:
 		return m_movement.c_str();
 	}
 	
+	std::string getMov () {
+		return m_movement;
+	}
+
 	const Node* parent() {
 		return m_nodeParent;
 	}

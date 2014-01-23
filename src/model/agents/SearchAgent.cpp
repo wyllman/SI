@@ -93,7 +93,6 @@ void SearchAgent::actDependingOfState() {
 	switch (getState()) {
 	case SEARCHING:
 		if (!explorationMove()) {
-
 			setState(AVAILABLE);
 			getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),

@@ -133,6 +133,7 @@ bool PathFindingTree::calculateHeuristicRoute() {
 	}
 
 	if (success) {
+		std::cout << "INVIRTIENDO" << std::endl;
 		reversePath(*(*successorIterator));
 	}
 
@@ -204,9 +205,17 @@ float PathFindingTree::heuristicValue(const Node& start) {
 void PathFindingTree::reversePath(const Node& node) {
 	Node* tmp;
 	tmp = &const_cast<Node&>(node);
+	std::string routeMin = "]";
+	std::string tmpText;
 
-	while (tmp != NULL) {
+	while (tmp->parent() != NULL) {
 		// TODO Codigo para rellenar el camino
+		routeMin = "," + (tmp->getMov()) + routeMin;
 		tmp = const_cast<Node*>(tmp->parent());
+
+
 	}
+	routeMin = "[" + tmp->getMov() + routeMin;
+	m_route = routeMin;
+
 }

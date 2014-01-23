@@ -17,6 +17,7 @@
 #ifndef TOOLS_H_
 #define TOOLS_H_
 
+#include <inttypes.h>
 #include <map>
 #include <string>
 #include <bits/stl_pair.h>
@@ -133,6 +134,6 @@ enum State {
 
 Direction strToDirectionEnum (std::string);
 std::string directionEnumToString(Direction);
-float euclideanDistance (Point, Point);
+float euclideanDistance (const Point&, const Point&);
 
 #endif /* TOOLS_H_ */

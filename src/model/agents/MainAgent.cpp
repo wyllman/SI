@@ -8,6 +8,7 @@
 #include <model/agents/MainAgent.h>
 #include <model/agents/SearchAgent.h>
 #include <model/agents/WorkingAgent.h>
+#include <model/agents/tools/PathFindingTree.h>
 
 #include <model/bdi/Belief.h>
 #include <model/bdi/BeliefSet.h>
@@ -23,14 +24,14 @@
 #include <boost/random/random_device.hpp>
 
 MainAgent::MainAgent(Simulator* refModel, Map* theMap) :
-		Agent(theMap), refSimulator_(refModel) {
+	Agent(theMap), refSimulator_(refModel) {
 	logAction(LOG_INIT);
 	m_beliefSet = new BeliefSet();
 	m_desires = new Desire();
 	createInitialBelieves();
 	createDesires();
 	m_intentions = new Intention(*dynamic_cast<Agent*>(this), *m_beliefSet,
-			*m_desires);
+	                             *m_desires);
 	setNameAgent(const_cast<char*>("MAIN_AGENT"));
 	createRndInitialPos(const_cast<Map*>(refSimulator_->getMap()));
 	initAgents();
@@ -38,10 +39,12 @@ MainAgent::MainAgent(Simulator* refModel, Map* theMap) :
 
 MainAgent::~MainAgent() {
 	logAction(LOG_END);
+
 	if (m_beliefSet != NULL) {
 		delete m_beliefSet;
 		m_beliefSet = NULL;
 	}
+
 	if (m_desires != NULL) {
 		delete m_desires;
 		m_desires = NULL;
@@ -70,34 +73,37 @@ void MainAgent::initAgents() {
 	// --- Primer agente (NOeste)
 	WorkingAgent* working1 = new WorkingAgent(this, refMap_);
 	working1->setPosition(
-			Point(getPosition().first - 1, getPosition().second - 1));
+	        Point(getPosition().first - 1, getPosition().second - 1));
 	m_WorVecAgents.push_back(working1);
 	// --- Segundo agente (NEste)
 	WorkingAgent* working2 = new WorkingAgent(this, refMap_);
 	working2->setPosition(
-			Point(getPosition().first - 1, getPosition().second + 1));
+	        Point(getPosition().first - 1, getPosition().second + 1));
 	m_WorVecAgents.push_back(working2);
 	// --- Tercer agente (SEste)
 	WorkingAgent* working3 = new WorkingAgent(this, refMap_);
 	working3->setPosition(
-			Point(getPosition().first + 1, getPosition().second + 1));
+	        Point(getPosition().first + 1, getPosition().second + 1));
 	m_WorVecAgents.push_back(working3);
 	// --- Cuarto agente (SOeste)
 	WorkingAgent* working4 = new WorkingAgent(this, refMap_);
 	working4->setPosition(
-			Point(getPosition().first + 1, getPosition().second - 1));
+	        Point(getPosition().first + 1, getPosition().second - 1));
 	m_WorVecAgents.push_back(working4);
 
 }
 
 bool MainAgent::update() {
-	m_intentions->update();
+	// m_intentions->update();
+	PathFindingTree tree(*this, this->m_position, Point(50, 50));
+	tree.calculateHeuristicRoute();
 
 	return updateMiniAgents();
 }
 
 bool MainAgent::updateMiniAgents() {
 	bool result = false;
+
 	for (unsigned int i = 0; i < getVAgents().size(); i++) {
 		if (getVAgents().at(i)->getState() != AVAILABLE) {
 			getVAgents().at(i)->actDependingOfState();
@@ -142,36 +148,36 @@ void MainAgent::createRndInitialPos(Map* mainMap) {
 
 		// Comprobación de vecindad de la nave -> para la colocación de agentes
 		BYTE tempCentro = ((*mainMap)(m_position.first, m_position.second)
-				& MASK_TERRAIN);
+		                   & MASK_TERRAIN);
 		BYTE tempArrIzq = ((*mainMap)(m_position.first - 1,
-				m_position.second - 1) & MASK_TERRAIN);
+		                              m_position.second - 1) & MASK_TERRAIN);
 		BYTE tempArr = ((*mainMap)(m_position.first, m_position.second - 1)
-				& MASK_TERRAIN);
+		                & MASK_TERRAIN);
 		BYTE tempArrDer = ((*mainMap)(m_position.first + 1,
-				m_position.second - 1) & MASK_TERRAIN);
+		                              m_position.second - 1) & MASK_TERRAIN);
 		BYTE tempIzq = ((*mainMap)(m_position.first - 1, m_position.second)
-				& MASK_TERRAIN);
+		                & MASK_TERRAIN);
 		BYTE tempDer = ((*mainMap)(m_position.first + 1, m_position.second)
-				& MASK_TERRAIN);
+		                & MASK_TERRAIN);
 		BYTE tempAbjIzq = ((*mainMap)(m_position.first - 1,
-				m_position.second + 1) & MASK_TERRAIN);
+		                              m_position.second + 1) & MASK_TERRAIN);
 		BYTE tempAbj = ((*mainMap)(m_position.first, m_position.second + 1)
-				& MASK_TERRAIN);
+		                & MASK_TERRAIN);
 		BYTE tempAbjDer = ((*mainMap)(m_position.first + 1,
-				m_position.second + 1) & MASK_TERRAIN);
+		                              m_position.second + 1) & MASK_TERRAIN);
 
 		if (tempCentro == TERRAIN_GROUND && tempArrIzq == TERRAIN_GROUND
-				&& tempArr == TERRAIN_GROUND && tempArrDer == TERRAIN_GROUND
-				&& tempIzq == TERRAIN_GROUND && tempDer == TERRAIN_GROUND
-				&& tempAbjIzq == TERRAIN_GROUND && tempAbj == TERRAIN_GROUND
-				&& tempAbjDer == TERRAIN_GROUND) {
+		    && tempArr == TERRAIN_GROUND && tempArrDer == TERRAIN_GROUND
+		    && tempIzq == TERRAIN_GROUND && tempDer == TERRAIN_GROUND
+		    && tempAbjIzq == TERRAIN_GROUND && tempAbj == TERRAIN_GROUND
+		    && tempAbjDer == TERRAIN_GROUND) {
 			condition = true;
 		}
 
 	} while (!condition);
 
 	std::cout << "Position generated on: x = " << m_position.first << " , y = "
-			<< m_position.second << std::endl;
+	          << m_position.second << std::endl;
 }
 
 void MainAgent::logAction(int index) {
@@ -180,30 +186,37 @@ void MainAgent::logAction(int index) {
 		case LOG_INIT:
 			std::cout << "---Generando el Agente principal " << std::endl;
 			break;
+
 		case LOG_END:
 			std::cout << "---Destruyendo el Agente principal " << std::endl;
 			break;
+
 		case LOG_F_INIT:
 			std::cout
-					<< "---Llamando a la función createRndInitialPos () del agente principal."
-					<< std::endl;
+			                << "---Llamando a la función createRndInitialPos () del agente principal."
+			                << std::endl;
 			break;
+
 		default:
 			break;
 		}
 	}
+
 	if (ADVAN_LOG) {
 		switch (index) {
 		case LOG_INIT:
 			refSimulator_->log("---Generando el Agente principal ");
 			break;
+
 		case LOG_END:
 			refSimulator_->log("---Destruyendo el Agente principal ");
 			break;
+
 		case LOG_F_INIT:
 			refSimulator_->log(
-					"---Llamando a la función createRndInitialPos () del agente principal.");
+			        "---Llamando a la función createRndInitialPos () del agente principal.");
 			break;
+
 		default:
 			break;
 		}
@@ -212,7 +225,7 @@ void MainAgent::logAction(int index) {
 
 Package* MainAgent::readFIPAPackage(Package* p) {
 	Package* answer = new Package(getNameAgent(), p->getSender(),
-			NOT_UNDERSTOOD);
+	                              NOT_UNDERSTOOD);
 
 	// Comprobamos que el paquete es de la conversación actual
 	if (p->getIdComm() == getIdComm()) {
@@ -221,47 +234,56 @@ Package* MainAgent::readFIPAPackage(Package* p) {
 			switch (p->getType()) {
 			case NOT_UNDERSTOOD:
 				std::cout
-						<< "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible"
-						<< std::endl;
+				                << "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible"
+				                << std::endl;
 				break;
+
 			case CONFIRM:
 				std::cout
-						<< "CONFIRM: Recibido paquete que indica -> Confirmada la operación."
-						<< std::endl;
+				                << "CONFIRM: Recibido paquete que indica -> Confirmada la operación."
+				                << std::endl;
 				break;
+
 			case ARRIVED_GOAL:
 				std::cout << "Se ha confirmado la finalización de la ruta."
-						<< std::endl;
+				          << std::endl;
 				Belief* belief;
 				belief = new Belief("AGENT_ARRIVED");
 				m_beliefSet->add(p->getSender(), belief);
 				break;
+
 			case MAP_UPDATE:
 				break;
+
 			case LOCATED_OBSTACLE:
 				break;
+
 			case END_LIMITS:
 				break;
+
 			case COME_BACK:
 				sendToRoute(p->getRefSenderAgent()->getPosition(),
-						getPosition(), p->getRefSenderAgent(), COME_BACK);
+				            getPosition(), p->getRefSenderAgent(), COME_BACK);
 				break;
+
 			case DIRECTION_SEARCH:
 
 				break;
+
 			default:
 				std::cout << "No se entiende el tipo del paquete recibido."
-						<< std::endl;
+				          << std::endl;
 
 			}
 		}
 
 	}
+
 	return answer;
 }
 
 void MainAgent::sendToRoute(Point s, Point e, Agent* theAgent, Type theType) {
-	PathFindingTree* tree = new PathFindingTree(this, s, e);
+	PathFindingTree* tree = new PathFindingTree(*this, s, e);
 	std::string route = "";
 
 	tree->calculateHeuristicRoute();
@@ -270,7 +292,7 @@ void MainAgent::sendToRoute(Point s, Point e, Agent* theAgent, Type theType) {
 	std::vector<std::string> vect;
 
 	Package* p = new Package(this->getNameAgent(), theAgent->getNameAgent(),
-			theType);
+	                         theType);
 	vect.push_back(route);
 	p->setContent(vect);
 	readFIPAPackage(theAgent->readFIPAPackage(p));

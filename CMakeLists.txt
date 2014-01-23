@@ -98,17 +98,15 @@ if (Boost_FOUND)
 endif (Boost_FOUND)
 
 if (${PROJECT_OS} MATCHES "Linux")
+	set (CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_DIR}/cmake/modules)
 	if (FINDGLEW_FOUND)
-		set (CMAKE_MODULE_PATH "")
 		find_package (GLEW REQUIRED)
-		set (CMAKE_MODULE_PATH ${PROJECT_DIR}/cmake/modules)
 	else (FINDGLEW_FOUND)
 		find_package (GLEW)
 	endif (FINDGLEW_FOUND)
 	
 	if (GLEW_FOUND)
 		include_directories (${GLEW_INCLUDE_DIR})
-		message ( ${GLEW_LIBRARIES})
 	endif (GLEW_FOUND)
 endif (${PROJECT_OS} MATCHES "Linux")
 

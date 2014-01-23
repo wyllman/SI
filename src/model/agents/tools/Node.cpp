@@ -7,93 +7,48 @@
 
 #include <model/agents/tools/Node.h>
 
-Node::Node(Point p, std::string mov, Node* padre) {
-	m_p.first = p.first;
-	m_p.second = p.second;
-	m_mov = mov;
-	m_padre = padre;
-
-	m_visitado = false;
-	distFromStart = 0;
+Node::Node(const Point& position, const std::string& movement, const Node& parent) :
+	m_position(position),
+	m_movement(movement),
+	m_nodeParent(&parent),
+	m_distanceFromStart(0),
+	m_heuristicDistance(0.0) {
+	m_childrenNodes = new std::vector<Node*>;
+	m_objectiveDistance = static_cast<float>(m_distanceFromStart) + m_heuristicDistance;
 }
 
-Node::Node (const Node& p) {
-	m_p.first = p.m_p.first;
-	m_p.second = p.m_p.second;
-	m_padre = p.m_padre;
-	m_visitado = p.m_visitado;
-	m_nodosHijos = p.m_nodosHijos;
-	distFromStart = p.distFromStart;
+Node::Node(const Node& node) :
+	m_position(node.m_position),
+	m_nodeParent(node.m_nodeParent),
+	m_childrenNodes(node.m_childrenNodes),
+	m_distanceFromStart(node.m_distanceFromStart),
+	m_heuristicDistance(node.m_heuristicDistance),
+	m_objectiveDistance(node.m_objectiveDistance) {
 }
 
 
 Node::~Node() {
-	//delete m_padre;
+	if (!m_childrenNodes->empty()) {
+		for (uint32_t i = 0; i < m_childrenNodes->size(); ++i) {
+			if ((*m_childrenNodes)[i] != NULL) {
+				delete (*m_childrenNodes)[i];
+				(*m_childrenNodes)[i] = NULL;
+			}
+		}
+	}
 }
 
-bool Node::areEquals (Node* q) {
-	bool result = false;
-	if (this->getP().first == q->getP().first &&
-			this->getP().second == q->getP().second)
-		result = true;
-	return result;
+void Node::setDistanceFromStart(uint32_t dist) {
+	m_distanceFromStart = dist;
+	m_objectiveDistance = static_cast<float>(m_distanceFromStart) + m_heuristicDistance;
 }
 
-bool Node::isPointIntoMapLimits (int widthMap, int heightMap) {
-	bool intoMap = false;
-	if (this -> getP().first >= 0 && this -> getP().first < widthMap &&
-			this -> getP().second >= 0 && this -> getP().second < heightMap)
-		intoMap = true;
-	return intoMap;
+void Node::setHeuristicDistance(float dist) {
+	m_heuristicDistance = dist;
+	m_objectiveDistance = static_cast<float>(m_distanceFromStart) + m_heuristicDistance;
 }
 
-void Node::setAttr (Point p, std::string s, Node* n) {
-	m_p = p;
-	m_mov = s;
-	m_padre = n;
+void Node::insertChildren(const Node& node) {
+	m_childrenNodes->push_back(&const_cast<Node&>(node));
 }
-
-const std::string& Node::getMov() const {
-	return m_mov;
-}
-
-Point Node::getP() const {
-	return m_p;
-}
-
-bool Node::isVisitado() const {
-	return m_visitado;
-}
-
-void Node::setVisitado(bool visitado) {
-	m_visitado = visitado;
-}
-
-const Node* Node::getPadre() {
-	return m_padre;
-}
-
-std::vector<Node*>& Node::getNodosHijos() {
-	return m_nodosHijos;
-}
-
-void Node::setNodosHijos(std::vector<Node*>& nodosHijos) {
-	m_nodosHijos = nodosHijos;
-}
-
-int Node::getDistFromStart() {
-	return distFromStart;
-}
-
-int Node::getHeurVal() const {
-	return heurVal_;
-}
-
-void Node::setHeurVal(int heurVal) {
-	heurVal_ = heurVal;
-}
-
-void Node::setDistFromStart(int distFromStart) {
-	this->distFromStart = distFromStart;
-}
-
+// kate: indent-mode cstyle; indent-width 8; replace-tabs off; tab-width 8; 

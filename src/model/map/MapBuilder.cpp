@@ -138,24 +138,6 @@ void MapBuilder::generateResources() {
 	} while(probabilityDistrib(probabilityRNG) < 6);
 }
 
-const int* MapBuilder::splitArray(const char* cstr) {
-	std::string str(cstr);
-	int tmp[4];
-	int initPos;
-	int index;
-	initPos = 0;
-	index = 0;
-
-	for (uint32_t i = 0; i <= str.length(); i++) {
-		if (str[i] == ' ' || str[i] == '\0') {
-			tmp[index] = atoi(const_cast<char*>(str.substr(initPos, i - initPos).c_str()));
-			index++;
-			initPos = i;
-		}
-	}
-	return tmp;
-}
-
 void MapBuilder::generateResourceType(BYTE type, Point loc) {
 	uint32_t size;
 	uint32_t width;

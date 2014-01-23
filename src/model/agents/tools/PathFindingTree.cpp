@@ -5,245 +5,208 @@
  *      Author: maikel
  */
 
-#include <model/agents/tools/PathFindingTree.h>
 #include <Tools.h>
+#include <model/agents/tools/Node.h>
+#include <model/agents/tools/PathFindingTree.h>
+#include <model/agents/MainAgent.h>
 
-PathFindingTree::PathFindingTree(MainAgent* refMAg, Point s, Point e) {
-	setRoot(new Node(s, "RAIZ", NULL)); // Raíz no tiene padre!
-	setGoal(new Node(e, " ", getRoot()));
-	setRefMainAgent(refMAg);
+#include <cstring>
+#include <iostream>
+#include <typeinfo>
+#include <list>
+#include <stdio.h>
 
-	setActual(getRoot());
+using namespace std;
+
+PathFindingTree::PathFindingTree(const MainAgent& agent, const Point& start, const Point& end) :
+	m_rootNode(new Node(start, std::string("RAIZ"), *static_cast<Node*>(NULL))),
+	m_goalNode(new Node(end, " ", *m_rootNode)),
+	m_agent(const_cast<MainAgent*>(&agent)) {
+	m_rootNode->setHeuristicDistance(euclideanDistance(m_rootNode->position(), m_goalNode->position()));
 }
 
 PathFindingTree::~PathFindingTree() {
-	delete getRoot();
-	delete getGoal();
-	delete getActual();
+	if (m_rootNode != NULL) {
+		delete m_rootNode;
+		m_rootNode = NULL;
+	}
+
+	if (m_goalNode != NULL) {
+		delete m_goalNode;
+		m_goalNode = NULL;
+	}
+
+	if (!m_leafNodes.empty()) {
+		for (uint32_t i = 0; i < m_leafNodes.size(); ++i) {
+			if (m_leafNodes [i] != NULL) {
+				delete m_leafNodes[i];
+				m_leafNodes[i] = NULL;
+			}
+		}
+
+		m_leafNodes.clear();
+	}
 }
 
 // A*
-
+// FIXME Hay que comprobar que el terreno sea pasable
+// FIXME Hay alguna comprobacion o asignacion mal, el bucle no termina nunca
 void PathFindingTree::calculateHeuristicRoute() {
-	elPutoVector.clear();
-	std::string routeMin = "]";
-	if (getActual()->getP().first > 0 && getActual()->getP().first < MAP_WIDTH
-			&& getActual()->getP().second > 0
-			&& getActual()->getP().second < MAP_HEIGHT
-			&& ((*getMap())(getGoal()->getP().first,
-					getGoal()->getP().second) & MASK_TERRAIN)
-					== TERRAIN_GROUND) {
-		while (!getActual()->areEquals(getGoal())) {
-			expandir();
-			//std::cout<< "Expandiendo Nodo actual"<<std::endl;
-			calculateBetterNode();
-			//std::cout<< "Calculando Mejor Nodo"<<std::endl;
-			//std::cin.get();
-		}
+	vector<Node*> closedSet;
+	vector<Node*> openSet;
+	vector<Node*>::iterator setIterator;
+	vector<Node*>::iterator successorIterator;
+	vector<Node*>::iterator bestIterator;
+	Node* bestNode;
+	bool success;
+	bool existsInOpenSet;
+	bool existsInClosedSet;
+	uint32_t bestDistance;
+	float currentDistance;
+	bestNode = m_rootNode;
 
+	cout << "Insertando root (" << m_rootNode->position().first << "," <<
+	     m_rootNode->position().second << ")" << endl;
+	cout << "Objetivo (" << m_goalNode->position().first << "," <<
+	     m_goalNode->position().second << ")" << endl;
+	openSet.push_back(m_rootNode);
 
-		while (const_cast<Node*>(getActual()->getPadre()) != NULL) {
-			routeMin = "," + getActual()->getMov() + routeMin;
-			setActual(const_cast<Node*> (getActual()->getPadre()));
-		}
-		routeMin = "[" + getActual()->getMov() + routeMin;
-		setRoute(routeMin); // Asignamos como ruta mínima definitiva la calculada por el algoritmo
-	} else {
-		throw "AVISOOO!! No se puede calcular la ruta hacia el destino indicado!!";
-	}
-}
+	while (!openSet.empty() && !success) {
+		bestDistance = 9999;
 
-void PathFindingTree::expandir() {
-	int firstTmp = getActual()->getP().first - 1;
-	int secondTmp = getActual()->getP().second;
+		// se busca el mejor nodo candidato en la lista
+		for (setIterator = openSet.begin(); setIterator != openSet.end(); ++setIterator) {
+			cout << "Comprobando nodo " << *setIterator << endl;
+			currentDistance = (*setIterator)->objectiveDistance();
 
-	if ((firstTmp >= 0)
-		&& (firstTmp < MAP_WIDTH)
-		&& (secondTmp >= 0)
-		&& (secondTmp < MAP_WIDTH)
-		&& m_refMainAgent->getKnownMap()[firstTmp][secondTmp]
-		&& (((*getMap())(firstTmp, secondTmp)) & MASK_TERRAIN) == TERRAIN_GROUND) {
-
-		Node* nodeNorth = new Node( Point(firstTmp, secondTmp),
-			"NORTH", getActual());
-		if (!isInRoute(nodeNorth)) {
-			nodeNorth->setDistFromStart(getActual()->getDistFromStart() + 1);
-			getActual()->getNodosHijos().push_back(nodeNorth);
-
-			//nodeNorth->setHeurVal(heuristicValue(nodeNorth));
-			elPutoVector.push_back(nodeNorth);
-		}
-	}
-
-	firstTmp = getActual()->getP().first;
-	secondTmp = getActual()->getP().second + 1;
-
-	if ((firstTmp >= 0)
-		&& (firstTmp < MAP_WIDTH)
-		&& (secondTmp >= 0)
-		&& (secondTmp < MAP_WIDTH)
-		&& m_refMainAgent->getKnownMap()[firstTmp][secondTmp]
-		&& (((*getMap())(firstTmp, secondTmp)) & MASK_TERRAIN) == TERRAIN_GROUND) {
-
-		Node* nodeEast = new Node( Point(firstTmp, secondTmp),
-			"EAST", getActual());
-		if (!isInRoute(nodeEast)) {
-			nodeEast->setDistFromStart(getActual()->getDistFromStart() + 1);
-			getActual()->getNodosHijos().push_back(nodeEast);
-
-			//nodeEast->setHeurVal(heuristicValue(nodeEast));
-			elPutoVector.push_back(nodeEast);
-
-		}
-	}
-
-	firstTmp = getActual()->getP().first + 1;
-	secondTmp = getActual()->getP().second;
-
-	if ((firstTmp >= 0)
-		&& (firstTmp < MAP_WIDTH)
-		&& (secondTmp >= 0)
-		&& (secondTmp < MAP_WIDTH)
-		&& m_refMainAgent->getKnownMap()[firstTmp][secondTmp]
-		&& (((*getMap())(firstTmp, secondTmp)) & MASK_TERRAIN) == TERRAIN_GROUND) {
-
-		Node* nodeSouth = new Node( Point(firstTmp, secondTmp),
-			"SOUTH", getActual());
-		if (!isInRoute(nodeSouth)) {
-			nodeSouth->setDistFromStart(getActual()->getDistFromStart() + 1);
-			getActual()->getNodosHijos().push_back(nodeSouth);
-
-			//nodeSouth->setHeurVal(heuristicValue(nodeSouth));
-			elPutoVector.push_back(nodeSouth);
-
-		}
-	}
-
-	firstTmp = getActual()->getP().first;
-	secondTmp = getActual()->getP().second - 1;
-
-	if ((firstTmp >= 0)
-		&& (firstTmp < MAP_WIDTH)
-		&& (secondTmp >= 0)
-		&& (secondTmp < MAP_WIDTH)
-		&& m_refMainAgent->getKnownMap()[firstTmp][secondTmp]
-		&& (((*getMap())(firstTmp, secondTmp)) & MASK_TERRAIN) == TERRAIN_GROUND) {
-
-		Node* nodeWest = new Node( Point(firstTmp, secondTmp),
-			"WEST", getActual());
-		if (!isInRoute(nodeWest)) {
-			nodeWest->setDistFromStart(getActual()->getDistFromStart() + 1);
-			getActual()->getNodosHijos().push_back(nodeWest);
-
-			//nodeWest->setHeurVal(heuristicValue(nodeWest));
-			elPutoVector.push_back(nodeWest);
-
-		}
-	}
-	getActual()->setVisitado(true);
-}
-
-void PathFindingTree::calculateBetterNode() {
-	//INFO: Cola de Nodos -> push_back (), pop_front ()
-	std::queue<Node*> colaNodos;
-	Node* start = new Node(*getRoot());
-	int distance = 99999999;
-
-
-	colaNodos.push(start);
-	while (!colaNodos.empty()) {
-		for (unsigned int i = 0; i < colaNodos.front()->getNodosHijos().size();
-				++i) {
-			if (colaNodos.front()->getNodosHijos().at(i)->getNodosHijos().size()
-					> 0) { // No son nodos HOJA!!
-				//std::cout << "No hoja" << std::endl;
-
-				colaNodos.push(colaNodos.front()->getNodosHijos().at(i));
-			} else if (!colaNodos.front()->getNodosHijos().at(i)->isVisitado()) { // Son nodos HOJA
-				float val = heuristicValue(
-						colaNodos.front()->getNodosHijos().at(i));
-				//int val = colaNodos.front()->getHeurVal();
-				if (val <= distance) {
-					distance = val;
-					setActual(colaNodos.front()->getNodosHijos().at(i));
-				}
-				//std::cout << "Si hoja" << std::endl;
+			if (currentDistance <= bestDistance) {
+				bestDistance = currentDistance;
+				bestNode = *setIterator;
+				bestIterator = setIterator;
 			}
-			//std::cout << "TAMPILA = " << colaNodos.size() << std::endl;
 		}
-		colaNodos.pop();
+
+		cout << "Elegido nodo " << bestNode << " con distancia " <<
+		     bestDistance << endl;
+		expandNode(*bestNode);
+		openSet.erase(bestIterator);
+
+		for (successorIterator = bestNode->children()->begin(); successorIterator != bestNode->children()->end(); ++successorIterator) {
+			cout << "Comprobando nodo hijo " << & (*successorIterator) << " (" << (*successorIterator)->position().first << "," <<
+			     (*successorIterator)->position().second << ")" << endl;
+
+			if ((*successorIterator)->position().first == m_goalNode->position().first &&
+			                (*successorIterator)->position().second == m_goalNode->position().second) {
+				success = true;
+				break;
+			} else {
+				(*successorIterator)->setDistanceFromStart(bestNode->distanceFromStart() + 1);
+				(*successorIterator)->setHeuristicDistance(euclideanDistance((*successorIterator)->position(), m_goalNode->position()));
+			}
+
+			existsInClosedSet = false;
+			existsInOpenSet = false;
+
+			/*
+			        *       if a node with the same position as successor is in the OPEN list \
+			        which has a lower f than successor, skip this successor
+			    if a node with the same position as successor is in the CLOSED list \
+			        which has a lower f than successor, skip this successor
+			*/
+			for (std::vector<Node*>::iterator i = openSet.begin(); i != openSet.end(); ++i) {
+				if ((*successorIterator)->position().first == (*i)->position().first &&
+				                (*successorIterator)->position().second == (*i)->position().second) {
+					if ((*successorIterator)->objectiveDistance() >= (*i)->objectiveDistance()) {
+						existsInOpenSet = true;
+						break;
+					}
+				}
+			}
+
+			if (!existsInOpenSet) {
+				for (std::vector<Node*>::iterator i = closedSet.begin(); i != closedSet.end(); ++i) {
+					if ((*successorIterator)->position().first == (*i)->position().first &&
+					                (*successorIterator)->position().second == (*i)->position().second) {
+						if ((*successorIterator)->objectiveDistance() >= (*i)->objectiveDistance()) {
+							existsInClosedSet = true;
+							break;
+						}
+					}
+				}
+			}
+
+			if (!existsInOpenSet && !existsInClosedSet) {
+				cout << "Insertando nodo " << (*successorIterator) << " (" << (*successorIterator)->position().first << "," <<
+				     (*successorIterator)->position().second << ")" << endl;
+				openSet.push_back((*successorIterator));
+			}
+		}
+
+		cout << "Añadiendo nodo " << bestNode << " a closedSet" << endl;
+		closedSet.push_back(bestNode);
+		cin.get();
+	}
+	if (success) {
+		reversePath(*(*successorIterator));
 	}
 }
 
-bool PathFindingTree::isInRoute(Node* nodeCheck) {
-	Node* temp;
-	temp = new Node(*getActual());
-	bool result = false;
+void PathFindingTree::expandNode(Node& node) {
+	cout << "Expandiendo nodo " << &node << endl;
+	Node* north;
+	Node* east;
+	Node* south;
+	Node* west;
+	Point northPoint(const_cast<Node&>(node).position().first, const_cast<Node&>(node).position().second - 1);
+	Point eastPoint(const_cast<Node&>(node).position().first + 1, const_cast<Node&>(node).position().second);
+	Point southPoint(const_cast<Node&>(node).position().first, const_cast<Node&>(node).position().second + 1);
+	Point westPoint(const_cast<Node&>(node).position().first - 1, const_cast<Node&>(node).position().second);
 
-	//std::cout << "Antes del While de isInRoute ()" << std::endl;
-	while (temp->getPadre() != NULL) {
-		//std::cout << "Buscando en ruta.... Padre = " << temp->getPadre()
-				//<< std::endl;
-		if (temp->areEquals(nodeCheck)) {
-			result = true;
-			break;
-		}
-		temp = const_cast<Node*> (temp->getPadre());
+	north = new Node(northPoint, "NORTH", node);
+	north->setDistanceFromStart(node.distanceFromStart() + 1);
+	north->setHeuristicDistance(euclideanDistance(north->position(), m_goalNode->position()));
+	node.insertChildren(*north);
+
+	east = new Node(eastPoint, "EAST", node);
+	east->setDistanceFromStart(node.distanceFromStart() + 1);
+	east->setHeuristicDistance(euclideanDistance(east->position(), m_goalNode->position()));
+	node.insertChildren(*east);
+
+	south = new Node(southPoint, "SOUTH", node);
+	south->setDistanceFromStart(node.distanceFromStart() + 1);
+	south->setHeuristicDistance(euclideanDistance(south->position(), m_goalNode->position()));
+	node.insertChildren(*south);
+
+	west = new Node(westPoint, "WEST", node);
+	west->setDistanceFromStart(node.distanceFromStart() + 1);
+	west->setHeuristicDistance(euclideanDistance(west->position(), m_goalNode->position()));
+	node.insertChildren(*west);
+
+	for (vector<Node*>::iterator i = node.children()->begin(); i != node.children()->end(); i += 1) {
+		cout << "Nodo " << &(*i) << " (" << (*i)->direction() << ") distancia inicio " << (*i)->distanceFromStart() << " distancia heuristica " <<
+		     (*i)->heuristicDistance() << " total " << (*i)->objectiveDistance() << endl;
 	}
-	if (!result) {
-		if (temp -> areEquals(nodeCheck)) {
-			result = true;
-		}
+
+	cout << "Nodo expandido: regresando" << endl;
+}
+
+uint32_t PathFindingTree::calculateBestCandidate() {
+
+}
+
+bool PathFindingTree::isInRoute(const Node& nodeCheck) {
+	// Comprobar que el nodo no se encuentra en la rama actual.
+}
+
+float PathFindingTree::heuristicValue(const Node& start) {
+	return euclideanDistance(const_cast<Node&>(start).position(), m_goalNode->position());
+}
+
+void PathFindingTree::reversePath(const Node& node) {
+	Node* tmp;
+	tmp = &const_cast<Node&>(node);
+	while (tmp != NULL) {
+		// TODO Codigo para rellenar el camino
+		tmp = const_cast<Node*>(tmp->parent());
 	}
-	return result;
-}
-
-float PathFindingTree::heuristicValue(Node* start) {
-	return ( 	std::abs (start->getP().first - getGoal()->getP().first) +
-			std::abs (start->getP().second - getGoal()->getP().second) +
-			start -> getDistFromStart() );
-}
-
-Map* PathFindingTree::getMap() {
-	return const_cast<Map*>(m_refMainAgent->getMap());
-}
-
-Node* PathFindingTree::getActual() {
-	return m_actual;
-}
-
-void PathFindingTree::setActual(Node* actual) {
-	m_actual = actual;
-}
-
-Node* PathFindingTree::getGoal() {
-	return m_Goal;
-}
-
-void PathFindingTree::setGoal(Node* goal) {
-	m_Goal = goal;
-}
-
-MainAgent* PathFindingTree::getRefMainAgent() {
-	return m_refMainAgent;
-}
-
-void PathFindingTree::setRefMainAgent(MainAgent* refMainAgent) {
-	m_refMainAgent = refMainAgent;
-}
-
-Node* PathFindingTree::getRoot() {
-	return m_Root;
-}
-
-void PathFindingTree::setRoot(Node* root) {
-	m_Root = root;
-}
-
-std::string& PathFindingTree::getRoute() {
-	return m_route;
-}
-
-void PathFindingTree::setRoute(std::string& route) {
-	m_route = route;
 }

@@ -10,7 +10,7 @@
 #include <cstring>
 #include <cmath>
 
-Direction strToDirectionEnum (std::string dir) {
+Direction strToDirectionEnum(std::string dir) {
 	if (strcmp(dir.c_str(), "NORTH") == 0) {
 		return NORTH;
 	} else if (strcmp(dir.c_str(), "SOUTH") == 0) {
@@ -32,38 +32,48 @@ Direction strToDirectionEnum (std::string dir) {
 
 std::string directionEnumToString(Direction dir) {
 	std::string str;
-	switch(dir) {
+
+	switch (dir) {
 	case NORTH:
 		str = "NORTH";
 		break;
+
 	case NEAST:
 		str = "NEAST";
-			break;
+		break;
+
 	case EAST:
 		str = "EAST";
-			break;
+		break;
+
 	case SEAST:
 		str = "SEAST";
-			break;
+		break;
+
 	case SOUTH:
 		str = "SOUTH";
-			break;
+		break;
+
 	case SWEST:
 		str = "SWEST";
-			break;
+		break;
+
 	case WEST:
 		str = "WEST";
-			break;
+		break;
+
 	case NWEST:
 		str = "NWEST";
-			break;
+		break;
+
 	default:
 		str = "ERROR_DIR";
-			break;
+		break;
 	}
+
 	return str;
 }
 
-float euclideanDistance (Point p, Point q) {
-	return sqrt (pow ((q.first - p.first), 2) + pow ((q.second - q.second), 2));
+float euclideanDistance(const Point& p, const Point& q) {
+	return sqrt(pow((q.first - p.first), 2) + pow((q.second - q.second), 2));
 }

@@ -20,11 +20,10 @@
 #include <inttypes.h>
 #include <map>
 #include <string>
-#include <bits/stl_pair.h>
+#include <Point.h>
 
 // Definiciones de tipos propios para el proyecto.
 typedef unsigned char BYTE;
-typedef std::pair<int, int> Point;
 
 // Conjunto de constantes de configuración del sistema de seguimiento
 const bool BASIC_LOG = true;

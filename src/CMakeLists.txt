@@ -6,4 +6,10 @@ add_library (
 	Tools.cpp
   )
 
+add_library (
+	Point
+	STATIC
+	Point.cpp
+)
+
 set (CMAKE_POSITION_INDEPENDENT_CODE FALSE)

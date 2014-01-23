@@ -22,7 +22,7 @@ PathFindingTree::PathFindingTree(const MainAgent& agent, const Point& start, con
 	m_rootNode(new Node(start, std::string("RAIZ"), *static_cast<Node*>(NULL))),
 	m_goalNode(new Node(end, " ", *m_rootNode)),
 	m_agent(const_cast<MainAgent*>(&agent)) {
-	m_rootNode->setHeuristicDistance(euclideanDistance(m_rootNode->position(), m_goalNode->position()));
+	m_rootNode->setHeuristicDistance(heuristicValue(*m_rootNode));
 }
 
 PathFindingTree::~PathFindingTree() {
@@ -95,27 +95,19 @@ void PathFindingTree::calculateHeuristicRoute() {
 			cout << "Comprobando nodo hijo " << & (*successorIterator) << " (" << (*successorIterator)->position().first << "," <<
 			     (*successorIterator)->position().second << ")" << endl;
 
-			if ((*successorIterator)->position().first == m_goalNode->position().first &&
-			                (*successorIterator)->position().second == m_goalNode->position().second) {
+			if ((*successorIterator)->position() == m_goalNode->position()) {
 				success = true;
 				break;
 			} else {
 				(*successorIterator)->setDistanceFromStart(bestNode->distanceFromStart() + 1);
-				(*successorIterator)->setHeuristicDistance(euclideanDistance((*successorIterator)->position(), m_goalNode->position()));
+				(*successorIterator)->setHeuristicDistance(heuristicValue(*(*successorIterator)));
 			}
 
 			existsInClosedSet = false;
 			existsInOpenSet = false;
 
-			/*
-			        *       if a node with the same position as successor is in the OPEN list \
-			        which has a lower f than successor, skip this successor
-			    if a node with the same position as successor is in the CLOSED list \
-			        which has a lower f than successor, skip this successor
-			*/
 			for (std::vector<Node*>::iterator i = openSet.begin(); i != openSet.end(); ++i) {
-				if ((*successorIterator)->position().first == (*i)->position().first &&
-				                (*successorIterator)->position().second == (*i)->position().second) {
+				if ((*successorIterator)->position() == (*i)->position()) {
 					if ((*successorIterator)->objectiveDistance() >= (*i)->objectiveDistance()) {
 						existsInOpenSet = true;
 						break;
@@ -125,8 +117,7 @@ void PathFindingTree::calculateHeuristicRoute() {
 
 			if (!existsInOpenSet) {
 				for (std::vector<Node*>::iterator i = closedSet.begin(); i != closedSet.end(); ++i) {
-					if ((*successorIterator)->position().first == (*i)->position().first &&
-					                (*successorIterator)->position().second == (*i)->position().second) {
+					if ((*successorIterator)->position() == (*i)->position()) {
 						if ((*successorIterator)->objectiveDistance() >= (*i)->objectiveDistance()) {
 							existsInClosedSet = true;
 							break;
@@ -146,6 +137,7 @@ void PathFindingTree::calculateHeuristicRoute() {
 		closedSet.push_back(bestNode);
 		cin.get();
 	}
+
 	if (success) {
 		reversePath(*(*successorIterator));
 	}
@@ -164,22 +156,22 @@ void PathFindingTree::expandNode(Node& node) {
 
 	north = new Node(northPoint, "NORTH", node);
 	north->setDistanceFromStart(node.distanceFromStart() + 1);
-	north->setHeuristicDistance(euclideanDistance(north->position(), m_goalNode->position()));
+	north->setHeuristicDistance(heuristicValue(*north));
 	node.insertChildren(*north);
 
 	east = new Node(eastPoint, "EAST", node);
 	east->setDistanceFromStart(node.distanceFromStart() + 1);
-	east->setHeuristicDistance(euclideanDistance(east->position(), m_goalNode->position()));
+	east->setHeuristicDistance(heuristicValue(*east));
 	node.insertChildren(*east);
 
 	south = new Node(southPoint, "SOUTH", node);
 	south->setDistanceFromStart(node.distanceFromStart() + 1);
-	south->setHeuristicDistance(euclideanDistance(south->position(), m_goalNode->position()));
+	south->setHeuristicDistance(heuristicValue(*south));
 	node.insertChildren(*south);
 
 	west = new Node(westPoint, "WEST", node);
 	west->setDistanceFromStart(node.distanceFromStart() + 1);
-	west->setHeuristicDistance(euclideanDistance(west->position(), m_goalNode->position()));
+	west->setHeuristicDistance(heuristicValue(*west));
 	node.insertChildren(*west);
 
 	for (vector<Node*>::iterator i = node.children()->begin(); i != node.children()->end(); i += 1) {
@@ -205,6 +197,7 @@ float PathFindingTree::heuristicValue(const Node& start) {
 void PathFindingTree::reversePath(const Node& node) {
 	Node* tmp;
 	tmp = &const_cast<Node&>(node);
+
 	while (tmp != NULL) {
 		// TODO Codigo para rellenar el camino
 		tmp = const_cast<Node*>(tmp->parent());

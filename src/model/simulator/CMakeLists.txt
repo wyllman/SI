@@ -4,4 +4,4 @@ add_library (
 	Simulator.cpp
 )
 
-target_link_libraries (Simulator Tools Model Map MapConsoleInterface BDI FIPA Agents ${BOOST_RANDOM_LIB})
+target_link_libraries (Simulator Point Tools Model Map MapConsoleInterface BDI FIPA Agents ${BOOST_RANDOM_LIB})

@@ -11,5 +11,5 @@ add_library (
 	STATIC
 	PathFindingTree.cpp
 )
-	
+
 set (CMAKE_POSITION_INDEPENDENT_CODE FALSE)

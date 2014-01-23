@@ -41,41 +41,36 @@ Package* SearchAgent::readFIPAPackage(Package* p) {
 			switch (p->getType()) {
 			case NOT_UNDERSTOOD:
 				std::cout
-				                << "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible"
-				                << std::endl;
+					<< "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible"
+					<< std::endl;
 				break;
-
 			case CONFIRM:
 				std::cout << "CONFIRM: Confirmada la operación." << std::endl;
 				break;
-
 			case DIRECTION_SEARCH:
 				//Realizar búsqueda dada esta dirección
 				setNameAgent(const_cast<char*>(p->getContent() [0].c_str()));
 				localDireccionalSearch(p->getContent().at(0));
 				break;
-
 			case GO_LOCATION:
 				followRoute(p->getContent().at(0));
 				setState(FOLLOWING_ROUTE);
 				answer = new Package(getNameAgent(), p->getSender(), CONFIRM);
 				break;
-
 			case GO_SEARCHING_LOCATION:
 				followRoute(p->getContent().at(0));
 				setState(FOLLOWING_SEARCH_ROUTE);
 				answer = new Package(getNameAgent(), p->getSender(), CONFIRM);
 				break;
-
 			case COME_BACK:
 				followRoute(p -> getContent().at(0));
 				answer = new Package (getNameAgent(), p -> getSender(), CONFIRM);
 				setState(FOLLOWING_RET_ROUTE);
 				break;
-
 			default:
 				std::cout << "SA No se entiende el tipo del paquete recibido."
-				          << std::endl;
+					<< std::endl;
+				break;
 			}
 		}
 	}
@@ -85,7 +80,7 @@ Package* SearchAgent::readFIPAPackage(Package* p) {
 
 void SearchAgent::localDireccionalSearch(std::string d) {
 	initExplorationMove(m_position.first, m_position.second,
-	                    static_cast<Direction>(strToDirectionEnum(d.c_str())));
+			static_cast<Direction>(strToDirectionEnum(d.c_str())));
 	setState(SEARCHING);
 }
 
@@ -100,70 +95,56 @@ void SearchAgent::actDependingOfState() {
 		} else {
 			sensor();
 		}
-
 		break;
-
 	case SECOND_SEARCHING:
 		std::cout << "COMENZANDO EXPLORACION SECUNDARIA" << std::endl;
 		break;
-
 	case FOLLOWING_ROUTE:
 		std::cout << "Tam: " << getRoutes().size() << std::endl;
 
 		if (!routedMove()) {
 			setState(AVAILABLE);
 			getRefMainAgent()->readFIPAPackage(
-			        new Package(getNameAgent(),
-			                    getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+					new Package(getNameAgent(),
+							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
 		} else {
 			sensor();
 		}
-
 		break;
-
 	case FOLLOWING_SEARCH_ROUTE:
 		std::cout << "CAMINANDO AL PUNTO DE BUSQUEDA" << std::endl;
 
 		if (!routedMove()) {
 			setState(SECOND_SEARCHING);
 			getRefMainAgent()->readFIPAPackage(
-			        new Package(getNameAgent(),
-			                    getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+					new Package(getNameAgent(),
+							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
 		} else {
 			sensor();
 		}
-
 		break;
 	case FOLLOWING_RET_ROUTE:
 		std::cout << "Tam: " << getRoutes().size() << std::endl;
 		if (!routedMove()) {
-			//if (m_position.first != refMainAgent_->getPosition().first ||
-			//	m_position.second != refMainAgent_->getPosition().second) {
-			//	getRefMainAgent()->readFIPAPackage(
-			//						new Package(getNameAgent(),
-			//								getRefMainAgent()->getNameAgent(), COME_BACK, this));
-			//} else {
 			setState(AVAILABLE);
 			getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),
 							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
-			//}
 		} else {
 			sensor();
 		}
 		break;
-
 	default:
 		break;
 	}
 }
 void SearchAgent::followRoute(std::string route) {
-	std::cout << "SEGUIR LA RUTA: " << route << std::endl;
+	//std::cout << "SEGUIR LA RUTA: " << route << std::endl;
 	std::vector<Direction> camino;
 	int posIni = route.find("[");
 	int posCorchFin = route.find("]");
-	std::cout << "Pos ini:" << posIni << " posFin: " << posCorchFin
-	          << std::endl;
+	//std::cout << "Pos ini:" << posIni << " posFin: " << posCorchFin
+	//	<< std::endl;
 	route = route.substr(1, route.length());
 	int posComa = 0;
 	bool stop = false;
@@ -179,9 +160,7 @@ void SearchAgent::followRoute(std::string route) {
 			dirTemp = route.substr(0, posComa);
 			route = route.substr(posComa + 1, route.length());
 		}
-
 		camino.push_back(strToDirectionEnum(dirTemp));
-
 	}
 
 	for (unsigned int i = 0; i < camino.size(); i++) {
@@ -272,7 +251,7 @@ bool SearchAgent::explorationMove() {
 
 					if (tempDir != ERROR_DIR) {
 						directionAct = tempDir;
-						controledMove(directionAct);    // FIXME: ELIMINAR ESTA CONDICION Y SU ELSE
+						controledMove(directionAct);
 						updateDistance(directionAct);
 						lastMoveDirEXPL_ = directionAct;
 						result = true;
@@ -290,7 +269,6 @@ bool SearchAgent::explorationMove() {
 								result = true;
 							}
 						} else {
-							//finalDirecton_ = ERROR_DIR;
 							std::cout << "ERROR FIN CAMINO" << std::endl;
 						}
 					}
@@ -301,7 +279,7 @@ bool SearchAgent::explorationMove() {
 				}
 			} else {
 				std::cout << "ERROR, NO SE DEBE ACCEDER A ESTE PUNTO"
-				          << std::endl;
+						<< std::endl;
 			}
 		}
 	}
@@ -316,7 +294,6 @@ bool SearchAgent::swipeMove(const Point& start, const Point& end) {
 
 	if (m_lastLocalDirection == ERROR_DIR) {
 		nextPosition = m_position;
-
 		if (start.first > end.first) {
 			if (start.second > end.second) {
 				--nextPosition.second;
@@ -330,19 +307,17 @@ bool SearchAgent::swipeMove(const Point& start, const Point& end) {
 				++nextPosition.second;
 			}
 		}
-
 		if (refMainAgent_->getKnownMap()[nextPosition.first][nextPosition.second] &&
 		    ((*refMap_)(nextPosition.first, nextPosition.second) & MASK_TERRAIN) == TERRAIN_GROUND
 		   ) {
 			hasMoved = true;
 		}
 	}
-
 	return hasMoved;
 }
 
 Direction SearchAgent::calculateClockDirection(Direction theDirection,
-                bool inverse) {
+		bool inverse) {
 	Direction result = ERROR_DIR;
 
 	if (inverse) {
@@ -358,7 +333,6 @@ Direction SearchAgent::calculateClockDirection(Direction theDirection,
 			result = ((Direction)(theDirection + 1));
 		}
 	}
-
 	return result;
 }
 Direction SearchAgent::calculateInverseDirection(Direction theDirection) {
@@ -371,52 +345,44 @@ Direction SearchAgent::calculateInverseDirection(Direction theDirection) {
 }
 void SearchAgent::updateDistance(Direction theDirection) {
 	switch (guideDirectionEXPL_) {
-	case NORTH:
-		if (theDirection == NORTH || theDirection == NEAST
-		    || theDirection == NWEST) {
-			++initPointDistanceEXPL_;
-		} else if (theDirection == SOUTH || theDirection == SEAST
-		           || theDirection == SWEST) {
-			--initPointDistanceEXPL_;
-		}
-
-		break;
-
-	case EAST:
-		if (theDirection == EAST || theDirection == NEAST
-		    || theDirection == SEAST) {
-			++initPointDistanceEXPL_;
-		} else if (theDirection == WEST || theDirection == SWEST
-		           || theDirection == NWEST) {
-			--initPointDistanceEXPL_;
-		}
-
-		break;
-
-	case SOUTH:
-		if (theDirection == SOUTH || theDirection == SEAST
-		    || theDirection == SWEST) {
-			++initPointDistanceEXPL_;
-		} else if (theDirection == NORTH || theDirection == NEAST
-		           || theDirection == NWEST) {
-			--initPointDistanceEXPL_;
-		}
-
-		break;
-
-	case WEST:
-		if (theDirection == WEST || theDirection == NWEST
-		    || theDirection == SWEST) {
-			++initPointDistanceEXPL_;
-		} else if (theDirection == EAST || theDirection == SEAST
-		           || theDirection == NEAST) {
-			--initPointDistanceEXPL_;
-		}
-
-		break;
-
-	default:
-		break;
+		case NORTH:
+			if (theDirection == NORTH || theDirection == NEAST
+					|| theDirection == NWEST) {
+				++initPointDistanceEXPL_;
+			} else if (theDirection == SOUTH || theDirection == SEAST
+					|| theDirection == SWEST) {
+				--initPointDistanceEXPL_;
+			}
+			break;
+		case EAST:
+			if (theDirection == EAST || theDirection == NEAST
+					|| theDirection == SEAST) {
+				++initPointDistanceEXPL_;
+			} else if (theDirection == WEST || theDirection == SWEST
+					|| theDirection == NWEST) {
+				--initPointDistanceEXPL_;
+			}
+			break;
+		case SOUTH:
+			if (theDirection == SOUTH || theDirection == SEAST
+					|| theDirection == SWEST) {
+				++initPointDistanceEXPL_;
+			} else if (theDirection == NORTH || theDirection == NEAST
+					|| theDirection == NWEST) {
+				--initPointDistanceEXPL_;
+			}
+			break;
+		case WEST:
+			if (theDirection == WEST || theDirection == NWEST
+					|| theDirection == SWEST) {
+				++initPointDistanceEXPL_;
+			} else if (theDirection == EAST || theDirection == SEAST
+					|| theDirection == NEAST) {
+				--initPointDistanceEXPL_;
+			}
+			break;
+		default:
+			break;
 	}
 }
 // FIN -------------------------------------------------------------------------------
@@ -428,25 +394,21 @@ bool SearchAgent::onLimits() {
 	bool result = false;
 
 	switch (guideDirectionEXPL_) {
-	case NORTH:
-	case SOUTH:
-		if ((m_position.second >= (initPointEXPL_.second - DISTANCE))
-		    && (m_position.second <= (initPointEXPL_.second + DISTANCE))) {
-			result = true;
-		}
-
-		break;
-
-	case EAST:
-	case WEST:
-		if ((m_position.first >= (initPointEXPL_.first - DISTANCE))
-		    && (m_position.first <= (initPointEXPL_.first + DISTANCE))) {
-			result = true;
-		}
-
-		break;
+		case NORTH:
+		case SOUTH:
+			if ((m_position.second >= (initPointEXPL_.second - DISTANCE))
+					&& (m_position.second <= (initPointEXPL_.second + DISTANCE))) {
+				result = true;
+			}
+			break;
+		case EAST:
+		case WEST:
+			if ((m_position.first >= (initPointEXPL_.first - DISTANCE))
+					&& (m_position.first <= (initPointEXPL_.first + DISTANCE))) {
+				result = true;
+			}
+			break;
 	}
-
 	return result;
 }
 bool SearchAgent::onLineLimits() {
@@ -454,25 +416,21 @@ bool SearchAgent::onLineLimits() {
 	bool result = false;
 
 	switch (guideDirectionEXPL_) {
-	case NORTH:
-	case SOUTH:
-		if ((m_position.second == (initPointEXPL_.second - DISTANCE))
-		    || (m_position.second == (initPointEXPL_.second + DISTANCE))) {
-			result = true;
-		}
-
-		break;
-
-	case EAST:
-	case WEST:
-		if ((m_position.first == (initPointEXPL_.first - DISTANCE))
-		    || (m_position.first == (initPointEXPL_.first + DISTANCE))) {
-			result = true;
-		}
-
-		break;
+		case NORTH:
+		case SOUTH:
+			if ((m_position.second == (initPointEXPL_.second - DISTANCE))
+					|| (m_position.second == (initPointEXPL_.second + DISTANCE))) {
+				result = true;
+			}
+			break;
+		case EAST:
+		case WEST:
+			if ((m_position.first == (initPointEXPL_.first - DISTANCE))
+					|| (m_position.first == (initPointEXPL_.first + DISTANCE))) {
+				result = true;
+			}
+			break;
 	}
-
 	return result;
 }
 bool SearchAgent::onRoute() {
@@ -486,55 +444,46 @@ bool SearchAgent::onRoute() {
 		result = true;
 	} else if (onLineLimits()) {
 		switch (guideDirectionEXPL_) {
-		case NORTH:
-			if (EVEN) {
-				if (m_position.second > initPointEXPL_.second) {
+			case NORTH:
+				if (EVEN) {
+					if (m_position.second > initPointEXPL_.second) {
+						result = true;
+					}
+				} else if (m_position.second < initPointEXPL_.second) {
 					result = true;
 				}
-			} else if (m_position.second < initPointEXPL_.second) {
-				result = true;
-			}
-
-			break;
-
-		case EAST:
-			if (EVEN) {
-				if (m_position.first > initPointEXPL_.first) {
+				break;
+			case EAST:
+				if (EVEN) {
+					if (m_position.first > initPointEXPL_.first) {
+						result = true;
+					}
+				} else if (m_position.first < initPointEXPL_.first) {
 					result = true;
 				}
-			} else if (m_position.first < initPointEXPL_.first) {
-				result = true;
-			}
-
-			break;
-
-		case SOUTH:
-			if (EVEN) {
-				if (m_position.second < initPointEXPL_.second) {
+				break;
+			case SOUTH:
+				if (EVEN) {
+					if (m_position.second < initPointEXPL_.second) {
+						result = true;
+					}
+				} else if (m_position.second > initPointEXPL_.second) {
 					result = true;
 				}
-			} else if (m_position.second > initPointEXPL_.second) {
-				result = true;
-			}
-
-			break;
-
-		case WEST:
-			if (EVEN) {
-				if (m_position.first < initPointEXPL_.first) {
+				break;
+			case WEST:
+				if (EVEN) {
+					if (m_position.first < initPointEXPL_.first) {
+						result = true;
+					}
+				} else if (m_position.first > initPointEXPL_.first) {
 					result = true;
 				}
-			} else if (m_position.first > initPointEXPL_.first) {
-				result = true;
-			}
-
-			break;
-
-		default:
-			break;
+				break;
+			default:
+				break;
 		}
 	}
-
 	return result;
 }
 
@@ -548,134 +497,125 @@ Direction SearchAgent::calculateRouteDir() {
 	// if (onRoute()) {...codigo siguiente...};
 
 	switch (guideDirectionEXPL_) {
-	case NORTH:
-		if (ON_RECT) {
-			if (m_position.second == initPointEXPL_.second + DISTANCE) {
-				if (EVEN) {
-					result = WEST;
+		case NORTH:
+			if (ON_RECT) {
+				if (m_position.second == initPointEXPL_.second + DISTANCE) {
+					if (EVEN) {
+						result = WEST;
+					} else {
+						result = NEAST;
+					}
+				} else if (m_position.second == initPointEXPL_.second - DISTANCE) {
+					if (EVEN) {
+						result = NWEST;
+					} else {
+						result = EAST;
+					}
 				} else {
+					if (EVEN) {
+						result = WEST;
+					} else {
+						result = EAST;
+					}
+				}
+			} else {
+				if (m_position.second > initPointEXPL_.second) {
 					result = NEAST;
-				}
-			} else if (m_position.second == initPointEXPL_.second - DISTANCE) {
-				if (EVEN) {
-					result = NWEST;
-				} else {
-					result = EAST;
-				}
-			} else {
-				if (EVEN) {
-					result = WEST;
-				} else {
-					result = EAST;
-				}
-			}
-		} else {
-			if (m_position.second > initPointEXPL_.second) {
-				result = NEAST;
-			} else {
-				result = NWEST;
-			}
-		}
-
-		break;
-
-	case EAST:
-		if (ON_RECT) {
-			if (m_position.first == initPointEXPL_.first + DISTANCE) {
-				if (EVEN) {
-					result = NORTH;
-				} else {
-					result = SEAST;
-				}
-			} else if (m_position.first == initPointEXPL_.first - DISTANCE) {
-				if (EVEN) {
-					result = NEAST;
-				} else {
-					result = SOUTH;
-				}
-			} else {
-				if (EVEN) {
-					result = NORTH;
-				} else {
-					result = SOUTH;
-				}
-			}
-		} else {
-			if (m_position.first > initPointEXPL_.first) {
-				result = SEAST;
-			} else {
-				result = NEAST;
-			}
-		}
-
-		break;
-
-	case SOUTH:
-		if (ON_RECT) {
-			if (m_position.second == initPointEXPL_.second + DISTANCE) {
-				if (EVEN) {
-					result = SEAST;
-				} else {
-					result = WEST;
-				}
-			} else if (m_position.second == initPointEXPL_.second - DISTANCE) {
-				if (EVEN) {
-					result = EAST;
-				} else {
-					result = SWEST;
-				}
-			} else {
-				if (EVEN) {
-					result = EAST;
-				} else {
-					result = WEST;
-				}
-			}
-		} else {
-			if (m_position.second > initPointEXPL_.second) {
-				result = SEAST;
-			} else {
-				result = SWEST;
-			}
-		}
-
-		break;
-
-	case WEST:
-		if (ON_RECT) {
-			if (m_position.first == initPointEXPL_.first + DISTANCE) {
-				if (EVEN) {
-					result = SWEST;
-				} else {
-					result = NORTH;
-				}
-			} else if (m_position.first == initPointEXPL_.first - DISTANCE) {
-				if (EVEN) {
-					result = SOUTH;
 				} else {
 					result = NWEST;
 				}
-			} else {
-				if (EVEN) {
-					result = SOUTH;
+			}
+			break;
+		case EAST:
+			if (ON_RECT) {
+				if (m_position.first == initPointEXPL_.first + DISTANCE) {
+					if (EVEN) {
+						result = NORTH;
+					} else {
+						result = SEAST;
+					}
+				} else if (m_position.first == initPointEXPL_.first - DISTANCE) {
+					if (EVEN) {
+						result = NEAST;
+					} else {
+						result = SOUTH;
+					}
 				} else {
-					result = NORTH;
+					if (EVEN) {
+						result = NORTH;
+					} else {
+						result = SOUTH;
+					}
+				}
+			} else {
+				if (m_position.first > initPointEXPL_.first) {
+					result = SEAST;
+				} else {
+					result = NEAST;
 				}
 			}
-		} else {
-			if (m_position.first > initPointEXPL_.first) {
-				result = SWEST;
+			break;
+		case SOUTH:
+			if (ON_RECT) {
+				if (m_position.second == initPointEXPL_.second + DISTANCE) {
+					if (EVEN) {
+						result = SEAST;
+					} else {
+						result = WEST;
+					}
+				} else if (m_position.second == initPointEXPL_.second - DISTANCE) {
+					if (EVEN) {
+						result = EAST;
+					} else {
+						result = SWEST;
+					}
+				} else {
+					if (EVEN) {
+						result = EAST;
+					} else {
+						result = WEST;
+					}
+				}
 			} else {
-				result = NWEST;
+				if (m_position.second > initPointEXPL_.second) {
+					result = SEAST;
+				} else {
+					result = SWEST;
+				}
 			}
-		}
-
-		break;
-
-	default:
-		break;
+			break;
+		case WEST:
+			if (ON_RECT) {
+				if (m_position.first == initPointEXPL_.first + DISTANCE) {
+					if (EVEN) {
+						result = SWEST;
+					} else {
+						result = NORTH;
+					}
+				} else if (m_position.first == initPointEXPL_.first - DISTANCE) {
+					if (EVEN) {
+						result = SOUTH;
+					} else {
+						result = NWEST;
+					}
+				} else {
+					if (EVEN) {
+						result = SOUTH;
+					} else {
+						result = NORTH;
+					}
+				}
+			} else {
+				if (m_position.first > initPointEXPL_.first) {
+					result = SWEST;
+				} else {
+					result = NWEST;
+				}
+			}
+			break;
+		default:
+			break;
 	}
-
 	return result;
 }
 Direction SearchAgent::calculateReturnDir() {

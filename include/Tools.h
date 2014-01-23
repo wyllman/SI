@@ -47,6 +47,8 @@ const float MAP_UP_SCALE = 2.5;
 //   Agentes:
 const float MAIN_AGENT_SCALE = 1;
 const float SECOND_AGENT_SCALE = 0.5;
+// Tamaño del sector
+const int32_t SECTOR_SIZE = 10;
 
 // Conjunto de constantes auxiliares para la integración del sistema
 // de seguimiento

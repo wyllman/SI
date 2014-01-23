@@ -21,7 +21,7 @@ private:
 	Desire* m_desire;
 	MainAgent* m_agent;
 	bool m_newDesireSelected;
-	std::string m_currentDesire;
+	std::string m_currentGoal;
 
 	void exploreMap();
 	void findOptimalLocation();

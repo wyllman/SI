@@ -23,17 +23,45 @@ class MapBuilder;
 
 
 class Map {
-	private:
-		uint32_t m_size;
-		MapBuilder* m_builder;
-		BYTE** m_mapArray;
-	public:
-		Map();
-		Map(const Map& map);
-		~Map();
-		inline BYTE const* const* map() const { return m_mapArray; }
-		BYTE operator()(int x, int y) const;
-		inline uint32_t size() const { return m_size; }
+private:
+    uint32_t m_size;
+    MapBuilder* m_builder;
+    BYTE** m_mapArray;
+public:
+    Map();
+    Map ( const Map& map );
+    ~Map();
+
+    inline BYTE operator() ( int x, int y ) const {
+        return m_mapArray[x][y];
+    }
+
+    inline BYTE operator() ( Point p ) const {
+        return m_mapArray[p.first][p.second];
+    }
+
+    inline BYTE cellTerrainType ( int x, int y ) const {
+        return ( m_mapArray[x][y] & MASK_TERRAIN );
+    }
+
+    inline BYTE cellTerrainType ( Point p ) const {
+        return ( m_mapArray[p.first][p.second] & MASK_TERRAIN );
+    }
+
+    inline BYTE cellResourceType ( int x, int y ) const {
+        return ( m_mapArray[x][y] & MASK_RESOURCE );
+    }
+
+    inline BYTE cellResourceType ( Point p ) const {
+        return ( m_mapArray[p.first][p.second] & MASK_RESOURCE );
+    }
+
+    inline BYTE const* const* map() const {
+        return m_mapArray;
+    }
+    inline uint32_t size() const {
+        return m_size;
+    }
 };
 
 #endif /* MAP_H_ */

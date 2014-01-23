@@ -24,39 +24,41 @@
 class Package;
 
 class Agent {
-   private:
-      State m_state;
+private:
+	State m_state;
 
-      unsigned int m_idComm;
-      char* m_nameAgent;
+	unsigned int m_idComm;
+	char* m_nameAgent;
 
-   protected:
-      Point m_position;
-      Map* refMap_;
-      std::vector<Direction> m_routes;
-   public:
-      Agent(Map*);
-      virtual ~Agent() = 0;
+protected:
+	Point m_position;
+	Map* refMap_;
+	std::vector<Direction> m_routes;
+public:
+	Agent(Map*);
+	virtual ~Agent() = 0;
 
-      void move(Direction);
-      bool controledMove (Direction);
-      bool checkTerrain (Direction);
-      bool routedMove ();
-      bool checkRouteMoves ();
+	void move(Direction);
+	bool controledMove(Direction);
+	bool checkTerrain(Direction);
+	bool routedMove();
+	bool checkRouteMoves();
 
-      void setRoutes(std::vector<Direction>& routes);
+	void setRoutes(std::vector<Direction>& routes);
 
-      Point getPosition ();
-      unsigned int getIdComm() const;
-      void setIdComm(unsigned int idComm);
-      char* getNameAgent() const;
-      void setNameAgent(char* nameAgent);
-      State getState() const;
-     void setState(State state);
-     std::vector<Direction>& getRoutes();
+	Point getPosition();
+	unsigned int getIdComm() const;
+	void setIdComm(unsigned int idComm);
+	char* getNameAgent() const;
+	void setNameAgent(char* nameAgent);
+	State getState() const;
+	void setState(State state);
+	std::vector<Direction>& getRoutes();
 
-      virtual Package* readFIPAPackage (Package*) { return NULL; };
-      virtual void actDependingOfState () { };
+	virtual Package* readFIPAPackage(Package*) {
+		return NULL;
+	};
+	virtual void actDependingOfState() { };
 };
 
 #endif /* AGENT_H_ */

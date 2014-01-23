@@ -14,7 +14,7 @@
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 SearchAgent::SearchAgent(MainAgent* mainAgent, Map* theMap) :
-		Agent(theMap), refMainAgent_(mainAgent) {
+	Agent(theMap), refMainAgent_(mainAgent) {
 	setNameAgent(const_cast<char*>("SEARCH_AGENT"));
 	initPointDistanceEXPL_ = -1;
 	guideDirectionEXPL_ = ERROR_DIR;
@@ -22,6 +22,7 @@ SearchAgent::SearchAgent(MainAgent* mainAgent, Map* theMap) :
 	finalMovemnts_ = false;
 	finalDirecton_ = ERROR_DIR;
 	countLoopSteps_ = 0;
+	m_lastLocalDirection = ERROR_DIR;
 }
 SearchAgent::~SearchAgent() {
 }
@@ -32,6 +33,7 @@ SearchAgent::~SearchAgent() {
 // Métodos públicos:
 Package* SearchAgent::readFIPAPackage(Package* p) {
 	Package* answer;
+
 	// Comprobamos que el paquete es de la conversación actual
 	if (p->getIdComm() == getIdComm()) {
 		// Comprobamos que el paquete va destinado al agente correcto
@@ -39,44 +41,51 @@ Package* SearchAgent::readFIPAPackage(Package* p) {
 			switch (p->getType()) {
 			case NOT_UNDERSTOOD:
 				std::cout
-						<< "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible"
-						<< std::endl;
+				                << "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible"
+				                << std::endl;
 				break;
+
 			case CONFIRM:
 				std::cout << "CONFIRM: Confirmada la operación." << std::endl;
 				break;
+
 			case DIRECTION_SEARCH:
 				//Realizar búsqueda dada esta dirección
-				setNameAgent(const_cast<char*>(p->getContent()[0].c_str()));
+				setNameAgent(const_cast<char*>(p->getContent() [0].c_str()));
 				localDireccionalSearch(p->getContent().at(0));
 				break;
+
 			case GO_LOCATION:
 				followRoute(p->getContent().at(0));
 				setState(FOLLOWING_ROUTE);
 				answer = new Package(getNameAgent(), p->getSender(), CONFIRM);
 				break;
+
 			case GO_SEARCHING_LOCATION:
 				followRoute(p->getContent().at(0));
 				setState(FOLLOWING_SEARCH_ROUTE);
 				answer = new Package(getNameAgent(), p->getSender(), CONFIRM);
 				break;
+
 			case COME_BACK:
 				followRoute(p -> getContent().at(0));
 				answer = new Package (getNameAgent(), p -> getSender(), CONFIRM);
 				setState(FOLLOWING_RET_ROUTE);
 				break;
+
 			default:
 				std::cout << "SA No se entiende el tipo del paquete recibido."
-						<< std::endl;
+				          << std::endl;
 			}
 		}
 	}
+
 	return answer;
 }
 
 void SearchAgent::localDireccionalSearch(std::string d) {
 	initExplorationMove(m_position.first, m_position.second,
-			static_cast<Direction>(strToDirectionEnum(d.c_str())));
+	                    static_cast<Direction>(strToDirectionEnum(d.c_str())));
 	setState(SEARCHING);
 }
 
@@ -92,46 +101,55 @@ void SearchAgent::actDependingOfState() {
 		} else {
 			sensor();
 		}
+
 		break;
+
 	case SECOND_SEARCHING:
 		std::cout << "COMENZANDO EXPLORACION SECUNDARIA" << std::endl;
 		break;
+
 	case FOLLOWING_ROUTE:
 		std::cout << "Tam: " << getRoutes().size() << std::endl;
+
 		if (!routedMove()) {
 			setState(AVAILABLE);
 			getRefMainAgent()->readFIPAPackage(
-					new Package(getNameAgent(),
-							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+			        new Package(getNameAgent(),
+			                    getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
 		}
+
 		break;
+
 	case FOLLOWING_SEARCH_ROUTE:
 		std::cout << "CAMINANDO AL PUNTO DE BUSQUEDA" << std::endl;
+
 		if (!routedMove()) {
 			setState(SECOND_SEARCHING);
 			getRefMainAgent()->readFIPAPackage(
-					new Package(getNameAgent(),
-							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+			        new Package(getNameAgent(),
+			                    getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
 		} else {
 			sensor();
 		}
+
 		break;
 	case FOLLOWING_RET_ROUTE:
 		std::cout << "Tam: " << getRoutes().size() << std::endl;
 		if (!routedMove()) {
-			if (m_position.first != refMainAgent_->getPosition().first ||
-				m_position.second != refMainAgent_->getPosition().second) {
-				getRefMainAgent()->readFIPAPackage(
-									new Package(getNameAgent(),
-											getRefMainAgent()->getNameAgent(), COME_BACK, this));
-			} else {
+			//if (m_position.first != refMainAgent_->getPosition().first ||
+			//	m_position.second != refMainAgent_->getPosition().second) {
+			//	getRefMainAgent()->readFIPAPackage(
+			//						new Package(getNameAgent(),
+			//								getRefMainAgent()->getNameAgent(), COME_BACK, this));
+			//} else {
 			setState(AVAILABLE);
 			getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),
 							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
-			}
+			//}
 		}
 		break;
+
 	default:
 		break;
 	}
@@ -142,13 +160,15 @@ void SearchAgent::followRoute(std::string route) {
 	int posIni = route.find("[");
 	int posCorchFin = route.find("]");
 	std::cout << "Pos ini:" << posIni << " posFin: " << posCorchFin
-			<< std::endl;
+	          << std::endl;
 	route = route.substr(1, route.length());
 	int posComa = 0;
 	bool stop = false;
 	std::string dirTemp;
+
 	while (!stop) {
 		posComa = route.find(",");
+
 		if (posComa == -1) {
 			stop = true;
 			dirTemp = route.substr(0, route.length() - 1);
@@ -157,33 +177,15 @@ void SearchAgent::followRoute(std::string route) {
 			route = route.substr(posComa + 1, route.length());
 		}
 
-		camino.push_back(translateRoute(dirTemp));
+		camino.push_back(strToDirectionEnum(dirTemp));
 
 	}
+
 	for (unsigned int i = 0; i < camino.size(); i++) {
 		m_routes.push_back(camino[camino.size() - i]);
 	}
 }
 
-Direction SearchAgent::translateRoute(std::string dir) {
-	if (strcmp(dir.c_str(), "NORTH") == 0) {
-		return NORTH;
-	} else if (strcmp(dir.c_str(), "SOUTH") == 0) {
-		return SOUTH;
-	} else if (strcmp(dir.c_str(), "EAST") == 0) {
-		return EAST;
-	} else if (strcmp(dir.c_str(), "WEST") == 0) {
-		return WEST;
-	} else if (strcmp(dir.c_str(), "NEAST") == 0) {
-		return NEAST;
-	} else if (strcmp(dir.c_str(), "NWEST") == 0) {
-		return NWEST;
-	} else if (strcmp(dir.c_str(), "SEAST") == 0) {
-		return SEAST;
-	} else if (strcmp(dir.c_str(), "SWEST") == 0) {
-		return SWEST;
-	}
-}
 void SearchAgent::initExplorationMove(int row, int col, Direction guideDir) {
 	initPointEXPL_.first = row;
 	initPointEXPL_.second = col;
@@ -223,8 +225,9 @@ bool SearchAgent::explorationMove() {
 
 	// Realizar el primer paso.
 	if (initPointDistanceEXPL_ == 1) {
-		directionAct = ((Direction) (guideDirectionEXPL_ + 1));
+		directionAct = ((Direction)(guideDirectionEXPL_ + 1));
 		obstacleDetectec = !controledMove(directionAct);
+
 		if (!obstacleDetectec) {
 			lastDirectionEXPL_ = directionAct;
 			lastMoveDirEXPL_ = directionAct;
@@ -234,6 +237,7 @@ bool SearchAgent::explorationMove() {
 	} else if (initPointDistanceEXPL_ != -1) {
 		if (finalMovemnts_) {
 			directionAct = calculateFinalDir(finalDirecton_);
+
 			if (directionAct != ERROR_DIR) {
 				if (controledMove(directionAct)) {
 					updateDistance(directionAct);
@@ -259,11 +263,13 @@ bool SearchAgent::explorationMove() {
 
 			if (directionAct != ERROR_DIR) {
 				obstacleDetectec = !controledMove(directionAct);
+
 				if (obstacleDetectec) {
 					tempDir = calculateObstaclDir(directionAct);
+
 					if (tempDir != ERROR_DIR) {
 						directionAct = tempDir;
-						controledMove(directionAct); // FIXME: ELIMINAR ESTA CONDICION Y SU ELSE
+						controledMove(directionAct);    // FIXME: ELIMINAR ESTA CONDICION Y SU ELSE
 						updateDistance(directionAct);
 						lastMoveDirEXPL_ = directionAct;
 						result = true;
@@ -273,6 +279,7 @@ bool SearchAgent::explorationMove() {
 						finalDirecton_ = directionAct;
 						finalMovemnts_ = true;
 						directionAct = calculateFinalDir(finalDirecton_);
+
 						if (directionAct != ERROR_DIR) {
 							if (controledMove(directionAct)) {
 								updateDistance(directionAct);
@@ -291,38 +298,64 @@ bool SearchAgent::explorationMove() {
 				}
 			} else {
 				std::cout << "ERROR, NO SE DEBE ACCEDER A ESTE PUNTO"
-						<< std::endl;
+				          << std::endl;
 			}
 		}
 	}
+
 	return result;
 }
 
-void SearchAgent::swipeMove() {
-	const uint32_t SECTOR_SIZE = 10;
-	Point position = m_position;
-	Direction lastMovement;
-	Direction nextMovement;
+bool SearchAgent::swipeMove(const Point& start, const Point& end) {
+	bool hasMoved;
+	hasMoved = false;
+	Point nextPosition;
 
+	if (m_lastLocalDirection == ERROR_DIR) {
+		nextPosition = m_position;
 
+		if (start.first > end.first) {
+			if (start.second > end.second) {
+				--nextPosition.second;
+			} else {
+				--nextPosition.second;
+			}
+		} else {
+			if (start.second > end.second) {
+				++nextPosition.second;
+			} else {
+				++nextPosition.second;
+			}
+		}
+
+		if (refMainAgent_->getKnownMap()[nextPosition.first][nextPosition.second] &&
+		    ((*refMap_)(nextPosition.first, nextPosition.second) & MASK_TERRAIN) == TERRAIN_GROUND
+		   ) {
+			hasMoved = true;
+		}
+	}
+
+	return hasMoved;
 }
 
 Direction SearchAgent::calculateClockDirection(Direction theDirection,
-		bool inverse) {
+                bool inverse) {
 	Direction result = ERROR_DIR;
+
 	if (inverse) {
 		if (theDirection == NORTH) {
 			result = NWEST;
 		} else {
-			result = ((Direction) (theDirection - 1));
+			result = ((Direction)(theDirection - 1));
 		}
 	} else {
 		if (theDirection == NWEST) {
 			result = NORTH;
 		} else {
-			result = ((Direction) (theDirection + 1));
+			result = ((Direction)(theDirection + 1));
 		}
 	}
+
 	return result;
 }
 Direction SearchAgent::calculateInverseDirection(Direction theDirection) {
@@ -337,40 +370,48 @@ void SearchAgent::updateDistance(Direction theDirection) {
 	switch (guideDirectionEXPL_) {
 	case NORTH:
 		if (theDirection == NORTH || theDirection == NEAST
-				|| theDirection == NWEST) {
+		    || theDirection == NWEST) {
 			++initPointDistanceEXPL_;
 		} else if (theDirection == SOUTH || theDirection == SEAST
-				|| theDirection == SWEST) {
+		           || theDirection == SWEST) {
 			--initPointDistanceEXPL_;
 		}
+
 		break;
+
 	case EAST:
 		if (theDirection == EAST || theDirection == NEAST
-				|| theDirection == SEAST) {
+		    || theDirection == SEAST) {
 			++initPointDistanceEXPL_;
 		} else if (theDirection == WEST || theDirection == SWEST
-				|| theDirection == NWEST) {
+		           || theDirection == NWEST) {
 			--initPointDistanceEXPL_;
 		}
+
 		break;
+
 	case SOUTH:
 		if (theDirection == SOUTH || theDirection == SEAST
-				|| theDirection == SWEST) {
+		    || theDirection == SWEST) {
 			++initPointDistanceEXPL_;
 		} else if (theDirection == NORTH || theDirection == NEAST
-				|| theDirection == NWEST) {
+		           || theDirection == NWEST) {
 			--initPointDistanceEXPL_;
 		}
+
 		break;
+
 	case WEST:
 		if (theDirection == WEST || theDirection == NWEST
-				|| theDirection == SWEST) {
+		    || theDirection == SWEST) {
 			++initPointDistanceEXPL_;
 		} else if (theDirection == EAST || theDirection == SEAST
-				|| theDirection == NEAST) {
+		           || theDirection == NEAST) {
 			--initPointDistanceEXPL_;
 		}
+
 		break;
+
 	default:
 		break;
 	}
@@ -387,18 +428,22 @@ bool SearchAgent::onLimits() {
 	case NORTH:
 	case SOUTH:
 		if ((m_position.second >= (initPointEXPL_.second - DISTANCE))
-				&& (m_position.second <= (initPointEXPL_.second + DISTANCE))) {
+		    && (m_position.second <= (initPointEXPL_.second + DISTANCE))) {
 			result = true;
 		}
+
 		break;
+
 	case EAST:
 	case WEST:
 		if ((m_position.first >= (initPointEXPL_.first - DISTANCE))
-				&& (m_position.first <= (initPointEXPL_.first + DISTANCE))) {
+		    && (m_position.first <= (initPointEXPL_.first + DISTANCE))) {
 			result = true;
 		}
+
 		break;
 	}
+
 	return result;
 }
 bool SearchAgent::onLineLimits() {
@@ -409,16 +454,19 @@ bool SearchAgent::onLineLimits() {
 	case NORTH:
 	case SOUTH:
 		if ((m_position.second == (initPointEXPL_.second - DISTANCE))
-				|| (m_position.second == (initPointEXPL_.second + DISTANCE))) {
+		    || (m_position.second == (initPointEXPL_.second + DISTANCE))) {
 			result = true;
 		}
+
 		break;
+
 	case EAST:
 	case WEST:
 		if ((m_position.first == (initPointEXPL_.first - DISTANCE))
-				|| (m_position.first == (initPointEXPL_.first + DISTANCE))) {
+		    || (m_position.first == (initPointEXPL_.first + DISTANCE))) {
 			result = true;
 		}
+
 		break;
 	}
 
@@ -443,7 +491,9 @@ bool SearchAgent::onRoute() {
 			} else if (m_position.second < initPointEXPL_.second) {
 				result = true;
 			}
+
 			break;
+
 		case EAST:
 			if (EVEN) {
 				if (m_position.first > initPointEXPL_.first) {
@@ -452,7 +502,9 @@ bool SearchAgent::onRoute() {
 			} else if (m_position.first < initPointEXPL_.first) {
 				result = true;
 			}
+
 			break;
+
 		case SOUTH:
 			if (EVEN) {
 				if (m_position.second < initPointEXPL_.second) {
@@ -461,7 +513,9 @@ bool SearchAgent::onRoute() {
 			} else if (m_position.second > initPointEXPL_.second) {
 				result = true;
 			}
+
 			break;
+
 		case WEST:
 			if (EVEN) {
 				if (m_position.first < initPointEXPL_.first) {
@@ -470,7 +524,9 @@ bool SearchAgent::onRoute() {
 			} else if (m_position.first > initPointEXPL_.first) {
 				result = true;
 			}
+
 			break;
+
 		default:
 			break;
 		}
@@ -517,7 +573,9 @@ Direction SearchAgent::calculateRouteDir() {
 				result = NWEST;
 			}
 		}
+
 		break;
+
 	case EAST:
 		if (ON_RECT) {
 			if (m_position.first == initPointEXPL_.first + DISTANCE) {
@@ -546,7 +604,9 @@ Direction SearchAgent::calculateRouteDir() {
 				result = NEAST;
 			}
 		}
+
 		break;
+
 	case SOUTH:
 		if (ON_RECT) {
 			if (m_position.second == initPointEXPL_.second + DISTANCE) {
@@ -575,7 +635,9 @@ Direction SearchAgent::calculateRouteDir() {
 				result = SWEST;
 			}
 		}
+
 		break;
+
 	case WEST:
 		if (ON_RECT) {
 			if (m_position.first == initPointEXPL_.first + DISTANCE) {
@@ -604,7 +666,9 @@ Direction SearchAgent::calculateRouteDir() {
 				result = NWEST;
 			}
 		}
+
 		break;
+
 	default:
 		break;
 	}
@@ -636,28 +700,36 @@ Direction SearchAgent::calculateOutRouteDir() {
 		} else {
 			result = WEST;
 		}
+
 		break;
+
 	case EAST:
 		if (ON_EVEN) {
 			result = SOUTH;
 		} else {
 			result = NORTH;
 		}
+
 		break;
+
 	case SOUTH:
 		if (ON_EVEN) {
 			result = WEST;
 		} else {
 			result = EAST;
 		}
+
 		break;
+
 	case WEST:
 		if (ON_EVEN) {
 			result = NORTH;
 		} else {
 			result = SOUTH;
 		}
+
 		break;
+
 	default:
 		break;
 	}
@@ -680,26 +752,33 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 			case NWEST:
 			case WEST:
 				tmpDir = calculateClockDirection(theDirection, false);
+
 				if (checkTerrain(tmpDir)) {
 					result = tmpDir;
 				} else {
 					tmpDir = calculateClockDirection(tmpDir, false);
+
 					if (checkTerrain(tmpDir)) {
 						result = tmpDir;
 					}
 				}
+
 				break;
+
 			case NEAST:
 			case EAST:
 				tmpDir = calculateClockDirection(theDirection, true);
+
 				if (checkTerrain(tmpDir)) {
 					result = tmpDir;
 				} else {
 					tmpDir = calculateClockDirection(tmpDir, true);
+
 					if (checkTerrain(tmpDir)) {
 						result = tmpDir;
 					}
 				}
+
 				break;
 			}
 		} else { // Si no estamos en ruta, realizar movimiento recto par/impar
@@ -721,7 +800,9 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 				}
 			}
 		}
+
 		break;
+
 	case EAST:
 		if (ON_ROUTE) {
 			// Si estamos en ruta, realizar la busqueda de dos movimientos
@@ -731,26 +812,33 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 			case NEAST:
 			case NORTH:
 				tmpDir = calculateClockDirection(theDirection, false);
+
 				if (checkTerrain(tmpDir)) {
 					result = tmpDir;
 				} else {
 					tmpDir = calculateClockDirection(tmpDir, false);
+
 					if (checkTerrain(tmpDir)) {
 						result = tmpDir;
 					}
 				}
+
 				break;
+
 			case SEAST:
 			case SOUTH:
 				tmpDir = calculateClockDirection(theDirection, true);
+
 				if (checkTerrain(tmpDir)) {
 					result = tmpDir;
 				} else {
 					tmpDir = calculateClockDirection(tmpDir, true);
+
 					if (checkTerrain(tmpDir)) {
 						result = tmpDir;
 					}
 				}
+
 				break;
 			}
 		} else { // Si no estamos en ruta, realzar mov. rect. par/impar
@@ -772,7 +860,9 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 				}
 			}
 		}
+
 		break;
+
 	case SOUTH:
 		if (ON_ROUTE) {
 			// Si estamos en ruta, realizar la busqueda de dos movimientos
@@ -782,26 +872,33 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 			case SEAST:
 			case EAST:
 				tmpDir = calculateClockDirection(theDirection, false);
+
 				if (checkTerrain(tmpDir)) {
 					result = tmpDir;
 				} else {
 					tmpDir = calculateClockDirection(tmpDir, false);
+
 					if (checkTerrain(tmpDir)) {
 						result = tmpDir;
 					}
 				}
+
 				break;
+
 			case SWEST:
 			case WEST:
 				tmpDir = calculateClockDirection(theDirection, true);
+
 				if (checkTerrain(tmpDir)) {
 					result = tmpDir;
 				} else {
 					tmpDir = calculateClockDirection(tmpDir, true);
+
 					if (checkTerrain(tmpDir)) {
 						result = tmpDir;
 					}
 				}
+
 				break;
 			}
 		} else { // Si no estamos en ruta, realizar movimiento recto par/impar
@@ -823,7 +920,9 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 				}
 			}
 		}
+
 		break;
+
 	case WEST:
 		if (ON_ROUTE) {
 			// Si estamos en ruta, realizar la busqueda de dos movimientos
@@ -833,26 +932,33 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 			case NWEST:
 			case NORTH:
 				tmpDir = calculateClockDirection(theDirection, true);
+
 				if (checkTerrain(tmpDir)) {
 					result = tmpDir;
 				} else {
 					tmpDir = calculateClockDirection(tmpDir, true);
+
 					if (checkTerrain(tmpDir)) {
 						result = tmpDir;
 					}
 				}
+
 				break;
+
 			case SWEST:
 			case SOUTH:
 				tmpDir = calculateClockDirection(theDirection, false);
+
 				if (checkTerrain(tmpDir)) {
 					result = tmpDir;
 				} else {
 					tmpDir = calculateClockDirection(tmpDir, false);
+
 					if (checkTerrain(tmpDir)) {
 						result = tmpDir;
 					}
 				}
+
 				break;
 			}
 		} else { // Si no estamos en ruta, realzar mov. rect. par/impar
@@ -874,7 +980,9 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 				}
 			}
 		}
+
 		break;
+
 	default:
 		break;
 	}
@@ -921,7 +1029,9 @@ Direction SearchAgent::calculateFinalDir(Direction theDirection) {
 		} else {
 			std::cout << "ERROR CALCULO DIR FINAL (OTROS)" << std::endl;
 		}
+
 		break;
+
 	case EAST:
 		if ((theDirection == NORTH) || theDirection == NEAST) {
 			if (checkTerrain(SEAST)) {
@@ -956,7 +1066,9 @@ Direction SearchAgent::calculateFinalDir(Direction theDirection) {
 		} else {
 			std::cout << "ERROR CALCULO DIR FINAL (OTROS)" << std::endl;
 		}
+
 		break;
+
 	case SOUTH:
 		if ((theDirection == WEST) || theDirection == SWEST) {
 			if (checkTerrain(SEAST)) {
@@ -991,7 +1103,9 @@ Direction SearchAgent::calculateFinalDir(Direction theDirection) {
 		} else {
 			std::cout << "ERROR CALCULO DIR FINAL (OTROS)" << std::endl;
 		}
+
 		break;
+
 	case WEST:
 		if ((theDirection == NORTH) || theDirection == NWEST) {
 			if (checkTerrain(SWEST)) {
@@ -1026,7 +1140,9 @@ Direction SearchAgent::calculateFinalDir(Direction theDirection) {
 		} else {
 			std::cout << "ERROR CALCULO DIR FINAL (OTROS)" << std::endl;
 		}
+
 		break;
+
 	default:
 		break;
 	}
@@ -1039,15 +1155,16 @@ void SearchAgent::sensor() {
 	int switchedCells = 0;
 
 	++countLoopSteps_;
+
 	for (int32_t i = m_position.first - width; i <= m_position.first + width;
-			++i) {
+	     ++i) {
 		for (int32_t j = m_position.second - width;
-				j <= m_position.second + width; ++j) {
+		     j <= m_position.second + width; ++j) {
 			if ((i >= 0 && i < MAP_WIDTH) && (j >= 0 && j < MAP_WIDTH)) {
 				if (sqrt(
-						pow((i - m_position.first), 2)
-								+ pow((j - m_position.second), 2))
-						<= (width * 1.0)) {
+				            pow((i - m_position.first), 2)
+				            + pow((j - m_position.second), 2))
+				    <= (width * 1.0)) {
 					if (!refMainAgent_->knownMapPosition(i, j)) {
 						countLoopSteps_ = 0;
 						refMainAgent_->setKnownMapPosition(i, j, true);
@@ -1058,6 +1175,7 @@ void SearchAgent::sensor() {
 			}
 		}
 	}
+
 	refMainAgent_->checkedCells(switchedCells);
 }
 

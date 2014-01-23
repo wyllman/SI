@@ -17,13 +17,13 @@
 #ifndef TOOLS_H_
 #define TOOLS_H_
 
+#include <inttypes.h>
 #include <map>
 #include <string>
-#include <bits/stl_pair.h>
+#include <Point.h>
 
 // Definiciones de tipos propios para el proyecto.
 typedef unsigned char BYTE;
-typedef std::pair<int, int> Point;
 
 // Conjunto de constantes de configuración del sistema de seguimiento
 const bool BASIC_LOG = true;
@@ -133,6 +133,12 @@ enum State {
 
 Direction strToDirectionEnum (std::string);
 std::string directionEnumToString(Direction);
-float euclideanDistance (Point, Point);
+/**
+ * \fn euclideanDistance (const Point& origin, const Point& target)
+ * \param origin El punto origin
+ * \param target El punto objetivo
+ * \return Distancia euclídea entre los dos puntos
+ */
+float euclideanDistance (const Point&, const Point&);
 
 #endif /* TOOLS_H_ */

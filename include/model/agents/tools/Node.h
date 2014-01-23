@@ -9,44 +9,58 @@
 #define NODE_H_
 
 #include <Tools.h>
+
 #include <string>
 #include <vector>
 
 class Node {
 private:
-	Point m_p; //!< Punto en el mapa
-	std::string m_mov; //!< indica la dirección que llevó hacia este nodo
-	const Node* m_padre; //!< Nodo que alcanza al nodo actual (su padre en el árbol)
-	bool m_visitado; //!< Indica si el nodo ha sido expandido -> si se han generado hijos
-	int distFromStart; //!< Distancia desde el origen
-	std::vector<Node*> m_nodosHijos; //!<Vector de nodos hijos en el árbol de búsqueda
+	Point m_position; //!< \var m_position Punto en el mapa
+	std::string m_movement; //!< \var m_movement indica la dirección que llevó hacia este nodo
+	const Node* m_nodeParent; //!< \var m_nodeParent Nodo que alcanza al nodo actual (su padre en el árbol)
+	uint32_t m_distanceFromStart; //!< \var m_distanceFromStart Distancia desde el origen
+	float m_heuristicDistance; //!< \var m_heuristicDistance heurística hasta el objetivo.
+	float m_objectiveDistance;
 
-
-	int heurVal_;
-
-
+	std::vector<Node*>* m_childrenNodes; //!<Vector de nodos hijos en el árbol de búsqueda
 
 public:
+	Node(const Point&, const std::string&, const Node&);
+	Node(const Node&);
+	~Node();
 
-	Node(Point, std::string, Node*);
-	Node (const Node&);
-	virtual ~Node();
+	inline Point position() {
+		return m_position;
+	}
+	inline uint32_t distanceFromStart() {
+		return m_distanceFromStart;
+	}
+	inline float heuristicDistance() {
+		return m_heuristicDistance;
+	}
+	
+	inline float objectiveDistance() {
+		return m_objectiveDistance;
+	}
 
-	bool areEquals (Node*);
-	bool isPointIntoMapLimits (int widthMap, int heightMap);
+	inline std::vector<Node*>* children() {
+		return m_childrenNodes;
+	}
+	
+	const char* direction() {
+		return m_movement.c_str();
+	}
+	
+	const Node* parent() {
+		return m_nodeParent;
+	}
 
-	void setAttr (Point, std::string, Node*);
-	const std::string& getMov() const;
-	Point getP() const;
-	const Node* getPadre();
-	bool isVisitado() const;
-	void setVisitado(bool visitado);
-	std::vector<Node*>& getNodosHijos();
-	void setNodosHijos(std::vector<Node*>& nodosHijos);
-	int getDistFromStart();
-	void setDistFromStart(int distFromStart);
-	int getHeurVal() const;
-	void setHeurVal(int heurVal);
+	void setDistanceFromStart(uint32_t);
+	void setHeuristicDistance(float);
+
+	void insertChildren(const Node&);
 };
 
 #endif /* NODE_H_ */
+
+

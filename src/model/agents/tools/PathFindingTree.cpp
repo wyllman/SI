@@ -30,6 +30,7 @@ PathFindingTree::~PathFindingTree() {
 		delete m_rootNode;
 		m_rootNode = NULL;
 	}
+
 	if (m_goalNode != NULL) {
 		delete m_goalNode;
 		m_goalNode = NULL;
@@ -37,7 +38,6 @@ PathFindingTree::~PathFindingTree() {
 }
 
 // A*
-// FIXME Hay que comprobar que el terreno sea pasable
 bool PathFindingTree::calculateHeuristicRoute() {
 	vector<Node*> closedSet;
 	vector<Node*> openSet;
@@ -166,40 +166,50 @@ void PathFindingTree::expandNode(Node& node) {
 	west->setDistanceFromStart(node.distanceFromStart() + 1);
 	west->setHeuristicDistance(heuristicValue(*west));
 
-	if ((north->position().first >= 0 && north->position().first < MAP_WIDTH )
-			&& (north->position().second >= 0 && north->position().second < MAP_WIDTH)) {
+	if ((north->position().first >= 0 && north->position().first < MAP_WIDTH)
+	                && (north->position().second >= 0 && north->position().second < MAP_WIDTH)) {
 		if (m_agent->getKnownMap()[north->position().first][north->position().second]) {
 			if (((*m_agent->getMap())(north->position().first, north->position().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
 				node.insertChildren(*north);
+			} else if (north != NULL) {
+				delete north;
 			}
 		}
 	}
 
-	if ((east->position().first >= 0 && east->position().first < MAP_WIDTH )
-			&& (east->position().second >= 0 && east->position().second < MAP_WIDTH)) {
+	if ((east->position().first >= 0 && east->position().first < MAP_WIDTH)
+	                && (east->position().second >= 0 && east->position().second < MAP_WIDTH)) {
 		if (m_agent->getKnownMap()[east->position().first][east->position().second]) {
 			if (((*m_agent->getMap())(east->position().first, east->position().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
 				node.insertChildren(*east);
+			} else if (east != NULL) {
+				delete east;
 			}
 		}
 	}
-	if ((south->position().first >= 0 && south->position().first < MAP_WIDTH )
-				&& (south->position().second >= 0 && south->position().second < MAP_WIDTH)) {
+
+	if ((south->position().first >= 0 && south->position().first < MAP_WIDTH)
+	                && (south->position().second >= 0 && south->position().second < MAP_WIDTH)) {
 		if (m_agent->getKnownMap()[south->position().first][south->position().second]) {
 			if (((*m_agent->getMap())(south->position().first, south->position().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
 				node.insertChildren(*south);
+			} else if (south != NULL) {
+				delete south;
 			}
 		}
 	}
-	if ((west->position().first >= 0 && west->position().first < MAP_WIDTH )
-					&& (west->position().second >= 0 && west->position().second < MAP_WIDTH)) {
+
+	if ((west->position().first >= 0 && west->position().first < MAP_WIDTH)
+	                && (west->position().second >= 0 && west->position().second < MAP_WIDTH)) {
 		if (m_agent->getKnownMap()[west->position().first][west->position().second]) {
 			if (((*m_agent->getMap())(west->position().first, west->position().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
 				node.insertChildren(*west);
+			} else if (west != NULL) {
+				delete west;
 			}
 		}
 	}
-	
+
 // 	for (vector<Node*>::iterator i = node.children()->begin(); i != node.children()->end(); i += 1) {
 // 		cout << "Nodo " << &(*i) << " (" << (*i)->direction() << ") distancia inicio " << (*i)->distanceFromStart() << " distancia heuristica " <<
 // 		     (*i)->heuristicDistance() << " total " << (*i)->objectiveDistance() << endl;

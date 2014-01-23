@@ -115,6 +115,8 @@ void SearchAgent::actDependingOfState() {
 			getRefMainAgent()->readFIPAPackage(
 			        new Package(getNameAgent(),
 			                    getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+		} else {
+			sensor();
 		}
 
 		break;
@@ -135,17 +137,13 @@ void SearchAgent::actDependingOfState() {
 	case FOLLOWING_RET_ROUTE:
 		std::cout << "Tam: " << getRoutes().size() << std::endl;
 		if (!routedMove()) {
-			//if (m_position.first != refMainAgent_->getPosition().first ||
-			//	m_position.second != refMainAgent_->getPosition().second) {
-			//	getRefMainAgent()->readFIPAPackage(
-			//						new Package(getNameAgent(),
-			//								getRefMainAgent()->getNameAgent(), COME_BACK, this));
-			//} else {
 			setState(AVAILABLE);
 			getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),
 							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
 			//}
+		} else {
+			sensor();
 		}
 		break;
 

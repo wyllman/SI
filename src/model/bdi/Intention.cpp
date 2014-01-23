@@ -210,14 +210,10 @@ void Intention::sectorExploration() {
 				ss << j;
 				std::cout << "Comprobando sector " << j << std::endl;
 				if (m_beliefSet->getSectorExploredRatio(j) <= EXPLORED_RATIO
-						&& (m_beliefSet->getSectorExploredRatio(j - 1)
-								>= EXPLORED_RATIO
-								|| m_beliefSet->getSectorExploredRatio(j + 1)
-										>= EXPLORED_RATIO
-								|| m_beliefSet->getSectorExploredRatio(j - 10)
-										>= EXPLORED_RATIO
-								|| m_beliefSet->getSectorExploredRatio(j + 10)
-										>= EXPLORED_RATIO)
+					&& (m_beliefSet->getSectorExploredRatio(j - 1) >= EXPLORED_RATIO
+					|| m_beliefSet->getSectorExploredRatio(j + 1) >= EXPLORED_RATIO
+					|| m_beliefSet->getSectorExploredRatio(j - 10) >= EXPLORED_RATIO
+					|| m_beliefSet->getSectorExploredRatio(j + 10) >= EXPLORED_RATIO)
 						&& !m_beliefSet->exists(ss.str())) {
 					std::cout << "MANDANDO A EXPLORAR " << std::endl;
 					row = j / 10;

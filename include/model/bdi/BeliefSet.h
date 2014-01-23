@@ -32,6 +32,7 @@ private:
 	bool** m_knownMap;
 	int m_exploredCells;
 	float m_exploredPercentage;
+	float m_sectorExplorationAverage;
 	Point m_position;
 	std::vector<float> m_sectorExploredRatio;
 	std::vector<float> m_sectorSettlementFactor;
@@ -41,7 +42,7 @@ public:
 	~BeliefSet();
 
 	const Belief* operator()(std::string belief) {
-		return m_beliefSet["belief"];
+		return m_beliefSet[belief];
 	}
 	const Map* map() {
 		return m_map;

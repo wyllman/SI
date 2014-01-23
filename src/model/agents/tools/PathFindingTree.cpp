@@ -59,7 +59,7 @@ bool PathFindingTree::calculateHeuristicRoute() {
 	cout << "Objetivo (" << m_goalNode->position().first << "," <<
 	     m_goalNode->position().second << ")" << endl;
 	openSet.push_back(m_rootNode);
-	
+
 	iteration = 0;
 
 	while (!openSet.empty() && !success) {
@@ -67,6 +67,7 @@ bool PathFindingTree::calculateHeuristicRoute() {
 // 			cout << "Recorridos " << iteration << " nodos, rompiendo bucle" << endl;
 			break;
 		}
+
 		bestDistance = 9999;
 
 		// se busca el mejor nodo candidato en la lista
@@ -141,6 +142,8 @@ bool PathFindingTree::calculateHeuristicRoute() {
 
 void PathFindingTree::expandNode(Node& node) {
 // 	cout << "Expandiendo nodo " << &node << endl;
+	bool terrainDiscovered;
+	BYTE terrainType;
 	Node* north;
 	Node* east;
 	Node* south;
@@ -153,28 +156,45 @@ void PathFindingTree::expandNode(Node& node) {
 	north = new Node(northPoint, "NORTH", node);
 	north->setDistanceFromStart(node.distanceFromStart() + 1);
 	north->setHeuristicDistance(heuristicValue(*north));
-	node.insertChildren(*north);
 
 	east = new Node(eastPoint, "EAST", node);
 	east->setDistanceFromStart(node.distanceFromStart() + 1);
 	east->setHeuristicDistance(heuristicValue(*east));
-	node.insertChildren(*east);
 
 	south = new Node(southPoint, "SOUTH", node);
 	south->setDistanceFromStart(node.distanceFromStart() + 1);
 	south->setHeuristicDistance(heuristicValue(*south));
-	node.insertChildren(*south);
 
 	west = new Node(westPoint, "WEST", node);
 	west->setDistanceFromStart(node.distanceFromStart() + 1);
 	west->setHeuristicDistance(heuristicValue(*west));
-	node.insertChildren(*west);
 
+	if (m_agent->getKnownMap()[north->position().first][north->position().second]) {
+		if (((*m_agent->getMap())(north->position().first, north->position().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
+			node.insertChildren(*north);
+		}
+	}
+	if (m_agent->getKnownMap()[east->position().first][east->position().second]) {
+		if (((*m_agent->getMap())(east->position().first, east->position().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
+			node.insertChildren(*east);
+		}
+	}
+	if (m_agent->getKnownMap()[south->position().first][south->position().second]) {
+		if (((*m_agent->getMap())(south->position().first, south->position().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
+			node.insertChildren(*south);
+		}
+	}
+	if (m_agent->getKnownMap()[west->position().first][west->position().second]) {
+		if (((*m_agent->getMap())(west->position().first, west->position().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
+			node.insertChildren(*west);
+		}
+	}
+	
 // 	for (vector<Node*>::iterator i = node.children()->begin(); i != node.children()->end(); i += 1) {
 // 		cout << "Nodo " << &(*i) << " (" << (*i)->direction() << ") distancia inicio " << (*i)->distanceFromStart() << " distancia heuristica " <<
 // 		     (*i)->heuristicDistance() << " total " << (*i)->objectiveDistance() << endl;
 // 	}
-// 
+//
 // 	cout << "Nodo expandido: regresando" << endl;
 }
 

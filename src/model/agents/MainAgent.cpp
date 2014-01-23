@@ -94,13 +94,7 @@ void MainAgent::initAgents() {
 }
 
 bool MainAgent::update() {
-	// m_intentions->update();
-	PathFindingTree tree(*this, this->m_position, Point(50, 50));
-	if (tree.calculateHeuristicRoute() ==  true) {
-		cout << "RUTA CALCULADA" << endl;
-		cin.get();
-	}
-
+	m_intentions->update();
 	return updateMiniAgents();
 }
 
@@ -170,10 +164,10 @@ void MainAgent::createRndInitialPos(Map* mainMap) {
 		                              m_position.second + 1) & MASK_TERRAIN);
 
 		if (tempCentro == TERRAIN_GROUND && tempArrIzq == TERRAIN_GROUND
-		    && tempArr == TERRAIN_GROUND && tempArrDer == TERRAIN_GROUND
-		    && tempIzq == TERRAIN_GROUND && tempDer == TERRAIN_GROUND
-		    && tempAbjIzq == TERRAIN_GROUND && tempAbj == TERRAIN_GROUND
-		    && tempAbjDer == TERRAIN_GROUND) {
+		                && tempArr == TERRAIN_GROUND && tempArrDer == TERRAIN_GROUND
+		                && tempIzq == TERRAIN_GROUND && tempDer == TERRAIN_GROUND
+		                && tempAbjIzq == TERRAIN_GROUND && tempAbj == TERRAIN_GROUND
+		                && tempAbjDer == TERRAIN_GROUND) {
 			condition = true;
 		}
 

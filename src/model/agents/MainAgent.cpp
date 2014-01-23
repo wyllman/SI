@@ -96,7 +96,10 @@ void MainAgent::initAgents() {
 bool MainAgent::update() {
 	// m_intentions->update();
 	PathFindingTree tree(*this, this->m_position, Point(50, 50));
-	tree.calculateHeuristicRoute();
+	if (tree.calculateHeuristicRoute() ==  true) {
+		cout << "RUTA CALCULADA" << endl;
+		cin.get();
+	}
 
 	return updateMiniAgents();
 }

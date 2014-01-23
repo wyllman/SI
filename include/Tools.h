@@ -133,6 +133,12 @@ enum State {
 
 Direction strToDirectionEnum (std::string);
 std::string directionEnumToString(Direction);
+/**
+ * \fn euclideanDistance (const Point& origin, const Point& target)
+ * \param origin El punto origin
+ * \param target El punto objetivo
+ * \return Distancia euclídea entre los dos puntos
+ */
 float euclideanDistance (const Point&, const Point&);
 
 #endif /* TOOLS_H_ */

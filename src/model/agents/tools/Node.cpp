@@ -51,4 +51,3 @@ void Node::setHeuristicDistance(float dist) {
 void Node::insertChildren(const Node& node) {
 	m_childrenNodes->push_back(&const_cast<Node&>(node));
 }
-// kate: indent-mode cstyle; indent-width 8; replace-tabs off; tab-width 8; 

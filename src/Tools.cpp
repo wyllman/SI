@@ -74,6 +74,6 @@ std::string directionEnumToString(Direction dir) {
 	return str;
 }
 
-float euclideanDistance(const Point& p, const Point& q) {
-	return sqrt(pow((q.first - p.first), 2) + pow((q.second - q.second), 2));
+float euclideanDistance(const Point& origin, const Point& target) {
+	return sqrt(pow(origin.first - target.first, 2) + pow(origin.second - target.second, 2));
 }

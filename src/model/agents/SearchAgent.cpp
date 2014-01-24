@@ -126,6 +126,9 @@ void SearchAgent::actDependingOfState() {
 	case FOLLOWING_RET_ROUTE:
 		std::cout << "Tam: " << getRoutes().size() << std::endl;
 		if (!routedMove()) {
+			//FIXME: Si el agente no ha llegado a la posicion requerida por entrar en un bucle,
+			// moverlo aleatoriamente unos pasos y reiniciar el A*
+
 			//if (m_position.first != refMainAgent_->getPosition().first ||
 			//		m_position.second != refMainAgent_->getPosition().second) {
 			//	getRefMainAgent()->readFIPAPackage(

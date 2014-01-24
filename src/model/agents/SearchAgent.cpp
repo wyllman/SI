@@ -151,8 +151,8 @@ void SearchAgent::actDependingOfState() {
 void SearchAgent::followRoute(std::string route) {
 	//std::cout << "SEGUIR LA RUTA: " << route << std::endl;
 	std::vector<Direction> camino;
-	int posIni = route.find("[");
-	int posCorchFin = route.find("]");
+//	int posIni = route.find("[");
+//	int posCorchFin = route.find("]");
 	//std::cout << "Pos ini:" << posIni << " posFin: " << posCorchFin
 	//	<< std::endl;
 	route = route.substr(1, route.length());
@@ -422,6 +422,8 @@ bool SearchAgent::onLimits() {
 				result = true;
 			}
 			break;
+		default:
+			break;
 	}
 	return result;
 }
@@ -443,6 +445,8 @@ bool SearchAgent::onLineLimits() {
 					|| (m_position.first == (initPointEXPL_.first + DISTANCE))) {
 				result = true;
 			}
+			break;
+		default:
 			break;
 	}
 	return result;
@@ -694,7 +698,7 @@ Direction SearchAgent::calculateOutRouteDir() {
 	return result;
 }
 Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
-	const Direction LAST_MOVE = lastMoveDirEXPL_;
+//	const Direction LAST_MOVE = lastMoveDirEXPL_;
 	const bool ON_ROUTE = onRoute();
 	Direction result = ERROR_DIR;
 	Direction tmpDir;
@@ -736,6 +740,8 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 					}
 				}
 
+				break;
+			default:
 				break;
 			}
 		} else { // Si no estamos en ruta, realizar movimiento recto par/impar
@@ -795,7 +801,8 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 						result = tmpDir;
 					}
 				}
-
+				break;
+			default:
 				break;
 			}
 		} else { // Si no estamos en ruta, realzar mov. rect. par/impar
@@ -857,6 +864,8 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 				}
 
 				break;
+			defautl:
+				break;
 			}
 		} else { // Si no estamos en ruta, realizar movimiento recto par/impar
 			if (theDirection == EAST) {
@@ -916,6 +925,8 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 					}
 				}
 
+				break;
+			default:
 				break;
 			}
 		} else { // Si no estamos en ruta, realzar mov. rect. par/impar

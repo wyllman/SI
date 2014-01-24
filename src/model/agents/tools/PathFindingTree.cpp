@@ -130,7 +130,7 @@ bool PathFindingTree::calculateHeuristicRoute() {
 	}
 
 	if (success) {
-		reversePath(*(*successorIterator));
+		reversePath(*(*(--successorIterator)));
 	}
 
 	return success;
@@ -229,7 +229,7 @@ void PathFindingTree::reversePath(const Node& node) {
 	m_route = "]";
 	i = 0;
 
-	while (tmp != NULL) {
+	while (tmp->parent() != NULL) {
 		m_route = "," + std::string(tmp->direction()) + m_route;
 		tmp = const_cast<Node*>(tmp->parent());
 	}

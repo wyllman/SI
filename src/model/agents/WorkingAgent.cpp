@@ -86,7 +86,6 @@ void WorkingAgent::followRoute(string route) {
 			dirTemp = route.substr(0, posComa);
 			route = route.substr(posComa + 1, route.length());
 		}
-
 		camino.push_back(strToDirectionEnum(dirTemp));
 	}
 

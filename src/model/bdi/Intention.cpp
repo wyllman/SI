@@ -22,6 +22,7 @@ Intention::Intention(const Agent& agent, BeliefSet& beliefSet, Desire& desire) :
 	m_beliefSet(&beliefSet), m_desire(&desire), m_agent(
 	        &dynamic_cast<MainAgent&>(const_cast<Agent&>(agent))) {
 	m_currentGoal = "Initial_Exploration";
+	loopCount_ = 0;
 }
 
 Intention::~Intention() {
@@ -93,6 +94,10 @@ void Intention::exploreMap() {
 		if (m_beliefSet->exists("NORTH") && m_beliefSet->exists("SOUTH")
 		                && m_beliefSet->exists("EAST") && m_beliefSet->exists("WEST")) {
 			m_currentGoal = "Start_Sector_Exploration";
+			m_beliefSet->remove("NORTH");
+			m_beliefSet->remove("SOUTH");
+			m_beliefSet->remove("EAST");
+			m_beliefSet->remove("WEST");
 		}
 	}
 
@@ -205,6 +210,7 @@ void Intention::sectorExploration() {
 	const float EXPLORED_RATIO = 0.9;
 	const uint32_t S_RATIO = MAP_WIDTH / SECTOR_SIZE;
 	bool sectorFound = false;
+	bool globlalSectorFound = false;
 	int row;
 	int col;
 	Point p;
@@ -213,25 +219,25 @@ void Intention::sectorExploration() {
 	uint32_t distance;
 	stringstream ss;
 	bestDistance = 99999;
+	float explorationRatioAux;
 
 	for (uint32_t i = 0; i < m_agent->getVAgents().size() //&& !sectorFound;
 	                ;++i) {
 		sectorFound = false;
 		std::cout << m_agent->getVAgents()[i]->getNameAgent() << std::endl;
 
-		// std::cin.get();
 		if (m_agent->getVAgents()[i]->getState() == AVAILABLE) {
 			for (uint32_t j = 0; j < SECTORS && !sectorFound; ++j) {
 				ss << j;
-				std::cout << "Comprobando sector " << j << std::endl;
-
-				if (m_beliefSet->getSectorExploredRatio(j) <= EXPLORED_RATIO
+				//std::cout << "Comprobando sector " << j << std::endl;
+				explorationRatioAux = m_beliefSet->getSectorExploredRatio(j);
+				if (explorationRatioAux <= EXPLORED_RATIO
 				//                && (m_beliefSet->getSectorExploredRatio(j - 1) >= EXPLORED_RATIO
 				//                    || m_beliefSet->getSectorExploredRatio(j + 1) >= EXPLORED_RATIO
 				//                    || m_beliefSet->getSectorExploredRatio(j - S_RATIO) >= EXPLORED_RATIO
 				//                    || m_beliefSet->getSectorExploredRatio(j + S_RATIO) >= EXPLORED_RATIO)
 				                && !m_beliefSet->exists(ss.str())) {
-					std::cout << "MANDANDO A EXPLORAR " << std::endl;
+					std::cout << "ANALIZANDO SECTOR DE TERRENO" << std::endl;
 
 					row = j / SECTOR_SIZE;
 					col = j % SECTOR_SIZE;
@@ -267,16 +273,26 @@ void Intention::sectorExploration() {
 						                     const_cast<Agent*>(m_agent->getVAgents()[i]),
 						                     GO_SEARCHING_LOCATION);
 						sectorFound = true;
-						Belief* belief;
-						belief = new Belief("EXPLORED");
-						m_beliefSet->add(ss.str(), belief);
+						globlalSectorFound = true;
+						loopCount_ = 0;
+						if (explorationRatioAux >= m_beliefSet->getSectorExploredRatio(j)) {
+							Belief* belief;
+							belief = new Belief("EXPLORED");
+							m_beliefSet->add(ss.str(), belief);
+						}
 					}
 				}
 			}
 		}
 	}
-	if (sectorFound) {
+	if (globlalSectorFound) {
 		m_currentGoal = "Awaiting_Exploration_End";
+	} else {
+		++loopCount_;
+	}
+	if (loopCount_ > 1000) {
+		loopCount_ = 0;
+		m_currentGoal = "END_SECOND_EXPLORATION";
 	}
 }
 

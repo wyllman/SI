@@ -91,7 +91,7 @@ void SearchAgent::actDependingOfState() {
 	case SEARCHING:
 
 		if (!explorationMove()) {
-			setState(AVAILABLE);
+			setState(AWAITING_NEW_ORDER);
 			getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),
 							getRefMainAgent()->getNameAgent(), COME_BACK, this));
@@ -171,7 +171,9 @@ void SearchAgent::followRoute(std::string route) {
 	int posCorchFin = route.find("]");
 	//std::cout << "Pos ini:" << posIni << " posFin: " << posCorchFin
 	//	<< std::endl;
-	route = route.substr(1, route.length());
+	if (route.size() > 3) {
+		route = route.substr(1, route.length());
+	}
 	int posComa = 0;
 	bool stop = false;
 	std::string dirTemp;

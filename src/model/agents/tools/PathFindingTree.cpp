@@ -233,8 +233,9 @@ void PathFindingTree::reversePath(const Node& node) {
 		m_route = "," + std::string(tmp->direction()) + m_route;
 		tmp = const_cast<Node*>(tmp->parent());
 	}
-
-	m_route = m_route.substr(1, m_route.size() - 1);
+	if (m_route.size() > 3) {
+		m_route = m_route.substr(1, m_route.size() - 1);
+	}
 	m_route = "[" + m_route;
 
 }

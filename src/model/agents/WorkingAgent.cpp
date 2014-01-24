@@ -75,7 +75,6 @@ void WorkingAgent::followRoute(std::string route) {
 	int posComa = 0;
 	bool stop = false;
 	string dirTemp;
-	Direction auxDir;
 
 	while (!stop) {
 		posComa = route.find(",");
@@ -87,10 +86,7 @@ void WorkingAgent::followRoute(std::string route) {
 			dirTemp = route.substr(0, posComa);
 			route = route.substr(posComa + 1, route.length());
 		}
-		auxDir = strToDirectionEnum(dirTemp);
-		if (auxDir != ERROR_DIR) {
-			camino.push_back(auxDir);
-		}
+		camino.push_back(strToDirectionEnum(dirTemp));
 	}
 
 

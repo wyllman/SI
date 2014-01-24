@@ -156,7 +156,6 @@ void SearchAgent::followRoute(std::string route) {
 	int posComa = 0;
 	bool stop = false;
 	std::string dirTemp;
-	Direction auxDir;
 
 	while (!stop) {
 		posComa = route.find(",");
@@ -168,10 +167,9 @@ void SearchAgent::followRoute(std::string route) {
 			dirTemp = route.substr(0, posComa);
 			route = route.substr(posComa + 1, route.length());
 		}
-		auxDir = strToDirectionEnum(dirTemp);
-		if (auxDir != ERROR_DIR) {
-			camino.push_back(auxDir);
-		}
+
+		camino.push_back(strToDirectionEnum(dirTemp));
+
 	}
 
 	for (unsigned int i = 0; i < camino.size(); i++) {

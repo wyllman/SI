@@ -85,6 +85,7 @@ void SearchAgent::localDireccionalSearch(std::string d) {
 }
 
 void SearchAgent::actDependingOfState() {
+	int ramdomDirection = rand() % 4;
 	switch (getState()) {
 	case SEARCHING:
 		if (!explorationMove()) {
@@ -98,6 +99,22 @@ void SearchAgent::actDependingOfState() {
 		break;
 	case SECOND_SEARCHING:
 		std::cout << "COMENZANDO EXPLORACION SECUNDARIA" << std::endl;
+		switch (ramdomDirection) {
+			case 0:
+				localDireccionalSearch("NORTH");
+				break;
+			case 1:
+				localDireccionalSearch("EAST");
+				break;
+			case 2:
+				localDireccionalSearch("SOUTH");
+				break;
+			case 3:
+				localDireccionalSearch("WEST");
+				break;
+			default:
+				break;
+		}
 		break;
 	case FOLLOWING_ROUTE:
 		std::cout << "Tam: " << getRoutes().size() << std::endl;
@@ -210,7 +227,7 @@ bool SearchAgent::explorationMove() {
 	Direction directionAct = ERROR_DIR;
 	Direction tempDir = ERROR_DIR;
 
-	if (countLoopSteps_ >= 50) {
+	if (countLoopSteps_ >= 100) {
 		return false;
 	}
 

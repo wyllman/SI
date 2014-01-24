@@ -274,6 +274,9 @@ void Intention::sectorExploration() {
 			}
 		}
 	}
+	if (sectorFound) {
+		m_currentGoal = "Awaiting_Exploration_End";
+	}
 }
 
 void Intention::gotoOptimalLocation() {

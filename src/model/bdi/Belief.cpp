@@ -7,17 +7,17 @@
 
 #include <model/bdi/Belief.h>
 
-Belief::Belief(std::string belief) :
-    m_belief(belief)
-{
+using namespace std;
+
+Belief::Belief(string belief) :
+	m_belief(belief) {
 
 }
 
 Belief::Belief(const char* cstr) :
-		m_belief(std::string(cstr))
-	{
+	m_belief(string(cstr)) {
 
-	}
+}
 
 Belief::~Belief() {
 }

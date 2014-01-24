@@ -15,18 +15,19 @@
 #include <Tools.h>
 
 #include <iostream>
-#include <cstdlib>
+
+using namespace std;
 
 void logAction(int index) {
    if (BASIC_LOG) {
       switch (index) {
          case LOG_INIT:
-            std::cout << "**********************************" << std::endl;
-            std::cout << "Iniciando el Simulador PreColonia." << std::endl;
+            cout << "**********************************" << endl;
+            cout << "Iniciando el Simulador PreColonia." << endl;
             break;
          case LOG_END:
-            std::cout << "Saliendo del Simulador PreColonia." << std::endl;
-            std::cout << "**********************************" << std::endl;
+            cout << "Saliendo del Simulador PreColonia." << endl;
+            cout << "**********************************" << endl;
             break;
          default:
             break;

@@ -32,13 +32,9 @@ public:
     Map ( const Map& map );
     ~Map();
 
-    inline BYTE operator() ( int x, int y ) const {
-        return m_mapArray[x][y];
-    }
+    BYTE operator() ( int, int) const;
 
-    inline BYTE operator() ( Point p ) const {
-        return m_mapArray[p.first][p.second];
-    }
+    BYTE operator() ( Point p ) const;
 
     inline BYTE cellTerrainType ( int x, int y ) const {
         return ( m_mapArray[x][y] & MASK_TERRAIN );

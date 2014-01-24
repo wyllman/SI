@@ -7,6 +7,8 @@
 
 #include <model/fipa/Package.h>
 
+using namespace std;
+
 Package::Package(char* send, char* receiv, Type type) {
 	setSender(send);
 	setReceiver(receiv);
@@ -59,11 +61,11 @@ void Package::setIdComm(unsigned int idComm) {
 	m_idComm = idComm;
 }
 
-std::vector<std::string>& Package::getContent() {
+vector<string>& Package::getContent() {
 	return m_content;
 }
 
-void Package::setContent(std::vector<std::string>& content) {
+void Package::setContent(vector<string>& content) {
 	m_content = content;
 }
 

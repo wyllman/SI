@@ -31,6 +31,8 @@
 
 #include <iostream>
 
+using namespace std;
+
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Interface::Interface(const Controller& controller) :
@@ -189,19 +191,19 @@ void Interface::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			std::cout << "---Generada la vista Interfaz " << std::endl;
+			cout << "---Generada la vista Interfaz " << endl;
 			break;
 
 		case LOG_END:
-			std::cout << "---Destruyendo la vista Interfaz " << std::endl;
+			cout << "---Destruyendo la vista Interfaz " << endl;
 			break;
 
 		case LOG_F_INIT:
-			std::cout << "---Llamando a la función init de la clase Interface." << std::endl;
+			cout << "---Llamando a la función init de la clase Interface." << endl;
 			break;
 
 		case LOG_F_STOP:
-			std::cout << "---Llamando a la función stop de la clase Interface." << std::endl;
+			cout << "---Llamando a la función stop de la clase Interface." << endl;
 			break;
 
 		default:

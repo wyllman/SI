@@ -14,8 +14,6 @@
 #include <model/agents/tools/Node.h>
 #include <cstring>
 
-using namespace std;
-
 class WorkingAgent : public Agent {
    public:
       WorkingAgent(MainAgent*, Map*);

@@ -2,7 +2,7 @@
 #define POINT_H_
 
 #include <map>// Juan, no quites este include!!!!
-#include <bits/stl_pair.h>
+#include <ostream>
 #include <stdint.h>
 
 class Point : public std::pair<int32_t, int32_t> {
@@ -12,6 +12,7 @@ public:
 	~Point();
 	bool operator==(const Point&);
 	bool operator!=(const Point&);
+	friend std::ostream& operator<<(std::ostream&, const Point&);
 };
 
 #endif

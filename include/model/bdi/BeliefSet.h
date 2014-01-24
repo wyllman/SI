@@ -25,10 +25,12 @@ class Belief;
  * son independientes y con sus propios operadores.
  */
 
+class Map;
+
 class BeliefSet {
 private:
 	std::map<std::string, const Belief*> m_beliefSet;
-	Map* m_map;
+	const Map* m_map;
 	bool** m_knownMap;
 	int m_exploredCells;
 	float m_exploredPercentage;
@@ -38,10 +40,10 @@ private:
 	std::vector<float> m_sectorSettlementFactor;
 
 public:
-	BeliefSet();
+	BeliefSet(const Map&);
 	~BeliefSet();
 
-	const Belief* operator()(std::string belief) {
+	const Belief* operator[](std::string belief) {
 		return m_beliefSet[belief];
 	}
 	const Map* map() {
@@ -53,6 +55,8 @@ public:
 	}
 	void setMap(Map* map);
 	bool** getKnownMap();
+	bool getKnownMapCell(uint32_t, uint32_t);
+	bool getKnownMapCell(const Point&);
 	Point position() {
 		return m_position;
 	}
@@ -67,8 +71,8 @@ public:
 	void setSectorSettlementFactor(uint32_t, float);
 	void resetSectorExploredRatio();
 	bool exists(std::string);
-	float getSectorExploredRatio(int cell);
-	float getSectorSettlementFactor(int cell) {
+	float getSectorExploredRatio(int32_t cell);
+	float getSectorSettlementFactor(int32_t cell) {
 		return m_sectorSettlementFactor[cell];
 	}
 };

@@ -8,8 +8,7 @@
 #include <model/agents/SearchAgent.h>
 #include <model/bdi/BeliefSet.h>
 
-#include <cstring>
-#include <cmath>
+using namespace std;
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
@@ -19,6 +18,7 @@ SearchAgent::SearchAgent(MainAgent* mainAgent, Map* theMap) :
 	initPointDistanceEXPL_ = -1;
 	guideDirectionEXPL_ = ERROR_DIR;
 	lastDirectionEXPL_ = ERROR_DIR;
+	lastMoveDirEXPL_ = ERROR_DIR;
 	finalMovemnts_ = false;
 	finalDirecton_ = ERROR_DIR;
 	countLoopSteps_ = 0;
@@ -40,12 +40,12 @@ Package* SearchAgent::readFIPAPackage(Package* p) {
 		if (p->getReceiver() == getNameAgent()) {
 			switch (p->getType()) {
 			case NOT_UNDERSTOOD:
-				std::cout
+				cout
 					<< "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible"
-					<< std::endl;
+					<< endl;
 				break;
 			case CONFIRM:
-				std::cout << "CONFIRM: Confirmada la operación." << std::endl;
+				cout << "CONFIRM: Confirmada la operación." << endl;
 				break;
 			case DIRECTION_SEARCH:
 				//Realizar búsqueda dada esta dirección
@@ -68,8 +68,8 @@ Package* SearchAgent::readFIPAPackage(Package* p) {
 				setState(FOLLOWING_RET_ROUTE);
 				break;
 			default:
-				std::cout << "SA No se entiende el tipo del paquete recibido."
-					<< std::endl;
+				cout << "SA No se entiende el tipo del paquete recibido."
+					<< endl;
 				break;
 			}
 		}
@@ -78,7 +78,7 @@ Package* SearchAgent::readFIPAPackage(Package* p) {
 	return answer;
 }
 
-void SearchAgent::localDireccionalSearch(std::string d) {
+void SearchAgent::localDireccionalSearch(string d) {
 	initExplorationMove(m_position.first, m_position.second,
 			static_cast<Direction>(strToDirectionEnum(d.c_str())));
 	setState(SEARCHING);
@@ -97,10 +97,10 @@ void SearchAgent::actDependingOfState() {
 		}
 		break;
 	case SECOND_SEARCHING:
-		std::cout << "COMENZANDO EXPLORACION SECUNDARIA" << std::endl;
+		cout << "COMENZANDO EXPLORACION SECUNDARIA" << endl;
 		break;
 	case FOLLOWING_ROUTE:
-		std::cout << "Tam: " << getRoutes().size() << std::endl;
+		cout << "Tam: " << getRoutes().size() << endl;
 
 		if (!routedMove()) {
 			setState(AVAILABLE);
@@ -112,7 +112,7 @@ void SearchAgent::actDependingOfState() {
 		}
 		break;
 	case FOLLOWING_SEARCH_ROUTE:
-		std::cout << "CAMINANDO AL PUNTO DE BUSQUEDA" << std::endl;
+		cout << "CAMINANDO AL PUNTO DE BUSQUEDA" << endl;
 
 		if (!routedMove()) {
 			setState(SECOND_SEARCHING);
@@ -124,22 +124,12 @@ void SearchAgent::actDependingOfState() {
 		}
 		break;
 	case FOLLOWING_RET_ROUTE:
-		std::cout << "Tam: " << getRoutes().size() << std::endl;
+		cout << "Tam: " << getRoutes().size() << endl;
 		if (!routedMove()) {
-			//FIXME: Si el agente no ha llegado a la posicion requerida por entrar en un bucle,
-			// moverlo aleatoriamente unos pasos y reiniciar el A*
-
-			//if (m_position.first != refMainAgent_->getPosition().first ||
-			//		m_position.second != refMainAgent_->getPosition().second) {
-			//	getRefMainAgent()->readFIPAPackage(
-			//			new Package(getNameAgent(),
-			//					getRefMainAgent()->getNameAgent(), COME_BACK, this));
-			//} else {
-				setState(AVAILABLE);
-				getRefMainAgent()->readFIPAPackage(
+			setState(AVAILABLE);
+			getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),
 							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
-			//}
 		} else {
 			sensor();
 		}
@@ -148,18 +138,19 @@ void SearchAgent::actDependingOfState() {
 		break;
 	}
 }
-void SearchAgent::followRoute(std::string route) {
-	//std::cout << "SEGUIR LA RUTA: " << route << std::endl;
-	std::vector<Direction> camino;
-//	int posIni = route.find("[");
-//	int posCorchFin = route.find("]");
-	//std::cout << "Pos ini:" << posIni << " posFin: " << posCorchFin
-	//	<< std::endl;
+
+void SearchAgent::followRoute(string route) {
+	//cout << "SEGUIR LA RUTA: " << route << endl;
+	vector<Direction> camino;
+	int posIni = route.find("[");
+	int posCorchFin = route.find("]");
+	//cout << "Pos ini:" << posIni << " posFin: " << posCorchFin
+	//	<< endl;
+
 	route = route.substr(1, route.length());
 	int posComa = 0;
 	bool stop = false;
-	std::string dirTemp;
-	Direction auxDir;
+	string dirTemp;
 
 	while (!stop) {
 		posComa = route.find(",");
@@ -171,10 +162,7 @@ void SearchAgent::followRoute(std::string route) {
 			dirTemp = route.substr(0, posComa);
 			route = route.substr(posComa + 1, route.length());
 		}
-		auxDir = strToDirectionEnum(dirTemp);
-		if (auxDir != ERROR_DIR) {
-			camino.push_back(auxDir);
-		}
+		camino.push_back(strToDirectionEnum(dirTemp));
 	}
 
 	for (unsigned int i = 0; i < camino.size(); i++) {
@@ -193,10 +181,10 @@ void SearchAgent::initExplorationMove(int row, int col, Direction guideDir) {
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // ___________________________________________________________________________________
 // Manejadores públicos:
-std::vector<Direction>& SearchAgent::getRoutes() {
+vector<Direction>& SearchAgent::getRoutes() {
 	return m_routes;
 }
-void SearchAgent::setRoutes(const std::vector<Direction>& routes) {
+void SearchAgent::setRoutes(const vector<Direction>& routes) {
 	m_routes = routes;
 }
 MainAgent* SearchAgent::getRefMainAgent() {
@@ -241,7 +229,7 @@ bool SearchAgent::explorationMove() {
 					result = true;
 				}
 			} else {
-				std::cout << "FIN CAMINO CORRECTO" << std::endl;
+				cout << "FIN CAMINO CORRECTO" << endl;
 			}
 		} else {
 			if (onLimits()) {
@@ -252,7 +240,7 @@ bool SearchAgent::explorationMove() {
 					outPreferedRoute = true;
 				}
 			} else {
-				std::cout << "ERROR AGENTE FUERA DE LIMITES" << std::endl;
+				cout << "ERROR AGENTE FUERA DE LIMITES" << endl;
 				directionAct = calculateReturnDir();
 				outOfLimits = true;
 			}
@@ -283,7 +271,7 @@ bool SearchAgent::explorationMove() {
 								result = true;
 							}
 						} else {
-							std::cout << "ERROR FIN CAMINO" << std::endl;
+							cout << "ERROR FIN CAMINO" << endl;
 						}
 					}
 				} else {
@@ -292,8 +280,8 @@ bool SearchAgent::explorationMove() {
 					result = true;
 				}
 			} else {
-				std::cout << "ERROR, NO SE DEBE ACCEDER A ESTE PUNTO"
-						<< std::endl;
+				cout << "ERROR, NO SE DEBE ACCEDER A ESTE PUNTO"
+						<< endl;
 			}
 		}
 	}
@@ -991,11 +979,11 @@ Direction SearchAgent::calculateFinalDir(Direction theDirection) {
 				}
 			}
 		} else if (theDirection == NORTH) {
-			std::cout << "ERROR CALCULO DIR FINAL (NORTH)" << std::endl;
+			cout << "ERROR CALCULO DIR FINAL (NORTH)" << endl;
 		} else if (theDirection == ERROR_DIR) {
-			std::cout << "ERROR CALCULO DIR FINAL (ERROR_DIR)" << std::endl;
+			cout << "ERROR CALCULO DIR FINAL (ERROR_DIR)" << endl;
 		} else {
-			std::cout << "ERROR CALCULO DIR FINAL (OTROS)" << std::endl;
+			cout << "ERROR CALCULO DIR FINAL (OTROS)" << endl;
 		}
 
 		break;
@@ -1028,11 +1016,11 @@ Direction SearchAgent::calculateFinalDir(Direction theDirection) {
 				}
 			}
 		} else if (theDirection == EAST) {
-			std::cout << "ERROR CALCULO DIR FINAL (EAST)" << std::endl;
+			cout << "ERROR CALCULO DIR FINAL (EAST)" << endl;
 		} else if (theDirection == ERROR_DIR) {
-			std::cout << "ERROR CALCULO DIR FINAL (ERROR_DIR)" << std::endl;
+			cout << "ERROR CALCULO DIR FINAL (ERROR_DIR)" << endl;
 		} else {
-			std::cout << "ERROR CALCULO DIR FINAL (OTROS)" << std::endl;
+			cout << "ERROR CALCULO DIR FINAL (OTROS)" << endl;
 		}
 
 		break;
@@ -1065,11 +1053,11 @@ Direction SearchAgent::calculateFinalDir(Direction theDirection) {
 				}
 			}
 		} else if (theDirection == SOUTH) {
-			std::cout << "ERROR CALCULO DIR FINAL (SOUTH)" << std::endl;
+			cout << "ERROR CALCULO DIR FINAL (SOUTH)" << endl;
 		} else if (theDirection == ERROR_DIR) {
-			std::cout << "ERROR CALCULO DIR FINAL (ERROR_DIR)" << std::endl;
+			cout << "ERROR CALCULO DIR FINAL (ERROR_DIR)" << endl;
 		} else {
-			std::cout << "ERROR CALCULO DIR FINAL (OTROS)" << std::endl;
+			cout << "ERROR CALCULO DIR FINAL (OTROS)" << endl;
 		}
 
 		break;
@@ -1102,11 +1090,11 @@ Direction SearchAgent::calculateFinalDir(Direction theDirection) {
 				}
 			}
 		} else if (theDirection == WEST) {
-			std::cout << "ERROR CALCULO DIR FINAL (WEST)" << std::endl;
+			cout << "ERROR CALCULO DIR FINAL (WEST)" << endl;
 		} else if (theDirection == ERROR_DIR) {
-			std::cout << "ERROR CALCULO DIR FINAL (ERROR_DIR)" << std::endl;
+			cout << "ERROR CALCULO DIR FINAL (ERROR_DIR)" << endl;
 		} else {
-			std::cout << "ERROR CALCULO DIR FINAL (OTROS)" << std::endl;
+			cout << "ERROR CALCULO DIR FINAL (OTROS)" << endl;
 		}
 
 		break;
@@ -1130,8 +1118,8 @@ void SearchAgent::sensor() {
 		     j <= m_position.second + width; ++j) {
 			if ((i >= 0 && i < MAP_WIDTH) && (j >= 0 && j < MAP_WIDTH)) {
 				if (sqrt(
-				            pow((i - m_position.first), 2)
-				            + pow((j - m_position.second), 2))
+				            pow((float)(i - m_position.first), 2)
+				            + pow((float)(j - m_position.second), 2))
 				    <= (width * 1.0)) {
 					if (!refMainAgent_->knownMapPosition(i, j)) {
 						countLoopSteps_ = 0;

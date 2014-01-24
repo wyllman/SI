@@ -130,7 +130,7 @@ bool PathFindingTree::calculateHeuristicRoute() {
 	}
 
 	if (success) {
-		reversePath(*(*(--successorIterator)));
+		reversePath(*(*successorIterator));
 	}
 
 	return success;

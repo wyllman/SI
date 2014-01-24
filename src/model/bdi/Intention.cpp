@@ -18,6 +18,8 @@
 #include <iostream>
 #include <sstream>
 
+using namespace std;
+
 Intention::Intention(const Agent& agent, BeliefSet& beliefSet, Desire& desire) :
 	m_beliefSet(&beliefSet), m_desire(&desire), m_agent(
 	        &dynamic_cast<MainAgent&>(const_cast<Agent&>(agent))) {
@@ -28,30 +30,30 @@ Intention::~Intention() {
 }
 
 void Intention::update() {
-	std::cout << "Current Desire: " << m_currentGoal << std::endl;
+	cout << "Current Desire: " << m_currentGoal << endl;
 
 	if (!(*m_desire)["50_Percent_Explored"]) {
 		exploreMap();
 	} else {
 		if (!(*m_desire)["100_Percent_Explored"]) {
 
-			std::cout << "Mapa explorado" << std::endl;
+			cout << "Mapa explorado" << endl;
 
 			exploreMap();
 		} else if (!(*m_desire)["Settlement_Place_Found"]) {
-			std::cout << "Busca asentamiento" << std::endl;
+			cout << "Busca asentamiento" << endl;
 			findOptimalLocation();
 			gotoOptimalLocation();
 		}
 
 		if (m_beliefSet->exists("Optimal_Location")
 		                && !(*m_desire)["Resources_Gathered"]) {
-			std::cout << "Busca recursos" << std::endl;
+			cout << "Busca recursos" << endl;
 			gatherResources();
 		}
 
 		if ((*m_desire)["Resources_Gathered"]) {
-			std::cout << "Construye asentamiento" << std::endl;
+			cout << "Construye asentamiento" << endl;
 			buildSettlement();
 		}
 
@@ -70,11 +72,11 @@ void Intention::exploreMap() {
 				pack = new Package(m_agent->getNameAgent(),
 				                   m_agent->getVAgents()[i]->getNameAgent(),
 				                   DIRECTION_SEARCH);
-				std::vector<std::string> packContent;
+				vector<string> packContent;
 				// Dirección a la que se envía el agente (i * 2). Ver Tools.h
-				std::cout << "Enviando agente "
+				cout << "Enviando agente "
 				          << directionEnumToString(static_cast<Direction>(i * 2))
-				          << std::endl;
+				          << endl;
 				packContent.push_back(
 				        directionEnumToString(static_cast<Direction>(i * 2)));
 				pack->setContent(packContent);
@@ -107,13 +109,13 @@ void Intention::exploreMap() {
 	}
 
 	checkSectorsExplorationRatio();
-	std::cout << "Porcentaje explorado: " << m_beliefSet->exploredPercentage()
-	          << std::endl;
+	cout << "Porcentaje explorado: " << m_beliefSet->exploredPercentage()
+	          << endl;
 }
 
 void Intention::findOptimalLocation() {
-	const uint32_t SECTORS = ((MAP_WIDTH * MAP_WIDTH) / (SECTOR_SIZE* SECTOR_SIZE));
-	const float EXPLORATED_RATIO = 0.9;
+	const uint32_t SECTORS = ((MAP_WIDTH * MAP_WIDTH) / (SECTOR_SIZE * SECTOR_SIZE));
+	const float EXPLORED_RATIO = 0.9;
 	bool water = false, food = false, metal = false, mineral = false;
 	bool elevation = false;
 	BYTE terrainValue;
@@ -121,7 +123,7 @@ void Intention::findOptimalLocation() {
 	float sectorValue = 0.0;
 
 	for (uint32_t i = 0; i < SECTORS; ++i) {
-		if (m_beliefSet->getSectorExploredRatio(i) >= EXPLORATED_RATIO) {
+		if (m_beliefSet->getSectorExploredRatio(i) >= EXPLORED_RATIO) {
 			uint32_t limitJ = (i / SECTOR_SIZE) * SECTOR_SIZE + SECTOR_SIZE;
 			uint32_t limitK = (i % SECTOR_SIZE) * SECTOR_SIZE + SECTOR_SIZE;
 
@@ -201,9 +203,8 @@ void Intention::checkSectorsFactor() {
 }
 
 void Intention::sectorExploration() {
-	const uint32_t SECTORS = ((MAP_WIDTH* MAP_WIDTH) / (SECTOR_SIZE * SECTOR_SIZE));
-	const float EXPLORED_RATIO = 0.9;
-	const uint32_t S_RATIO = MAP_WIDTH / SECTOR_SIZE;
+	const uint32_t SECTORS = ((MAP_WIDTH * MAP_WIDTH) / (SECTOR_SIZE * SECTOR_SIZE));
+	const uint32_t SECTOR_OFFSET = MAP_WIDTH / SECTOR_SIZE;
 	bool sectorFound = false;
 	int row;
 	int col;
@@ -216,61 +217,72 @@ void Intention::sectorExploration() {
 
 	for (uint32_t i = 0; i < m_agent->getVAgents().size() && !sectorFound;
 	                ++i) {
-		std::cout << m_agent->getVAgents()[i]->getNameAgent() << std::endl;
+		cout << m_agent->getVAgents()[i]->getNameAgent() << endl;
 
-		// std::cin.get();
+		// cin.get();
 		if (m_agent->getVAgents()[i]->getState() == AVAILABLE) {
 			for (uint32_t j = 0; j < SECTORS && !sectorFound; ++j) {
 				ss << j;
-				std::cout << "Comprobando sector " << j << std::endl;
+				cout << "Comprobando sector " << j << endl;
 
-				if (m_beliefSet->getSectorExploredRatio(j) <= EXPLORED_RATIO
-				                && (m_beliefSet->getSectorExploredRatio(j - 1) >= EXPLORED_RATIO
-				                    || m_beliefSet->getSectorExploredRatio(j + 1) >= EXPLORED_RATIO
-				                    || m_beliefSet->getSectorExploredRatio(j - S_RATIO) >= EXPLORED_RATIO
-				                    || m_beliefSet->getSectorExploredRatio(j + S_RATIO) >= EXPLORED_RATIO)
-				                && !m_beliefSet->exists(ss.str())) {
-					std::cout << "MANDANDO A EXPLORAR " << std::endl;
+				if (!m_beliefSet->exists(ss.str())) {
+					p = *checkSectorBoundaries(j);
 
-					row = j / SECTOR_SIZE;
-					col = j % SECTOR_SIZE;
-					row *= SECTOR_SIZE;
-					col *= SECTOR_SIZE;
-
-					p.first = row;
-					p.second = col;
-					bestPoint = p;
-
-					for (int k = 0; k < 2; ++k) {
-						for (int l = 0; l < 2; ++l) {
-							p.first += k * SECTOR_SIZE;
-							p.second += l * SECTOR_SIZE;
-							distance = euclideanDistance(m_agent->getVAgents()[i]->getPosition(), p);
-
-							if (distance <= bestDistance) {
-								if (((*(m_agent->getMap()))(bestPoint.first,
-								                            bestPoint.second) & MASK_TERRAIN) == TERRAIN_GROUND
-								                && m_agent->getKnownMap()[bestPoint.first][bestPoint.second]) {
-									bestDistance = distance;
-									bestPoint = p;
-								}
-							}
-						}
-					}
-
-					if (((*(m_agent->getMap()))(bestPoint.first,
-					                            bestPoint.second) & MASK_TERRAIN) == TERRAIN_GROUND
-					                && (m_agent->getKnownMap())[bestPoint.first][bestPoint.second]) {
-						m_agent->sendToRoute(m_agent->getVAgents()[i]->getPosition(),
-						                     Point(bestPoint.first, bestPoint.second),
+					if (p != Point(-1, -1)) {
+						cout << "Comprobando sector " << j << " desde el punto " << p << endl;
+						m_agent->sendToRoute(m_agent->getVAgents()[i]->getPosition(), p,
 						                     const_cast<Agent*>(m_agent->getVAgents()[i]),
 						                     GO_SEARCHING_LOCATION);
-						sectorFound = true;
-						Belief* belief;
-						belief = new Belief("EXPLORED");
-						m_beliefSet->add(ss.str(), belief);
 					}
 				}
+
+// 				if (m_beliefSet->getSectorExploredRatio(j) <= EXPLORED_RATIO
+// 				                && (m_beliefSet->getSectorExploredRatio(j - 1) >= EXPLORED_RATIO
+// 				                    || m_beliefSet->getSectorExploredRatio(j + 1) >= EXPLORED_RATIO
+// 				                    || m_beliefSet->getSectorExploredRatio(j - SECTOR_OFFSET) >= EXPLORED_RATIO
+// 				                    || m_beliefSet->getSectorExploredRatio(j + SECTOR_OFFSET) >= EXPLORED_RATIO)
+// 				                && !m_beliefSet->exists(ss.str())) {
+// 					cout << "MANDANDO A EXPLORAR " << endl;
+//
+// 					row = j / SECTOR_SIZE;
+// 					col = j % SECTOR_SIZE;
+// 					row *= SECTOR_SIZE;
+// 					col *= SECTOR_SIZE;
+//
+// 					p.first = row;
+// 					p.second = col;
+// 					bestPoint = p;
+//
+// 					for (int k = 0; k < 2; ++k) {
+// 						for (int l = 0; l < 2; ++l) {
+// 							p.first += k * SECTOR_SIZE;
+// 							p.second += l * SECTOR_SIZE;
+// 							distance = euclideanDistance(m_agent->getVAgents()[i]->getPosition(), p);
+//
+// 							if (distance <= bestDistance) {
+// 								if (((*(m_agent->getMap()))(bestPoint.first,
+// 								                            bestPoint.second) & MASK_TERRAIN) == TERRAIN_GROUND
+// 								                && m_agent->getKnownMap()[bestPoint.first][bestPoint.second]) {
+// 									bestDistance = distance;
+// 									bestPoint = p;
+// 								}
+// 							}
+// 						}
+// 					}
+//
+// 					if (((*(m_agent->getMap()))(bestPoint.first,
+// 					                            bestPoint.second) & MASK_TERRAIN) == TERRAIN_GROUND
+// 					                && (m_agent->getKnownMap())[bestPoint.first][bestPoint.second]) {
+// 						m_agent->sendToRoute(m_agent->getVAgents()[i]->getPosition(),
+// 						                     Point(bestPoint.first, bestPoint.second),
+// 						                     const_cast<Agent*>(m_agent->getVAgents()[i]),
+// 						                     GO_SEARCHING_LOCATION);
+// 						sectorFound = true;
+// 						Belief* belief;
+// 						belief = new Belief("EXPLORED");
+// 						m_beliefSet->add(ss.str(), belief);
+// 					}
+// 				}
 			}
 		}
 	}
@@ -291,7 +303,7 @@ void Intention::gotoOptimalLocation() {
 
 	ss << bestSector;
 	Belief* belief = new Belief(ss.str());
-	m_beliefSet->add(std::string("Optimal_Location"), belief);
+	m_beliefSet->add(string("Optimal_Location"), belief);
 	// TODO Ir
 	m_desire->set("Settlement_Place_Found", true);
 }
@@ -299,19 +311,62 @@ void Intention::gotoOptimalLocation() {
 const Point* Intention::checkSectorBoundaries(uint32_t sector) {
 	Point upperLeft((sector / SECTOR_SIZE) * SECTOR_SIZE, (sector % SECTOR_SIZE) * SECTOR_SIZE);
 	Point lowerRight(upperLeft.first + SECTOR_SIZE, upperLeft.second + SECTOR_SIZE);
+	const uint32_t SECTOR_OFFSET = MAP_WIDTH / SECTOR_SIZE;
+	const float EXPLORED_RATIO = 0.9;
+	int32_t x;
+	int32_t y;
+	const int32_t TOP_LEFT_X = upperLeft.first - 1;
+	const int32_t TOP_LEFT_Y = upperLeft. second - 1;
+	const int32_t BOT_RIGHT_X = lowerRight.first + 1;
+	const int32_t BOT_RIGHT_Y = lowerRight.second + 1;
 
-	// Se comprueba desde la esquina NW a la SE
-	for (uint32_t i = upperLeft.first - 1; i < lowerRight.first + 1; ++i) {
-		for (uint32_t j = upperLeft.second - 1; j < lowerRight.second + 1; ++j) {
-			if (!(i == upperLeft.first - 1 && j == upperLeft.second - 1)
-				// TODO
-			                || !(i == upperLeft.first - 1 && j == lowerRight.second + 1)
-					|| !(i == upperLeft.second + 1 && j == lowerRight.first - 1)
-			                || !(i == lowerRight.first + 1 && j == lowerRight.second + 1)) {
+	bool accessibleBoundingSectors;
+	bool accessibleBoundary;
+	accessibleBoundingSectors = false;
+	accessibleBoundary = false;
+	cout << "Comprobando sector " << sector << endl;
 
+	// se comprueba si alguno de los sectores adyacentes ha sido explorado
+	if (m_beliefSet->getSectorExploredRatio(sector - 1) >= EXPLORED_RATIO ||
+	                m_beliefSet->getSectorExploredRatio(sector + 1) >= EXPLORED_RATIO ||
+	                m_beliefSet->getSectorExploredRatio(sector - SECTOR_OFFSET) >= EXPLORED_RATIO ||
+	                m_beliefSet->getSectorExploredRatio(sector + SECTOR_OFFSET) >= EXPLORED_RATIO) {
+		accessibleBoundingSectors = true;
+		cout << "Tiene un sector adyacente accesible" << endl;
+	} else {
+		cout << "No tiene sector adyacente accesible, saliendo" << endl;
+		return new Point(-1, -1);
+	}
+
+	// TODO Añadir comprobación
+	// Si los sectores adyacentes son accesibles pero el límite no, marcar como explorado
+	if (accessibleBoundingSectors) {
+
+	}
+
+	// Se comprueba desde la esquina NW a la SE, no incluyendo las esquinas.
+	for (x = upperLeft.first - 1; x <= lowerRight.first && !accessibleBoundary; ++x) {
+		for (y = upperLeft.second - 1; y <= lowerRight.second && !accessibleBoundary; ++y) {
+			if (!(x == upperLeft.first - 1 && y == upperLeft.second - 1)
+			                || !(x == upperLeft.first - 1 && y == lowerRight.second + 1)
+			                || !(x == upperLeft.second + 1 && y == lowerRight.first - 1)
+			                || !(x == lowerRight.first + 1 && y == lowerRight.second + 1)) {
+				cout << "Comprobando casilla " << Point(x, y) << endl;
+
+				if (m_beliefSet->getKnownMapCell(x, y) && ((*m_agent->getMap())(x, y) & MASK_TERRAIN) == TERRAIN_GROUND) {
+					cout << "Es accesible" << endl;
+					accessibleBoundary = true;
+				}
 			}
 		}
 	}
 
+	if (accessibleBoundary) {
+		cout << "Devolviendo éxito " << Point(x, y) << endl;
+		cin.get();
+		return new Point(x, y);
+	}
+
+	cout << "No tiene ningún punto limítrofe accesible. Devolviendo fallo" << endl;
 	return new Point(-1, -1);
 }

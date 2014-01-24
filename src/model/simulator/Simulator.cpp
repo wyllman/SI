@@ -26,6 +26,8 @@
 
 #include <iostream>
 
+using namespace std;
+
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Simulator::Simulator(const Controller& controller) :
@@ -50,9 +52,9 @@ void Simulator::init() {
 
    for (uint32_t i = 0; i < map_->size(); i++) {
       for (uint32_t j = 0; j < map_->size(); j++) {
-         std::cout << mapci(i, j);
+         cout << mapci(i, j);
       }
-      std::cout << std::endl;
+      cout << endl;
    }
    reset ();
 }
@@ -114,16 +116,16 @@ void Simulator::logAction(int index) {
    if (BASIC_LOG) {
       switch (index) {
          case LOG_INIT:
-            std::cout << "---Generado el modelo Simulator " << std::endl;
+            cout << "---Generado el modelo Simulator " << endl;
             break;
          case LOG_END:
-            std::cout << "---Destruyendo el modelo Simulator " << std::endl;
+            cout << "---Destruyendo el modelo Simulator " << endl;
             break;
          case LOG_F_INIT:
-            std::cout << "---Llamando a la función init de la clase Simulator " << std::endl;
+            cout << "---Llamando a la función init de la clase Simulator " << endl;
             break;
          case LOG_F_STOP:
-            std::cout << "---Llamando a la función stop de la clase Simulator " << std::endl;
+            cout << "---Llamando a la función stop de la clase Simulator " << endl;
             break;
          default:
             break;

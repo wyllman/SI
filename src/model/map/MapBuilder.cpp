@@ -23,6 +23,8 @@
 #include <map3.c>
 //#include <map4.c>
 
+//using namespace boost;
+
 MapBuilder::MapBuilder() {
 	m_mapSize = gimp.width;
 	m_map = new BYTE*[m_mapSize];
@@ -138,7 +140,7 @@ void MapBuilder::generateResources() {
 	} while(probabilityDistrib(probabilityRNG) < 6);
 }
 
-void MapBuilder::generateResourceType(BYTE type, Point loc) {
+void MapBuilder::generateResourceType( BYTE type, Point loc) {
 	uint32_t size;
 	uint32_t width;
 	uint32_t i;
@@ -211,3 +213,4 @@ void MapBuilder::generateResourceType(BYTE type, Point loc) {
 		}
 	} while (i++ < size);
 }
+

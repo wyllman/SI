@@ -9,8 +9,11 @@
 
 #include <cstring>
 #include <cmath>
+//#include <math.h>
 
-Direction strToDirectionEnum(std::string dir) {
+using namespace std;
+
+Direction strToDirectionEnum(string dir) {
 	if (strcmp(dir.c_str(), "NORTH") == 0) {
 		return NORTH;
 	} else if (strcmp(dir.c_str(), "SOUTH") == 0) {
@@ -27,13 +30,11 @@ Direction strToDirectionEnum(std::string dir) {
 		return SEAST;
 	} else if (strcmp(dir.c_str(), "SWEST") == 0) {
 		return SWEST;
-	} else {
-		return ERROR_DIR;
 	}
 }
 
-std::string directionEnumToString(Direction dir) {
-	std::string str;
+string directionEnumToString(Direction dir) {
+	string str;
 
 	switch (dir) {
 	case NORTH:
@@ -77,5 +78,5 @@ std::string directionEnumToString(Direction dir) {
 }
 
 float euclideanDistance(const Point& origin, const Point& target) {
-	return sqrt(pow(origin.first - target.first, 2) + pow(origin.second - target.second, 2));
+	return sqrt(pow((float)origin.first - target.first, 2) + pow((float)origin.second - target.second, 2));
 }

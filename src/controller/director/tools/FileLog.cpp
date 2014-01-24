@@ -22,6 +22,7 @@
 #include <fstream>
 #include <cstring>
 
+using namespace std;
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 FileLog::FileLog() {
@@ -51,7 +52,7 @@ void FileLog::reset() {
 }
 void FileLog::save() {
    if (!regAccErr_.empty()) {
-      std::ofstream outfile("LogAE.txt", std::ofstream::out);
+      ofstream outfile("LogAE.txt", ofstream::out);
       for (int i = 0; i < regAccErr_.size(); i++) {
          outfile.write(regAccErr_[i].c_str(), regAccErr_[i].size());
          outfile.write("\n", 1);
@@ -60,24 +61,24 @@ void FileLog::save() {
    }
 }
 void FileLog::showConsole() {
-   std::cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << std::endl;
-   std::cout << "+++ Mostrando el registro de acciones y errores         +++" << std::endl;
-   std::cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+   cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+   cout << "+++ Mostrando el registro de acciones y errores         +++" << endl;
+   cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
 
    if (!regAccErr_.empty()) {
       for (int i = 0; i < regAccErr_.size(); i++) {
-         std::cout << "+++ " << regAccErr_[i] << std::endl;
+         cout << "+++ " << regAccErr_[i] << endl;
       }
-      std::cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+      cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
    } else {
-      std::cout << "+++ ¡Error! El registro está vacío.                     +++" << std::endl;
-      std::cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << std::endl;
+      cout << "+++ ¡Error! El registro está vacío.                     +++" << endl;
+      cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
    }
 }
 void FileLog::insertLine(const char* line) {
-   std::string tempLine;
+   string tempLine;
    int lineSize = strlen(line);
-   std::stringstream ss;
+   stringstream ss;
 
    lineNumber_ += 1;
    ss << lineNumber_;
@@ -105,10 +106,10 @@ void FileLog::logAction(int index) {
    if (BASIC_LOG) {
       switch (index) {
          case LOG_INIT:
-            std::cout << "------Generado la herramienta FileLog para el Director " << std::endl;
+            cout << "------Generado la herramienta FileLog para el Director " << endl;
             break;
          case LOG_END:
-            std::cout << "------Destruyendo la herramienta FileLog para el Director " << std::endl;
+            cout << "------Destruyendo la herramienta FileLog para el Director " << endl;
             break;
          default:
             break;

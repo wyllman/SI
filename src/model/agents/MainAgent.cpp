@@ -23,10 +23,13 @@
 #include <boost/random/negative_binomial_distribution.hpp>
 #include <boost/random/random_device.hpp>
 
+using namespace std;
+using namespace boost;
+
 MainAgent::MainAgent(Simulator* refModel, Map* theMap) :
 	Agent(theMap), refSimulator_(refModel) {
 	logAction(LOG_INIT);
-	m_beliefSet = new BeliefSet();
+	m_beliefSet = new BeliefSet(*theMap);
 	m_desires = new Desire();
 	createInitialBelieves();
 	createDesires();
@@ -120,14 +123,14 @@ bool MainAgent::updateMiniAgents() {
 
 void MainAgent::createRndInitialPos(Map* mainMap) {
 	logAction(LOG_F_INIT);
-	boost::random::random_device rndDev;
-	boost::random::mt11213b probabilityRNG;
-	boost::random::mt11213b layoutRNG;
-	boost::random::mt11213b positionRNG;
-	boost::random::mt11213b typeRNG;
-	boost::random::binomial_distribution<> probabilityDistrib(3, 0.5);
-	boost::random::uniform_int_distribution<> positionDistrib(2, MAP_WIDTH - 2); // Porque WIDTH = HEIGHT
-	boost::random::uniform_int_distribution<> typeDistrib(3, 5);
+	random::random_device rndDev;
+	random::mt11213b probabilityRNG;
+	random::mt11213b layoutRNG;
+	random::mt11213b positionRNG;
+	random::mt11213b typeRNG;
+	random::binomial_distribution<> probabilityDistrib(3, 0.5);
+	random::uniform_int_distribution<> positionDistrib(2, MAP_WIDTH - 2); // Porque WIDTH = HEIGHT
+	random::uniform_int_distribution<> typeDistrib(3, 5);
 
 	bool condition = false; // Indica si está en una posición CORRECTA
 
@@ -173,25 +176,23 @@ void MainAgent::createRndInitialPos(Map* mainMap) {
 
 	} while (!condition);
 
-	std::cout << "Position generated on: x = " << m_position.first << " , y = "
-	          << m_position.second << std::endl;
+	cout << "Position generated on: x = " << m_position.first << " , y = "
+	          << m_position.second << endl;
 }
 
 void MainAgent::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			std::cout << "---Generando el Agente principal " << std::endl;
+			cout << "---Generando el Agente principal " << endl;
 			break;
 
 		case LOG_END:
-			std::cout << "---Destruyendo el Agente principal " << std::endl;
+			cout << "---Destruyendo el Agente principal " << endl;
 			break;
 
 		case LOG_F_INIT:
-			std::cout
-			                << "---Llamando a la función createRndInitialPos () del agente principal."
-			                << std::endl;
+			cout << "---Llamando a la función createRndInitialPos () del agente principal." << endl;
 			break;
 
 		default:
@@ -230,20 +231,15 @@ Package* MainAgent::readFIPAPackage(Package* p) {
 		if (p->getReceiver() == getNameAgent()) {
 			switch (p->getType()) {
 			case NOT_UNDERSTOOD:
-				std::cout
-				                << "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible"
-				                << std::endl;
+				cout << "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible" << endl;
 				break;
 
 			case CONFIRM:
-				std::cout
-				                << "CONFIRM: Recibido paquete que indica -> Confirmada la operación."
-				                << std::endl;
+				cout << "CONFIRM: Recibido paquete que indica -> Confirmada la operación." << endl;
 				break;
 
 			case ARRIVED_GOAL:
-				std::cout << "Se ha confirmado la finalización de la ruta."
-				          << std::endl;
+				cout << "Se ha confirmado la finalización de la ruta." << endl;
 				Belief* belief;
 				belief = new Belief("AGENT_ARRIVED");
 				m_beliefSet->add(p->getSender(), belief);
@@ -268,8 +264,7 @@ Package* MainAgent::readFIPAPackage(Package* p) {
 				break;
 
 			default:
-				std::cout << "No se entiende el tipo del paquete recibido."
-				          << std::endl;
+				cout << "No se entiende el tipo del paquete recibido." << endl;
 
 			}
 		}
@@ -281,28 +276,26 @@ Package* MainAgent::readFIPAPackage(Package* p) {
 
 void MainAgent::sendToRoute(Point s, Point e, Agent* theAgent, Type theType) {
 	PathFindingTree* tree = new PathFindingTree(*this, s, e);
-	std::string route = "";
 
 	tree->calculateHeuristicRoute();
-	route += tree->getRoute();
-	std::cout << "Ruta mínima = " << route << std::endl;
-	std::vector<std::string> vect;
+	cout << "Ruta mínima = " << tree->getRoute() << endl;
+	vector<string> vect;
 
 	Package* p = new Package(this->getNameAgent(), theAgent->getNameAgent(),
 	                         theType);
-	vect.push_back(route);
+	vect.push_back(tree->getRoute());
 	p->setContent(vect);
 	readFIPAPackage(theAgent->readFIPAPackage(p));
 }
 
 // Manejadores de atributos
-std::vector<Agent*>& MainAgent::getVAgents() {
+vector<Agent*>& MainAgent::getVAgents() {
 	return m_Vagents;
 }
-std::vector<Agent*>& MainAgent::getWorVecAgents() {
+vector<Agent*>& MainAgent::getWorVecAgents() {
 	return m_WorVecAgents;
 }
-std::vector<Package*>& MainAgent::getPackagesFipa() {
+vector<Package*>& MainAgent::getPackagesFipa() {
 	return m_packagesFIPA;
 }
 const Map* MainAgent::getMap() const {

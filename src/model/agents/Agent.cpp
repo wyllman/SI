@@ -9,6 +9,8 @@
 
 #include <cmath>
 
+using namespace std;
+
 Agent::Agent(Map* theMap): refMap_ (theMap) {
    setIdComm(0);
    m_state = AVAILABLE;
@@ -158,10 +160,10 @@ void Agent::setState(State state) {
 	m_state = state;
 }
 
-std::vector<Direction>& Agent::getRoutes() {
+vector<Direction>& Agent::getRoutes() {
 	return m_routes;
 }
 
-void Agent::setRoutes(std::vector<Direction>& routes) {
+void Agent::setRoutes(vector<Direction>& routes) {
 	m_routes = routes;
 }

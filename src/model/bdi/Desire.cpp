@@ -7,16 +7,18 @@
 
 #include <model/bdi/Desire.h>
 
+using namespace std;
+
 Desire::Desire() {
 }
 
 Desire::~Desire() {
 }
 
-void Desire::add(std::string desire, bool value) {
-    m_desire.insert(std::pair<std::string, bool>(desire, value));
+void Desire::add(string desire, bool value) {
+    m_desire.insert(pair<string, bool>(desire, value));
 }
 
-void Desire::set(std::string desire, bool value) {
+void Desire::set(string desire, bool value) {
     m_desire[desire] = value;
 }

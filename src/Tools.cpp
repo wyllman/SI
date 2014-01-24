@@ -10,7 +10,9 @@
 #include <cstring>
 #include <cmath>
 
-Direction strToDirectionEnum(std::string dir) {
+using namespace std;
+
+Direction strToDirectionEnum(string dir) {
 	if (strcmp(dir.c_str(), "NORTH") == 0) {
 		return NORTH;
 	} else if (strcmp(dir.c_str(), "SOUTH") == 0) {
@@ -30,8 +32,8 @@ Direction strToDirectionEnum(std::string dir) {
 	}
 }
 
-std::string directionEnumToString(Direction dir) {
-	std::string str;
+string directionEnumToString(Direction dir) {
+	string str;
 
 	switch (dir) {
 	case NORTH:

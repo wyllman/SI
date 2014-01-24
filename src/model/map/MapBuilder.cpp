@@ -23,6 +23,8 @@
 #include <map3.c>
 //#include <map4.c>
 
+using namespace boost;
+
 MapBuilder::MapBuilder() {
 	m_mapSize = gimp.width;
 	m_map = new BYTE*[m_mapSize];
@@ -61,7 +63,7 @@ void MapBuilder::generateMap() {
 }
 
 void MapBuilder::generateElevation() {
-	boost::random::mt11213b mersenneGenerator;
+	random::mt11213b mersenneGenerator;
 	uint32_t lowerBound;
 	uint32_t upperBound;
 	uint32_t bytesPerPixel;
@@ -106,14 +108,14 @@ void MapBuilder::generateElevation() {
 }
 
 void MapBuilder::generateResources() {
-	boost::random::random_device rndDev;
-	boost::random::mt11213b probabilityRNG;
-	boost::random::mt11213b layoutRNG;
-	boost::random::mt11213b positionRNG;
-	boost::random::mt11213b typeRNG;
-	boost::random::negative_binomial_distribution<> probabilityDistrib(3, 0.5);
-	boost::random::uniform_int_distribution<> positionDistrib(0, m_mapSize);
-	boost::random::uniform_int_distribution<> typeDistrib(3, 5);
+	random::random_device rndDev;
+	random::mt11213b probabilityRNG;
+	random::mt11213b layoutRNG;
+	random::mt11213b positionRNG;
+	random::mt11213b typeRNG;
+	random::negative_binomial_distribution<> probabilityDistrib(3, 0.5);
+	random::uniform_int_distribution<> positionDistrib(0, m_mapSize);
+	random::uniform_int_distribution<> typeDistrib(3, 5);
 	Point point;
 	
 	probabilityRNG.seed(rndDev());
@@ -144,13 +146,13 @@ void MapBuilder::generateResourceType(BYTE type, Point loc) {
 	uint32_t i;
 	i = 0;
 
-	boost::random_device rndDev;
-	boost::random::mt11213b sizeRNG;
-	boost::random::mt11213b directionRNG;
-	boost::random::mt11213b widthRNG;
-	boost::random::uniform_int_distribution<> sizeDistrib(10, 15);
-	boost::random::uniform_int_distribution<> directionDistrib(0, 7);
-	boost::random::uniform_int_distribution<> widthDistrib(3, 5);
+	random_device rndDev;
+	random::mt11213b sizeRNG;
+	random::mt11213b directionRNG;
+	random::mt11213b widthRNG;
+	random::uniform_int_distribution<> sizeDistrib(10, 15);
+	random::uniform_int_distribution<> directionDistrib(0, 7);
+	random::uniform_int_distribution<> widthDistrib(3, 5);
 
 	sizeRNG.seed(rndDev());
 	sizeRNG();

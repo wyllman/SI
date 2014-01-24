@@ -19,6 +19,7 @@
 
 #include <iostream>
 
+using namespace std;
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 MainLoop::MainLoop(const Director& director) {
@@ -126,10 +127,10 @@ void MainLoop::logAction(int index) {
    if (BASIC_LOG) {
       switch (index) {
          case LOG_INIT:
-            std::cout << "------Generado la herramienta MainLoop para el Director " << std::endl;
+            cout << "------Generado la herramienta MainLoop para el Director " << endl;
             break;
          case LOG_END:
-            std::cout << "------Destruyendo la herramienta MainLoop para el Director " << std::endl;
+            cout << "------Destruyendo la herramienta MainLoop para el Director " << endl;
             break;
          default:
             break;

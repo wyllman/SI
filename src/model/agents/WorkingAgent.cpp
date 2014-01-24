@@ -28,12 +28,12 @@ Package* WorkingAgent::readFIPAPackage(Package* p) {
 		if (p -> getReceiver() == getNameAgent()) {
 			switch (p -> getType()) {
 			case NOT_UNDERSTOOD:
-				std::cout << "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible" << std::endl;
+				cout << "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible" << endl;
 				return NULL;
 				break;
 
 			case CONFIRM:
-				std::cout << "CONFIRM: Confirmada la operación." << std::endl;
+				cout << "CONFIRM: Confirmada la operación." << endl;
 				return NULL;
 				break;
 
@@ -57,7 +57,7 @@ Package* WorkingAgent::readFIPAPackage(Package* p) {
 				break;
 
 			default:
-				std::cout << "No se entiende el tipo del paquete recibido." << std::endl;
+				cout << "No se entiende el tipo del paquete recibido." << endl;
 			}
 		}
 	}
@@ -65,7 +65,7 @@ Package* WorkingAgent::readFIPAPackage(Package* p) {
 	return answer;
 }
 
-void WorkingAgent::followRoute(std::string route) {
+void WorkingAgent::followRoute(string route) {
 	cout << "SEGUIR LA RUTA: " << route << endl;
 	vector<Direction> camino;
 	int posIni = route.find("[");

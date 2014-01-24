@@ -28,6 +28,8 @@
 
 #include <iostream>
 
+using namespace std;
+
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Director::Director() {
@@ -360,19 +362,19 @@ void Director::logAction(int index) {
    if (BASIC_LOG) {
       switch (index) {
          case LOG_INIT:
-            std::cout << "---Generado el coordinador Director " << std::endl;
+            cout << "---Generado el coordinador Director " << endl;
             break;
          case LOG_END:
-            std::cout << "---Destruyendo el coordinador Director " << std::endl;
+            cout << "---Destruyendo el coordinador Director " << endl;
             break;
          case LOG_F_INIT:
-            std::cout << "---Llamando a la funcion init del Director" << std::endl;
+            cout << "---Llamando a la funcion init del Director" << endl;
             break;
          case LOG_F_STOP:
-            std::cout << "---Llamando a la funcion stop del Director" << std::endl;
+            cout << "---Llamando a la funcion stop del Director" << endl;
             break;
          case LOG_F_LOOP:
-            std::cout << "---Llamando a la función mainLoop del Director" << std::endl;
+            cout << "---Llamando a la función mainLoop del Director" << endl;
             break;
          default:
             break;

@@ -29,6 +29,8 @@
 
 #include <math.h>
 
+using namespace std;
+
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Scenographer::Scenographer(const Interface& interface, const Scene& scene, const Map& map) {
@@ -635,15 +637,15 @@ void Scenographer::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			std::cout
+			cout
 			                << "------Generado el gestor Scenographer para la vista Interfaz "
-			                << std::endl;
+			                << endl;
 			break;
 
 		case LOG_END:
-			std::cout
+			cout
 			                << "------Destruyendo el gestor Scenographer para la vista Interfaz "
-			                << std::endl;
+			                << endl;
 			break;
 
 		default:

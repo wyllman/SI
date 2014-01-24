@@ -10,16 +10,12 @@
 #include <model/agents/tools/PathFindingTree.h>
 #include <model/agents/MainAgent.h>
 
-#include <cstring>
 #include <iostream>
-#include <typeinfo>
-#include <list>
-#include <stdio.h>
 
 using namespace std;
 
 PathFindingTree::PathFindingTree(const MainAgent& agent, const Point& start, const Point& end) :
-	m_rootNode(new Node(start, std::string("RAIZ"), *static_cast<Node*>(NULL))),
+	m_rootNode(new Node(start, string("RAIZ"), *static_cast<Node*>(NULL))),
 	m_goalNode(new Node(end, " ", *m_rootNode)),
 	m_agent(const_cast<MainAgent*>(&agent)) {
 	m_rootNode->setHeuristicDistance(heuristicValue(*m_rootNode));
@@ -98,7 +94,7 @@ bool PathFindingTree::calculateHeuristicRoute() {
 			existsInClosedSet = false;
 			existsInOpenSet = false;
 
-			for (std::vector<Node*>::iterator i = openSet.begin(); i != openSet.end(); ++i) {
+			for (vector<Node*>::iterator i = openSet.begin(); i != openSet.end(); ++i) {
 				if ((*successorIterator)->position() == (*i)->position()) {
 					if ((*successorIterator)->objectiveDistance() >= (*i)->objectiveDistance()) {
 						existsInOpenSet = true;
@@ -108,7 +104,7 @@ bool PathFindingTree::calculateHeuristicRoute() {
 			}
 
 			if (!existsInOpenSet) {
-				for (std::vector<Node*>::iterator i = closedSet.begin(); i != closedSet.end(); ++i) {
+				for (vector<Node*>::iterator i = closedSet.begin(); i != closedSet.end(); ++i) {
 					if ((*successorIterator)->position() == (*i)->position()) {
 						if ((*successorIterator)->objectiveDistance() >= (*i)->objectiveDistance()) {
 							existsInClosedSet = true;
@@ -230,7 +226,7 @@ void PathFindingTree::reversePath(const Node& node) {
 	i = 0;
 
 	while (tmp != NULL) {
-		m_route = "," + std::string(tmp->direction()) + m_route;
+		m_route = "," + string(tmp->direction()) + m_route;
 		tmp = const_cast<Node*>(tmp->parent());
 	}
 

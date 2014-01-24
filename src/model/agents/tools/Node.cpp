@@ -7,13 +7,15 @@
 
 #include <model/agents/tools/Node.h>
 
-Node::Node(const Point& position, const std::string& movement, const Node& parent) :
+using namespace std;
+
+Node::Node(const Point& position, const string& movement, const Node& parent) :
 	m_position(position),
 	m_movement(movement),
 	m_nodeParent(&parent),
 	m_distanceFromStart(0),
 	m_heuristicDistance(0.0) {
-	m_childrenNodes = new std::vector<Node*>;
+	m_childrenNodes = new vector<Node*>;
 	m_objectiveDistance = static_cast<float>(m_distanceFromStart) + m_heuristicDistance;
 }
 

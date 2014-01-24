@@ -20,6 +20,8 @@
 #include <string.h>
 #include <iostream>
 
+using namespace std;
+
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Scene::Scene(const Interface& interface) {
@@ -443,15 +445,15 @@ void Scene::logAction(int index) {
 	if (BASIC_LOG) {
 		switch (index) {
 		case LOG_INIT:
-			std::cout
+			cout
 			                << "------Generado la herramienta Scene para la vista Interfaz "
-			                << std::endl;
+			                << endl;
 			break;
 
 		case LOG_END:
-			std::cout
+			cout
 			                << "------Destruyendo la herramienta Scene para la vista Interfaz "
-			                << std::endl;
+			                << endl;
 			break;
 
 		default:

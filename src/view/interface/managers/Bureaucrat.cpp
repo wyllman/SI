@@ -27,6 +27,8 @@
    #include <GLU.h>
 #endif
 
+using namespace std;
+
 // ___________________________________________________________________________________
 // Constructores y Destructor:
 Bureaucrat::Bureaucrat(const Interface& interface) {
@@ -98,19 +100,19 @@ void Bureaucrat::logAction(int index) {
    if (BASIC_LOG) {
       switch (index) {
          case LOG_INIT:
-            std::cout << "------Generado el gestor Bureaucrat para la vista Interfaz " << std::endl;
+            cout << "------Generado el gestor Bureaucrat para la vista Interfaz " << endl;
             break;
          case LOG_END:
-            std::cout << "------Destruyendo el gestor Bureaucrat para la vista Interfaz" << std::endl;
+            cout << "------Destruyendo el gestor Bureaucrat para la vista Interfaz" << endl;
             break;
          case LOG_F_INIT:
-            std::cout << "------Inicializando SDL en la clase Bureaucrat." << std::endl;
+            cout << "------Inicializando SDL en la clase Bureaucrat." << endl;
             break;
          case LOG_F_INIT_1:
-            std::cout << "------Inicializando OGL en la clase Bureaucrat." << std::endl;
+            cout << "------Inicializando OGL en la clase Bureaucrat." << endl;
             break;
          case LOG_ERROR:
-            std::cout << "------ERROR!! No se pudo iniciar SDL: " << SDL_GetError() << std::endl;
+            cout << "------ERROR!! No se pudo iniciar SDL: " << SDL_GetError() << endl;
             break;
          default:
             break;

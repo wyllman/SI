@@ -18,8 +18,8 @@
 #include <Tools.h>
 
 #include <iostream>
-#include <cstdlib>
 
+using namespace std;
 
 // ___________________________________________________________________________________
 // Constructores y Destructor:
@@ -127,27 +127,27 @@ void Context::logAction(int index) {
    if (BASIC_LOG) {
       switch (index) {
          case LOG_INIT:
-            std::cout
+            cout
                << "------Generado la herramienta Context para la vista Interfaz"
-               << std::endl;
+               << endl;
             break;
          case LOG_END:
-            std::cout
+            cout
                << "------Destruyendo la herramienta Context para la vista Interfaz"
-               << std::endl;
+               << endl;
             break;
          case LOG_F_INIT:
-            std::cout << "------Iniciando el contexto OGL de la herramienta Context"
-               << std::endl;
+            cout << "------Iniciando el contexto OGL de la herramienta Context"
+               << endl;
             break;
          case LOG_ERROR:
-            std::cout << "------ERROR!! Compilando el Vertex Shader" << std::endl;
+            cout << "------ERROR!! Compilando el Vertex Shader" << endl;
             break;
          case LOG_ERROR_1:
-            std::cout << "------ERROR!! Compilando el Fragment Shader" << std::endl;
+            cout << "------ERROR!! Compilando el Fragment Shader" << endl;
             break;
          case LOG_ERROR_2:
-            std::cout << "------ERROR!! Enlazando el programa GSL" << std::endl;
+            cout << "------ERROR!! Enlazando el programa GSL" << endl;
             break;
          default:
             break;

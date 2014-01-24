@@ -3,8 +3,8 @@
 Point::Point() {
 }
 
-Point::Point(int x, int y) :
-	std::pair<int, int>(x, y) {
+Point::Point(int32_t x, int32_t y) :
+	std::pair<int32_t, int32_t>(x, y) {
 }
 
 Point::~Point() {

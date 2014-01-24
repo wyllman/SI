@@ -175,6 +175,15 @@ void MainAgent::createRndInitialPos(Map* mainMap) {
 
 	std::cout << "Position generated on: x = " << m_position.first << " , y = "
 	          << m_position.second << std::endl;
+	getKnownMap()[m_position.first][m_position.second] = true;
+	getKnownMap()[m_position.first - 1][m_position.second - 1] = true;
+	getKnownMap()[m_position.first - 1][m_position.second + 1] = true;
+	getKnownMap()[m_position.first - 1][m_position.second] = true;
+	getKnownMap()[m_position.first + 1][m_position.second - 1] = true;
+	getKnownMap()[m_position.first + 1][m_position.second + 1] = true;
+	getKnownMap()[m_position.first + 1][m_position.second] = true;
+	getKnownMap()[m_position.first][m_position.second - 1] = true;
+	getKnownMap()[m_position.first][m_position.second + 1] = true;
 }
 
 void MainAgent::logAction(int index) {

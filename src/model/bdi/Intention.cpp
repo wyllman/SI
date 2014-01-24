@@ -205,6 +205,7 @@ void Intention::checkSectorsFactor() {
 void Intention::sectorExploration() {
 	const uint32_t SECTORS = ((MAP_WIDTH * MAP_WIDTH) / (SECTOR_SIZE * SECTOR_SIZE));
 	const uint32_t SECTOR_OFFSET = MAP_WIDTH / SECTOR_SIZE;
+	const float EXPLORED_RATIO = 0.9;
 	bool sectorFound = false;
 	int row;
 	int col;

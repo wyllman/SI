@@ -29,8 +29,6 @@ Direction strToDirectionEnum(string dir) {
 		return SEAST;
 	} else if (strcmp(dir.c_str(), "SWEST") == 0) {
 		return SWEST;
-	} else {
-		return ERROR_DIR;
 	}
 }
 

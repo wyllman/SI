@@ -224,9 +224,6 @@ void Director::mainFunction() {
       const_cast<Scenographer*>(
                                  dynamic_cast<Interface*>(
                                  const_cast<View*>(refView_))->getScenographer())->setMask(tmpKnonwMap);
-      const_cast<Scenographer*>(
-                                 dynamic_cast<Interface*>(
-                                 const_cast<View*>(refView_))->getScenographer())->updatedColor();
       mainLoop_->stopReset();
       mainLoop_->update();
    }
@@ -335,7 +332,6 @@ void Director::keyEvents (SDL_Event& eventSDL){
          const_cast<Scenographer*>(
                       dynamic_cast<Interface*>(
                       const_cast<View*>(refView_))->getScenographer())->updatedColor();
-         mainLoop_->update();
       }
 
    }

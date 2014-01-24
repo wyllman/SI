@@ -72,8 +72,8 @@ bool PathFindingTree::calculateHeuristicRoute() {
 		// se busca el mejor nodo candidato en la lista
 		for (setIterator = openSet.begin(); setIterator != openSet.end(); ++setIterator) {
 			currentDistance = (*setIterator)->objectiveDistance();
-// 			cout << "Comprobando nodo " << *setIterator <<  " distancia " << currentDistance << endl;
 
+// 			cout << "Comprobando nodo " << *setIterator <<  " distancia " << currentDistance << endl;
 			if (currentDistance <= bestDistance) {
 				bestDistance = currentDistance;
 				bestNode = *setIterator;
@@ -130,7 +130,6 @@ bool PathFindingTree::calculateHeuristicRoute() {
 	}
 
 	if (success) {
-		std::cout << "INVIRTIENDO" << std::endl;
 		reversePath(*(*successorIterator));
 	}
 

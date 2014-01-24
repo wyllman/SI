@@ -214,8 +214,9 @@ void Intention::sectorExploration() {
 	stringstream ss;
 	bestDistance = 99999;
 
-	for (uint32_t i = 0; i < m_agent->getVAgents().size() && !sectorFound;
-	                ++i) {
+	for (uint32_t i = 0; i < m_agent->getVAgents().size() //&& !sectorFound;
+	                ;++i) {
+		sectorFound = false;
 		std::cout << m_agent->getVAgents()[i]->getNameAgent() << std::endl;
 
 		// std::cin.get();
@@ -225,10 +226,10 @@ void Intention::sectorExploration() {
 				std::cout << "Comprobando sector " << j << std::endl;
 
 				if (m_beliefSet->getSectorExploredRatio(j) <= EXPLORED_RATIO
-				                && (m_beliefSet->getSectorExploredRatio(j - 1) >= EXPLORED_RATIO
-				                    || m_beliefSet->getSectorExploredRatio(j + 1) >= EXPLORED_RATIO
-				                    || m_beliefSet->getSectorExploredRatio(j - S_RATIO) >= EXPLORED_RATIO
-				                    || m_beliefSet->getSectorExploredRatio(j + S_RATIO) >= EXPLORED_RATIO)
+				//                && (m_beliefSet->getSectorExploredRatio(j - 1) >= EXPLORED_RATIO
+				//                    || m_beliefSet->getSectorExploredRatio(j + 1) >= EXPLORED_RATIO
+				//                    || m_beliefSet->getSectorExploredRatio(j - S_RATIO) >= EXPLORED_RATIO
+				//                    || m_beliefSet->getSectorExploredRatio(j + S_RATIO) >= EXPLORED_RATIO)
 				                && !m_beliefSet->exists(ss.str())) {
 					std::cout << "MANDANDO A EXPLORAR " << std::endl;
 

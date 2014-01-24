@@ -82,12 +82,14 @@ void SearchAgent::localDireccionalSearch(std::string d) {
 	initExplorationMove(m_position.first, m_position.second,
 			static_cast<Direction>(strToDirectionEnum(d.c_str())));
 	setState(SEARCHING);
+	countLoopSteps_ = 0;
 }
 
 void SearchAgent::actDependingOfState() {
 	int ramdomDirection = rand() % 4;
 	switch (getState()) {
 	case SEARCHING:
+
 		if (!explorationMove()) {
 			setState(AVAILABLE);
 			getRefMainAgent()->readFIPAPackage(
@@ -123,7 +125,7 @@ void SearchAgent::actDependingOfState() {
 			setState(AVAILABLE);
 			getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),
-							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+							getRefMainAgent()->getNameAgent(), CONFIRM));
 		} else {
 			sensor();
 		}
@@ -135,7 +137,7 @@ void SearchAgent::actDependingOfState() {
 			setState(SECOND_SEARCHING);
 			getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),
-							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+							getRefMainAgent()->getNameAgent(), CONFIRM));
 		} else {
 			sensor();
 		}

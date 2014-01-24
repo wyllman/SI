@@ -126,10 +126,17 @@ void SearchAgent::actDependingOfState() {
 	case FOLLOWING_RET_ROUTE:
 		std::cout << "Tam: " << getRoutes().size() << std::endl;
 		if (!routedMove()) {
-			setState(AVAILABLE);
-			getRefMainAgent()->readFIPAPackage(
+			//if (m_position.first != refMainAgent_->getPosition().first ||
+			//		m_position.second != refMainAgent_->getPosition().second) {
+			//	getRefMainAgent()->readFIPAPackage(
+			//			new Package(getNameAgent(),
+			//					getRefMainAgent()->getNameAgent(), COME_BACK, this));
+			//} else {
+				setState(AVAILABLE);
+				getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),
 							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+			//}
 		} else {
 			sensor();
 		}
@@ -149,6 +156,7 @@ void SearchAgent::followRoute(std::string route) {
 	int posComa = 0;
 	bool stop = false;
 	std::string dirTemp;
+	Direction auxDir;
 
 	while (!stop) {
 		posComa = route.find(",");
@@ -160,7 +168,10 @@ void SearchAgent::followRoute(std::string route) {
 			dirTemp = route.substr(0, posComa);
 			route = route.substr(posComa + 1, route.length());
 		}
-		camino.push_back(strToDirectionEnum(dirTemp));
+		auxDir = strToDirectionEnum(dirTemp);
+		if (auxDir != ERROR_DIR) {
+			camino.push_back(auxDir);
+		}
 	}
 
 	for (unsigned int i = 0; i < camino.size(); i++) {

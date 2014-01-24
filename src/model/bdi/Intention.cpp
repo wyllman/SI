@@ -203,7 +203,7 @@ void Intention::checkSectorsFactor() {
 void Intention::sectorExploration() {
 	const uint32_t SECTORS = ((MAP_WIDTH* MAP_WIDTH) / (SECTOR_SIZE * SECTOR_SIZE));
 	const float EXPLORED_RATIO = 0.9;
-	const uint32_t CACA = MAP_WIDTH / SECTOR_SIZE;
+	const uint32_t S_RATIO = MAP_WIDTH / SECTOR_SIZE;
 	bool sectorFound = false;
 	int row;
 	int col;
@@ -227,8 +227,8 @@ void Intention::sectorExploration() {
 				if (m_beliefSet->getSectorExploredRatio(j) <= EXPLORED_RATIO
 				                && (m_beliefSet->getSectorExploredRatio(j - 1) >= EXPLORED_RATIO
 				                    || m_beliefSet->getSectorExploredRatio(j + 1) >= EXPLORED_RATIO
-				                    || m_beliefSet->getSectorExploredRatio(j - CACA) >= EXPLORED_RATIO
-				                    || m_beliefSet->getSectorExploredRatio(j + CACA) >= EXPLORED_RATIO)
+				                    || m_beliefSet->getSectorExploredRatio(j - S_RATIO) >= EXPLORED_RATIO
+				                    || m_beliefSet->getSectorExploredRatio(j + S_RATIO) >= EXPLORED_RATIO)
 				                && !m_beliefSet->exists(ss.str())) {
 					std::cout << "MANDANDO A EXPLORAR " << std::endl;
 

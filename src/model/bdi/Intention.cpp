@@ -104,7 +104,7 @@ void Intention::exploreMap() {
 }
 
 void Intention::findOptimalLocation() {
-	const uint32_t SECTORS = (pow(MAP_WIDTH, 2) / pow(SECTOR_SIZE, 2));
+	const uint32_t SECTORS = ((MAP_WIDTH * MAP_WIDTH) / (SECTOR_SIZE* SECTOR_SIZE));
 	const float EXPLORATED_RATIO = 0.9;
 	bool water = false, food = false, metal = false, mineral = false;
 	bool elevation = false;
@@ -187,7 +187,7 @@ void Intention::checkSectorsFactor() {
 
 void Intention::sectorExploration() {
 	std::cout << "MANDANDO A EXPLORAR ANTERIOR " << std::endl;
-	const uint32_t SECTORS = (pow(MAP_WIDTH, 2) / pow(SECTOR_SIZE, 2));
+	const uint32_t SECTORS = ((MAP_WIDTH* MAP_WIDTH) / (SECTOR_SIZE * SECTOR_SIZE));
 	const float EXPLORED_RATIO = 0.9;
 	const uint32_t CACA = MAP_WIDTH / SECTOR_SIZE;
 	bool sectorFound = false;
@@ -260,7 +260,7 @@ void Intention::sectorExploration() {
 }
 
 void Intention::gotoOptimalLocation() {
-	const int SECTORS = (pow(MAP_WIDTH, 2) / pow(SECTOR_SIZE, 2));
+	const int SECTORS = ((MAP_WIDTH * MAP_WIDTH) / (SECTOR_SIZE * SECTOR_SIZE));
 	float maxValue = 0.0;
 	uint32_t bestSector = 0;
 	stringstream ss;

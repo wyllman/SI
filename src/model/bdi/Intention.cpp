@@ -122,32 +122,26 @@ void Intention::findOptimalLocation() {
 	const uint32_t SECTORS = ((MAP_WIDTH * MAP_WIDTH) / (SECTOR_SIZE * SECTOR_SIZE));
 	const float EXPLORED_RATIO = 0.9;
 	bool water = false, food = false, metal = false, mineral = false;
-	bool elevation = false;
 	BYTE terrainValue;
 	BYTE resourceValue;
 	float sectorValue = 0.0;
 
 	for (uint32_t i = 0; i < SECTORS; ++i) {
+		sectorValue = 0.0;
+		cout << m_beliefSet->getSectorExploredRatio(i) << endl;
 		if (m_beliefSet->getSectorExploredRatio(i) >= EXPLORED_RATIO) {
 			uint32_t limitJ = (i / SECTOR_SIZE) * SECTOR_SIZE + SECTOR_SIZE;
 			uint32_t limitK = (i % SECTOR_SIZE) * SECTOR_SIZE + SECTOR_SIZE;
 
-			for (uint32_t j = (i / SECTOR_SIZE) * SECTOR_SIZE;
-			                j < limitJ && !elevation; ++j) {
-				for (uint32_t k = (i % SECTOR_SIZE) * SECTOR_SIZE;
-				                k < limitK && !elevation; ++k) {
-					if (m_beliefSet->getKnownMap()[j][k]) {
+			for (uint32_t j = (i / SECTOR_SIZE) * SECTOR_SIZE; j < limitJ; ++j) {
+				for (uint32_t k = (i % SECTOR_SIZE) * SECTOR_SIZE; k < limitK; ++k) {
+					if (m_beliefSet->getKnownMapCell(j, k)) {
 						terrainValue = (*m_beliefSet->map())(j, k)
 						               & MASK_TERRAIN;
 						resourceValue = (*m_beliefSet->map())(j, k)
 						                & MASK_RESOURCE;
 
 						if (terrainValue == TERRAIN_ELEVATION) {
-							elevation = true;
-						} else {
-							if (terrainValue == TERRAIN_WATER)
-								water = true;
-
 							switch (resourceValue) {
 							case RESOURCE_FOOD:
 								food = true;
@@ -161,20 +155,24 @@ void Intention::findOptimalLocation() {
 								mineral = true;
 								break;
 							}
+						} else if (terrainValue == TERRAIN_WATER) {
+								water = true;
 						}
 					}
 				}
 			}
+			water? sectorValue += 20:0;
+			food? sectorValue += 10:0;
+			metal? sectorValue += 3:0;
+			mineral? sectorValue += 3:0;
 
-			water ? sectorValue += 4 : sectorValue += 0;
-			food ? sectorValue += 2 : sectorValue += 0;
-			metal ? sectorValue += 1 : sectorValue += 0;
-			mineral ? sectorValue += 1 : sectorValue += 0;
-
-			sectorValue /= euclideanDistance(m_agent->getPosition(),
-			                                 Point(limitJ - 5, limitK - 5));
+			sectorValue /= euclideanDistance(m_agent->getPosition(), Point(limitJ - 5, limitK - 5));
 			m_beliefSet->setSectorSettlementFactor(i, sectorValue);
 		}
+	}
+	for (uint32_t i = 0; i < 100; ++i) {
+		// TODO Elegir el mejor e introducirlo en el beliefSet
+		cout << m_beliefSet->getSectorSettlementFactor(i) << endl;
 	}
 }
 
@@ -287,7 +285,7 @@ void Intention::sectorExploration() {
 	} else {
 		++loopCount_;
 	}
-	if (loopCount_ > 1000) {
+	if (loopCount_ > 500) {
 		loopCount_ = 0;
 		m_currentGoal = "END_SECOND_EXPLORATION";
 		for (uint32_t i = 0; i < m_agent->getVAgents().size(); ++i) {
@@ -295,6 +293,7 @@ void Intention::sectorExploration() {
 					m_agent->getPosition(),const_cast<Agent*>(m_agent->getVAgents()[i]),
 					GO_LOCATION);
 		}
+		m_desire->set("100_Percent_Explored", true);
 	}
 }
 

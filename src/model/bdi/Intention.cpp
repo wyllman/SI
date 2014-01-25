@@ -168,15 +168,15 @@ void Intention::findOptimalLocation() {
 					}
 				}
 			}
-			water? sectorValue += 20:0;
-			food? sectorValue += 10:0;
-			metal? sectorValue += 3:0;
-			mineral? sectorValue += 3:0;
+			water? sectorValue += 400:0;
+			food? sectorValue += 100:0;
+			metal? sectorValue += 9:0;
+			mineral? sectorValue += 9:0;
 
 			float dist = euclideanDistance(m_agent->getPosition(), Point(limitJ - 5, limitK - 5));
 
 			if (dist > 0.0) {
-				sectorValue /= dist;
+				sectorValue /= (dist * 0.1);
 			}
 
 			m_beliefSet->setSectorSettlementFactor(i, sectorValue);
@@ -186,10 +186,10 @@ void Intention::findOptimalLocation() {
 	float bestFactor;
 
 	bestSector = 0;
-	bestFactor = 0.0;
+	bestFactor = -1.0;
 
 	for (uint32_t i = 0; i < SECTORS; ++i) {
-		if ( m_beliefSet->getSectorSettlementFactor(i) >= bestFactor) {
+		if ( m_beliefSet->getSectorSettlementFactor(i) > bestFactor) {
 			bestFactor = m_beliefSet->getSectorSettlementFactor(i);
 			bestSector = i;
 		}
@@ -319,6 +319,7 @@ void Intention::sectorExploration() {
 					m_agent->getPosition(),const_cast<Agent*>(m_agent->getVAgents()[i]),
 					GO_LOCATION);
 		}
+		m_desire->set("50_Percent_Explored", true);
 		m_desire->set("100_Percent_Explored", true);
 	}
 }
@@ -337,8 +338,18 @@ void Intention::gotoOptimalLocation() {
 
 
 	if (tree->routeFound_) {
+		cout << "Moviendo al sector " << sector << " " << destination << hex <<
+				static_cast<int>(m_agent->getMap()->cellTerrainType(destination) &
+				m_agent->getMap()->cellResourceType(destination)) << endl;
 		temp += tree->getRoute();
+		cout << temp << endl;
+		cin.get();
 		m_agent->followRoute(temp);
+
+		if (tree != NULL) {
+			delete tree;
+			tree = NULL;
+		}
 
 		m_desire->set("Settlement_Place_Found", true);
 	} else {

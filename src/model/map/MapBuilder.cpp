@@ -101,7 +101,7 @@ void MapBuilder::generateElevation() {
 			}
 			// creamos agua en los bordes del mapa para simplificar la deteccion de colisiones
 			if (i == 0 || i == m_mapSize - 1 || j == 0 || j == m_mapSize - 1) {
-				m_map[i][j] = TERRAIN_WATER;
+				m_map[i][j] = TERRAIN_ELEVATION;
 			}
 		}
 	}

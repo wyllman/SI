@@ -15,6 +15,9 @@ class MainAgent;
 
 class PathFindingTree {
 public:
+	/**
+	 * \
+	 */
 	PathFindingTree(const MainAgent&, const Point&, const Point&);
 	~PathFindingTree();
 

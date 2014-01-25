@@ -23,7 +23,6 @@ PathFindingTree::PathFindingTree(const MainAgent& agent, const Point& start, con
 	m_goalNode(new Node(end, " ", *m_rootNode)),
 	m_agent(const_cast<MainAgent*>(&agent)) {
 	m_rootNode->setHeuristicDistance(heuristicValue(*m_rootNode));
-	routeFound_ = false;
 }
 
 PathFindingTree::~PathFindingTree() {
@@ -60,6 +59,7 @@ bool PathFindingTree::calculateHeuristicRoute() {
 	     m_goalNode->position().second << ")" << endl;
 	openSet.push_back(m_rootNode);
 
+	success = false;
 	iteration = 0;
 
 	while (!openSet.empty() && !success) {
@@ -121,7 +121,6 @@ bool PathFindingTree::calculateHeuristicRoute() {
 	}
 
 	if (success) {
-		routeFound_ = true;
 		reversePath(*(*successorIterator));
 	}
 

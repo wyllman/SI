@@ -72,6 +72,7 @@ void WorkingAgent::actDependingOfState() {
 		if (getRecolectTime() < 10)
 			setRecolectTime(getRecolectTime() + 1);
 		else {
+			//setRecolectTime(0);
 			setState(FULL_OF_RESOURCES);
 			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), COME_BACK, this));
 		}
@@ -90,6 +91,7 @@ void WorkingAgent::actDependingOfState() {
 		if (getRecolectTime() > 0) {
 			setRecolectTime(getRecolectTime() - 1);
 		} else {
+			//setRecolectTime(0);
 			setState(AVAILABLE);
 			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), CONFIRM));
 		}

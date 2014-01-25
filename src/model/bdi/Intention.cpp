@@ -48,6 +48,7 @@ void Intention::update() {
 			if (m_beliefSet->exists("Best_Location")) {
 				cout << "Se mueve al asentamiento" << endl;
 				gotoOptimalLocation();
+				//m_desire->set("Settlement_Place_Found", true);
 			} else {
 				cout << "No existe lugar para el asentamiento" << endl;
 				exit (1);
@@ -148,7 +149,7 @@ void Intention::findOptimalLocation() {
 						resourceValue = (*m_beliefSet->map())(j, k)
 						                & MASK_RESOURCE;
 
-						if (terrainValue == TERRAIN_ELEVATION) {
+						if (terrainValue == TERRAIN_GROUND) {
 							switch (resourceValue) {
 							case RESOURCE_FOOD:
 								food = true;
@@ -168,16 +169,16 @@ void Intention::findOptimalLocation() {
 					}
 				}
 			}
-			water? sectorValue += 20:0;
-			food? sectorValue += 10:0;
-			metal? sectorValue += 3:0;
-			mineral? sectorValue += 3:0;
+			water? sectorValue += 1:0;
+			food? sectorValue += 1:0;
+			metal? sectorValue += 1:0;
+			mineral? sectorValue += 1:0;
 
-			float dist = euclideanDistance(m_agent->getPosition(), Point(limitJ - 5, limitK - 5));
+			//float dist = euclideanDistance(m_agent->getPosition(), Point(limitJ - 5, limitK - 5));
 
-			if (dist > 0.0) {
-				sectorValue /= dist;
-			}
+			//if (dist > 0.0) {
+				//sectorValue /= (dist * 0.1);
+			//}
 
 			m_beliefSet->setSectorSettlementFactor(i, sectorValue);
 		}
@@ -186,10 +187,10 @@ void Intention::findOptimalLocation() {
 	float bestFactor;
 
 	bestSector = 0;
-	bestFactor = 0.0;
+	bestFactor = -1.0;
 
 	for (uint32_t i = 0; i < SECTORS; ++i) {
-		if ( m_beliefSet->getSectorSettlementFactor(i) >= bestFactor) {
+		if ( m_beliefSet->getSectorSettlementFactor(i) > bestFactor) {
 			bestFactor = m_beliefSet->getSectorSettlementFactor(i);
 			bestSector = i;
 		}
@@ -203,7 +204,47 @@ void Intention::findOptimalLocation() {
 }
 
 void Intention::gatherResources() {
-//TODO: Recolectar recursos
+	int numberWorkAg = m_agent->getWorVecAgents().size();
+	Point resourcePoint =  m_agent->getPosition();
+	Point tmpPoint = resourcePoint;
+	bool foundPoint = false;
+
+	cout << "Entrando en fase de recolección!!!!!!" << endl;
+	//TODO: (Por cada trabajador)Buscar un punto con recursos al que mandar un agente
+	//TODO: Enivar a cada trabajador a recolectar (si su estado es avalaible)
+
+	// Para cada uno de los trabajadores
+	for (int i = 0; i < numberWorkAg; ++i) {
+		foundPoint = false;
+		for (int j = 0; j < MAP_WIDTH && !foundPoint; ++j) {
+			tmpPoint.first = j;
+			for (int k = 0; k < MAP_WIDTH  && !foundPoint; ++k) {
+				tmpPoint.second = k;
+				if ((tmpPoint.first >= 0 && tmpPoint.first < MAP_WIDTH)
+						&& ((tmpPoint.second >= 0 && tmpPoint.second < MAP_WIDTH))
+						&& (m_beliefSet->getKnownMapCell(tmpPoint))
+						&& (m_beliefSet->map()->cellTerrainType(tmpPoint) == TERRAIN_GROUND)
+						&& (m_beliefSet->map()->cellResourceType(tmpPoint) != 0x0)) {
+
+
+					cout << "ENCONTRADO UN PUNTO CON RECURSOS!!" << endl;
+					if (m_agent->getWorVecAgents()[i]->getState() == AVAILABLE) {
+						foundPoint = true;
+						resourcePoint = tmpPoint;
+						cout << "ENVIANDO A UN AGENTE A RECOLECTAR" << endl;
+						m_agent->sendToRoute(m_agent->getWorVecAgents()[i]->getPosition()
+								, resourcePoint, m_agent->getWorVecAgents()[i], GO_RESOURCE_LOCATION);
+					}
+
+				}
+
+			}
+		}
+		// Calcular punto a partir de la posicion de la nave central
+		// comprobar si el punto es terreno conocido y con recurso
+		// enviar al agente
+
+	}
 }
 
 void Intention::buildSettlement() {
@@ -219,8 +260,8 @@ void Intention::checkSectorsExplorationRatio() {
 
 	for (int32_t i = 0; i < MAP_WIDTH; ++i) {
 		for (int32_t j = 0; j < MAP_WIDTH; ++j) {
-			if (m_beliefSet->getKnownMap()[i][j]) {
-				cell = (((i / SECTOR_SIZE) * SECTOR_SIZE) + (j / SECTOR_SIZE));
+			if (m_beliefSet->getKnownMap()[j][i]) {
+				cell = (((j / SECTOR_SIZE) * SECTOR_SIZE) + (i / SECTOR_SIZE));
 				m_beliefSet->sumSectorExploredRatio(cell, CELL_VALUE);
 			}
 		}
@@ -319,7 +360,7 @@ void Intention::sectorExploration() {
 					m_agent->getPosition(),const_cast<Agent*>(m_agent->getVAgents()[i]),
 					GO_LOCATION);
 		}
-		m_desire->set("5p0_Percent_Explored", true);
+		m_desire->set("50_Percent_Explored", true);
 		m_desire->set("100_Percent_Explored", true);
 	}
 }
@@ -331,27 +372,35 @@ void Intention::gotoOptimalLocation() {
 	string temp = "";
 
 	sector = atoi((*(*m_beliefSet)["Best_Location"])().c_str());
-	destination.first = (sector / SECTOR_SIZE) * SECTOR_SIZE;
-	destination.second = (sector % SECTOR_SIZE) * SECTOR_SIZE;
+
+	destination.first = (sector / SECTOR_SIZE) * SECTOR_SIZE - 5;
+	destination.second = (sector % SECTOR_SIZE) * SECTOR_SIZE - 5;
+	tree = new PathFindingTree (*m_agent, m_agent->getPosition(), destination);
+
 	if ((destination.first >= 0 && destination.first < MAP_WIDTH)
-			&& (destination.second >= 0 && destination.second < MAP_WIDTH)
-			&& (m_agent->getKnownMap()[destination.first][destination.second])
-			&& (m_agent->getMap()->cellTerrainType(destination)) == TERRAIN_GROUND) {
-
-		tree = new PathFindingTree (*m_agent, m_agent->getPosition(), destination);
-		tree->calculateHeuristicRoute();
-
-
-		if (tree->routeFound_) {
+				&& (destination.second >= 0 && destination.second < MAP_WIDTH)
+				&& (m_agent->getKnownMap()[destination.first][destination.second])
+				&& (m_agent->getMap()->cellTerrainType(destination)) == TERRAIN_GROUND) {
+		if (tree->calculateHeuristicRoute()) {
+			cout << "Moviendo al sector " << sector << " " << destination << hex <<
+					static_cast<int>(m_agent->getMap()->cellTerrainType(destination) &
+					m_agent->getMap()->cellResourceType(destination)) << endl;
 			temp += tree->getRoute();
+			cout << temp << endl;
 			m_agent->followRoute(temp);
+
+			if (tree != NULL) {
+				delete tree;
+				tree = NULL;
+			}
 
 			m_desire->set("Settlement_Place_Found", true);
 		} else {
 			cout << "NO HAY RUTA FINAL" << endl;
 		}
 	} else {
-		cout << "PUNTO NO MALO" << endl;
+		cout << "NO ES UN TERRENO ACCESIBLE" << endl;
+		m_desire->set("Settlement_Place_Found", true); //FIXME: puesto de pruebas
 	}
 
 }
@@ -411,7 +460,6 @@ const Point* Intention::checkSectorBoundaries(uint32_t sector) {
 
 	if (accessibleBoundary) {
 		cout << "Devolviendo éxito " << Point(x, y) << endl;
-		cin.get();
 		return new Point(x, y);
 	}
 

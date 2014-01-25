@@ -22,7 +22,6 @@ class WorkingAgent : public Agent {
       void setPosition (Point p) { m_position = p; }
       Package* readFIPAPackage (Package*);
 
-      void followRoute(std::string);
 
       unsigned int getRecolectTime() const;
       void setRecolectTime(unsigned int recolectTime);

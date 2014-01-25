@@ -97,6 +97,12 @@ void MainAgent::initAgents() {
 }
 
 bool MainAgent::update() {
+
+	if (m_routes.size() > 0) {
+		routedMove();
+	}
+
+
 	m_intentions->update();
 	return updateMiniAgents();
 }

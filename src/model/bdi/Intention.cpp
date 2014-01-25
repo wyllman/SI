@@ -125,7 +125,6 @@ void Intention::findOptimalLocation() {
 	BYTE terrainValue;
 	BYTE resourceValue;
 	float sectorValue = 0.0;
-	float secondValue;
 
 	for (uint32_t i = 0; i < SECTORS; ++i) {
 		sectorValue = 0.0;
@@ -167,15 +166,34 @@ void Intention::findOptimalLocation() {
 			metal? sectorValue += 3:0;
 			mineral? sectorValue += 3:0;
 
-			secondValue = euclideanDistance(m_agent->getPosition(), Point(limitJ - 5, limitK - 5));
-			(secondValue != 0)? sectorValue /= secondValue:0;
+			float dist = euclideanDistance(m_agent->getPosition(), Point(limitJ - 5, limitK - 5));
+
+			if (dist > 0.0) {
+				sectorValue /= dist;
+			}
+
 			m_beliefSet->setSectorSettlementFactor(i, sectorValue);
 		}
 	}
-	for (uint32_t i = 0; i < 100; ++i) {
-		// TODO Elegir el mejor e introducirlo en el beliefSet
-		cout << m_beliefSet->getSectorSettlementFactor(i) << endl;
+	uint32_t bestSector;
+	float bestFactor;
+
+	bestSector = 0;
+	bestFactor = 99999.0;
+
+	for (uint32_t i = 0; i < SECTORS; ++i) {
+		if ( m_beliefSet->getSectorSettlementFactor(i) <= bestFactor) {
+			bestFactor = m_beliefSet->getSectorSettlementFactor(i);
+			bestSector = i;
+		}
 	}
+
+	stringstream ss;
+	ss << bestSector;
+
+	// Se introduce la creencia Best_Location con el sector elegido
+	m_beliefSet->add(string("Best_Location"), new Belief(ss.str().c_str()));
+
 }
 
 void Intention::gatherResources() {

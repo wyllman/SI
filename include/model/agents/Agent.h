@@ -34,6 +34,8 @@ protected:
 	Point m_position;
 	Map* refMap_;
 	std::vector<Direction> m_routes;
+
+
 public:
 	Agent(Map*);
 	virtual ~Agent() = 0;
@@ -59,6 +61,7 @@ public:
 		return NULL;
 	};
 	virtual void actDependingOfState() { };
+    void followRoute(std::string);
 };
 
 #endif /* AGENT_H_ */

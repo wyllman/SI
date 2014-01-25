@@ -29,7 +29,7 @@ class SearchAgent: public Agent {
       Package* readFIPAPackage (Package*);
 
       void localDireccionalSearch (std::string);
-      void followRoute(std::string);
+
 
       void actDependingOfState ();
       void initExplorationMove (int row, int col, Direction guideDir);

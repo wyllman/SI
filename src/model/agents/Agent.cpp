@@ -167,3 +167,32 @@ vector<Direction>& Agent::getRoutes() {
 void Agent::setRoutes(vector<Direction>& routes) {
 	m_routes = routes;
 }
+
+void Agent::followRoute(string route) {
+	//cout << "SEGUIR LA RUTA: " << route << endl;
+	vector<Direction> camino;
+	int posIni = route.find("[");
+	int posCorchFin = route.find("]");
+	if (!route.empty() && route.size() > 4) {
+		route = route.substr(1, route.size() - 1);// FIXME: da problemas principalmente en map4.c
+	}
+	int posComa = 0;
+	bool stop = false;
+	string dirTemp;
+
+	while (!stop) {
+		posComa = route.find(",");
+		if (posComa == -1) {
+			stop = true;
+			dirTemp = route.substr(0, route.length() - 1);
+		} else {
+			dirTemp = route.substr(0, posComa);
+			route = route.substr(posComa + 1, route.length());
+		}
+		camino.push_back(strToDirectionEnum(dirTemp));
+	}
+
+	for (unsigned int i = 0; i < camino.size(); i++) {
+		m_routes.push_back(camino[camino.size() - i]);
+	}
+}

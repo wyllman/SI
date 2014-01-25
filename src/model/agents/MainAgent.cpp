@@ -289,19 +289,21 @@ Package* MainAgent::readFIPAPackage(Package* p) {
 }
 
 void MainAgent::sendToRoute(Point s, Point e, Agent* theAgent, Type theType) {
-	PathFindingTree* tree = new PathFindingTree(*this, s, e);
-	std::string route = "";
+	if (s != e) {
+		PathFindingTree* tree = new PathFindingTree(*this, s, e);
+		std::string route = "";
 
-	tree->calculateHeuristicRoute();
-	route += tree->getRoute();
-	std::cout << "Ruta mínima = " << route << std::endl;
-	std::vector<std::string> vect;
+		tree->calculateHeuristicRoute();
+		route += tree->getRoute();
+		std::cout << "Ruta mínima = " << route << std::endl;
+		std::vector<std::string> vect;
 
-	Package* p = new Package(this->getNameAgent(), theAgent->getNameAgent(),
-	                         theType);
-	vect.push_back(route);
-	p->setContent(vect);
-	readFIPAPackage(theAgent->readFIPAPackage(p));
+		Package* p = new Package(this->getNameAgent(), theAgent->getNameAgent(),
+				theType);
+		vect.push_back(route);
+		p->setContent(vect);
+		readFIPAPackage(theAgent->readFIPAPackage(p));
+	}
 }
 
 // Manejadores de atributos

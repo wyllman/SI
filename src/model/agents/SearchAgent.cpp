@@ -89,12 +89,18 @@ void SearchAgent::actDependingOfState() {
 	int ramdomDirection = rand() % 4;
 	switch (getState()) {
 	case SEARCHING:
-
 		if (!explorationMove()) {
-			setState(AWAITING_NEW_ORDER);
-			getRefMainAgent()->readFIPAPackage(
-					new Package(getNameAgent(),
-							getRefMainAgent()->getNameAgent(), COME_BACK, this));
+			if (SIMULATOR_RET_MOV_ON) {
+				setState(AWAITING_NEW_ORDER);
+				getRefMainAgent()->readFIPAPackage(
+						new Package(getNameAgent(),
+								getRefMainAgent()->getNameAgent(), COME_BACK, this));
+			} else {
+				setState(AVAILABLE);
+				getRefMainAgent()->readFIPAPackage(
+						new Package(getNameAgent(),
+								getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+			}
 		} else {
 			sensor();
 		}
@@ -120,7 +126,6 @@ void SearchAgent::actDependingOfState() {
 		break;
 	case FOLLOWING_ROUTE:
 		std::cout << "Tam: " << getRoutes().size() << std::endl;
-
 		if (!routedMove()) {
 			setState(AVAILABLE);
 			getRefMainAgent()->readFIPAPackage(
@@ -132,7 +137,6 @@ void SearchAgent::actDependingOfState() {
 		break;
 	case FOLLOWING_SEARCH_ROUTE:
 		std::cout << "CAMINANDO AL PUNTO DE BUSQUEDA" << std::endl;
-
 		if (!routedMove()) {
 			setState(SECOND_SEARCHING);
 			getRefMainAgent()->readFIPAPackage(
@@ -145,17 +149,10 @@ void SearchAgent::actDependingOfState() {
 	case FOLLOWING_RET_ROUTE:
 		std::cout << "Tam: " << getRoutes().size() << std::endl;
 		if (!routedMove()) {
-			//if (m_position.first != refMainAgent_->getPosition().first ||
-			//		m_position.second != refMainAgent_->getPosition().second) {
-			//	getRefMainAgent()->readFIPAPackage(
-			//			new Package(getNameAgent(),
-			//					getRefMainAgent()->getNameAgent(), COME_BACK, this));
-			//} else {
-				setState(AVAILABLE);
-				getRefMainAgent()->readFIPAPackage(
-					new Package(getNameAgent(),
-							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
-			//}
+			setState(AVAILABLE);
+			getRefMainAgent()->readFIPAPackage(
+				new Package(getNameAgent(),
+						getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
 		} else {
 			sensor();
 		}
@@ -169,10 +166,8 @@ void SearchAgent::followRoute(std::string route) {
 	std::vector<Direction> camino;
 	int posIni = route.find("[");
 	int posCorchFin = route.find("]");
-	//std::cout << "Pos ini:" << posIni << " posFin: " << posCorchFin
-	//	<< std::endl;
-	if (route.size() > 3) {
-		route = route.substr(1, route.length());
+	if (!route.empty() && route.size() > 4) {
+		route = route.substr(1, route.size() - 1);// FIXME: da problemas principalmente en map4.c
 	}
 	int posComa = 0;
 	bool stop = false;
@@ -180,7 +175,6 @@ void SearchAgent::followRoute(std::string route) {
 
 	while (!stop) {
 		posComa = route.find(",");
-
 		if (posComa == -1) {
 			stop = true;
 			dirTemp = route.substr(0, route.length() - 1);
@@ -188,9 +182,7 @@ void SearchAgent::followRoute(std::string route) {
 			dirTemp = route.substr(0, posComa);
 			route = route.substr(posComa + 1, route.length());
 		}
-
 		camino.push_back(strToDirectionEnum(dirTemp));
-
 	}
 
 	for (unsigned int i = 0; i < camino.size(); i++) {

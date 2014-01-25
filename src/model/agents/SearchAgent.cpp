@@ -82,43 +82,66 @@ void SearchAgent::localDireccionalSearch(string d) {
 	initExplorationMove(m_position.first, m_position.second,
 			static_cast<Direction>(strToDirectionEnum(d.c_str())));
 	setState(SEARCHING);
+	countLoopSteps_ = 0;
 }
 
 void SearchAgent::actDependingOfState() {
+	int ramdomDirection = rand() % 4;
 	switch (getState()) {
 	case SEARCHING:
 		if (!explorationMove()) {
-			setState(AVAILABLE);
-			getRefMainAgent()->readFIPAPackage(
-					new Package(getNameAgent(),
-							getRefMainAgent()->getNameAgent(), COME_BACK, this));
+			if (SIMULATOR_RET_MOV_ON) {
+				setState(AWAITING_NEW_ORDER);
+				getRefMainAgent()->readFIPAPackage(
+						new Package(getNameAgent(),
+								getRefMainAgent()->getNameAgent(), COME_BACK, this));
+			} else {
+				setState(AVAILABLE);
+				getRefMainAgent()->readFIPAPackage(
+						new Package(getNameAgent(),
+								getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+			}
 		} else {
 			sensor();
 		}
 		break;
 	case SECOND_SEARCHING:
-		cout << "COMENZANDO EXPLORACION SECUNDARIA" << endl;
+		std::cout << "COMENZANDO EXPLORACION SECUNDARIA" << std::endl;
+		switch (ramdomDirection) {
+			case 0:
+				localDireccionalSearch("NORTH");
+				break;
+			case 1:
+				localDireccionalSearch("EAST");
+				break;
+			case 2:
+				localDireccionalSearch("SOUTH");
+				break;
+			case 3:
+				localDireccionalSearch("WEST");
+				break;
+			default:
+				break;
+		}
 		break;
 	case FOLLOWING_ROUTE:
-		cout << "Tam: " << getRoutes().size() << endl;
-
+		std::cout << "Tam: " << getRoutes().size() << std::endl;
 		if (!routedMove()) {
 			setState(AVAILABLE);
 			getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),
-							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+							getRefMainAgent()->getNameAgent(), CONFIRM));
 		} else {
 			sensor();
 		}
 		break;
 	case FOLLOWING_SEARCH_ROUTE:
-		cout << "CAMINANDO AL PUNTO DE BUSQUEDA" << endl;
-
+		std::cout << "CAMINANDO AL PUNTO DE BUSQUEDA" << std::endl;
 		if (!routedMove()) {
 			setState(SECOND_SEARCHING);
 			getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),
-							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+							getRefMainAgent()->getNameAgent(), CONFIRM));
 		} else {
 			sensor();
 		}
@@ -128,8 +151,8 @@ void SearchAgent::actDependingOfState() {
 		if (!routedMove()) {
 			setState(AVAILABLE);
 			getRefMainAgent()->readFIPAPackage(
-					new Package(getNameAgent(),
-							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
+				new Package(getNameAgent(),
+						getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
 		} else {
 			sensor();
 		}
@@ -144,17 +167,15 @@ void SearchAgent::followRoute(string route) {
 	vector<Direction> camino;
 	int posIni = route.find("[");
 	int posCorchFin = route.find("]");
-	//cout << "Pos ini:" << posIni << " posFin: " << posCorchFin
-	//	<< endl;
-
-	route = route.substr(1, route.length());
+	if (!route.empty() && route.size() > 4) {
+		route = route.substr(1, route.size() - 1);// FIXME: da problemas principalmente en map4.c
+	}
 	int posComa = 0;
 	bool stop = false;
 	string dirTemp;
 
 	while (!stop) {
 		posComa = route.find(",");
-
 		if (posComa == -1) {
 			stop = true;
 			dirTemp = route.substr(0, route.length() - 1);
@@ -203,7 +224,7 @@ bool SearchAgent::explorationMove() {
 	Direction directionAct = ERROR_DIR;
 	Direction tempDir = ERROR_DIR;
 
-	if (countLoopSteps_ >= 50) {
+	if (countLoopSteps_ >= 100) {
 		return false;
 	}
 

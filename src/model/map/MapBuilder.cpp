@@ -20,8 +20,8 @@
 #include <map>
 
 //#include <map2.c>
-#include <map3.c>
-//#include <map4.c>
+//#include <map3.c>
+#include <map4.c>
 
 //using namespace boost;
 

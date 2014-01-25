@@ -22,6 +22,8 @@
 #include <string>
 #include <Point.h>
 
+const bool SIMULATOR_RET_MOV_ON = false;
+
 // Definiciones de tipos propios para el proyecto.
 typedef unsigned char BYTE;
 

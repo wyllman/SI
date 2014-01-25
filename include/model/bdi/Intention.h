@@ -24,6 +24,7 @@ private:
 	MainAgent* m_agent;
 	bool m_newDesireSelected;
 	std::string m_currentGoal;
+	int loopCount_;
 	
 	/**
 	 * \fn exploreMap()

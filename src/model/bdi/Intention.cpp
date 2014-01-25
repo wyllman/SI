@@ -319,6 +319,7 @@ void Intention::sectorExploration() {
 					m_agent->getPosition(),const_cast<Agent*>(m_agent->getVAgents()[i]),
 					GO_LOCATION);
 		}
+		m_desire->set("5p0_Percent_Explored", true);
 		m_desire->set("100_Percent_Explored", true);
 	}
 }
@@ -330,19 +331,27 @@ void Intention::gotoOptimalLocation() {
 	string temp = "";
 
 	sector = atoi((*(*m_beliefSet)["Best_Location"])().c_str());
-	destination.first = (sector / SECTOR_SIZE) * SECTOR_SIZE - 5;
-	destination.second = (sector % SECTOR_SIZE) * SECTOR_SIZE - 5;
-	tree = new PathFindingTree (*m_agent, m_agent->getPosition(), destination);
-	tree->calculateHeuristicRoute();
+	destination.first = (sector / SECTOR_SIZE) * SECTOR_SIZE;
+	destination.second = (sector % SECTOR_SIZE) * SECTOR_SIZE;
+	if ((destination.first >= 0 && destination.first < MAP_WIDTH)
+			&& (destination.second >= 0 && destination.second < MAP_WIDTH)
+			&& (m_agent->getKnownMap()[destination.first][destination.second])
+			&& (m_agent->getMap()->cellTerrainType(destination)) == TERRAIN_GROUND) {
+
+		tree = new PathFindingTree (*m_agent, m_agent->getPosition(), destination);
+		tree->calculateHeuristicRoute();
 
 
-	if (tree->routeFound_) {
-		temp += tree->getRoute();
-		m_agent->followRoute(temp);
+		if (tree->routeFound_) {
+			temp += tree->getRoute();
+			m_agent->followRoute(temp);
 
-		m_desire->set("Settlement_Place_Found", true);
+			m_desire->set("Settlement_Place_Found", true);
+		} else {
+			cout << "NO HAY RUTA FINAL" << endl;
+		}
 	} else {
-		cout << "NO HAY RUTA FINAL" << endl;
+		cout << "PUNTO NO MALO" << endl;
 	}
 
 }

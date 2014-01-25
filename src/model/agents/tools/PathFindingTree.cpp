@@ -23,6 +23,7 @@ PathFindingTree::PathFindingTree(const MainAgent& agent, const Point& start, con
 	m_goalNode(new Node(end, " ", *m_rootNode)),
 	m_agent(const_cast<MainAgent*>(&agent)) {
 	m_rootNode->setHeuristicDistance(heuristicValue(*m_rootNode));
+	routeFound_ = false;
 }
 
 PathFindingTree::~PathFindingTree() {
@@ -45,7 +46,7 @@ bool PathFindingTree::calculateHeuristicRoute() {
 	vector<Node*>::iterator successorIterator;
 	vector<Node*>::iterator bestIterator;
 	Node* bestNode;
-	bool success;
+	bool success = false;
 	bool existsInOpenSet;
 	bool existsInClosedSet;
 	uint32_t iteration;
@@ -68,7 +69,6 @@ bool PathFindingTree::calculateHeuristicRoute() {
 		}
 
 		bestDistance = 9999;
-
 		// se busca el mejor nodo candidato en la lista
 		for (setIterator = openSet.begin(); setIterator != openSet.end(); ++setIterator) {
 			currentDistance = (*setIterator)->objectiveDistance();
@@ -81,15 +81,10 @@ bool PathFindingTree::calculateHeuristicRoute() {
 			}
 		}
 
-// 		cout << "Elegido nodo " << bestNode << " con distancia " <<
-// 		     bestDistance << endl;
 		expandNode(*bestNode);
 		openSet.erase(bestIterator);
 
 		for (successorIterator = bestNode->children()->begin(); successorIterator != bestNode->children()->end(); ++successorIterator) {
-// 			cout << "Comprobando nodo hijo " << & (*successorIterator) << " (" << (*successorIterator)->position().first << "," <<
-// 			     (*successorIterator)->position().second << ")" << endl;
-
 			if ((*successorIterator)->position() == m_goalNode->position()) {
 				success = true;
 				break;
@@ -119,13 +114,9 @@ bool PathFindingTree::calculateHeuristicRoute() {
 			}
 
 			if (!existsInOpenSet && !existsInClosedSet) {
-// 				cout << "Insertando nodo " << (*successorIterator) << " (" << (*successorIterator)->position().first << "," <<
-// 				     (*successorIterator)->position().second << ")" << endl;
 				openSet.push_back((*successorIterator));
 			}
 		}
-
-// 		cout << "Añadiendo nodo " << bestNode << " a closedSet" << endl;
 		closedSet.push_back(bestNode);
 	}
 
@@ -138,7 +129,6 @@ bool PathFindingTree::calculateHeuristicRoute() {
 }
 
 void PathFindingTree::expandNode(Node& node) {
-// 	cout << "Expandiendo nodo " << &node << endl;
 	bool terrainDiscovered;
 	BYTE terrainType;
 	Node* north;
@@ -210,12 +200,6 @@ void PathFindingTree::expandNode(Node& node) {
 		}
 	}
 
-// 	for (vector<Node*>::iterator i = node.children()->begin(); i != node.children()->end(); i += 1) {
-// 		cout << "Nodo " << &(*i) << " (" << (*i)->direction() << ") distancia inicio " << (*i)->distanceFromStart() << " distancia heuristica " <<
-// 		     (*i)->heuristicDistance() << " total " << (*i)->objectiveDistance() << endl;
-// 	}
-//
-// 	cout << "Nodo expandido: regresando" << endl;
 }
 
 float PathFindingTree::heuristicValue(const Node& start) {

@@ -162,11 +162,10 @@ void SearchAgent::actDependingOfState() {
 	}
 }
 void SearchAgent::followRoute(std::string route) {
-	//std::cout << "SEGUIR LA RUTA: " << route << std::endl;
 	std::vector<Direction> camino;
 	int posIni = route.find("[");
 	int posCorchFin = route.find("]");
-	if (!route.empty() && route.size() > 4) {
+	if (!route.empty() && route.size() > 4) { // ESTA CONDICION PARECE ARREGLAR EL FIXME DE ABAJO
 		route = route.substr(1, route.size() - 1);// FIXME: da problemas principalmente en map4.c
 	}
 	int posComa = 0;

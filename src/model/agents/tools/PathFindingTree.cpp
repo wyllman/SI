@@ -208,13 +208,6 @@ void PathFindingTree::expandNode(Node& node) {
 			}
 		}
 	}
-
-// 	for (vector<Node*>::iterator i = node.children()->begin(); i != node.children()->end(); i += 1) {
-// 		cout << "Nodo " << &(*i) << " (" << (*i)->direction() << ") distancia inicio " << (*i)->distanceFromStart() << " distancia heuristica " <<
-// 		     (*i)->heuristicDistance() << " total " << (*i)->objectiveDistance() << endl;
-// 	}
-//
-// 	cout << "Nodo expandido: regresando" << endl;
 }
 
 float PathFindingTree::heuristicValue(const Node& start) {

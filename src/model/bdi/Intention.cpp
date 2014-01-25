@@ -36,7 +36,7 @@ void Intention::update() {
 	} else {
 		if (!(*m_desire)["100_Percent_Explored"]) {
 
-			std::cout << "Mapa explorado" << std::endl;
+			std::cout << "Más del 50% del mapa explorado" << std::endl;
 
 			exploreMap();
 		} else if (!(*m_desire)["Settlement_Place_Found"]) {
@@ -246,8 +246,8 @@ void Intention::sectorExploration() {
 							distance = euclideanDistance(m_agent->getVAgents()[i]->getPosition(), p);
 
 							if (distance <= bestDistance) {
-								if ((bestPoint.first > 0 && bestPoint.first < MAP_WIDTH - 1)
-										&& (bestPoint.second > 0 && bestPoint.second < MAP_WIDTH - 1)) {
+								if ((bestPoint.first >= 1 && bestPoint.first < MAP_WIDTH - 1)
+										&& (bestPoint.second >= 1 && bestPoint.second < MAP_WIDTH - 1)) {
 									if (((*(m_agent->getMap()))(bestPoint.first,
 											bestPoint.second) & MASK_TERRAIN) == TERRAIN_GROUND
 											&& m_agent->getKnownMap()[bestPoint.first][bestPoint.second]) {
@@ -270,7 +270,7 @@ void Intention::sectorExploration() {
 							sectorFound = true;
 							globlalSectorFound = true;
 							loopCount_ = 0;
-							if (explorationRatioAux >= m_beliefSet->getSectorExploredRatio(j)) {
+							if (explorationRatioAux >= (m_beliefSet->getSectorExploredRatio(j))) {
 								Belief* belief;
 								belief = new Belief("EXPLORED");
 								m_beliefSet->add(ss.str(), belief);
@@ -286,14 +286,16 @@ void Intention::sectorExploration() {
 	} else {
 		++loopCount_;
 	}
-	if (loopCount_ > 1000) {
+	if (loopCount_ > 500) {
 		loopCount_ = 0;
 		m_currentGoal = "END_SECOND_EXPLORATION";
 		for (uint32_t i = 0; i < m_agent->getVAgents().size(); ++i) {
 			m_agent->sendToRoute(m_agent->getVAgents()[i]->getPosition(),
 					m_agent->getPosition(),const_cast<Agent*>(m_agent->getVAgents()[i]),
 					GO_LOCATION);
+
 		}
+		m_desire->set("100_Percent_Explored", true);
 	}
 }
 

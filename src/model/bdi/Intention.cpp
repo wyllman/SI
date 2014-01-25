@@ -326,41 +326,55 @@ void Intention::sectorExploration() {
 	}
 }
 
-// FIXME
 void Intention::gotoOptimalLocation() {
 	uint32_t sector;
 	Point destination;
 	PathFindingTree* tree;
-	string temp = "";
+	string tempRoute;
 
 	sector = atoi((*(*m_beliefSet)["Best_Location"])().c_str());
-	destination.first = (sector / SECTOR_SIZE) * SECTOR_SIZE - 5;
-	destination.second = (sector % SECTOR_SIZE) * SECTOR_SIZE - 5;
+	destination = *checkSectorCells(sector);
 	tree = new PathFindingTree (*m_agent, m_agent->getPosition(), destination);
 
-	if (m_agent->getMap()->cellTerrainType(destination) == TERRAIN_GROUND &&
-			m_agent->getKnownMap()[destination.first][destination.second]) {
-		if (tree->calculateHeuristicRoute()) {
-			cout << "Moviendo al sector " << sector << " " << destination << hex <<
-					static_cast<int>(m_agent->getMap()->cellTerrainType(destination) &
-					m_agent->getMap()->cellResourceType(destination)) << endl;
-			temp += tree->getRoute();
-			cout << temp << endl;
-			cin.get();
-			m_agent->followRoute(temp);
+	if (tree->calculateHeuristicRoute()) {
+		cout << "Moviendo al sector " << sector << " " << destination << endl;
+		tempRoute = tree->getRoute();
+		m_agent->followRoute(tempRoute);
+		cout << tempRoute << endl;
+		cin.get();
 
-			if (tree != NULL) {
-				delete tree;
-				tree = NULL;
-			}
-
-			m_desire->set("Settlement_Place_Found", true);
-		} else {
-			cout << "NO HAY RUTA FINAL" << endl;
+		if (tree != NULL) {
+			delete tree;
+			tree = NULL;
 		}
+		m_desire->set("Settlement_Place_Found", true);
 	} else {
-		cout << "NO ES UN TERRENO ACCESIBLE" << endl;
+		cout << "NO HAY RUTA FINAL" << endl;
 	}
+
+//	if (m_beliefSet->map()->cellTerrainType(destination) == TERRAIN_GROUND &&
+//			m_beliefSet->knownMapCell(destination.first, destination.second)) {
+//		if (tree->calculateHeuristicRoute()) {
+//			cout << "Moviendo al sector " << sector << " " << destination << hex <<
+//					static_cast<int>(m_beliefSet->map()->cellTerrainType(destination) &
+//					m_beliefSet->map()->cellResourceType(destination)) << endl;
+//			temp += tree->getRoute();
+//			cout << temp << endl;
+//			cin.get();
+//			m_agent->followRoute(temp);
+//
+//			if (tree != NULL) {
+//				delete tree;
+//				tree = NULL;
+//			}
+//
+//			m_desire->set("Settlement_Place_Found", true);
+//		} else {
+//			cout << "NO HAY RUTA FINAL" << endl;
+//		}
+//	} else {
+//		cout << "NO ES UN TERRENO ACCESIBLE" << endl;
+//	}
 
 }
 
@@ -425,4 +439,36 @@ const Point* Intention::checkSectorBoundaries(uint32_t sector) {
 
 	cout << "No tiene ningún punto limítrofe accesible. Devolviendo fallo" << endl;
 	return new Point(-1, -1);
+}
+
+
+const Point* Intention::checkSectorCells(uint32_t sector) {
+	Point destination;
+	Point center;
+	Point closestToCenter;
+	float distanceToCenter;
+	float bestDistance;
+
+	bestDistance = 99999.0;
+	destination.first = (sector / SECTOR_SIZE) * SECTOR_SIZE;
+	destination.second = (sector % SECTOR_SIZE) * SECTOR_SIZE;
+	center.first = destination.first + 5;
+	center.second = destination.second + 5;
+	closestToCenter = destination;
+
+	for (int32_t i = destination.first; i < destination.first + SECTOR_SIZE; ++i) {
+		for (int32_t j = destination.second; j < destination.second + SECTOR_SIZE; ++j) {
+			if (m_beliefSet->knownMapCell(i, j)) {
+				if (m_beliefSet->map()->cellTerrainType(i, j) == TERRAIN_GROUND) {
+					distanceToCenter = euclideanDistance(Point(i, j), center);
+					if (distanceToCenter < bestDistance) {
+						closestToCenter = Point(i, j);
+						bestDistance = distanceToCenter;
+					}
+				}
+			}
+		}
+	}
+
+	return new Point(closestToCenter.first, closestToCenter.second);
 }

@@ -128,13 +128,22 @@ void Intention::exploreMap() {
 void Intention::findOptimalLocation() {
 	const uint32_t SECTORS = ((MAP_WIDTH * MAP_WIDTH) / (SECTOR_SIZE * SECTOR_SIZE));
 	const float EXPLORED_RATIO = 0.9;
-	bool water = false, food = false, metal = false, mineral = false;
+	uint32_t water;
+	uint32_t food;
+	uint32_t metal;
+	uint32_t mineral;
+	uint32_t ground;
 	BYTE terrainValue;
 	BYTE resourceValue;
-	float sectorValue = 0.0;
+	float sectorValue;
 
 	for (uint32_t i = 0; i < SECTORS; ++i) {
 		sectorValue = 0.0;
+		water = 0;
+		food = 0;
+		metal = 0;
+		mineral = 0;
+		ground = 0;
 		cout << m_beliefSet->getSectorExploredRatio(i) << endl;
 		if (m_beliefSet->getSectorExploredRatio(i) >= EXPLORED_RATIO) {
 			uint32_t limitJ = (i / SECTOR_SIZE) * SECTOR_SIZE + SECTOR_SIZE;
@@ -146,30 +155,31 @@ void Intention::findOptimalLocation() {
 						terrainValue = m_beliefSet->map()->cellTerrainType(j, k);
 						resourceValue = m_beliefSet->map()->cellResourceType(j, k);
 
-						if (terrainValue == TERRAIN_ELEVATION) {
+						if (terrainValue == TERRAIN_GROUND) {
 							switch (resourceValue) {
 							case RESOURCE_FOOD:
-								food = true;
+								++food;
 								break;
 
 							case RESOURCE_METAL:
-								metal = true;
+								++metal;
 								break;
 
 							case RESOURCE_MINERAL:
-								mineral = true;
+								++mineral;
 								break;
 							}
+							++ground;
 						} else if (terrainValue == TERRAIN_WATER) {
-								water = true;
+								++water;
 						}
 					}
 				}
 			}
-			water? sectorValue += 20:0;
-			food? sectorValue += 10:0;
-			metal? sectorValue += 3:0;
-			mineral? sectorValue += 3:0;
+
+			if (ground >= ((SECTOR_SIZE * SECTOR_SIZE) * 3 / 4)) {
+				sectorValue += 4 * water + 2 * food + mineral + metal;
+			}
 
 			m_beliefSet->setSectorSettlementFactor(i, sectorValue);
 		}

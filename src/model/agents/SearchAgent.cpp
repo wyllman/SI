@@ -125,7 +125,6 @@ void SearchAgent::actDependingOfState() {
 		}
 		break;
 	case FOLLOWING_ROUTE:
-		std::cout << "Tam: " << getRoutes().size() << std::endl;
 		if (!routedMove()) {
 			setState(AVAILABLE);
 			getRefMainAgent()->readFIPAPackage(
@@ -147,7 +146,6 @@ void SearchAgent::actDependingOfState() {
 		}
 		break;
 	case FOLLOWING_RET_ROUTE:
-		cout << "Tam: " << getRoutes().size() << endl;
 		if (!routedMove()) {
 			setState(AVAILABLE);
 			getRefMainAgent()->readFIPAPackage(

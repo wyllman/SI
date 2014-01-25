@@ -21,7 +21,6 @@ using namespace std;
 PathFindingTree::PathFindingTree(const MainAgent& agent, const Point& start, const Point& end) :
 	m_rootNode(new Node(start, std::string("RAIZ"), *static_cast<Node*>(NULL))),
 	m_goalNode(new Node(end, " ", *m_rootNode)),
-	routeFound_(false),
 	m_agent(const_cast<MainAgent*>(&agent)) {
 	m_rootNode->setHeuristicDistance(heuristicValue(*m_rootNode));
 }
@@ -60,6 +59,7 @@ bool PathFindingTree::calculateHeuristicRoute() {
 	     m_goalNode->position().second << ")" << endl;
 	openSet.push_back(m_rootNode);
 
+	success = false;
 	iteration = 0;
 
 	while (!openSet.empty() && !success) {
@@ -131,7 +131,6 @@ bool PathFindingTree::calculateHeuristicRoute() {
 	}
 
 	if (success) {
-		routeFound_ = true;
 		reversePath(*(*successorIterator));
 	}
 

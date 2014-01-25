@@ -25,7 +25,6 @@ public:
 	inline std::string& getRoute() {
 		return m_route;
 	}
-	bool routeFound_;
 private:
 	Node* m_rootNode;
 	Node* m_goalNode;

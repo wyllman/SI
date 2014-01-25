@@ -219,8 +219,8 @@ void Intention::checkSectorsExplorationRatio() {
 
 	for (int32_t i = 0; i < MAP_WIDTH; ++i) {
 		for (int32_t j = 0; j < MAP_WIDTH; ++j) {
-			if (m_beliefSet->getKnownMap()[i][j]) {
-				cell = (((i / SECTOR_SIZE) * SECTOR_SIZE) + (j / SECTOR_SIZE));
+			if (m_beliefSet->getKnownMap()[j][i]) {
+				cell = (((j / SECTOR_SIZE) * SECTOR_SIZE) + (i / SECTOR_SIZE));
 				m_beliefSet->sumSectorExploredRatio(cell, CELL_VALUE);
 			}
 		}
@@ -334,26 +334,28 @@ void Intention::gotoOptimalLocation() {
 	destination.first = (sector / SECTOR_SIZE) * SECTOR_SIZE - 5;
 	destination.second = (sector % SECTOR_SIZE) * SECTOR_SIZE - 5;
 	tree = new PathFindingTree (*m_agent, m_agent->getPosition(), destination);
-	tree->calculateHeuristicRoute();
 
+	if (m_agent->getMap()->cellTerrainType(destination) == TERRAIN_GROUND) {
+		if (tree->calculateHeuristicRoute()) {
+			cout << "Moviendo al sector " << sector << " " << destination << hex <<
+					static_cast<int>(m_agent->getMap()->cellTerrainType(destination) &
+					m_agent->getMap()->cellResourceType(destination)) << endl;
+			temp += tree->getRoute();
+			cout << temp << endl;
+			cin.get();
+			m_agent->followRoute(temp);
 
-	if (tree->routeFound_) {
-		cout << "Moviendo al sector " << sector << " " << destination << hex <<
-				static_cast<int>(m_agent->getMap()->cellTerrainType(destination) &
-				m_agent->getMap()->cellResourceType(destination)) << endl;
-		temp += tree->getRoute();
-		cout << temp << endl;
-		cin.get();
-		m_agent->followRoute(temp);
+			if (tree != NULL) {
+				delete tree;
+				tree = NULL;
+			}
 
-		if (tree != NULL) {
-			delete tree;
-			tree = NULL;
+			m_desire->set("Settlement_Place_Found", true);
+		} else {
+			cout << "NO HAY RUTA FINAL" << endl;
 		}
-
-		m_desire->set("Settlement_Place_Found", true);
 	} else {
-		cout << "NO HAY RUTA FINAL" << endl;
+		cout << "NO ES UN TERRENO ACCESIBLE" << endl;
 	}
 
 }

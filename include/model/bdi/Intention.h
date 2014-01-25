@@ -68,6 +68,7 @@ private:
 	 * BeliefSet::m_sectorExploredRatio a 1
 	 */
 	const Point* checkSectorBoundaries(uint32_t);
+	const Point* checkSectorCells(uint32_t);
 	void checkSectorsFactor();
 	void sectorExploration();
 	void gotoOptimalLocation();

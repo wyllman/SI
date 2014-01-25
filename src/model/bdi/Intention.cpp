@@ -129,13 +129,22 @@ void Intention::exploreMap() {
 void Intention::findOptimalLocation() {
 	const uint32_t SECTORS = ((MAP_WIDTH * MAP_WIDTH) / (SECTOR_SIZE * SECTOR_SIZE));
 	const float EXPLORED_RATIO = 0.9;
-	bool water = false, food = false, metal = false, mineral = false;
+	uint32_t water;
+	uint32_t food;
+	uint32_t metal;
+	uint32_t mineral;
+	uint32_t ground;
 	BYTE terrainValue;
 	BYTE resourceValue;
-	float sectorValue = 0.0;
+	float sectorValue;
 
 	for (uint32_t i = 0; i < SECTORS; ++i) {
 		sectorValue = 0.0;
+		water = 0;
+		food = 0;
+		metal = 0;
+		mineral = 0;
+		ground = 0;
 		cout << m_beliefSet->getSectorExploredRatio(i) << endl;
 		if (m_beliefSet->getSectorExploredRatio(i) >= EXPLORED_RATIO) {
 			uint32_t limitJ = (i / SECTOR_SIZE) * SECTOR_SIZE + SECTOR_SIZE;
@@ -144,42 +153,34 @@ void Intention::findOptimalLocation() {
 			for (uint32_t j = (i / SECTOR_SIZE) * SECTOR_SIZE; j < limitJ; ++j) {
 				for (uint32_t k = (i % SECTOR_SIZE) * SECTOR_SIZE; k < limitK; ++k) {
 					if (m_beliefSet->getKnownMapCell(j, k)) {
-						terrainValue = (*m_beliefSet->map())(j, k)
-						               & MASK_TERRAIN;
-						resourceValue = (*m_beliefSet->map())(j, k)
-						                & MASK_RESOURCE;
+						terrainValue = m_beliefSet->map()->cellTerrainType(j, k);
+						resourceValue = m_beliefSet->map()->cellResourceType(j, k);
 
 						if (terrainValue == TERRAIN_GROUND) {
 							switch (resourceValue) {
 							case RESOURCE_FOOD:
-								food = true;
+								++food;
 								break;
 
 							case RESOURCE_METAL:
-								metal = true;
+								++metal;
 								break;
 
 							case RESOURCE_MINERAL:
-								mineral = true;
+								++mineral;
 								break;
 							}
+							++ground;
 						} else if (terrainValue == TERRAIN_WATER) {
-								water = true;
+								++water;
 						}
 					}
 				}
 			}
-			water? sectorValue += 1:0;
-			food? sectorValue += 1:0;
-			metal? sectorValue += 1:0;
-			mineral? sectorValue += 1:0;
 
-			//float dist = euclideanDistance(m_agent->getPosition(), Point(limitJ - 5, limitK - 5));
-
-			//if (dist > 0.0) {
-				//sectorValue /= (dist * 0.1);
-			//}
-
+			if (ground >= ((SECTOR_SIZE * SECTOR_SIZE) * 3 / 4)) {
+				sectorValue += 4 * water + 2 * food + mineral + metal;
+			}
 			m_beliefSet->setSectorSettlementFactor(i, sectorValue);
 		}
 	}
@@ -209,6 +210,9 @@ void Intention::gatherResources() {
 	Point tmpPoint = resourcePoint;
 	bool foundPoint = false;
 
+	tmpPoint.first = 0;
+	tmpPoint.second = 0;
+
 	cout << "Entrando en fase de recolección!!!!!!" << endl;
 	//TODO: (Por cada trabajador)Buscar un punto con recursos al que mandar un agente
 	//TODO: Enivar a cada trabajador a recolectar (si su estado es avalaible)
@@ -217,9 +221,9 @@ void Intention::gatherResources() {
 	for (int i = 0; i < numberWorkAg; ++i) {
 		foundPoint = false;
 		for (int j = 0; j < MAP_WIDTH && !foundPoint; ++j) {
-			tmpPoint.first = j;
-			for (int k = 0; k < MAP_WIDTH  && !foundPoint; ++k) {
-				tmpPoint.second = k;
+			tmpPoint.first += 1;
+			for (int k = 0; k < MAP_WIDTH && !foundPoint; ++k) {
+				tmpPoint.second += 1;
 				if ((tmpPoint.first >= 0 && tmpPoint.first < MAP_WIDTH)
 						&& ((tmpPoint.second >= 0 && tmpPoint.second < MAP_WIDTH))
 						&& (m_beliefSet->getKnownMapCell(tmpPoint))
@@ -248,7 +252,7 @@ void Intention::gatherResources() {
 }
 
 void Intention::buildSettlement() {
-	m_desire->set("Settlement_Built", false);
+	m_desire->set("Settlement_Built", true);
 }
 
 void Intention::checkSectorsExplorationRatio() {
@@ -260,8 +264,8 @@ void Intention::checkSectorsExplorationRatio() {
 
 	for (int32_t i = 0; i < MAP_WIDTH; ++i) {
 		for (int32_t j = 0; j < MAP_WIDTH; ++j) {
-			if (m_beliefSet->getKnownMap()[j][i]) {
-				cell = (((j / SECTOR_SIZE) * SECTOR_SIZE) + (i / SECTOR_SIZE));
+			if (m_beliefSet->getKnownMap()[i][j]) {
+				cell = (((i / SECTOR_SIZE) * SECTOR_SIZE) + (j / SECTOR_SIZE));
 				m_beliefSet->sumSectorExploredRatio(cell, CELL_VALUE);
 			}
 		}
@@ -369,40 +373,26 @@ void Intention::gotoOptimalLocation() {
 	uint32_t sector;
 	Point destination;
 	PathFindingTree* tree;
-	string temp = "";
+	string tempRoute;
 
 	sector = atoi((*(*m_beliefSet)["Best_Location"])().c_str());
-
-	destination.first = (sector / SECTOR_SIZE) * SECTOR_SIZE - 5;
-	destination.second = (sector % SECTOR_SIZE) * SECTOR_SIZE - 5;
+	destination = *checkSectorCells(sector);
 	tree = new PathFindingTree (*m_agent, m_agent->getPosition(), destination);
 
-	if ((destination.first >= 0 && destination.first < MAP_WIDTH)
-				&& (destination.second >= 0 && destination.second < MAP_WIDTH)
-				&& (m_agent->getKnownMap()[destination.first][destination.second])
-				&& (m_agent->getMap()->cellTerrainType(destination)) == TERRAIN_GROUND) {
-		if (tree->calculateHeuristicRoute()) {
-			cout << "Moviendo al sector " << sector << " " << destination << hex <<
-					static_cast<int>(m_agent->getMap()->cellTerrainType(destination) &
-					m_agent->getMap()->cellResourceType(destination)) << endl;
-			temp += tree->getRoute();
-			cout << temp << endl;
-			m_agent->followRoute(temp);
+	if (tree->calculateHeuristicRoute()) {
+		cout << "Moviendo al sector " << sector << " " << destination << endl;
+		tempRoute = tree->getRoute();
+		m_agent->followRoute(tempRoute);
+		cout << tempRoute << endl;
 
-			if (tree != NULL) {
-				delete tree;
-				tree = NULL;
-			}
-
-			m_desire->set("Settlement_Place_Found", true);
-		} else {
-			cout << "NO HAY RUTA FINAL" << endl;
+		if (tree != NULL) {
+			delete tree;
+			tree = NULL;
 		}
+		m_desire->set("Settlement_Place_Found", true);
 	} else {
-		cout << "NO ES UN TERRENO ACCESIBLE" << endl;
-		m_desire->set("Settlement_Place_Found", true); //FIXME: puesto de pruebas
+		cout << "NO HAY RUTA FINAL" << endl;
 	}
-
 }
 
 const Point* Intention::checkSectorBoundaries(uint32_t sector) {
@@ -465,4 +455,36 @@ const Point* Intention::checkSectorBoundaries(uint32_t sector) {
 
 	cout << "No tiene ningún punto limítrofe accesible. Devolviendo fallo" << endl;
 	return new Point(-1, -1);
+}
+
+
+const Point* Intention::checkSectorCells(uint32_t sector) {
+	Point destination;
+	Point center;
+	Point closestToCenter;
+	float distanceToCenter;
+	float bestDistance;
+
+	bestDistance = 99999.0;
+	destination.first = (sector / SECTOR_SIZE) * SECTOR_SIZE;
+	destination.second = (sector % SECTOR_SIZE) * SECTOR_SIZE;
+	center.first = destination.first + 5;
+	center.second = destination.second + 5;
+	closestToCenter = destination;
+
+	for (int32_t i = destination.first; i < destination.first + SECTOR_SIZE; ++i) {
+		for (int32_t j = destination.second; j < destination.second + SECTOR_SIZE; ++j) {
+			if (m_beliefSet->knownMapCell(i, j)) {
+				if (m_beliefSet->map()->cellTerrainType(i, j) == TERRAIN_GROUND) {
+					distanceToCenter = euclideanDistance(Point(i, j), center);
+					if (distanceToCenter < bestDistance) {
+						closestToCenter = Point(i, j);
+						bestDistance = distanceToCenter;
+					}
+				}
+			}
+		}
+	}
+
+	return new Point(closestToCenter.first, closestToCenter.second);
 }

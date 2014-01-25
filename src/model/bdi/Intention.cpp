@@ -14,6 +14,7 @@
 #include <model/agents/SearchAgent.h>
 #include <model/agents/WorkingAgent.h>
 #include <model/fipa/Package.h>
+#include <model/agents/tools/PathFindingTree.h>
 
 #include <iostream>
 #include <sstream>
@@ -44,10 +45,16 @@ void Intention::update() {
 		} else if (!(*m_desire)["Settlement_Place_Found"]) {
 			cout << "Busca asentamiento" << endl;
 			findOptimalLocation();
-			gotoOptimalLocation();
+			if (m_beliefSet->exists("Best_Location")) {
+				cout << "Se mueve al asentamiento" << endl;
+				gotoOptimalLocation();
+			} else {
+				cout << "No existe lugar para el asentamiento" << endl;
+				exit (1);
+			}
 		}
 
-		if (m_beliefSet->exists("Optimal_Location")
+		if ((*m_desire)["Settlement_Place_Found"]
 		                && !(*m_desire)["Resources_Gathered"]) {
 			cout << "Busca recursos" << endl;
 			gatherResources();
@@ -193,7 +200,6 @@ void Intention::findOptimalLocation() {
 
 	// Se introduce la creencia Best_Location con el sector elegido
 	m_beliefSet->add(string("Best_Location"), new Belief(ss.str().c_str()));
-
 }
 
 void Intention::gatherResources() {
@@ -318,22 +324,19 @@ void Intention::sectorExploration() {
 }
 
 void Intention::gotoOptimalLocation() {
-	const int SECTORS = ((MAP_WIDTH * MAP_WIDTH) / (SECTOR_SIZE * SECTOR_SIZE));
-	float maxValue = 0.0;
-	uint32_t bestSector = 0;
-	stringstream ss;
+	uint32_t sector;
+	Point destination;
+	PathFindingTree* tree;
 
-	for (int32_t i = 0; i < SECTORS; ++i) {
-		if (m_beliefSet->getSectorSettlementFactor(i) > maxValue) {
-			maxValue = m_beliefSet->getSectorSettlementFactor(i);
-			bestSector = i;
-		}
+	sector = atoi((*(*m_beliefSet)["Best_Location"])().c_str());
+	destination.first = (sector / SECTOR_SIZE) * SECTOR_SIZE;
+	destination.second = (sector % SECTOR_SIZE) * SECTOR_SIZE;
+
+	if (tree != NULL) {
+		delete tree;
+		tree = NULL;
 	}
 
-	ss << bestSector;
-	Belief* belief = new Belief(ss.str());
-	m_beliefSet->add(string("Optimal_Location"), belief);
-	// TODO Ir
 	m_desire->set("Settlement_Place_Found", true);
 }
 

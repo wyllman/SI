@@ -186,10 +186,10 @@ void Intention::findOptimalLocation() {
 	float bestFactor;
 
 	bestSector = 0;
-	bestFactor = 99999.0;
+	bestFactor = 0.0;
 
 	for (uint32_t i = 0; i < SECTORS; ++i) {
-		if ( m_beliefSet->getSectorSettlementFactor(i) <= bestFactor) {
+		if ( m_beliefSet->getSectorSettlementFactor(i) >= bestFactor) {
 			bestFactor = m_beliefSet->getSectorSettlementFactor(i);
 			bestSector = i;
 		}
@@ -327,15 +327,15 @@ void Intention::gotoOptimalLocation() {
 	uint32_t sector;
 	Point destination;
 	PathFindingTree* tree;
+	string temp = "";
 
 	sector = atoi((*(*m_beliefSet)["Best_Location"])().c_str());
-	destination.first = (sector / SECTOR_SIZE) * SECTOR_SIZE;
-	destination.second = (sector % SECTOR_SIZE) * SECTOR_SIZE;
-
-	if (tree != NULL) {
-		delete tree;
-		tree = NULL;
-	}
+	destination.first = (sector / SECTOR_SIZE) * SECTOR_SIZE - 5;
+	destination.second = (sector % SECTOR_SIZE) * SECTOR_SIZE - 5;
+	tree = new PathFindingTree (*m_agent, m_agent->getPosition(), destination);
+	tree->calculateHeuristicRoute();
+	temp += tree->getRoute();
+	m_agent->followRoute(temp);
 
 	m_desire->set("Settlement_Place_Found", true);
 }

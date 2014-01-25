@@ -108,7 +108,7 @@ float BeliefSet::getSectorExploredRatio(int cell) {
 	if (cell < 0)
 		cell = 0;
 
-	if (cell > MAP_WIDTH)
+	if (cell >= MAP_WIDTH)
 		cell = MAP_WIDTH - 1;
 
 	return m_sectorExploredRatio[cell];

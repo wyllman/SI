@@ -117,6 +117,8 @@ void Intention::exploreMap() {
 }
 
 void Intention::findOptimalLocation() {
+	std::cout << "Calculando valores de los sectores del mapa." << std::endl;
+
 	const uint32_t SECTORS = ((MAP_WIDTH * MAP_WIDTH) / (SECTOR_SIZE* SECTOR_SIZE));
 	const float EXPLORATED_RATIO = 0.9;
 	bool water = false, food = false, metal = false, mineral = false;
@@ -127,6 +129,7 @@ void Intention::findOptimalLocation() {
 
 	for (uint32_t i = 0; i < SECTORS; ++i) {
 		if (m_beliefSet->getSectorExploredRatio(i) >= EXPLORATED_RATIO) {
+			std::cout << "ANALIZNADO SECTOR OPTIMO" << std::endl;
 			uint32_t limitJ = (i / SECTOR_SIZE) * SECTOR_SIZE + SECTOR_SIZE;
 			uint32_t limitK = (i % SECTOR_SIZE) * SECTOR_SIZE + SECTOR_SIZE;
 
@@ -134,7 +137,14 @@ void Intention::findOptimalLocation() {
 			                j < limitJ && !elevation; ++j) {
 				for (uint32_t k = (i % SECTOR_SIZE) * SECTOR_SIZE;
 				                k < limitK && !elevation; ++k) {
+
+					if ((j >= 1 && j < MAP_WIDTH - 1)
+							&& (k >= 1 && k < MAP_WIDTH -1)){
+
+
+
 					if (m_beliefSet->getKnownMap()[j][k]) {
+						std::cout << "ANALIZNADO SECTOR OPTIMO - En busca del error!!" << std::endl;
 						terrainValue = (*m_beliefSet->map())(j, k)
 						               & MASK_TERRAIN;
 						resourceValue = (*m_beliefSet->map())(j, k)
@@ -160,6 +170,7 @@ void Intention::findOptimalLocation() {
 								break;
 							}
 						}
+					}
 					}
 				}
 			}
@@ -241,8 +252,8 @@ void Intention::sectorExploration() {
 
 					for (int k = 0; k < 2; ++k) {
 						for (int l = 0; l < 2; ++l) {
-							p.first += k * SECTOR_SIZE;
-							p.second += l * SECTOR_SIZE;
+							p.first += k * (SECTOR_SIZE - 1);
+							p.second += l * (SECTOR_SIZE - 1);
 							distance = euclideanDistance(m_agent->getVAgents()[i]->getPosition(), p);
 
 							if (distance <= bestDistance) {
@@ -300,6 +311,7 @@ void Intention::sectorExploration() {
 }
 
 void Intention::gotoOptimalLocation() {
+	std::cout << "Seleccionando el mejor sector del terreno." << std::endl;
 	const int SECTORS = ((MAP_WIDTH * MAP_WIDTH) / (SECTOR_SIZE * SECTOR_SIZE));
 	float maxValue = 0.0;
 	uint32_t bestSector = 0;

@@ -125,6 +125,7 @@ void Intention::findOptimalLocation() {
 	BYTE terrainValue;
 	BYTE resourceValue;
 	float sectorValue = 0.0;
+	float secondValue;
 
 	for (uint32_t i = 0; i < SECTORS; ++i) {
 		sectorValue = 0.0;
@@ -166,7 +167,8 @@ void Intention::findOptimalLocation() {
 			metal? sectorValue += 3:0;
 			mineral? sectorValue += 3:0;
 
-			sectorValue /= euclideanDistance(m_agent->getPosition(), Point(limitJ - 5, limitK - 5));
+			secondValue = euclideanDistance(m_agent->getPosition(), Point(limitJ - 5, limitK - 5));
+			(secondValue != 0)? sectorValue /= secondValue:0;
 			m_beliefSet->setSectorSettlementFactor(i, sectorValue);
 		}
 	}

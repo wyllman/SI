@@ -303,6 +303,8 @@ void MainAgent::sendToRoute(Point s, Point e, Agent* theAgent, Type theType) {
 		vect.push_back(route);
 		p->setContent(vect);
 		readFIPAPackage(theAgent->readFIPAPackage(p));
+
+		delete (tree);
 	}
 }
 

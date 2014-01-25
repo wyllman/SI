@@ -246,11 +246,14 @@ void Intention::sectorExploration() {
 							distance = euclideanDistance(m_agent->getVAgents()[i]->getPosition(), p);
 
 							if (distance <= bestDistance) {
-								if (((*(m_agent->getMap()))(bestPoint.first,
-								                            bestPoint.second) & MASK_TERRAIN) == TERRAIN_GROUND
-								                && m_agent->getKnownMap()[bestPoint.first][bestPoint.second]) {
-									bestDistance = distance;
-									bestPoint = p;
+								if ((bestPoint.first > 0 && bestPoint.first < MAP_WIDTH - 1)
+										&& (bestPoint.second > 0 && bestPoint.second < MAP_WIDTH - 1)) {
+									if (((*(m_agent->getMap()))(bestPoint.first,
+											bestPoint.second) & MASK_TERRAIN) == TERRAIN_GROUND
+											&& m_agent->getKnownMap()[bestPoint.first][bestPoint.second]) {
+										bestDistance = distance;
+										bestPoint = p;
+									}
 								}
 							}
 						}

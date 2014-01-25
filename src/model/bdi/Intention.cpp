@@ -143,10 +143,8 @@ void Intention::findOptimalLocation() {
 			for (uint32_t j = (i / SECTOR_SIZE) * SECTOR_SIZE; j < limitJ; ++j) {
 				for (uint32_t k = (i % SECTOR_SIZE) * SECTOR_SIZE; k < limitK; ++k) {
 					if (m_beliefSet->getKnownMapCell(j, k)) {
-						terrainValue = (*m_beliefSet->map())(j, k)
-						               & MASK_TERRAIN;
-						resourceValue = (*m_beliefSet->map())(j, k)
-						                & MASK_RESOURCE;
+						terrainValue = m_beliefSet->map()->cellTerrainType(j, k);
+						resourceValue = m_beliefSet->map()->cellResourceType(j, k);
 
 						if (terrainValue == TERRAIN_ELEVATION) {
 							switch (resourceValue) {
@@ -168,16 +166,10 @@ void Intention::findOptimalLocation() {
 					}
 				}
 			}
-			water? sectorValue += 400:0;
-			food? sectorValue += 100:0;
-			metal? sectorValue += 9:0;
-			mineral? sectorValue += 9:0;
-
-			float dist = euclideanDistance(m_agent->getPosition(), Point(limitJ - 5, limitK - 5));
-
-			if (dist > 0.0) {
-				sectorValue /= (dist * 0.1);
-			}
+			water? sectorValue += 20:0;
+			food? sectorValue += 10:0;
+			metal? sectorValue += 3:0;
+			mineral? sectorValue += 3:0;
 
 			m_beliefSet->setSectorSettlementFactor(i, sectorValue);
 		}
@@ -207,7 +199,7 @@ void Intention::gatherResources() {
 }
 
 void Intention::buildSettlement() {
-	m_desire->set("Settlement_Built", false);
+	m_desire->set("Settlement_Built", true);
 }
 
 void Intention::checkSectorsExplorationRatio() {
@@ -219,8 +211,8 @@ void Intention::checkSectorsExplorationRatio() {
 
 	for (int32_t i = 0; i < MAP_WIDTH; ++i) {
 		for (int32_t j = 0; j < MAP_WIDTH; ++j) {
-			if (m_beliefSet->getKnownMap()[j][i]) {
-				cell = (((j / SECTOR_SIZE) * SECTOR_SIZE) + (i / SECTOR_SIZE));
+			if (m_beliefSet->getKnownMap()[i][j]) {
+				cell = (((i / SECTOR_SIZE) * SECTOR_SIZE) + (j / SECTOR_SIZE));
 				m_beliefSet->sumSectorExploredRatio(cell, CELL_VALUE);
 			}
 		}
@@ -324,6 +316,7 @@ void Intention::sectorExploration() {
 	}
 }
 
+// FIXME
 void Intention::gotoOptimalLocation() {
 	uint32_t sector;
 	Point destination;
@@ -335,7 +328,8 @@ void Intention::gotoOptimalLocation() {
 	destination.second = (sector % SECTOR_SIZE) * SECTOR_SIZE - 5;
 	tree = new PathFindingTree (*m_agent, m_agent->getPosition(), destination);
 
-	if (m_agent->getMap()->cellTerrainType(destination) == TERRAIN_GROUND) {
+	if (m_agent->getMap()->cellTerrainType(destination) == TERRAIN_GROUND &&
+			m_agent->getKnownMap()[destination.first][destination.second]) {
 		if (tree->calculateHeuristicRoute()) {
 			cout << "Moviendo al sector " << sector << " " << destination << hex <<
 					static_cast<int>(m_agent->getMap()->cellTerrainType(destination) &

@@ -334,10 +334,17 @@ void Intention::gotoOptimalLocation() {
 	destination.second = (sector % SECTOR_SIZE) * SECTOR_SIZE - 5;
 	tree = new PathFindingTree (*m_agent, m_agent->getPosition(), destination);
 	tree->calculateHeuristicRoute();
-	temp += tree->getRoute();
-	m_agent->followRoute(temp);
 
-	m_desire->set("Settlement_Place_Found", true);
+
+	if (tree->routeFound_) {
+		temp += tree->getRoute();
+		m_agent->followRoute(temp);
+
+		m_desire->set("Settlement_Place_Found", true);
+	} else {
+		cout << "NO HAY RUTA FINAL" << endl;
+	}
+
 }
 
 const Point* Intention::checkSectorBoundaries(uint32_t sector) {

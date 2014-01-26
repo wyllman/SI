@@ -86,7 +86,6 @@ void SearchAgent::localDireccionalSearch(string d) {
 }
 
 void SearchAgent::actDependingOfState() {
-	int ramdomDirection = rand() % 4;
 	switch (getState()) {
 	case SEARCHING:
 		if (!explorationMove()) {
@@ -107,7 +106,7 @@ void SearchAgent::actDependingOfState() {
 		break;
 	case SECOND_SEARCHING:
 		std::cout << "COMENZANDO EXPLORACION SECUNDARIA" << std::endl;
-		switch (ramdomDirection) {
+		switch (rand() % 4) {
 			case 0:
 				localDireccionalSearch("NORTH");
 				break;

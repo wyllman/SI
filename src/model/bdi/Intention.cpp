@@ -286,13 +286,12 @@ void Intention::sectorExploration() {
 	Point p;
 	Point bestPoint;
 	uint32_t bestDistance;
-	uint32_t loopCount;
+	static uint32_t loopCount = 0;
 	uint32_t distance;
 	stringstream ss;
 	float explorationRatioAux;
 	
 	bestDistance = 99999;
-	loopCount;
 	std::cout << "ANALIZANDO SECTORES DE TERRENO" << std::endl;
 	for (uint32_t i = 0; i < m_agent->getVAgents().size(); ++i) {
 		sectorFound = false;

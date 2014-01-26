@@ -30,13 +30,17 @@ Node::Node(const Node& node) :
 
 
 Node::~Node() {
-	if (!m_childrenNodes->empty()) {
-		for (uint32_t i = 0; i < m_childrenNodes->size(); ++i) {
-			if ((*m_childrenNodes)[i] != NULL) {
-				delete (*m_childrenNodes)[i];
-				(*m_childrenNodes)[i] = NULL;
+	if (m_childrenNodes != NULL) {
+		if (!m_childrenNodes->empty()) {
+			for (uint32_t i = 0; i < m_childrenNodes->size(); ++i) {
+				if ((*m_childrenNodes)[i] != NULL) {
+					delete (*m_childrenNodes)[i];
+					(*m_childrenNodes)[i] = NULL;
+				}
 			}
 		}
+		delete m_childrenNodes;
+		m_childrenNodes = NULL;
 	}
 }
 

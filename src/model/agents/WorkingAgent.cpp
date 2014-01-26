@@ -40,6 +40,9 @@ Package* WorkingAgent::readFIPAPackage(Package* p) {
 			case GO_RESOURCE_LOCATION:
 				//Realizar búsqueda dada esta dirección
 				followRoute(p -> getContent().at(0));
+				for (int i = 0; i < m_routes.size(); ++i) {
+					m_ret_routes.push_back(calculateInverseDirection(m_routes[m_routes.size() - (i + 1)]));
+				}
 				answer = new Package(getNameAgent(), p -> getSender(), CONFIRM);
 				setState(FOLLOWING_RES_ROUTE);
 				break;
@@ -73,8 +76,13 @@ void WorkingAgent::actDependingOfState() {
 			setRecolectTime(getRecolectTime() + 1);
 		else {
 			//setRecolectTime(0);
-			setState(FULL_OF_RESOURCES);
-			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), COME_BACK, this));
+			//setState(FULL_OF_RESOURCES);
+			m_routes.clear();
+			for (int i = 0; i < m_ret_routes.size(); ++i) {
+				m_routes.push_back(m_ret_routes[i]);
+			}
+			setState(FOLLOWING_RET_ROUTE);
+			//getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), COME_BACK, this));
 		}
 
 		break;
@@ -93,6 +101,7 @@ void WorkingAgent::actDependingOfState() {
 		} else {
 			//setRecolectTime(0);
 			setState(AVAILABLE);
+			m_ret_routes.clear();
 			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), CONFIRM));
 		}
 

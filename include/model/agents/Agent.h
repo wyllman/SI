@@ -35,6 +35,9 @@ protected:
 	Map* refMap_;
 	std::vector<Direction> m_routes;
 
+    Direction calculateClockDirection (Direction, bool);
+    Direction calculateInverseDirection (Direction);
+
 
 public:
 	Agent(Map*);

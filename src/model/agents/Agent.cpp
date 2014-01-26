@@ -196,3 +196,31 @@ void Agent::followRoute(string route) {
 		m_routes.push_back(camino[camino.size() - (i + 1)]);
 	}
 }
+
+Direction Agent::calculateClockDirection(Direction theDirection,
+		bool inverse) {
+	Direction result = ERROR_DIR;
+
+	if (inverse) {
+		if (theDirection == NORTH) {
+			result = NWEST;
+		} else {
+			result = ((Direction)(theDirection - 1));
+		}
+	} else {
+		if (theDirection == NWEST) {
+			result = NORTH;
+		} else {
+			result = ((Direction)(theDirection + 1));
+		}
+	}
+	return result;
+}
+Direction Agent::calculateInverseDirection(Direction theDirection) {
+	Direction result = ERROR_DIR;
+	result = calculateClockDirection(theDirection, false);
+	result = calculateClockDirection(result, false);
+	result = calculateClockDirection(result, false);
+	result = calculateClockDirection(result, false);
+	return result;
+}

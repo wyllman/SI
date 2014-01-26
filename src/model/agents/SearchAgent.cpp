@@ -310,33 +310,6 @@ bool SearchAgent::swipeMove(const Point& start, const Point& end) {
 	return hasMoved;
 }
 
-Direction SearchAgent::calculateClockDirection(Direction theDirection,
-		bool inverse) {
-	Direction result = ERROR_DIR;
-
-	if (inverse) {
-		if (theDirection == NORTH) {
-			result = NWEST;
-		} else {
-			result = ((Direction)(theDirection - 1));
-		}
-	} else {
-		if (theDirection == NWEST) {
-			result = NORTH;
-		} else {
-			result = ((Direction)(theDirection + 1));
-		}
-	}
-	return result;
-}
-Direction SearchAgent::calculateInverseDirection(Direction theDirection) {
-	Direction result = ERROR_DIR;
-	result = calculateClockDirection(theDirection, false);
-	result = calculateClockDirection(result, false);
-	result = calculateClockDirection(result, false);
-	result = calculateClockDirection(result, false);
-	return result;
-}
 void SearchAgent::updateDistance(Direction theDirection) {
 	switch (guideDirectionEXPL_) {
 		case NORTH:

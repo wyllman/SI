@@ -111,6 +111,18 @@ void Intention::exploreMap() {
 		}
 	}
 
+	if (m_currentGoal == "END_SECOND_EXPLORATION") {
+		if (m_beliefSet->exists("NORTH") && m_beliefSet->exists("SOUTH")
+		                && m_beliefSet->exists("EAST") && m_beliefSet->exists("WEST")) {
+			m_currentGoal = "Calculate_optimal_location";
+			m_desire->set("100_Percent_Explored", true);
+			m_beliefSet->remove("NORTH");
+			m_beliefSet->remove("SOUTH");
+			m_beliefSet->remove("EAST");
+			m_beliefSet->remove("WEST");
+		}
+	}
+
 	if (m_beliefSet->exploredPercentage() >= 0.5) {
 		if (!(*m_desire)["50_Percent_Explored"]) {
 			m_desire->set("50_Percent_Explored", true);
@@ -214,8 +226,6 @@ void Intention::gatherResources() {
 	tmpPoint.second = 0;
 
 	cout << "Entrando en fase de recolección!!!!!!" << endl;
-	//TODO: (Por cada trabajador)Buscar un punto con recursos al que mandar un agente
-	//TODO: Enivar a cada trabajador a recolectar (si su estado es avalaible)
 
 	// Para cada uno de los trabajadores
 	for (int i = 0; i < numberWorkAg; ++i) {
@@ -283,6 +293,7 @@ void Intention::sectorExploration() {
 	stringstream ss;
 	bestDistance = 99999;
 	float explorationRatioAux;
+
 	std::cout << "ANALIZANDO SECTORES DE TERRENO" << std::endl;
 	for (uint32_t i = 0; i < m_agent->getVAgents().size(); ++i) {
 		sectorFound = false;
@@ -332,11 +343,10 @@ void Intention::sectorExploration() {
 							sectorFound = true;
 							globlalSectorFound = true;
 							loopCount_ = 0;
-							if (explorationRatioAux >= m_beliefSet->getSectorExploredRatio(j)) {
-								Belief* belief;
-								belief = new Belief("EXPLORED");
-								m_beliefSet->add(ss.str(), belief);
-							}
+
+							Belief* belief;
+							belief = new Belief("EXPLORED");
+							m_beliefSet->add(ss.str(), belief);
 						}
 					}
 				}
@@ -357,7 +367,7 @@ void Intention::sectorExploration() {
 					GO_LOCATION);
 		}
 		m_desire->set("50_Percent_Explored", true);
-		m_desire->set("100_Percent_Explored", true);
+		//m_desire->set("100_Percent_Explored", true);
 	}
 }
 

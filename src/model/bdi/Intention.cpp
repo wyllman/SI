@@ -43,7 +43,9 @@ void Intention::update() {
 			exploreMap();
 		} else if (!(*m_desire)["Settlement_Place_Found"]) {
 			cout << "Busca asentamiento" << endl;
-			findOptimalLocation();
+			if (!m_beliefSet->exists("Best_Location")) {
+				findOptimalLocation();
+			}
 			if (m_beliefSet->exists("Best_Location")) {
 				cout << "Se mueve al asentamiento" << endl;
 				gotoOptimalLocation();
@@ -224,7 +226,10 @@ void Intention::gatherResources() {
 	tmpPoint.first = 0;
 	tmpPoint.second = 0;
 
-	cout << "Entrando en fase de recolección!!!!!!" << endl;
+
+	if (m_agent->m_routes.size() == 0) {
+		cout << "Entrando en fase de recolección!!!!!!" << endl;
+
 
 	// Para cada uno de los trabajadores
 	for (int i = 0; i < numberWorkAg; ++i) {
@@ -249,6 +254,8 @@ void Intention::gatherResources() {
 				}
 			}
 		}
+	}
+
 	}
 }
 
@@ -365,6 +372,9 @@ void Intention::sectorExploration() {
 			m_agent->sendToRoute(m_agent->getVAgents()[i]->getPosition(),
 					m_agent->getPosition(),const_cast<Agent*>(m_agent->getVAgents()[i]),
 					GO_LOCATION);
+			m_agent->sendToRoute(m_agent->getWorVecAgents()[i]->getPosition(),
+					m_agent->getPosition(),const_cast<Agent*>(m_agent->getWorVecAgents()[i]),
+					GO_LOCATION);
 		}
 		m_desire->set("50_Percent_Explored", true);
 		//m_desire->set("100_Percent_Explored", true);
@@ -376,24 +386,40 @@ void Intention::gotoOptimalLocation() {
 	Point destination;
 	PathFindingTree* tree;
 	string tempRoute;
+	bool continueAct = true;
 
-	sector = atoi((*(*m_beliefSet)["Best_Location"])().c_str());
-	destination = *checkSectorCells(sector);
-	tree = new PathFindingTree (*m_agent, m_agent->getPosition(), destination);
-
-	if (tree->calculateHeuristicRoute()) {
-		cout << "Moviendo al sector " << sector << " " << destination << endl;
-		tempRoute = tree->getRoute();
-		m_agent->followRoute(tempRoute);
-		cout << tempRoute << endl;
-
-		if (tree != NULL) {
-			delete tree;
-			tree = NULL;
+	for (int i = 0; i < 4; ++i) {
+		if (m_agent->getVAgents()[i]->getState() != AVAILABLE
+				|| m_agent->getWorVecAgents()[i]->getState() != AVAILABLE) {
+			continueAct = false;
 		}
-		m_desire->set("Settlement_Place_Found", true);
-	} else {
-		cout << "NO HAY RUTA FINAL" << endl;
+	}
+
+	if (continueAct) {
+		sector = atoi((*(*m_beliefSet)["Best_Location"])().c_str());
+		destination = *checkSectorCells(sector);
+		tree = new PathFindingTree (*m_agent, m_agent->getPosition(), destination);
+
+		if (tree->calculateHeuristicRoute()) {
+			cout << "Moviendo al sector " << sector << " " << destination << endl;
+			tempRoute = tree->getRoute();
+			m_agent->followRoute(tempRoute);
+			for (int i = 0; i < 4; ++i) {
+				m_agent->getVAgents()[i]->followRoute(tempRoute);
+				m_agent->getVAgents()[i]->setState(FOLLOWING_ROUTE);
+				m_agent->getWorVecAgents()[i]->followRoute(tempRoute);
+				m_agent->getWorVecAgents()[i]->setState(FOLLOWING_ROUTE);
+			}
+			cout << tempRoute << endl;
+
+			if (tree != NULL) {
+				delete tree;
+				tree = NULL;
+			}
+			m_desire->set("Settlement_Place_Found", true);
+		} else {
+			cout << "NO HAY RUTA FINAL" << endl;
+		}
 	}
 }
 

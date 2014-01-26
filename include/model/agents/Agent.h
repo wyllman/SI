@@ -33,13 +33,15 @@ private:
 protected:
 	Point m_position;
 	Map* refMap_;
-	std::vector<Direction> m_routes;
 
     Direction calculateClockDirection (Direction, bool);
     Direction calculateInverseDirection (Direction);
 
 
 public:
+
+    std::vector<Direction> m_routes;
+
 	Agent(Map*);
 	virtual ~Agent() = 0;
 

@@ -90,7 +90,7 @@ void WorkingAgent::actDependingOfState() {
 	case FOLLOWING_ROUTE:
 		if (!routedMove()) {
 			setState(AVAILABLE);
-			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
+			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), CONFIRM));
 		}
 
 		break;
@@ -110,7 +110,7 @@ void WorkingAgent::actDependingOfState() {
 	case FOLLOWING_RES_ROUTE:
 		if (!routedMove()) {
 			setState(RECOLECTING);
-			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
+			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), CONFIRM));
 		}
 
 		break;
@@ -118,7 +118,7 @@ void WorkingAgent::actDependingOfState() {
 	case FOLLOWING_RET_ROUTE:
 		if (!routedMove()) {
 			setState(PUTTING_RESOURCE);
-			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), ARRIVED_GOAL));
+			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), CONFIRM));
 		}
 
 		break;

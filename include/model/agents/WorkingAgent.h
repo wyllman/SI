@@ -16,6 +16,8 @@
 
 class WorkingAgent : public Agent {
    public:
+      bool activeRecolecting_;
+
       WorkingAgent(MainAgent*, Map*);
       ~WorkingAgent();
 

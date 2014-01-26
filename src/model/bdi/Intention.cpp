@@ -222,6 +222,8 @@ void Intention::gatherResources() {
 	Point resourcePoint =  m_agent->getPosition();
 	Point tmpPoint = resourcePoint;
 	bool foundPoint = false;
+	bool auxiliar = false;
+	BYTE resourceTmp;
 
 	tmpPoint.first = 0;
 	tmpPoint.second = 0;
@@ -234,24 +236,97 @@ void Intention::gatherResources() {
 	// Para cada uno de los trabajadores
 	for (int i = 0; i < numberWorkAg; ++i) {
 		foundPoint = false;
-		if (m_agent->getWorVecAgents()[i]->getState() == AVAILABLE) {
+		auxiliar = false;
+		if (m_agent->getWorVecAgents()[i]->getState() == AVAILABLE
+				&& dynamic_cast<WorkingAgent*>(m_agent->getWorVecAgents()[i])->activeRecolecting_) {
 			for (int j = 0; j < MAP_WIDTH && !foundPoint; ++j) {
 				tmpPoint.first = j;
 				for (int k = 0; k < MAP_WIDTH && !foundPoint; ++k) {
 					tmpPoint.second = k;
 					if ((tmpPoint.first >= 0 && tmpPoint.first < MAP_WIDTH)
-							&& ((tmpPoint.second >= 0 && tmpPoint.second < MAP_WIDTH))
-							&& (m_beliefSet->getKnownMapCell(tmpPoint))
-							&& (m_beliefSet->map()->cellTerrainType(tmpPoint) == TERRAIN_GROUND)
-							&& (m_beliefSet->map()->cellResourceType(tmpPoint) != 0x0)) {
+							&& ((tmpPoint.second >= 0 && tmpPoint.second < MAP_WIDTH))) {
 
-						foundPoint = true;
-						resourcePoint = tmpPoint;
-						cout << "ENVIANDO A UN AGENTE A RECOLECTAR" << endl;
-						m_agent->sendToRoute(m_agent->getWorVecAgents()[i]->getPosition()
-							, resourcePoint, m_agent->getWorVecAgents()[i], GO_RESOURCE_LOCATION);
+						if ((i != 3) && (m_beliefSet->getKnownMapCell(tmpPoint))
+								&& (m_beliefSet->map()->cellTerrainType(tmpPoint) == TERRAIN_GROUND)
+								&& (m_beliefSet->map()->cellResourceType(tmpPoint) != 0x0)) {
+							resourceTmp = m_beliefSet->map()->cellResourceType(tmpPoint);
+
+							switch (i) {
+								case 0:
+									if (resourceTmp == RESOURCE_FOOD) {
+										foundPoint = true;
+									}
+									break;
+								case 1:
+									if (resourceTmp == RESOURCE_METAL) {
+										foundPoint = true;
+									}
+									break;
+								case 2:
+									if (resourceTmp == RESOURCE_MINERAL) {
+										foundPoint = true;
+									}
+									break;
+								//case 3:
+								//	if (resourceTmp == RESOURCE_WATER) {
+								//		//foundPoint = true;
+								//	}
+								//	break;
+								default:
+									break;
+							}
+							if (foundPoint) {
+								resourcePoint = tmpPoint;
+								m_agent->sendToRoute(m_agent->getWorVecAgents()[i]->getPosition()
+									, resourcePoint, m_agent->getWorVecAgents()[i], GO_RESOURCE_LOCATION);
+							}
+						} else if ((i == 3) && !foundPoint && (m_beliefSet->getKnownMapCell(tmpPoint))
+								&& (m_beliefSet->map()->cellTerrainType(tmpPoint) == TERRAIN_WATER)) {
+							auxiliar = false;
+							if (tmpPoint.first > 0) {
+								if ((m_beliefSet->getKnownMapCell(tmpPoint.first - 1, tmpPoint.second))
+										&& (m_beliefSet->map()->cellTerrainType(tmpPoint.first - 1
+												, tmpPoint.second) == TERRAIN_GROUND)) {
+									auxiliar = true;
+									tmpPoint.first = tmpPoint.first - 1;
+								}
+							}
+							if (tmpPoint.first < (MAP_WIDTH - 1) && !auxiliar) {
+								if ((m_beliefSet->getKnownMapCell(tmpPoint.first + 1, tmpPoint.second))
+										&& (m_beliefSet->map()->cellTerrainType(tmpPoint.first + 1
+												, tmpPoint.second) == TERRAIN_GROUND)) {
+									auxiliar = true;
+									tmpPoint.first = tmpPoint.first + 1;
+								}
+							}
+							if (tmpPoint.second > 0 && !auxiliar) {
+								if ((m_beliefSet->getKnownMapCell(tmpPoint.first, tmpPoint.second - 1))
+										&& (m_beliefSet->map()->cellTerrainType(tmpPoint.first
+												, tmpPoint.second - 1) == TERRAIN_GROUND)) {
+									auxiliar = true;
+									tmpPoint.second = tmpPoint.second - 1;
+								}
+							}
+							if (tmpPoint.second < (MAP_WIDTH - 1) && !auxiliar) {
+								if ((m_beliefSet->getKnownMapCell(tmpPoint.first, tmpPoint.second + 1))
+										&& (m_beliefSet->map()->cellTerrainType(tmpPoint.first
+												, tmpPoint.second + 1) == TERRAIN_GROUND)) {
+									auxiliar = true;
+									tmpPoint.second = tmpPoint.second + 1;
+								}
+							}
+							if (auxiliar) {
+								foundPoint = true;
+								resourcePoint = tmpPoint;
+								m_agent->sendToRoute(m_agent->getWorVecAgents()[i]->getPosition()
+										, resourcePoint, m_agent->getWorVecAgents()[i], GO_RESOURCE_LOCATION);
+							}
+						}
 					}
 				}
+			}
+			if (!foundPoint && !auxiliar) {
+				dynamic_cast<WorkingAgent*>(m_agent->getWorVecAgents()[i])->activeRecolecting_ = false;
 			}
 		}
 	}

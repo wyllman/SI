@@ -170,6 +170,7 @@ void Agent::setRoutes(vector<Direction>& routes) {
 
 void Agent::followRoute(string route) {
 	//cout << "SEGUIR LA RUTA: " << route << endl;
+	m_routes.clear();
 	vector<Direction> camino;
 	int posIni = route.find("[");
 	int posCorchFin = route.find("]");

@@ -14,6 +14,7 @@ using namespace std;
 WorkingAgent::WorkingAgent(MainAgent* mainAgent, Map* theMap): Agent(theMap), refMainAgent_(mainAgent) {
 	setNameAgent(const_cast<char*>("WORK_AGENT"));
 	setRecolectTime(0);
+	activeRecolecting_ = true;
 }
 
 WorkingAgent::~WorkingAgent() {
@@ -40,6 +41,7 @@ Package* WorkingAgent::readFIPAPackage(Package* p) {
 			case GO_RESOURCE_LOCATION:
 				//Realizar búsqueda dada esta dirección
 				followRoute(p -> getContent().at(0));
+				m_ret_routes.clear();
 				for (int i = 0; i < m_routes.size(); ++i) {
 					m_ret_routes.push_back(calculateInverseDirection(m_routes[m_routes.size() - (i + 1)]));
 				}
@@ -72,69 +74,52 @@ Package* WorkingAgent::readFIPAPackage(Package* p) {
 void WorkingAgent::actDependingOfState() {
 	switch (getState()) {
 	case RECOLECTING:
-		if (getRecolectTime() < 10)
+		if (getRecolectTime() < 250)
 			setRecolectTime(getRecolectTime() + 1);
 		else {
-			//setRecolectTime(0);
-			//setState(FULL_OF_RESOURCES);
 			m_routes.clear();
 			for (int i = 0; i < m_ret_routes.size(); ++i) {
 				m_routes.push_back(m_ret_routes[i]);
 			}
 			setState(FOLLOWING_RET_ROUTE);
-			//getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), COME_BACK, this));
 		}
-
 		break;
-
 	case FOLLOWING_ROUTE:
 		if (!routedMove()) {
 			setState(AVAILABLE);
 			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), CONFIRM));
 		}
-
 		break;
-
 	case PUTTING_RESOURCE:
 		if (getRecolectTime() > 0) {
 			setRecolectTime(getRecolectTime() - 1);
 		} else {
-			//setRecolectTime(0);
 			setState(AVAILABLE);
 			m_ret_routes.clear();
 			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), CONFIRM));
 		}
-
 		break;
-
 	case FOLLOWING_RES_ROUTE:
 		if (!routedMove()) {
 			setState(RECOLECTING);
 			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), CONFIRM));
 		}
-
 		break;
-
 	case FOLLOWING_RET_ROUTE:
 		if (!routedMove()) {
 			setState(PUTTING_RESOURCE);
 			getRefMainAgent() -> readFIPAPackage(new Package(getNameAgent(), getRefMainAgent() -> getNameAgent(), CONFIRM));
 		}
-
 		break;
 	}
-
 }
 
 unsigned int WorkingAgent::getRecolectTime() const {
 	return m_recolectTime;
 }
-
 void WorkingAgent::setRecolectTime(unsigned int recolectTime) {
 	m_recolectTime = recolectTime;
 }
-
 MainAgent* WorkingAgent::getRefMainAgent() {
 	return refMainAgent_;
 }
-

@@ -22,21 +22,18 @@
 22. ---Destruyendo el Agente principal 
 23. ---Generando el Agente principal 
 24. ---Llamando a la función createRndInitialPos () del agente principal.
-25. ---Destruyendo el Agente principal 
-26. ---Generando el Agente principal 
-27. ---Llamando a la función createRndInitialPos () del agente principal.
+25. ---Llamando a la función stop de la clase Simulator.
+26. ---Destruyendo el Agente principal 
+27. ---Destruyendo el modelo Simulator 
 28. ---Llamando a la función stop de la clase Simulator.
-29. ---Destruyendo el Agente principal 
-30. ---Destruyendo el modelo Simulator 
-31. ---Llamando a la función stop de la clase Simulator.
-32. ---Llamando a la función stop de la clase Interface.
-33. ------Destruyendo el gestor Bureaucrat para la vista Interfaz 
-34. ------Destruyendo el gestor Scenographer para la vista Interfaz 
-35. ------Destruyendo la herramienta Window para la vista Interfaz 
-36. ------Destruyendo la herramienta Context para la vista Interfaz 
-37. ------Destruyendo la herramienta Scene para la vista Interfaz 
-38. ---Destruyendo la vista Interfaz 
-39. ---Llamando a la función stop de la clase Interface.
-40. ------Destruyendo la herramienta MainLoop para el Director 
-41. ---Llamando a la funcion stop del Director
-42. ******************************************
+29. ---Llamando a la función stop de la clase Interface.
+30. ------Destruyendo el gestor Bureaucrat para la vista Interfaz 
+31. ------Destruyendo el gestor Scenographer para la vista Interfaz 
+32. ------Destruyendo la herramienta Window para la vista Interfaz 
+33. ------Destruyendo la herramienta Context para la vista Interfaz 
+34. ------Destruyendo la herramienta Scene para la vista Interfaz 
+35. ---Destruyendo la vista Interfaz 
+36. ---Llamando a la función stop de la clase Interface.
+37. ------Destruyendo la herramienta MainLoop para el Director 
+38. ---Llamando a la funcion stop del Director
+39. ******************************************

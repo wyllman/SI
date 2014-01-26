@@ -193,6 +193,6 @@ void Agent::followRoute(string route) {
 	}
 
 	for (unsigned int i = 0; i < camino.size(); i++) {
-		m_routes.push_back(camino[camino.size() - i]);
+		m_routes.push_back(camino[camino.size() - (i + 1)]);
 	}
 }

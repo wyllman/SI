@@ -220,34 +220,26 @@ void Intention::gatherResources() {
 	// Para cada uno de los trabajadores
 	for (int i = 0; i < numberWorkAg; ++i) {
 		foundPoint = false;
-		for (int j = 0; j < MAP_WIDTH && !foundPoint; ++j) {
-			tmpPoint.first += 1;
-			for (int k = 0; k < MAP_WIDTH && !foundPoint; ++k) {
-				tmpPoint.second += 1;
-				if ((tmpPoint.first >= 0 && tmpPoint.first < MAP_WIDTH)
-						&& ((tmpPoint.second >= 0 && tmpPoint.second < MAP_WIDTH))
-						&& (m_beliefSet->getKnownMapCell(tmpPoint))
-						&& (m_beliefSet->map()->cellTerrainType(tmpPoint) == TERRAIN_GROUND)
-						&& (m_beliefSet->map()->cellResourceType(tmpPoint) != 0x0)) {
+		if (m_agent->getWorVecAgents()[i]->getState() == AVAILABLE) {
+			for (int j = 0; j < MAP_WIDTH && !foundPoint; ++j) {
+				tmpPoint.first = j;
+				for (int k = 0; k < MAP_WIDTH && !foundPoint; ++k) {
+					tmpPoint.second = k;
+					if ((tmpPoint.first >= 0 && tmpPoint.first < MAP_WIDTH)
+							&& ((tmpPoint.second >= 0 && tmpPoint.second < MAP_WIDTH))
+							&& (m_beliefSet->getKnownMapCell(tmpPoint))
+							&& (m_beliefSet->map()->cellTerrainType(tmpPoint) == TERRAIN_GROUND)
+							&& (m_beliefSet->map()->cellResourceType(tmpPoint) != 0x0)) {
 
-
-					cout << "ENCONTRADO UN PUNTO CON RECURSOS!!" << endl;
-					if (m_agent->getWorVecAgents()[i]->getState() == AVAILABLE) {
 						foundPoint = true;
 						resourcePoint = tmpPoint;
 						cout << "ENVIANDO A UN AGENTE A RECOLECTAR" << endl;
 						m_agent->sendToRoute(m_agent->getWorVecAgents()[i]->getPosition()
-								, resourcePoint, m_agent->getWorVecAgents()[i], GO_RESOURCE_LOCATION);
+							, resourcePoint, m_agent->getWorVecAgents()[i], GO_RESOURCE_LOCATION);
 					}
-
 				}
-
 			}
 		}
-		// Calcular punto a partir de la posicion de la nave central
-		// comprobar si el punto es terreno conocido y con recurso
-		// enviar al agente
-
 	}
 }
 

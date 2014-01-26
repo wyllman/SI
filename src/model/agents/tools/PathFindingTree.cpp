@@ -134,10 +134,21 @@ void PathFindingTree::expandNode(Node& node) {
 	Node* east;
 	Node* south;
 	Node* west;
+
+	Node* nWest;
+	Node* nEast;
+	Node* sWest;
+	Node* sEast;
+
 	Point northPoint(const_cast<Node&>(node).position().first - 1, const_cast<Node&>(node).position().second);
 	Point eastPoint(const_cast<Node&>(node).position().first, const_cast<Node&>(node).position().second + 1);
 	Point southPoint(const_cast<Node&>(node).position().first + 1, const_cast<Node&>(node).position().second);
 	Point westPoint(const_cast<Node&>(node).position().first, const_cast<Node&>(node).position().second - 1);
+
+	Point nWestPoint(const_cast<Node&>(node).position().first - 1, const_cast<Node&>(node).position().second - 1);
+	Point nEastPoint(const_cast<Node&>(node).position().first - 1, const_cast<Node&>(node).position().second + 1);
+	Point sWestPoint(const_cast<Node&>(node).position().first + 1, const_cast<Node&>(node).position().second - 1);
+	Point sEastPoint(const_cast<Node&>(node).position().first + 1, const_cast<Node&>(node).position().second + 1);
 
 	north = new Node(northPoint, "NORTH", node);
 	north->setDistanceFromStart(node.distanceFromStart() + 1);
@@ -154,6 +165,23 @@ void PathFindingTree::expandNode(Node& node) {
 	west = new Node(westPoint, "WEST", node);
 	west->setDistanceFromStart(node.distanceFromStart() + 1);
 	west->setHeuristicDistance(heuristicValue(*west));
+
+	nWest = new Node(northPoint, "NWEST", node);
+	nWest->setDistanceFromStart(node.distanceFromStart() + 1);
+	nWest->setHeuristicDistance(heuristicValue(*nWest));
+
+	nEast = new Node(northPoint, "NEAST", node);
+	nEast->setDistanceFromStart(node.distanceFromStart() + 1);
+	nEast->setHeuristicDistance(heuristicValue(*nEast));
+
+	sWest = new Node(northPoint, "SWEST", node);
+	sWest->setDistanceFromStart(node.distanceFromStart() + 1);
+	sWest->setHeuristicDistance(heuristicValue(*sWest));
+
+	sEast = new Node(northPoint, "SEAST", node);
+	sEast->setDistanceFromStart(node.distanceFromStart() + 1);
+	sEast->setHeuristicDistance(heuristicValue(*sEast));
+
 
 	if ((north->position().first >= 0 && north->position().first < MAP_WIDTH)
 	                && (north->position().second >= 0 && north->position().second < MAP_WIDTH)) {
@@ -195,6 +223,50 @@ void PathFindingTree::expandNode(Node& node) {
 				node.insertChildren(*west);
 			} else if (west != NULL) {
 				delete west;
+			}
+		}
+	}
+
+	if ((nWest->position().first >= 0 && nWest->position().first < MAP_WIDTH)
+	                && (nWest->position().second >= 0 && nWest->position().second < MAP_WIDTH)) {
+		if (m_agent->getKnownMap()[nWest->position().first][nWest->position().second]) {
+			if (((*m_agent->getMap())(nWest->position().first, nWest->position().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
+				node.insertChildren(*nWest);
+			} else if (nWest != NULL) {
+				delete nWest;
+			}
+		}
+	}
+
+	if ((nEast->position().first >= 0 && nEast->position().first < MAP_WIDTH)
+	                && (nEast->position().second >= 0 && nEast->position().second < MAP_WIDTH)) {
+		if (m_agent->getKnownMap()[nEast->position().first][nEast->position().second]) {
+			if (((*m_agent->getMap())(nEast->position().first, nEast->position().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
+				node.insertChildren(*nEast);
+			} else if (nEast != NULL) {
+				delete nEast;
+			}
+		}
+	}
+
+	if ((sWest->position().first >= 0 && sWest->position().first < MAP_WIDTH)
+	                && (sWest->position().second >= 0 && sWest->position().second < MAP_WIDTH)) {
+		if (m_agent->getKnownMap()[sWest->position().first][sWest->position().second]) {
+			if (((*m_agent->getMap())(sWest->position().first, sWest->position().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
+				node.insertChildren(*sWest);
+			} else if (sWest != NULL) {
+				delete sWest;
+			}
+		}
+	}
+
+	if ((sEast->position().first >= 0 && sEast->position().first < MAP_WIDTH)
+	                && (sEast->position().second >= 0 && sEast->position().second < MAP_WIDTH)) {
+		if (m_agent->getKnownMap()[sEast->position().first][sEast->position().second]) {
+			if (((*m_agent->getMap())(sEast->position().first, sEast->position().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
+				node.insertChildren(*sEast);
+			} else if (sEast != NULL) {
+				delete sEast;
 			}
 		}
 	}

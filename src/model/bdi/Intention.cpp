@@ -25,14 +25,13 @@ Intention::Intention(const Agent& agent, BeliefSet& beliefSet, Desire& desire) :
 	m_beliefSet(&beliefSet), m_desire(&desire), m_agent(
 	        &dynamic_cast<MainAgent&>(const_cast<Agent&>(agent))) {
 	m_currentGoal = "Initial_Exploration";
-	loopCount_ = 0;
 }
 
 Intention::~Intention() {
 }
 
 void Intention::update() {
-	cout << "Current Desire: " << m_currentGoal << endl;
+	cout << "Current Goal: " << m_currentGoal << endl;
 
 	if (!(*m_desire)["50_Percent_Explored"]) {
 		exploreMap();
@@ -287,10 +286,13 @@ void Intention::sectorExploration() {
 	Point p;
 	Point bestPoint;
 	uint32_t bestDistance;
+	uint32_t loopCount;
 	uint32_t distance;
 	stringstream ss;
-	bestDistance = 99999;
 	float explorationRatioAux;
+	
+	bestDistance = 99999;
+	loopCount;
 	std::cout << "ANALIZANDO SECTORES DE TERRENO" << std::endl;
 	for (uint32_t i = 0; i < m_agent->getVAgents().size(); ++i) {
 		sectorFound = false;
@@ -339,7 +341,7 @@ void Intention::sectorExploration() {
 									GO_SEARCHING_LOCATION);
 							sectorFound = true;
 							globlalSectorFound = true;
-							loopCount_ = 0;
+							loopCount = 0;
 							if (explorationRatioAux >= m_beliefSet->getSectorExploredRatio(j)) {
 								Belief* belief;
 								belief = new Belief("EXPLORED");
@@ -354,10 +356,10 @@ void Intention::sectorExploration() {
 	if (globlalSectorFound) {
 		m_currentGoal = "Awaiting_Exploration_End";
 	} else {
-		++loopCount_;
+		++loopCount;
 	}
-	if (loopCount_ > 500) {
-		loopCount_ = 0;
+	if (loopCount > 500) {
+		loopCount = 0;
 		m_currentGoal = "END_SECOND_EXPLORATION";
 		for (uint32_t i = 0; i < m_agent->getVAgents().size(); ++i) {
 			m_agent->sendToRoute(m_agent->getVAgents()[i]->getPosition(),

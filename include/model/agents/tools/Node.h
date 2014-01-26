@@ -18,7 +18,7 @@ private:
 	Point m_position; //!< \var m_position Punto en el mapa
 	std::string m_movement; //!< \var m_movement indica la dirección que llevó hacia este nodo
 	const Node* m_nodeParent; //!< \var m_nodeParent Nodo que alcanza al nodo actual (su padre en el árbol)
-	uint32_t m_distanceFromStart; //!< \var m_distanceFromStart Distancia desde el origen
+	float m_distanceFromStart; //!< \var m_distanceFromStart Distancia desde el origen
 	float m_heuristicDistance; //!< \var m_heuristicDistance heurística hasta el objetivo.
 	float m_objectiveDistance;
 
@@ -32,7 +32,7 @@ public:
 	inline Point position() {
 		return m_position;
 	}
-	inline uint32_t distanceFromStart() {
+	inline float distanceFromStart() {
 		return m_distanceFromStart;
 	}
 	inline float heuristicDistance() {
@@ -59,7 +59,7 @@ public:
 		return m_nodeParent;
 	}
 
-	void setDistanceFromStart(uint32_t);
+	void setDistanceFromStart(float);
 	void setHeuristicDistance(float);
 
 	void insertChildren(const Node&);

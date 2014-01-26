@@ -167,19 +167,19 @@ void PathFindingTree::expandNode(Node& node) {
 	west->setHeuristicDistance(heuristicValue(*west));
 
 	nWest = new Node(northPoint, "NWEST", node);
-	nWest->setDistanceFromStart(node.distanceFromStart() + 1);
+	nWest->setDistanceFromStart(node.distanceFromStart() + sqrt(2));
 	nWest->setHeuristicDistance(heuristicValue(*nWest));
 
 	nEast = new Node(northPoint, "NEAST", node);
-	nEast->setDistanceFromStart(node.distanceFromStart() + 1);
+	nEast->setDistanceFromStart(node.distanceFromStart() + sqrt(2));
 	nEast->setHeuristicDistance(heuristicValue(*nEast));
 
 	sWest = new Node(northPoint, "SWEST", node);
-	sWest->setDistanceFromStart(node.distanceFromStart() + 1);
+	sWest->setDistanceFromStart(node.distanceFromStart() + sqrt(2));
 	sWest->setHeuristicDistance(heuristicValue(*sWest));
 
 	sEast = new Node(northPoint, "SEAST", node);
-	sEast->setDistanceFromStart(node.distanceFromStart() + 1);
+	sEast->setDistanceFromStart(node.distanceFromStart() + sqrt(2));
 	sEast->setHeuristicDistance(heuristicValue(*sEast));
 
 

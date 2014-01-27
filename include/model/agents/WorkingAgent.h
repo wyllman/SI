@@ -16,6 +16,8 @@
 
 class WorkingAgent : public Agent {
    public:
+      bool activeRecolecting_;
+
       WorkingAgent(MainAgent*, Map*);
       ~WorkingAgent();
 
@@ -33,6 +35,8 @@ class WorkingAgent : public Agent {
    private:
       MainAgent* refMainAgent_;
       unsigned int m_recolectTime;
+
+      std::vector<Direction> m_ret_routes;
 };
 
 #endif /* WORKINGAGENT_H_ */

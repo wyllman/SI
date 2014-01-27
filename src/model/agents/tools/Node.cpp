@@ -44,7 +44,7 @@ Node::~Node() {
 	}
 }
 
-void Node::setDistanceFromStart(uint32_t dist) {
+void Node::setDistanceFromStart(float dist) {
 	m_distanceFromStart = dist;
 	m_objectiveDistance = static_cast<float>(m_distanceFromStart) + m_heuristicDistance;
 }

@@ -41,11 +41,11 @@ Package* SearchAgent::readFIPAPackage(Package* p) {
 			switch (p->getType()) {
 			case NOT_UNDERSTOOD:
 				cout
-					<< "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible"
+					<< "Search Agent: --- NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible. ---"
 					<< endl;
 				break;
 			case CONFIRM:
-				cout << "CONFIRM: Confirmada la operación." << endl;
+				cout << "Search Agent: --- CONFIRM: Confirmada la operación.---" << endl;
 				break;
 			case DIRECTION_SEARCH:
 				//Realizar búsqueda dada esta dirección
@@ -68,13 +68,13 @@ Package* SearchAgent::readFIPAPackage(Package* p) {
 				setState(FOLLOWING_RET_ROUTE);
 				break;
 			default:
-				cout << "SA No se entiende el tipo del paquete recibido."
+				cout << "Search Agent: --- ERROR! No se entiende el tipo del paquete recibido. ---"
 					<< endl;
+				answer = new Package(getNameAgent(), p->getSender(), NOT_UNDERSTOOD);
 				break;
 			}
 		}
 	}
-
 	return answer;
 }
 
@@ -128,13 +128,13 @@ void SearchAgent::actDependingOfState() {
 			setState(AVAILABLE);
 			getRefMainAgent()->readFIPAPackage(
 					new Package(getNameAgent(),
-							getRefMainAgent()->getNameAgent(), CONFIRM));
+							getRefMainAgent()->getNameAgent(), ARRIVED_GOAL));
 		} else {
 			sensor();
 		}
 		break;
 	case FOLLOWING_SEARCH_ROUTE:
-		std::cout << "CAMINANDO AL PUNTO DE BUSQUEDA" << std::endl;
+		//std::cout << "CAMINANDO AL PUNTO DE BUSQUEDA" << std::endl;
 		if (!routedMove()) {
 			setState(SECOND_SEARCHING);
 			getRefMainAgent()->readFIPAPackage(
@@ -231,7 +231,7 @@ bool SearchAgent::explorationMove() {
 					outPreferedRoute = true;
 				}
 			} else {
-				cout << "ERROR AGENTE FUERA DE LIMITES" << endl;
+				cout << "ERROR! --- Agente fuera de límites(SearchAgent::explorationMove()) ---" << endl;
 				directionAct = calculateReturnDir();
 				outOfLimits = true;
 			}
@@ -262,7 +262,7 @@ bool SearchAgent::explorationMove() {
 								result = true;
 							}
 						} else {
-							cout << "ERROR FIN CAMINO" << endl;
+							//cout << " FIN CAMINO" << endl;
 						}
 					}
 				} else {
@@ -271,7 +271,7 @@ bool SearchAgent::explorationMove() {
 					result = true;
 				}
 			} else {
-				cout << "ERROR, NO SE DEBE ACCEDER A ESTE PUNTO"
+				cout << "ERROR! --- Fin de exploración inesperado(SearchAgent::explorationMove()) ---"
 						<< endl;
 			}
 		}
@@ -309,33 +309,6 @@ bool SearchAgent::swipeMove(const Point& start, const Point& end) {
 	return hasMoved;
 }
 
-Direction SearchAgent::calculateClockDirection(Direction theDirection,
-		bool inverse) {
-	Direction result = ERROR_DIR;
-
-	if (inverse) {
-		if (theDirection == NORTH) {
-			result = NWEST;
-		} else {
-			result = ((Direction)(theDirection - 1));
-		}
-	} else {
-		if (theDirection == NWEST) {
-			result = NORTH;
-		} else {
-			result = ((Direction)(theDirection + 1));
-		}
-	}
-	return result;
-}
-Direction SearchAgent::calculateInverseDirection(Direction theDirection) {
-	Direction result = ERROR_DIR;
-	result = calculateClockDirection(theDirection, false);
-	result = calculateClockDirection(result, false);
-	result = calculateClockDirection(result, false);
-	result = calculateClockDirection(result, false);
-	return result;
-}
 void SearchAgent::updateDistance(Direction theDirection) {
 	switch (guideDirectionEXPL_) {
 		case NORTH:
@@ -491,8 +464,6 @@ Direction SearchAgent::calculateRouteDir() {
 	const bool EVEN = ((initPointDistanceEXPL_ % 2) == 0);
 	Direction result = ERROR_DIR;
 
-	// if (onRoute()) {...codigo siguiente...};
-
 	switch (guideDirectionEXPL_) {
 		case NORTH:
 			if (ON_RECT) {
@@ -631,8 +602,6 @@ Direction SearchAgent::calculateOutRouteDir() {
 	const bool ON_EVEN = (((DISTANCE / DIAMET_VIEW) % 2) == 0);
 	Direction result = ERROR_DIR;
 
-	// if (!onRoute()) {...codigo siguiente...}
-
 	switch (guideDirectionEXPL_) {
 	case NORTH:
 		if (ON_EVEN) {
@@ -677,7 +646,6 @@ Direction SearchAgent::calculateOutRouteDir() {
 	return result;
 }
 Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
-//	const Direction LAST_MOVE = lastMoveDirEXPL_;
 	const bool ON_ROUTE = onRoute();
 	Direction result = ERROR_DIR;
 	Direction tmpDir;
@@ -742,7 +710,6 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 				}
 			}
 		}
-
 		break;
 
 	case EAST:
@@ -764,7 +731,6 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 						result = tmpDir;
 					}
 				}
-
 				break;
 
 			case SEAST:
@@ -803,7 +769,6 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 				}
 			}
 		}
-
 		break;
 
 	case SOUTH:
@@ -825,7 +790,6 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 						result = tmpDir;
 					}
 				}
-
 				break;
 
 			case SWEST:
@@ -841,7 +805,6 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 						result = tmpDir;
 					}
 				}
-
 				break;
 			defautl:
 				break;
@@ -865,7 +828,6 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 				}
 			}
 		}
-
 		break;
 
 	case WEST:
@@ -887,7 +849,6 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 						result = tmpDir;
 					}
 				}
-
 				break;
 
 			case SWEST:
@@ -903,7 +864,6 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 						result = tmpDir;
 					}
 				}
-
 				break;
 			default:
 				break;
@@ -927,7 +887,6 @@ Direction SearchAgent::calculateObstaclDir(Direction theDirection) {
 				}
 			}
 		}
-
 		break;
 
 	default:
@@ -976,7 +935,6 @@ Direction SearchAgent::calculateFinalDir(Direction theDirection) {
 		} else {
 			cout << "ERROR CALCULO DIR FINAL (OTROS)" << endl;
 		}
-
 		break;
 
 	case EAST:
@@ -1013,7 +971,6 @@ Direction SearchAgent::calculateFinalDir(Direction theDirection) {
 		} else {
 			cout << "ERROR CALCULO DIR FINAL (OTROS)" << endl;
 		}
-
 		break;
 
 	case SOUTH:
@@ -1050,7 +1007,6 @@ Direction SearchAgent::calculateFinalDir(Direction theDirection) {
 		} else {
 			cout << "ERROR CALCULO DIR FINAL (OTROS)" << endl;
 		}
-
 		break;
 
 	case WEST:
@@ -1087,7 +1043,6 @@ Direction SearchAgent::calculateFinalDir(Direction theDirection) {
 		} else {
 			cout << "ERROR CALCULO DIR FINAL (OTROS)" << endl;
 		}
-
 		break;
 
 	default:

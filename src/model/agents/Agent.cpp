@@ -169,12 +169,12 @@ void Agent::setRoutes(vector<Direction>& routes) {
 }
 
 void Agent::followRoute(string route) {
-	//cout << "SEGUIR LA RUTA: " << route << endl;
+	m_routes.clear();
 	vector<Direction> camino;
 	int posIni = route.find("[");
 	int posCorchFin = route.find("]");
 	if (!route.empty() && route.size() > 4) {
-		route = route.substr(1, route.size() - 1);// FIXME: da problemas principalmente en map4.c
+		route = route.substr(1, route.size() - 1);
 	}
 	int posComa = 0;
 	bool stop = false;
@@ -193,6 +193,34 @@ void Agent::followRoute(string route) {
 	}
 
 	for (unsigned int i = 0; i < camino.size(); i++) {
-		m_routes.push_back(camino[camino.size() - i]);
+		m_routes.push_back(camino[camino.size() - (i + 1)]);
 	}
+}
+
+Direction Agent::calculateClockDirection(Direction theDirection,
+		bool inverse) {
+	Direction result = ERROR_DIR;
+
+	if (inverse) {
+		if (theDirection == NORTH) {
+			result = NWEST;
+		} else {
+			result = ((Direction)(theDirection - 1));
+		}
+	} else {
+		if (theDirection == NWEST) {
+			result = NORTH;
+		} else {
+			result = ((Direction)(theDirection + 1));
+		}
+	}
+	return result;
+}
+Direction Agent::calculateInverseDirection(Direction theDirection) {
+	Direction result = ERROR_DIR;
+	result = calculateClockDirection(theDirection, false);
+	result = calculateClockDirection(result, false);
+	result = calculateClockDirection(result, false);
+	result = calculateClockDirection(result, false);
+	return result;
 }

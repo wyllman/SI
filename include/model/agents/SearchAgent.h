@@ -64,17 +64,14 @@ class SearchAgent: public Agent {
       Direction calculateObstaclDir (Direction);
       Direction calculateFinalDir (Direction);
 
-
-
-
       Direction calculatePreferedDirection ();
       Direction calculateAngularDirection ();
       Direction calculateRectilinearDirection ();
       Direction calculateFreeDirection (bool);
-      Direction calculateClockDirection (Direction, bool);
-      Direction calculateInverseDirection (Direction);
+
       void updateDistance (Direction);
       void sensor();
+
 };
 
 #endif /* SEARCHAGENT_H_ */

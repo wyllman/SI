@@ -97,11 +97,9 @@ void MainAgent::initAgents() {
 }
 
 bool MainAgent::update() {
-
 	if (m_routes.size() > 0) {
 		routedMove();
 	}
-
 
 	m_intentions->update();
 	return updateMiniAgents();
@@ -182,8 +180,8 @@ void MainAgent::createRndInitialPos(Map* mainMap) {
 
 	} while (!condition);
 
-	cout << "Position generated on: x = " << m_position.first << " , y = "
-	          << m_position.second << endl;
+	//cout << "Position generated on: x = " << m_position.first << " , y = "
+	//          << m_position.second << endl;
 }
 
 void MainAgent::logAction(int index) {
@@ -228,8 +226,7 @@ void MainAgent::logAction(int index) {
 }
 
 Package* MainAgent::readFIPAPackage(Package* p) {
-	Package* answer = new Package(getNameAgent(), p->getSender(),
-	                              NOT_UNDERSTOOD);
+	Package* answer;
 
 	// Comprobamos que el paquete es de la conversación actual
 	if (p->getIdComm() == getIdComm()) {
@@ -237,15 +234,15 @@ Package* MainAgent::readFIPAPackage(Package* p) {
 		if (p->getReceiver() == getNameAgent()) {
 			switch (p->getType()) {
 			case NOT_UNDERSTOOD:
-				cout << "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible" << endl;
+				cout << "Main Agent: --- NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible. ---" << endl;
 				break;
 
 			case CONFIRM:
-				cout << "CONFIRM: Recibido paquete que indica -> Confirmada la operación." << endl;
+				cout << "Main Agent: --- CONFIRM: Recibido paquete que indica -> Confirmada la operación.---" << endl;
 				break;
 
 			case ARRIVED_GOAL:
-				cout << "Se ha confirmado la finalización de la ruta." << endl;
+				cout << "Main Agent: --- Se ha confirmado la finalización de la ruta.---" << endl;
 				Belief* belief;
 				belief = new Belief("AGENT_ARRIVED");
 				m_beliefSet->add(p->getSender(), belief);
@@ -253,10 +250,8 @@ Package* MainAgent::readFIPAPackage(Package* p) {
 
 			case MAP_UPDATE:
 				break;
-
 			case LOCATED_OBSTACLE:
 				break;
-
 			case END_LIMITS:
 				break;
 
@@ -266,17 +261,13 @@ Package* MainAgent::readFIPAPackage(Package* p) {
 				break;
 
 			case DIRECTION_SEARCH:
-
 				break;
-
 			default:
-				cout << "No se entiende el tipo del paquete recibido." << endl;
-
+				cout << "Main Agent: --- ERROR! No se entiende el tipo del paquete recibido.---" << endl;
+				answer = new Package(getNameAgent(), p->getSender(), NOT_UNDERSTOOD);
 			}
 		}
-
 	}
-
 	return answer;
 }
 
@@ -287,7 +278,7 @@ void MainAgent::sendToRoute(Point s, Point e, Agent* theAgent, Type theType) {
 
 		tree->calculateHeuristicRoute();
 		route += tree->getRoute();
-		std::cout << "Ruta mínima = " << route << std::endl;
+		//std::cout << "Ruta mínima = " << route << std::endl;
 		std::vector<std::string> vect;
 
 		Package* p = new Package(this->getNameAgent(), theAgent->getNameAgent(),

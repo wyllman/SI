@@ -53,10 +53,10 @@ bool PathFindingTree::calculateHeuristicRoute() {
 	float currentDistance;
 	bestNode = m_rootNode;
 
-	cout << "Insertando root (" << m_rootNode->position().first << "," <<
-	     m_rootNode->position().second << ")" << endl;
-	cout << "Objetivo (" << m_goalNode->position().first << "," <<
-	     m_goalNode->position().second << ")" << endl;
+	//cout << "Insertando root (" << m_rootNode->position().first << "," <<
+	//     m_rootNode->position().second << ")" << endl;
+	//cout << "Objetivo (" << m_goalNode->position().first << "," <<
+	//     m_goalNode->position().second << ")" << endl;
 	openSet.push_back(m_rootNode);
 
 	success = false;
@@ -184,7 +184,7 @@ void PathFindingTree::expandNode(Node& node) {
 
 
 	if ((north->position().first >= 0 && north->position().first < MAP_WIDTH)
-	                && (north->position().second >= 0 && north->position().second < MAP_WIDTH)) {
+		&& (north->position().second >= 0 && north->position().second < MAP_WIDTH)) {
 		if (m_agent->getKnownMap()[north->position().first][north->position().second]) {
 			if (((*m_agent->getMap())(north->position().first, north->position().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
 				node.insertChildren(*north);
@@ -195,7 +195,7 @@ void PathFindingTree::expandNode(Node& node) {
 	}
 
 	if ((east->position().first >= 0 && east->position().first < MAP_WIDTH)
-	                && (east->position().second >= 0 && east->position().second < MAP_WIDTH)) {
+			&& (east->position().second >= 0 && east->position().second < MAP_WIDTH)) {
 		if (m_agent->getKnownMap()[east->position().first][east->position().second]) {
 			if (((*m_agent->getMap())(east->position().first, east->position().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
 				node.insertChildren(*east);
@@ -206,7 +206,7 @@ void PathFindingTree::expandNode(Node& node) {
 	}
 
 	if ((south->position().first >= 0 && south->position().first < MAP_WIDTH)
-	                && (south->position().second >= 0 && south->position().second < MAP_WIDTH)) {
+			&& (south->position().second >= 0 && south->position().second < MAP_WIDTH)) {
 		if (m_agent->getKnownMap()[south->position().first][south->position().second]) {
 			if (((*m_agent->getMap())(south->position().first, south->position().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
 				node.insertChildren(*south);
@@ -217,7 +217,7 @@ void PathFindingTree::expandNode(Node& node) {
 	}
 
 	if ((west->position().first >= 0 && west->position().first < MAP_WIDTH)
-	                && (west->position().second >= 0 && west->position().second < MAP_WIDTH)) {
+		&& (west->position().second >= 0 && west->position().second < MAP_WIDTH)) {
 		if (m_agent->getKnownMap()[west->position().first][west->position().second]) {
 			if (((*m_agent->getMap())(west->position().first, west->position().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
 				node.insertChildren(*west);
@@ -228,7 +228,7 @@ void PathFindingTree::expandNode(Node& node) {
 	}
 
 	if ((nWest->position().first >= 0 && nWest->position().first < MAP_WIDTH)
-	                && (nWest->position().second >= 0 && nWest->position().second < MAP_WIDTH)) {
+			&& (nWest->position().second >= 0 && nWest->position().second < MAP_WIDTH)) {
 		if (m_agent->getKnownMap()[nWest->position().first][nWest->position().second]) {
 			if (((*m_agent->getMap())(nWest->position().first, nWest->position().second) & MASK_TERRAIN) == TERRAIN_GROUND) {
 				node.insertChildren(*nWest);
@@ -291,5 +291,4 @@ void PathFindingTree::reversePath(const Node& node) {
 	}
 
 	m_route = "[" + std::string(tmp->direction()) + m_route;
-
 }

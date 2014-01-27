@@ -169,13 +169,12 @@ void Agent::setRoutes(vector<Direction>& routes) {
 }
 
 void Agent::followRoute(string route) {
-	//cout << "SEGUIR LA RUTA: " << route << endl;
 	m_routes.clear();
 	vector<Direction> camino;
 	int posIni = route.find("[");
 	int posCorchFin = route.find("]");
 	if (!route.empty() && route.size() > 4) {
-		route = route.substr(1, route.size() - 1);// FIXME: da problemas principalmente en map4.c
+		route = route.substr(1, route.size() - 1);
 	}
 	int posComa = 0;
 	bool stop = false;

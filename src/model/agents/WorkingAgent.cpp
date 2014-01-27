@@ -29,12 +29,12 @@ Package* WorkingAgent::readFIPAPackage(Package* p) {
 		if (p -> getReceiver() == getNameAgent()) {
 			switch (p -> getType()) {
 			case NOT_UNDERSTOOD:
-				cout << "NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible" << endl;
+				cout << "Working Agent: --- NOT_UNDERSTOOD: recibido paquete cuyo contenido no es entendible. ---" << endl;
 				return NULL;
 				break;
 
 			case CONFIRM:
-				cout << "CONFIRM: Confirmada la operación." << endl;
+				cout << "Working Agent: --- CONFIRM: Confirmada la operación. ---" << endl;
 				return NULL;
 				break;
 
@@ -62,7 +62,7 @@ Package* WorkingAgent::readFIPAPackage(Package* p) {
 				break;
 
 			default:
-				cout << "No se entiende el tipo del paquete recibido." << endl;
+				cout << "Working Agent: --- ERROR! No se entiende el tipo del paquete recibido. ---" << endl;
 			}
 		}
 	}
